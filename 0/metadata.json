@@ -1,0 +1,80 @@
+{
+  "cli_version": "0.11.4",
+  "checkpoint_id": "01M4NG1NNM575FBSDJ06FSEZ39",
+  "session_id": "003a174f-f71b-492b-b3d0-c7b4eeb1e6a1",
+  "strategy": "manual-commit",
+  "created_at": "2026-10-11T12:47:23.368202467Z",
+  "branch": "site",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "site/findings.js",
+    "site/loupe.js"
+  ],
+  "agent": "Claude Code",
+  "model": "claude-sonnet-5-5",
+  "turn_id": "eb5c9f2698bb",
+  "compact_transcript_start": 0,
+  "token_usage": {
+    "input_tokens": 170,
+    "cache_creation_tokens": 244700,
+    "cache_read_tokens": 16842174,
+    "output_tokens": 125524,
+    "api_call_count": 85
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-10-11T12:47:22.945229222Z",
+    "agent_lines": 0,
+    "agent_removed": 0,
+    "human_added": 0,
+    "human_modified": 27,
+    "human_removed": 75,
+    "total_committed": 0,
+    "total_lines_changed": 152,
+    "agent_percentage": 0,
+    "metric_version": 2
+  },
+  "prompt_attributions": [
+    {
+      "checkpoint_number": 1,
+      "user_lines_added": 31088,
+      "user_lines_removed": 102,
+      "agent_lines_added": 0,
+      "agent_lines_removed": 0,
+      "user_added_per_file": {
+        "crossfoot/sitebuild.py": 164,
+        "qa/t06c/axe.json": 201,
+        "qa/t06c/axe.py": 37,
+        "qa/t06c/check.py": 119,
+        "qa/t06c/checks.json": 155,
+        "qa/t06c/shoot.log": 26,
+        "qa/t06c/shoot.py": 58,
+        "site/app.js": 92,
+        "site/data.js": 31,
+        "site/data/index.json": 1,
+        "site/data/panola-findings.json": 29337,
+        "site/data/panola.json": 1,
+        "site/findings.js": 340,
+        "site/index.html": 21,
+        "site/loupe.js": 158,
+        "site/panel.js": 5,
+        "site/stage.js": 28,
+        "site/styles.css": 136,
+        "site/tape.js": 103,
+        "tests/test_sitebuild.py": 75
+      },
+      "user_removed_per_file": {
+        "crossfoot/sitebuild.py": 11,
+        "site/app.js": 14,
+        "site/data.js": 4,
+        "site/data/index.json": 1,
+        "site/data/panola.json": 1,
+        "site/index.html": 4,
+        "site/loupe.js": 52,
+        "site/panel.js": 1,
+        "site/stage.js": 1,
+        "site/styles.css": 11,
+        "site/tape.js": 2
+      }
+    }
+  ]
+}

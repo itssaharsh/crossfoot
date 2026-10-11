@@ -1,0 +1,45 @@
+Read AGENTS.md, then .prod-build/briefs/T06c.md and do exactly that task.
+Finish by writing .prod-build/reports/T06c.md in the format at the end of the brief, commit on this branch (do not push), and reply with the report.
+
+---
+
+<task-notification>
+<task-id>bxj3nxsxd</task-id>
+<tool-use-id>toolu_01HMVRSHRiSNHkNJzNSaj9hH</tool-use-id>
+<output-file>/tmp/claude-1000/-home-saharsh-contri-crossfoot-site/003a174f-f71b-492b-b3d0-c7b4eeb1e6a1/tasks/bxj3nxsxd.output</output-file>
+<status>completed</status>
+<summary>Background command "cd /home/saharsh/contri/crossfoot-site; python3 - &lt;&lt;'E'
+p='qa/t06c/axe.py'
+s=open(p).read()
+s=s.replace('("/?record=1", "?record=1", None)]','("/?record=1", "?record=1", None)] + [(f"/?state={x}", f"?state={x}", None) for x in ("loading", "error", "empty", "partial", "first-run")]')
+open(p,'w').write(s)
+q=open('qa/t06c/shoot.py').read()
+q=q.replace('        b.close()\nmain','''        for st in ("empty", "partial"):
+            if want("states"):
+                for key, size in (("1440", W), ("390", M)): run(b, size, f"?state={st}", f"state-{st}-{key}.png")
+        b.close()
+main''')
+open('qa/t06c/shoot.py','w').write(q)
+E
+python3 qa/t06c/axe.py 2&gt;&amp;1 | tail -12; python3 qa/t06c/shoot.py states" completed (exit code 0)</summary>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>bnee88rt5</task-id>
+<summary>Monitor event: "noop"</summary>
+<event>[Monitor expired after 1s with no events delivered. Re-arm it if you still need the watch — and widen the filter if silence was unexpected.]</event>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>bu1ld2mbv</task-id>
+<tool-use-id>toolu_01MnHkWSzSU4BTaKfqUcdgDC</tool-use-id>
+<output-file>/tmp/claude-1000/-home-saharsh-contri-crossfoot-site/003a174f-f71b-492b-b3d0-c7b4eeb1e6a1/tasks/bu1ld2mbv.output</output-file>
+<status>completed</status>
+<summary>Monitor "check axe progress" stream ended</summary>
+<event>.................................................                        [100%]
+121 passed in 3.33s</event>
+</task-notification>
