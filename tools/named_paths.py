@@ -5,7 +5,8 @@
 
 Documents read: README.md, hackathon.md, docs/, .prod-build/reports/, tests/. A run id counts as present when runs/<id> exists;
 a path like runs/<id>/<rest> counts as present when that file exists. Lines that say "not committed", raw diff-stat lines of
-old reports and the made-up ids in tests/ are skipped."""
+old reports and the made-up ids in tests/ are skipped, and so is a sentence that says something was removed, deleted or
+renamed (and the lines that continue its bullet): what it names is meant to be gone."""
 import re, sys
 from pathlib import Path
 
@@ -13,6 +14,7 @@ ROOT = Path(__file__).resolve().parents[1]
 SOURCES = ["README.md", "hackathon.md", "docs", ".prod-build/reports", "tests"]
 RUN = re.compile(r"\b(2026\d{4}-\d{6})\b")
 RUNPATH = re.compile(r"runs/(2026\d{4}-\d{6})/([\w./*<>-]+)")
+GONE = re.compile(r"\b(removed|deleted|renamed)\b", re.I)
 QA = re.compile(r"(?<![\w/])qa/[\w./-]+")
 
 
@@ -27,9 +29,11 @@ def files():
 def scan():
     runs, paths, qa = {}, {}, {}
     for f in files():
+        gone = False         # inside a bullet or paragraph that says something was removed
         for line in f.read_text(errors="replace").splitlines():
             rel = f.relative_to(ROOT).as_posix()
-            if "not committed" in line or "deleted" in line or re.search(r"\|\s+\d+\s+[+-]*\s*$", line) or rel.startswith("tests/"):
+            gone = bool(GONE.search(line)) or (gone and line.startswith(" ") and bool(line.strip()))
+            if gone or "not committed" in line or re.search(r"\|\s+\d+\s+[+-]*\s*$", line) or rel.startswith("tests/"):
                 continue      # a run said not to be committed, a raw `git diff --stat` line (history), a test's made-up ids
             for m in RUN.finditer(line):
                 runs.setdefault(m.group(1), set()).add(rel)

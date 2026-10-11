@@ -276,6 +276,35 @@ Planned, and updated as each part is actually used:
   Not removed because tests use them: `grid_gaps`, `open_cells`, `to_page`, and the `make_crops` argument.
 - Not measured: whether a person reading the README's first screen finds the links without scrolling.
 
+### 11 October 2026, T08b: two defects from the fresh-clone test
+
+- **Seen in a fresh clone** (`git clone`, then the README's commands): `crossfoot site build --run latest` ended in a Python
+  traceback (the scan `data/scans/panola.pdf` was missing) after it had already deleted the files under `site/data/blocks/`; and
+  the README's cost table, the summary and the page gave, for each county, the figures of the last audit made again from an
+  existing ledger (Panola 8 calls, $0.0118, 41.5 s), not those of the run that read the county.
+- **Page build.** It now downloads a scan that is not in `data/` (`sources.fetch`, one line per county), builds into
+  `site/data.new/` and swaps it in only when every county was built; a failure removes the new folder and leaves `site/data/`
+  as it was. A failed download is one line naming the county and the URL, exit code 1. `tests/test_site_build_safe.py` (red first,
+  E0100) covers a build that fails half way, a missing scan, a present scan, a failed download and a build of one county.
+- **Other commands.** `tests/test_cli_missing_input.py` runs `fetch`, `filecheck`, `render`, `read`, `read-page`, `close`, `audit`
+  (matrix, report, `--all --resume`), `summarize`, `score`, `verify-known` and `site build` with the input missing and the
+  downloader faked to fail: each prints one line and exits 1. Three ended in a traceback before: `summarize` with no base summary,
+  `score` with no claims file, and `read-page` with no scan; fixed.
+- **Cost and time.** `crossfoot summarize` now keeps per county `read_run` (the run that read the scan, from its own summary) and
+  `audit_again` (the later audits from that ledger, added up), and the totals do the same; `summary.md` shows the reading first.
+  New final summary `runs/20261011-150000` (no model calls; the committed runs are unchanged). Its totals, from the files:
+  the reading run `20261011-130414` 552 calls, $2.8692, 1,671.3 s; audits made again 209 calls, $0.2888, 767.0 s. Panola: read
+  168 calls, $0.7675, 474.9 s; later audits 8 calls, $0.0118, 41.5 s. Jones: read 144 calls, $0.3844, 346.3 s; later audits 122
+  calls, $0.1363, 297.1 s. The audit ids inside `audit_again` are taken from the earlier summaries (`20261011-140000`,
+  `20261011-141300`); some of those run folders were removed in T08, so their figures survive only in those summaries.
+- **README table** is written from it by `tools/readme_tables.py` (the results table did not change). **Page**: a county's
+  `model cost` and `minutes` are the reading run's plus the later audits'; the replay's label divides those seconds by the
+  replay's length (Panola 17x, Jones 16x; Jones read 1x before). Measured in the browser at 1440x900: `qa/final/costs.json`
+  (page text and county file side by side) and `qa/final/*-run-numbers-1440.png`.
+- **Paths check.** `tools/named_paths.py --check` skips a bullet that says something was removed or renamed; `qa/final/checks.json`
+  now exists (`tools/qa/check.py` wrote it). `runs/20261011-140000` is kept: this log names it and `summarize` follows it back.
+- Not measured: the cost of an audit from nothing for a county other than as the one unattended run recorded it.
+
 ## Known limitations
 See the Limits section of [README.md](README.md).
 

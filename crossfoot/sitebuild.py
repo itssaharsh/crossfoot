@@ -822,10 +822,45 @@ def _clear(out: Path, key: str):
             f.unlink()
 
 
-def build(run_id: str, runs_dir="runs", out="site/data", counties=None, data_root=None) -> list[str]:
+class BuildError(Exception):
+    """The page's data could not be built; the message is one plain line."""
+
+
+def build(run_id: str, runs_dir="runs", out="site/data", counties=None, data_root=None, fetch=None, log=print) -> list[str]:
+    """Builds into a new folder beside `out` and replaces `out` only when every county was built; any failure leaves `out`
+    exactly as it was. A build of some counties starts from a copy of `out`, so the others stay."""
+    final = Path(out)
+    stage, old = final.with_name(final.name + ".new"), final.with_name(final.name + ".old")
+    for p in (stage, old):
+        shutil.rmtree(p, ignore_errors=True)
+    try:
+        if counties and final.exists():
+            shutil.copytree(final, stage)
+        keys = _build(run_id, runs_dir, stage, counties, data_root, fetch, log)
+        if final.exists():
+            final.rename(old)
+            try:
+                stage.rename(final)
+            except OSError:
+                old.rename(final)
+                raise
+            shutil.rmtree(old, ignore_errors=True)
+        else:
+            final.parent.mkdir(parents=True, exist_ok=True)
+            stage.rename(final)
+    finally:
+        shutil.rmtree(stage, ignore_errors=True)
+    return keys
+
+
+def _build(run_id, runs_dir, out, counties, data_root, fetch, log) -> list[str]:
+    from . import sources
+    fetch = fetch or sources.fetch
     if run_id == "latest":
         run_id = latest_run(runs_dir)
     run_dir = Path(runs_dir) / run_id
+    if not run_dir.is_dir():
+        raise BuildError(f"{run_dir} does not exist")
     out = Path(out)
     out.mkdir(parents=True, exist_ok=True)
     meta = json.loads((run_dir / "run.json").read_text()) if (run_dir / "run.json").exists() else {}
@@ -850,10 +885,19 @@ def build(run_id: str, runs_dir="runs", out="site/data", counties=None, data_roo
         summ = by_summary.get(key)
         # a summary run names the run each county's figures come from
         cdir = Path(runs_dir) / str((summ or {}).get("from_run") or run_id) / key
+        if not (cdir / "county.json").exists():
+            raise BuildError(f"{cdir / 'county.json'} does not exist (run {run_id}, county {key})")
         raw = json.loads((cdir / "county.json").read_text())
         if (summ or {}).get("status") == "unchecked" or raw.get("layout") == "no_printed_totals":
             index["counties"].append(unchecked_entry(key, summ, raw))
             continue
+        root = data_root or sources.DATA
+        if not sources.scan_path(key, root).exists():
+            log(f"{key}: the scan is not in {root}; downloading it")
+            try:
+                fetch(key, root)
+            except sources.FetchError as e:
+                raise BuildError(f"{key}: {e}") from e
         _clear(out, key)
         fpath = cdir / "findings.json"
         findings = json.loads(fpath.read_text()) if fpath.exists() else None
@@ -895,6 +939,9 @@ def build(run_id: str, runs_dir="runs", out="site/data", counties=None, data_roo
                          ("reader", "reader")):
             if (summ or {}).get(src) is not None:      # a run of every county: the county's own figures, not the run's
                 run[dst] = summ[src]
+        for k in ("read_run", "audit_again"):      # what the reading cost, and what the later audits added (seconds above add both)
+            if (summ or {}).get(k):
+                run[k] = summ[k]
         if raw.get("sample") and not run.get("sample"):
             run["sample"] = raw["sample"]
         d = build_county(raw, sizes, ink=inks, rules=rules, findings=findings, run=run,
@@ -940,7 +987,10 @@ def main(argv=None):
     ap.add_argument("--out", default="site/data")
     ap.add_argument("--county", action="append")
     a = ap.parse_args(argv)
-    keys = build(a.run, a.runs_dir, a.out, a.county)
+    try:
+        keys = build(a.run, a.runs_dir, a.out, a.county)
+    except (BuildError, FileNotFoundError) as e:
+        raise SystemExit(str(e))
     print(f"wrote {a.out}/index.json and {len(keys)} county file(s): {', '.join(keys)}")
 
 

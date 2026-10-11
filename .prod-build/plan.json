@@ -678,8 +678,10 @@
         "uv run crossfoot site build --run latest"
       ],
       "rollback": "git revert the task's commits",
-      "status": "todo",
-      "notes": "Added 2026-10-11 from the orchestrator's fresh-clone test."
+      "status": "doing",
+      "notes": "Added 2026-10-11 from the orchestrator's fresh-clone test.",
+      "base": "99e74dc",
+      "started_after": 99
     },
     {
       "id": "T09",

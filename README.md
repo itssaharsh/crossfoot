@@ -91,19 +91,19 @@ It needs `pdftoppm` (poppler) to render the scans. `uv run crossfoot --help` lis
 Measured cost and time per county, from the same summary:
 
 <!-- cost:start -->
-| County | Pages | Model calls | Metered cost (estimate) | Seconds |
-|---|---|---|---|---|
-| Panola | 6 | 8 | $0.0118 | 41.5 |
-| San Saba | 21 | 9 | $0.0298 | 36.9 |
-| Cottle | 12 | 0 | $0.0000 | 18.2 |
-| Jones | 20 | 1 | $0.0075 | 36.6 |
-| Lynn | 37 | 1 | $0.0089 | 50.6 |
-| Scurry | 38 | 1 | $0.0009 | 29.5 |
-| Foard | 16 | 1 | $0.0015 | 31.1 |
-| Limestone | 0 | 1 | $0.0021 | 1.8 |
-| **All** | 150 | 22 | $0.0625 | 246.2 |
+| County | Pages | Model calls | Metered cost (estimate) | Seconds | Added by later audits from the ledger |
+|---|---|---|---|---|---|
+| Panola | 6 | 168 | $0.7675 | 474.9 | 8 calls, $0.0118, 41.5 s |
+| San Saba | 21 | 34 | $0.2146 | 97.6 | 18 calls, $0.0596, 70.7 s |
+| Cottle | 12 | 22 | $0.1974 | 103.1 | 0 calls, $0.0000, 29.8 s |
+| Jones | 20 | 144 | $0.3844 | 346.3 | 122 calls, $0.1363, 297.1 s |
+| Lynn | 37 | 106 | $0.5333 | 345.0 | 57 calls, $0.0763, 217.4 s |
+| Scurry | 38 | 58 | $0.5543 | 199.8 | 2 calls, $0.0018, 58.8 s |
+| Foard | 16 | 19 | $0.2156 | 102.8 | 2 calls, $0.0030, 51.7 s |
+| Limestone | 0 | 1 | $0.0021 | 1.8 | none |
+| **All** | 150 | 552 | $2.8692 | 1671.3 | 209 calls, $0.2888, 767.0 s |
 
-These are the figures of the audit that `summary.json` lists for each county; a county audited again from an earlier run's ledger counts the new calls only, not the reading that was paid for in that earlier run. The one full run of Panola from nothing, [`runs/20261011-120008/run.json`](runs/20261011-120008/run.json), took 638.7 seconds, 269 model calls and $0.88 (metered estimate).
+Calls, cost and seconds are those of the run that read each county, [`runs/20261011-130414/summary.json`](runs/20261011-130414/summary.json) (one unattended `audit --all` run). The last column is what the audits made again from the same ledgers added (`summary.json` keeps both under `read_run` and `audit_again`). An audit from nothing costs, for the dearest checked county, Panola (168 model calls, $0.7675, 474.9 seconds), and for the cheapest, Cottle (22 model calls, $0.1974, 103.1 seconds); Limestone, which prints nothing to add up, took 1 call to be listed as not checked.
 <!-- cost:end -->
 
 ## The three tools

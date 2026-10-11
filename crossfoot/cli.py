@@ -159,9 +159,18 @@ def cmd_read_page(args) -> int:
     led = Ledger(out / "ledger.sqlite")
     gw = audit.AuditGateway(budget=args.budget)
     pages = [int(x) for x in args.pages.split(",")]
+    try:
+        sources.fetch(args.county)
+    except sources.FetchError as e:
+        shutil.rmtree(out, ignore_errors=True)
+        print(e, file=sys.stderr)
+        return 1
     print(f"run {run_id}: reading page(s) {args.pages} of {args.county} into a copy of the ledger of {args.into}")
     try:
         r = report.read_pages_into(args.county, gw, led, pages, log=lambda *a: print(*a, flush=True))
+    except RenderError as e:
+        print(e, file=sys.stderr)
+        return 1
     finally:
         tracing.shutdown()
     outputs.write_run(out, run_id, started=started, ended=time.strftime("%Y-%m-%dT%H:%M:%S"),
@@ -650,7 +659,14 @@ def cmd_summarize(args) -> int:
             return 1
         src[county] = run
     out = Path("runs") / (args.run_id or time.strftime("%Y%m%d-%H%M%S"))
-    s = allrun.combine(out, args.base, src, command="crossfoot " + " ".join(sys.argv[1:]))
+    try:
+        s = allrun.combine(out, args.base, src, command="crossfoot " + " ".join(sys.argv[1:]))
+    except FileNotFoundError as e:
+        print(f"{e.filename} does not exist", file=sys.stderr)
+        return 1
+    except (KeyError, ValueError, StopIteration) as e:
+        print(f"cannot build the summary from run {args.base} and {src}: {type(e).__name__} {e}", file=sys.stderr)
+        return 1
     print(f"written: {out / 'summary.json'}, {out / 'summary.md'}; {s['totals']['closed']} of "
           f"{s['totals']['counties']} counties closed")
     return 0
@@ -667,9 +683,16 @@ def cmd_score(args) -> int:
     if not src.exists():
         print(f"no audit of {args.county} to score against ({src})", file=sys.stderr)
         return 1
-    audit_doc = json.loads(src.read_text())
     claims_path = Path(args.findings)
-    claims = json.loads(claims_path.read_text())
+    if not claims_path.exists():
+        print(f"{claims_path} does not exist", file=sys.stderr)
+        return 1
+    try:
+        audit_doc = json.loads(src.read_text())
+        claims = json.loads(claims_path.read_text())
+    except ValueError as e:
+        print(f"cannot read {src} or {claims_path}: {e}", file=sys.stderr)
+        return 1
     res = score.score(claims, audit_doc["findings"], sources.read_published(args.county), audit_doc.get("not_compared") or [])
     res = {"county": args.county, "claims_file": str(claims_path), "audit_run": run, "audit_findings_file": str(src),
            "audit_side": score.audit_side(run, args.county), **res}
@@ -687,7 +710,16 @@ def cmd_score(args) -> int:
 
 def cmd_site_build(args) -> int:
     from . import sitebuild
-    keys = sitebuild.build(args.run, args.runs_dir, args.out, args.county)
+    try:
+        keys = sitebuild.build(args.run, args.runs_dir, args.out, args.county)
+    except (sitebuild.BuildError, RenderError, FileNotFoundError) as e:
+        print(e, file=sys.stderr)
+        return 1
+    except SystemExit as e:      # latest_run and the like say what is missing in a plain line
+        if isinstance(e.code, str):
+            print(e.code, file=sys.stderr)
+            return 1
+        raise
     print(f"wrote {args.out}/index.json and {len(keys)} county file(s): {', '.join(keys)}")
     return 0
 

@@ -1,0 +1,35 @@
+{
+ "panola": {
+  "page": {
+   "cells audited": "2,324",
+   "right on first read": "2,301",
+   "right after re-reads": "1",
+   "re-read": "20",
+   "disagreements": "121",
+   "settled": "109",
+   "model cost": "$0.78",
+   "minutes": "8.6"
+  },
+  "label": "Replay the audit Speed 1x Replay \u00b7 run of 11 Oct 2026 \u00b7 17x",
+  "file_cost": 0.7793,
+  "file_seconds": 516.4,
+  "file_minutes": 8.6,
+  "console_errors": []
+ },
+ "jones": {
+  "page": {
+   "cells audited": "1,784",
+   "right on first read": "1,784",
+   "right after re-reads": "0",
+   "disagreements": "26",
+   "settled": "26",
+   "model cost": "$0.52",
+   "minutes": "10.7"
+  },
+  "label": "Replay the audit Speed 1x Replay \u00b7 run of 11 Oct 2026 \u00b7 16x",
+  "file_cost": 0.5207,
+  "file_seconds": 643.4,
+  "file_minutes": 10.7,
+  "console_errors": []
+ }
+}

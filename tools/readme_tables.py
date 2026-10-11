@@ -9,7 +9,6 @@ import argparse, json, re, sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-FULL_RUN = "20261011-120008"          # the one full run of Panola from nothing, named in the README
 PICTURE = ("panola", "f005")          # a settled finding whose crop shows the cell and the row sum
 
 
@@ -45,16 +44,30 @@ def findings_table(s: dict) -> str:
 
 
 def cost_table(s: dict) -> str:
-    head = "| County | Pages | Model calls | Metered cost (estimate) | Seconds |\n|---|---|---|---|---|"
-    rows = [f"| {c['county'].replace('_', ' ').title()} | {c['pages']} | {c['model_calls']} | ${c['metered_cost']:.4f} | {c['seconds']} |"
+    """Per county: the pages, then what the run that read it cost and took, then what the audits made again from its ledger
+    added. The row for all counties is the reading run's own totals (`totals.read_run`)."""
+    head = ("| County | Pages | Model calls | Metered cost (estimate) | Seconds | Added by later audits from the ledger |\n"
+            "|---|---|---|---|---|---|")
+    again = lambda g: f"{g['model_calls']} calls, ${g['metered_cost']:.4f}, {g['seconds']} s" if g else "none"
+    rows = [f"| {c['county'].replace('_', ' ').title()} | {c['pages']} | {c['read_run']['model_calls']} "
+            f"| ${c['read_run']['metered_cost']:.4f} | {c['read_run']['seconds']} | {again(c.get('audit_again'))} |"
             for c in s["counties"]]
     t = s["totals"]
-    rows.append(f"| **All** | {sum(c['pages'] for c in s['counties'])} | {t['model_calls']} | ${t['metered_cost']:.4f} | {t['seconds']} |")
-    full = json.loads((ROOT / "runs" / FULL_RUN / "run.json").read_text())
-    note = (f"These are the figures of the audit that `summary.json` lists for each county; a county audited again from an "
-            f"earlier run's ledger counts the new calls only, not the reading that was paid for in that earlier run. The one "
-            f"full run of Panola from nothing, [`runs/{FULL_RUN}/run.json`](runs/{FULL_RUN}/run.json), took "
-            f"{full['seconds']} seconds, {full['model_calls']} model calls and ${full['metered_cost_estimate']:.2f} (metered estimate).")
+    r = t["read_run"]
+    rows.append(f"| **All** | {sum(c['pages'] for c in s['counties'])} | {r['model_calls']} | ${r['metered_cost']:.4f} "
+                f"| {r['seconds']} | {again(t.get('audit_again'))} |")
+    run = s["counties"][0]["read_run"]["run_id"]
+    checked = [c for c in s["counties"] if c["status"] != "unchecked"]
+    dear = max(checked, key=lambda c: c["read_run"]["metered_cost"])
+    cheap = min(checked, key=lambda c: c["read_run"]["metered_cost"])
+    name = lambda c: c["county"].replace("_", " ").title()
+    fig = lambda c: (f"{name(c)} ({c['read_run']['model_calls']} model calls, ${c['read_run']['metered_cost']:.4f}, "
+                     f"{c['read_run']['seconds']} seconds)")
+    note = (f"Calls, cost and seconds are those of the run that read each county, [`runs/{run}/summary.json`](runs/{run}/summary.json) "
+            f"(one unattended `audit --all` run). The last column is what the audits made again from the same ledgers added "
+            f"(`summary.json` keeps both under `read_run` and `audit_again`). An audit from nothing costs, for the dearest "
+            f"checked county, {fig(dear)}, and for the cheapest, {fig(cheap)}; Limestone, which prints nothing to add up, took "
+            f"{next(c for c in s['counties'] if c['county'] == 'limestone')['read_run']['model_calls']} call to be listed as not checked.")
     return "\n".join([head, *rows, "", note])
 
 

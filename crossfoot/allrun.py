@@ -87,7 +87,24 @@ def totals(rows: list[dict]) -> dict:
          "sums_check": _sum_dicts(rows, "sums_check"),
          "findings_by_kind": _sum_dicts(rows, "findings_by_kind"),
          "findings_by_status": _sum_dicts(rows, "findings_by_status")}
+    if any(r.get("read_run") for r in rows):
+        t["read_run"] = _sum_figs([r["read_run"] for r in rows if r.get("read_run")])
+        t["audit_again"] = _sum_figs([r["audit_again"] for r in rows if r.get("audit_again")])
     return t
+
+
+def _figs(row: dict) -> dict:
+    """The figures of a county row that cost something: calls (and by model), tokens, metered cost, seconds."""
+    return {"model_calls": row.get("model_calls", 0), "model_calls_by_model": row.get("model_calls_by_model") or {},
+            "prompt_tokens": row.get("prompt_tokens", 0), "completion_tokens": row.get("completion_tokens", 0),
+            "metered_cost": row.get("metered_cost", 0), "seconds": row.get("seconds", 0)}
+
+
+def _sum_figs(items: list[dict]) -> dict:
+    out = _figs({})
+    for it in items:
+        out = _add(out, _figs(it))
+    return out
 
 
 def _cov(r) -> str:
@@ -116,8 +133,13 @@ def write_summary(run_dir, summary: dict) -> None:
         second_sum           what the county has: "row and column" (matrix), "row and contest" or "row only" (report layout)
         sums_check           {in_all, holding_with_published, holding_with_corrected}: printed sums, counted from findings.json
         model_calls, model_calls_by_model {model: {calls, prompt_tokens, completion_tokens, cost}}, prompt_tokens,
-        completion_tokens, metered_cost (an estimate from the gateway's price list), seconds]
-      totals     the same figures added up over the counties
+        completion_tokens, metered_cost (an estimate from the gateway's price list), seconds
+        read_run     (a summary made by `crossfoot summarize`) the run that read the scan: {run_id, model_calls,
+                     model_calls_by_model, prompt_tokens, completion_tokens, metered_cost, seconds}; the figures above are
+                     then the reading run's and the later audits' added up
+        audit_again  the audits made again from that ledger after the reading, added up: {run_ids, model_calls,
+                     model_calls_by_model, prompt_tokens, completion_tokens, metered_cost, seconds}; absent when there was none]
+      totals     the same figures added up over the counties (read_run and audit_again too, when the rows have them)
       not_reached  counties the run did not get to (budget or stop)
       skipped      [{county, reason}] counties not audited, and why
       gateway_spend {before, after, change} from the gateway's own figure, when it could be read
@@ -126,13 +148,21 @@ def write_summary(run_dir, summary: dict) -> None:
     (run_dir / "summary.json").write_text(json.dumps(summary, indent=1))
     rows, t = summary["counties"], summary["totals"]
     f = lambda v: "" if v is None else v
-    L = [f"# Run {summary['run_id']}", "",
-         f"Budget ${summary['budget']:.2f}; metered cost (an estimate) ${t['metered_cost']:.4f}; {t['model_calls']} model calls; "
-         f"{t['seconds']} s; {t['closed']} of {t['counties']} counties closed.", "",
+    two = "read_run" in t
+    rd, ag = t.get("read_run") or {}, t.get("audit_again") or {}
+    head = (f"Budget ${summary['budget']:.2f}; the runs that read the counties: {rd['model_calls']} model calls, metered cost "
+            f"(an estimate) ${rd['metered_cost']:.4f}, {rd['seconds']} s; the audits made again from their ledgers added "
+            f"{ag['model_calls']} calls, ${ag['metered_cost']:.4f}, {ag['seconds']} s; {t['closed']} of {t['counties']} "
+            f"counties closed." if two else
+            f"Budget ${summary['budget']:.2f}; metered cost (an estimate) ${t['metered_cost']:.4f}; {t['model_calls']} model "
+            f"calls; {t['seconds']} s; {t['closed']} of {t['counties']} counties closed.")
+    L = [f"# Run {summary['run_id']}", "", head, "",
          "| county | status | layout | pages | cells | sums ok / failing after first read | cells re-read | cells accepted | "
          "cannot_verify | findings | printed sums in all / hold with published / hold with corrected | second sum | "
-         "published rows compared | calls | cost $ | seconds |",
-         "|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|"]
+         "published rows compared | " + ("read: calls | read: cost $ | read: seconds | audit again: calls | audit again: "
+                                         "cost $ | audit again: seconds |" if two else "calls | cost $ | seconds |"),
+         "|---|---|---|---|---|---|---|---|---|---|---|---|---|" + "---|---|---|" + ("---|---|---|" if two else "")]
+    cost = lambda g: f"{g.get('model_calls', 0)} | {g.get('metered_cost', 0):.4f} | {g.get('seconds', 0)}"
     for r in rows:
         s1, sc = r.get("sums_first_read") or {}, r.get("sums_check") or {}
         L.append(f"| {r['county']} | {r['status']} | {f(r.get('layout'))} | {f(r.get('pages'))} | {f(r.get('cells_read'))} | "
@@ -141,12 +171,13 @@ def write_summary(run_dir, summary: dict) -> None:
                  f"{sum((r.get('findings_by_status') or {}).values()) if r.get('findings_by_status') is not None else ''} | "
                  f"{sc.get('in_all', '')} / {sc.get('holding_with_published', '')} / {sc.get('holding_with_corrected', '')} | "
                  f"{r['second_sum'] if 'second_sum' in r else second_sum_text(r.get('layout'), r.get('second_sum_exists'))} | "
-                 f"{_cov(r)} | {r.get('model_calls', 0)} | {r.get('metered_cost', 0):.4f} | {r.get('seconds', 0)} |")
+                 f"{_cov(r)} | " + (f"{cost(r.get('read_run') or r)} | {cost(r['audit_again']) if r.get('audit_again') else ' |  | '} |"
+                                    if two else cost(r) + " |"))
     s1, sc = t["sums_first_read"], t["sums_check"]
     L.append(f"| **all** | | | | {t['cells_read']} | {s1.get('passing', 0)} / {s1.get('failing', 0)} | {t['cells_reread']} | "
              f"{t['cells_accepted']} | {t['cannot_verify']} | {sum(t['findings_by_status'].values())} | "
              f"{sc.get('in_all', 0)} / {sc.get('holding_with_published', 0)} / {sc.get('holding_with_corrected', 0)} | | "
-             f"{t['rows_compared']} of {t['rows_published']} | {t['model_calls']} | {t['metered_cost']:.4f} | {t['seconds']} |")
+             f"{t['rows_compared']} of {t['rows_published']} | " + (f"{cost(rd)} | {cost(ag)} |" if two else cost(t) + " |"))
     L += ["", "## Published rows compared with the scan", ""]
     for r in rows:
         if r.get("rows_published") is not None:
@@ -166,9 +197,9 @@ def write_summary(run_dir, summary: dict) -> None:
         L += ["", "## Where each county's figures come from", ""]
         L += [f"- {r['county']}: run {r.get('from_run')}" for r in rows]
         if (summary.get("made_from") or {}).get("base"):
-            L += ["", "A county taken from a single-county audit reused the ledger of an earlier run, so its calls, cost and "
-                  "seconds are those of the audit alone; the reading was paid for in the earlier run. The cost and calls in "
-                  "the header and the **all** row therefore add the reading of no county that was audited again."]
+            L += ["", "A county audited again reused the ledger of the run that read it. Its row shows the reading run's "
+                  "calls, cost and seconds first and what the later audits added after them; the figures in the header and "
+                  "the **all** row add both."]
     L += ["", "## Not audited", ""]
     if not summary["skipped"] and not summary["not_reached"]:
         L.append("Every county was audited.")
@@ -376,6 +407,26 @@ def _row_from_folder(folder: Path, county: str, old: dict) -> dict:
             "metered_cost": run.get("metered_cost_estimate", 0), "seconds": run.get("seconds", 0)}
 
 
+def _lineage(root: Path, run_id: str, county: str) -> tuple[dict, dict | None, str]:
+    """(read, again, last) of a county in the summary of `run_id`. `read`: the run that read its scan, its run id and figures.
+    `again`: the later audits made from that ledger added up ({run_ids, ...figures}), None when there was none. `last`: the
+    run the row's present figures are from. A summary that is not made from another is the reading run itself; one that is,
+    and has no read_run of its own (the first summaries had none), is followed back to it, and a row whose run differs from
+    its base's adds an audit."""
+    s = json.loads((root / run_id / "summary.json").read_text())
+    row = next(r for r in s["counties"] if r["county"] == county)
+    if row.get("read_run"):
+        return row["read_run"], row.get("audit_again"), row.get("from_run") or run_id
+    base = (s.get("made_from") or {}).get("base")
+    if not base:
+        return {"run_id": run_id, **_figs(row)}, None, run_id
+    read, again, last = _lineage(root, base, county)
+    run = row.get("from_run") or base
+    if run != last:
+        again = {"run_ids": ((again or {}).get("run_ids") or []) + [run], **_sum_figs([again or {}, row])}
+    return read, again, run
+
+
 def combine(out, base: str, use: dict, command: str = "") -> dict:
     """A new run folder whose summary covers every county of run `base` with the newest result of each: a county in `use`
     ({county: run id}) takes its audit from that run's folder, the others stay as `base` has them. Every row says which run its
@@ -385,9 +436,15 @@ def combine(out, base: str, use: dict, command: str = "") -> dict:
     old = json.loads((root / base / "summary.json").read_text())
     rows = []
     for r in old["counties"]:
+        read, again, last = _lineage(root, base, r["county"])
         run = use.get(r["county"]) or r.get("from_run") or base       # a base that is itself a summary names each row's run
         row = _row_from_folder(root / run, r["county"], r) if r["county"] in use else dict(r)
-        rows.append({**row, "from_run": run})
+        if run != last:                                              # an audit made after the ones the base counts
+            again = {"run_ids": ((again or {}).get("run_ids") or []) + [run], **_sum_figs([again or {}, row])}
+        row = {**row, **_sum_figs([read, again or {}]), "from_run": run, "read_run": read}
+        if again:
+            row["audit_again"] = again
+        rows.append(row)
     now = time.strftime("%Y-%m-%dT%H:%M:%S")
     summary = {"run_id": out.name, "command": command, "budget": old["budget"], "started": now, "ended": now,
                "resumed": False, "counties": rows, "totals": totals(rows), "not_reached": [],
