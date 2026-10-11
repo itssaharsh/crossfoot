@@ -1,0 +1,1101 @@
+{
+ "county": "scurry",
+ "run_id": "20261011-130414",
+ "layout": "report",
+ "file": "20241105__tx__general__scurry__precinct.csv",
+ "policy": {
+  "question_id": "document_disagrees_with_itself",
+  "answer": "cells",
+  "answered_by": "default, not yet confirmed by a person",
+  "meaning": "follow the cells as printed and list the printed total as inconsistent"
+ },
+ "counts": {
+  "findings": 15,
+  "by_kind": {
+   "extra_row": 15
+  },
+  "by_status": {
+   "cannot_verify": 15
+  },
+  "groups": 15,
+  "corrections": 0
+ },
+ "findings": [
+  {
+   "id": "f001",
+   "group": "g001",
+   "county": "scurry",
+   "office": "Justice, Supreme Court, Pl 4",
+   "district": "",
+   "party": "REP",
+   "candidate": "John Devine",
+   "precinct": "Precinct 10",
+   "part": "votes",
+   "file_value": 540,
+   "scan_value": null,
+   "kind": "extra_row",
+   "status": "cannot_verify",
+   "reason": "this file row has no matching row on the scan, so no printed total covers it",
+   "sums": [],
+   "page": null,
+   "block": null,
+   "row": null,
+   "box": null,
+   "crop": null,
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": {
+    "file": {
+     "votes": 540,
+     "absentee": 9,
+     "early_voting": 441,
+     "election_day": 90
+    },
+    "scan": null
+   },
+   "file_row": 256,
+   "file_line": 258,
+   "corrected": false,
+   "confirmed_by_person": false
+  },
+  {
+   "id": "f002",
+   "group": "g002",
+   "county": "scurry",
+   "office": "Justice, Supreme Court, Pl 4",
+   "district": "",
+   "party": "DEM",
+   "candidate": "Christine Vinh Weems",
+   "precinct": "Precinct 10",
+   "part": "votes",
+   "file_value": 45,
+   "scan_value": null,
+   "kind": "extra_row",
+   "status": "cannot_verify",
+   "reason": "this file row has no matching row on the scan, so no printed total covers it",
+   "sums": [],
+   "page": null,
+   "block": null,
+   "row": null,
+   "box": null,
+   "crop": null,
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": {
+    "file": {
+     "votes": 45,
+     "absentee": 0,
+     "early_voting": 38,
+     "election_day": 7
+    },
+    "scan": null
+   },
+   "file_row": 257,
+   "file_line": 259,
+   "corrected": false,
+   "confirmed_by_person": false
+  },
+  {
+   "id": "f003",
+   "group": "g003",
+   "county": "scurry",
+   "office": "Justice, Supreme Court, PI 6",
+   "district": "",
+   "party": "REP",
+   "candidate": "Jane Bland",
+   "precinct": "Precinct 10",
+   "part": "votes",
+   "file_value": 528,
+   "scan_value": null,
+   "kind": "extra_row",
+   "status": "cannot_verify",
+   "reason": "this file row has no matching row on the scan, so no printed total covers it",
+   "sums": [],
+   "page": null,
+   "block": null,
+   "row": null,
+   "box": null,
+   "crop": null,
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": {
+    "file": {
+     "votes": 528,
+     "absentee": 9,
+     "early_voting": 432,
+     "election_day": 87
+    },
+    "scan": null
+   },
+   "file_row": 258,
+   "file_line": 260,
+   "corrected": false,
+   "confirmed_by_person": false
+  },
+  {
+   "id": "f004",
+   "group": "g004",
+   "county": "scurry",
+   "office": "Justice, Supreme Court, PI 6",
+   "district": "",
+   "party": "DEM",
+   "candidate": "Bonnie Lee Goldstein",
+   "precinct": "Precinct 10",
+   "part": "votes",
+   "file_value": 46,
+   "scan_value": null,
+   "kind": "extra_row",
+   "status": "cannot_verify",
+   "reason": "this file row has no matching row on the scan, so no printed total covers it",
+   "sums": [],
+   "page": null,
+   "block": null,
+   "row": null,
+   "box": null,
+   "crop": null,
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": {
+    "file": {
+     "votes": 46,
+     "absentee": 0,
+     "early_voting": 39,
+     "election_day": 7
+    },
+    "scan": null
+   },
+   "file_row": 259,
+   "file_line": 261,
+   "corrected": false,
+   "confirmed_by_person": false
+  },
+  {
+   "id": "f005",
+   "group": "g005",
+   "county": "scurry",
+   "office": "Justice, Supreme Court, PI 6",
+   "district": "",
+   "party": "LIB",
+   "candidate": "J. David Roberson",
+   "precinct": "Precinct 10",
+   "part": "votes",
+   "file_value": 11,
+   "scan_value": null,
+   "kind": "extra_row",
+   "status": "cannot_verify",
+   "reason": "this file row has no matching row on the scan, so no printed total covers it",
+   "sums": [],
+   "page": null,
+   "block": null,
+   "row": null,
+   "box": null,
+   "crop": null,
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": {
+    "file": {
+     "votes": 11,
+     "absentee": 0,
+     "early_voting": 9,
+     "election_day": 2
+    },
+    "scan": null
+   },
+   "file_row": 260,
+   "file_line": 262,
+   "corrected": false,
+   "confirmed_by_person": false
+  },
+  {
+   "id": "f006",
+   "group": "g006",
+   "county": "scurry",
+   "office": "Presiding Judge, Ct of Crim App",
+   "district": "",
+   "party": "REP",
+   "candidate": "David J. Schenck",
+   "precinct": "Precinct 10",
+   "part": "votes",
+   "file_value": 535,
+   "scan_value": null,
+   "kind": "extra_row",
+   "status": "cannot_verify",
+   "reason": "this file row has no matching row on the scan, so no printed total covers it",
+   "sums": [],
+   "page": null,
+   "block": null,
+   "row": null,
+   "box": null,
+   "crop": null,
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": {
+    "file": {
+     "votes": 535,
+     "absentee": 9,
+     "early_voting": 439,
+     "election_day": 87
+    },
+    "scan": null
+   },
+   "file_row": 261,
+   "file_line": 263,
+   "corrected": false,
+   "confirmed_by_person": false
+  },
+  {
+   "id": "f007",
+   "group": "g007",
+   "county": "scurry",
+   "office": "Presiding Judge, Ct of Crim App",
+   "district": "",
+   "party": "DEM",
+   "candidate": "Holly Taylor",
+   "precinct": "Precinct 10",
+   "part": "votes",
+   "file_value": 50,
+   "scan_value": null,
+   "kind": "extra_row",
+   "status": "cannot_verify",
+   "reason": "this file row has no matching row on the scan, so no printed total covers it",
+   "sums": [],
+   "page": null,
+   "block": null,
+   "row": null,
+   "box": null,
+   "crop": null,
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": {
+    "file": {
+     "votes": 50,
+     "absentee": 0,
+     "early_voting": 42,
+     "election_day": 8
+    },
+    "scan": null
+   },
+   "file_row": 262,
+   "file_line": 264,
+   "corrected": false,
+   "confirmed_by_person": false
+  },
+  {
+   "id": "f008",
+   "group": "g008",
+   "county": "scurry",
+   "office": "Judge, Ct of Crim App, Pl 7",
+   "district": "",
+   "party": "REP",
+   "candidate": "Gina Parker",
+   "precinct": "Precinct 10",
+   "part": "votes",
+   "file_value": 534,
+   "scan_value": null,
+   "kind": "extra_row",
+   "status": "cannot_verify",
+   "reason": "this file row has no matching row on the scan, so no printed total covers it",
+   "sums": [],
+   "page": null,
+   "block": null,
+   "row": null,
+   "box": null,
+   "crop": null,
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": {
+    "file": {
+     "votes": 534,
+     "absentee": 9,
+     "early_voting": 437,
+     "election_day": 88
+    },
+    "scan": null
+   },
+   "file_row": 263,
+   "file_line": 265,
+   "corrected": false,
+   "confirmed_by_person": false
+  },
+  {
+   "id": "f009",
+   "group": "g009",
+   "county": "scurry",
+   "office": "Judge, Ct of Crim App, Pl 7",
+   "district": "",
+   "party": "DEM",
+   "candidate": "Nancy Mulder",
+   "precinct": "Precinct 10",
+   "part": "votes",
+   "file_value": 51,
+   "scan_value": null,
+   "kind": "extra_row",
+   "status": "cannot_verify",
+   "reason": "this file row has no matching row on the scan, so no printed total covers it",
+   "sums": [],
+   "page": null,
+   "block": null,
+   "row": null,
+   "box": null,
+   "crop": null,
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": {
+    "file": {
+     "votes": 51,
+     "absentee": 0,
+     "early_voting": 42,
+     "election_day": 9
+    },
+    "scan": null
+   },
+   "file_row": 264,
+   "file_line": 266,
+   "corrected": false,
+   "confirmed_by_person": false
+  },
+  {
+   "id": "f010",
+   "group": "g010",
+   "county": "scurry",
+   "office": "Judge, Ct of Crim App, PI 8",
+   "district": "",
+   "party": "REP",
+   "candidate": "Lee Finley",
+   "precinct": "Precinct 10",
+   "part": "votes",
+   "file_value": 536,
+   "scan_value": null,
+   "kind": "extra_row",
+   "status": "cannot_verify",
+   "reason": "this file row has no matching row on the scan, so no printed total covers it",
+   "sums": [],
+   "page": null,
+   "block": null,
+   "row": null,
+   "box": null,
+   "crop": null,
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": {
+    "file": {
+     "votes": 536,
+     "absentee": 9,
+     "early_voting": 438,
+     "election_day": 89
+    },
+    "scan": null
+   },
+   "file_row": 265,
+   "file_line": 267,
+   "corrected": false,
+   "confirmed_by_person": false
+  },
+  {
+   "id": "f011",
+   "group": "g011",
+   "county": "scurry",
+   "office": "Judge, Ct of Crim App, PI 8",
+   "district": "",
+   "party": "DEM",
+   "candidate": "Chika Anyiam",
+   "precinct": "Precinct 10",
+   "part": "votes",
+   "file_value": 45,
+   "scan_value": null,
+   "kind": "extra_row",
+   "status": "cannot_verify",
+   "reason": "this file row has no matching row on the scan, so no printed total covers it",
+   "sums": [],
+   "page": null,
+   "block": null,
+   "row": null,
+   "box": null,
+   "crop": null,
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": {
+    "file": {
+     "votes": 45,
+     "absentee": 0,
+     "early_voting": 38,
+     "election_day": 7
+    },
+    "scan": null
+   },
+   "file_row": 266,
+   "file_line": 268,
+   "corrected": false,
+   "confirmed_by_person": false
+  },
+  {
+   "id": "f012",
+   "group": "g012",
+   "county": "scurry",
+   "office": "Member, State BoE, Dist 15",
+   "district": "",
+   "party": "REP",
+   "candidate": "Aaron Kinsey",
+   "precinct": "Precinct 10",
+   "part": "votes",
+   "file_value": 504,
+   "scan_value": null,
+   "kind": "extra_row",
+   "status": "cannot_verify",
+   "reason": "this file row has no matching row on the scan, so no printed total covers it",
+   "sums": [],
+   "page": null,
+   "block": null,
+   "row": null,
+   "box": null,
+   "crop": null,
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": {
+    "file": {
+     "votes": 504,
+     "absentee": 8,
+     "early_voting": 410,
+     "election_day": 86
+    },
+    "scan": null
+   },
+   "file_row": 267,
+   "file_line": 269,
+   "corrected": false,
+   "confirmed_by_person": false
+  },
+  {
+   "id": "f013",
+   "group": "g013",
+   "county": "scurry",
+   "office": "Member, State BoE, Dist 15",
+   "district": "",
+   "party": "DEM",
+   "candidate": "Morgan Kirkpatrick",
+   "precinct": "Precinct 10",
+   "part": "votes",
+   "file_value": 53,
+   "scan_value": null,
+   "kind": "extra_row",
+   "status": "cannot_verify",
+   "reason": "this file row has no matching row on the scan, so no printed total covers it",
+   "sums": [],
+   "page": null,
+   "block": null,
+   "row": null,
+   "box": null,
+   "crop": null,
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": {
+    "file": {
+     "votes": 53,
+     "absentee": 0,
+     "early_voting": 45,
+     "election_day": 8
+    },
+    "scan": null
+   },
+   "file_row": 268,
+   "file_line": 270,
+   "corrected": false,
+   "confirmed_by_person": false
+  },
+  {
+   "id": "f014",
+   "group": "g014",
+   "county": "scurry",
+   "office": "Member, State BoE, Dist 15",
+   "district": "",
+   "party": "LIB",
+   "candidate": "Jack B. Westbrook",
+   "precinct": "Precinct 10",
+   "part": "votes",
+   "file_value": 14,
+   "scan_value": null,
+   "kind": "extra_row",
+   "status": "cannot_verify",
+   "reason": "this file row has no matching row on the scan, so no printed total covers it",
+   "sums": [],
+   "page": null,
+   "block": null,
+   "row": null,
+   "box": null,
+   "crop": null,
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": {
+    "file": {
+     "votes": 14,
+     "absentee": 0,
+     "early_voting": 11,
+     "election_day": 3
+    },
+    "scan": null
+   },
+   "file_row": 269,
+   "file_line": 271,
+   "corrected": false,
+   "confirmed_by_person": false
+  },
+  {
+   "id": "f015",
+   "group": "g015",
+   "county": "scurry",
+   "office": "Chief Justice, 11th Ct of App Dist",
+   "district": "",
+   "party": "REP",
+   "candidate": "John Bailey",
+   "precinct": "Precinct 10",
+   "part": "votes",
+   "file_value": 536,
+   "scan_value": null,
+   "kind": "extra_row",
+   "status": "cannot_verify",
+   "reason": "this file row has no matching row on the scan, so no printed total covers it",
+   "sums": [],
+   "page": null,
+   "block": null,
+   "row": null,
+   "box": null,
+   "crop": null,
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": {
+    "file": {
+     "votes": 536,
+     "absentee": 9,
+     "early_voting": 433,
+     "election_day": 94
+    },
+    "scan": null
+   },
+   "file_row": 271,
+   "file_line": 273,
+   "corrected": false,
+   "confirmed_by_person": false
+  }
+ ],
+ "groups": [
+  {
+   "id": "g001",
+   "kind": "extra_row",
+   "office": "Justice, Supreme Court, Pl 4",
+   "district": "",
+   "candidate": "John Devine",
+   "precincts": [
+    "Precinct 10"
+   ],
+   "page": null,
+   "block": null,
+   "findings": [
+    "f001"
+   ],
+   "statuses": {
+    "cannot_verify": 1
+   },
+   "what_to_do": null,
+   "crop": null
+  },
+  {
+   "id": "g002",
+   "kind": "extra_row",
+   "office": "Justice, Supreme Court, Pl 4",
+   "district": "",
+   "candidate": "Christine Vinh Weems",
+   "precincts": [
+    "Precinct 10"
+   ],
+   "page": null,
+   "block": null,
+   "findings": [
+    "f002"
+   ],
+   "statuses": {
+    "cannot_verify": 1
+   },
+   "what_to_do": null,
+   "crop": null
+  },
+  {
+   "id": "g003",
+   "kind": "extra_row",
+   "office": "Justice, Supreme Court, PI 6",
+   "district": "",
+   "candidate": "Jane Bland",
+   "precincts": [
+    "Precinct 10"
+   ],
+   "page": null,
+   "block": null,
+   "findings": [
+    "f003"
+   ],
+   "statuses": {
+    "cannot_verify": 1
+   },
+   "what_to_do": null,
+   "crop": null
+  },
+  {
+   "id": "g004",
+   "kind": "extra_row",
+   "office": "Justice, Supreme Court, PI 6",
+   "district": "",
+   "candidate": "Bonnie Lee Goldstein",
+   "precincts": [
+    "Precinct 10"
+   ],
+   "page": null,
+   "block": null,
+   "findings": [
+    "f004"
+   ],
+   "statuses": {
+    "cannot_verify": 1
+   },
+   "what_to_do": null,
+   "crop": null
+  },
+  {
+   "id": "g005",
+   "kind": "extra_row",
+   "office": "Justice, Supreme Court, PI 6",
+   "district": "",
+   "candidate": "J. David Roberson",
+   "precincts": [
+    "Precinct 10"
+   ],
+   "page": null,
+   "block": null,
+   "findings": [
+    "f005"
+   ],
+   "statuses": {
+    "cannot_verify": 1
+   },
+   "what_to_do": null,
+   "crop": null
+  },
+  {
+   "id": "g006",
+   "kind": "extra_row",
+   "office": "Presiding Judge, Ct of Crim App",
+   "district": "",
+   "candidate": "David J. Schenck",
+   "precincts": [
+    "Precinct 10"
+   ],
+   "page": null,
+   "block": null,
+   "findings": [
+    "f006"
+   ],
+   "statuses": {
+    "cannot_verify": 1
+   },
+   "what_to_do": null,
+   "crop": null
+  },
+  {
+   "id": "g007",
+   "kind": "extra_row",
+   "office": "Presiding Judge, Ct of Crim App",
+   "district": "",
+   "candidate": "Holly Taylor",
+   "precincts": [
+    "Precinct 10"
+   ],
+   "page": null,
+   "block": null,
+   "findings": [
+    "f007"
+   ],
+   "statuses": {
+    "cannot_verify": 1
+   },
+   "what_to_do": null,
+   "crop": null
+  },
+  {
+   "id": "g008",
+   "kind": "extra_row",
+   "office": "Judge, Ct of Crim App, Pl 7",
+   "district": "",
+   "candidate": "Gina Parker",
+   "precincts": [
+    "Precinct 10"
+   ],
+   "page": null,
+   "block": null,
+   "findings": [
+    "f008"
+   ],
+   "statuses": {
+    "cannot_verify": 1
+   },
+   "what_to_do": null,
+   "crop": null
+  },
+  {
+   "id": "g009",
+   "kind": "extra_row",
+   "office": "Judge, Ct of Crim App, Pl 7",
+   "district": "",
+   "candidate": "Nancy Mulder",
+   "precincts": [
+    "Precinct 10"
+   ],
+   "page": null,
+   "block": null,
+   "findings": [
+    "f009"
+   ],
+   "statuses": {
+    "cannot_verify": 1
+   },
+   "what_to_do": null,
+   "crop": null
+  },
+  {
+   "id": "g010",
+   "kind": "extra_row",
+   "office": "Judge, Ct of Crim App, PI 8",
+   "district": "",
+   "candidate": "Lee Finley",
+   "precincts": [
+    "Precinct 10"
+   ],
+   "page": null,
+   "block": null,
+   "findings": [
+    "f010"
+   ],
+   "statuses": {
+    "cannot_verify": 1
+   },
+   "what_to_do": null,
+   "crop": null
+  },
+  {
+   "id": "g011",
+   "kind": "extra_row",
+   "office": "Judge, Ct of Crim App, PI 8",
+   "district": "",
+   "candidate": "Chika Anyiam",
+   "precincts": [
+    "Precinct 10"
+   ],
+   "page": null,
+   "block": null,
+   "findings": [
+    "f011"
+   ],
+   "statuses": {
+    "cannot_verify": 1
+   },
+   "what_to_do": null,
+   "crop": null
+  },
+  {
+   "id": "g012",
+   "kind": "extra_row",
+   "office": "Member, State BoE, Dist 15",
+   "district": "",
+   "candidate": "Aaron Kinsey",
+   "precincts": [
+    "Precinct 10"
+   ],
+   "page": null,
+   "block": null,
+   "findings": [
+    "f012"
+   ],
+   "statuses": {
+    "cannot_verify": 1
+   },
+   "what_to_do": null,
+   "crop": null
+  },
+  {
+   "id": "g013",
+   "kind": "extra_row",
+   "office": "Member, State BoE, Dist 15",
+   "district": "",
+   "candidate": "Morgan Kirkpatrick",
+   "precincts": [
+    "Precinct 10"
+   ],
+   "page": null,
+   "block": null,
+   "findings": [
+    "f013"
+   ],
+   "statuses": {
+    "cannot_verify": 1
+   },
+   "what_to_do": null,
+   "crop": null
+  },
+  {
+   "id": "g014",
+   "kind": "extra_row",
+   "office": "Member, State BoE, Dist 15",
+   "district": "",
+   "candidate": "Jack B. Westbrook",
+   "precincts": [
+    "Precinct 10"
+   ],
+   "page": null,
+   "block": null,
+   "findings": [
+    "f014"
+   ],
+   "statuses": {
+    "cannot_verify": 1
+   },
+   "what_to_do": null,
+   "crop": null
+  },
+  {
+   "id": "g015",
+   "kind": "extra_row",
+   "office": "Chief Justice, 11th Ct of App Dist",
+   "district": "",
+   "candidate": "John Bailey",
+   "precincts": [
+    "Precinct 10"
+   ],
+   "page": null,
+   "block": null,
+   "findings": [
+    "f015"
+   ],
+   "statuses": {
+    "cannot_verify": 1
+   },
+   "what_to_do": null,
+   "crop": null
+  }
+ ],
+ "corrections": [],
+ "could_not_correct": [],
+ "sums_check": {
+  "in_all": 529,
+  "holding_with_ledger": 529,
+  "holding_with_published": 529,
+  "holding_with_corrected": 529,
+  "still_failing": [],
+  "rows_failing_own_total": {
+   "published": 0,
+   "corrected": 0
+  }
+ },
+ "unmatched": {
+  "scan": [
+   {
+    "block": "c002",
+    "page": 1,
+    "contest": "Ballots Cast Blank",
+    "candidate": ""
+   },
+   {
+    "block": "c021",
+    "page": 1,
+    "contest": "Justice, Supreme Court, Pl 2",
+    "candidate": "DaSeen Jones"
+   },
+   {
+    "block": "c036",
+    "page": 2,
+    "contest": "State Representative, Dist 83",
+    "candidate": "Dustin Burrows"
+   }
+  ],
+  "file": [
+   {
+    "contest": "Registered Voters",
+    "district": "",
+    "candidate": "",
+    "rows": 11
+   },
+   {
+    "contest": "Justice, Supreme Court, PI 2",
+    "district": "",
+    "candidate": "DaSean Jones",
+    "rows": 11
+   },
+   {
+    "contest": "State House",
+    "district": "83",
+    "candidate": "Dustin Burrows",
+    "rows": 11
+   }
+  ],
+  "rejected": [
+   {
+    "what": "State Representative, Dist 83 = State House",
+    "why": "county totals are not close (scan 4392, file 4936)"
+   },
+   {
+    "what": "Dustin Burrows = Dustin Burrows",
+    "why": "their contests are not paired"
+   }
+  ],
+  "model": {
+   "asked": {
+    "scan_contests": [
+     "Ballots Cast Blank",
+     "President/Vice President",
+     "US Senator",
+     "US Representative, Dist 19",
+     "State Representative, Dist 83"
+    ],
+    "file_contests": [
+     "Registered Voters",
+     "President",
+     "U.S. Senate",
+     "U.S. House",
+     "State House"
+    ],
+    "scan_candidates": [
+     "Ballots Cast Blank :: ",
+     "President/Vice President :: Donald J. Trump",
+     "President/Vice President :: Kamala D. Harris",
+     "President/Vice President :: Chase Oliver",
+     "President/Vice President :: Jill Stein",
+     "President/Vice President :: Write-ins",
+     "US Senator :: Ted Cruz",
+     "US Senator :: Colin Allred",
+     "US Senator :: Ted Brown",
+     "US Senator :: Write-ins",
+     "US Representative, Dist 19 :: Jodey C. Arrington",
+     "US Representative, Dist 19 :: Bernard Johnson",
+     "US Representative, Dist 19 :: Nathan Lewis",
+     "Justice, Supreme Court, Pl 2 :: DaSeen Jones",
+     "State Representative, Dist 83 :: Dustin Burrows"
+    ],
+    "file_candidates": [
+     "Registered Voters :: ",
+     "President :: Donald J. Trump",
+     "President :: Kamala D. Harris",
+     "President :: Chase Oliver",
+     "President :: Jill Stein",
+     "President :: Write-ins",
+     "U.S. Senate :: Ted Cruz",
+     "U.S. Senate :: Colin Allred",
+     "U.S. Senate :: Ted Brown",
+     "U.S. Senate :: Write-ins",
+     "U.S. House :: Jodey C. Arrington",
+     "U.S. House :: Bernard Johnson",
+     "U.S. House :: Nathan Lewis",
+     "Justice, Supreme Court, PI 2 :: DaSean Jones",
+     "State House :: Dustin Burrows"
+    ]
+   },
+   "answer": {
+    "contests": [
+     [
+      1,
+      1
+     ],
+     [
+      2,
+      2
+     ],
+     [
+      3,
+      3
+     ],
+     [
+      4,
+      4
+     ]
+    ],
+    "candidates": [
+     [
+      1,
+      1
+     ],
+     [
+      2,
+      2
+     ],
+     [
+      3,
+      3
+     ],
+     [
+      4,
+      4
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      6,
+      6
+     ],
+     [
+      7,
+      7
+     ],
+     [
+      8,
+      8
+     ],
+     [
+      9,
+      9
+     ],
+     [
+      10,
+      10
+     ],
+     [
+      11,
+      11
+     ],
+     [
+      12,
+      12
+     ],
+     [
+      14,
+      14
+     ]
+    ]
+   }
+  }
+ },
+ "corrected_events": [],
+ "audit": {
+  "disagreements_found": 15,
+  "rereads": 0,
+  "rereads_skipped_sums_decide": 0,
+  "rereads_agreed_with_ledger": 0,
+  "rereads_agreed_with_file": 0,
+  "ledger_corrected": 0,
+  "contests": 252,
+  "contest_totals_printed": 0,
+  "second_sum_exists": false,
+  "seconds": 4.6
+ }
+}

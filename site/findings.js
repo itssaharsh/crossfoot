@@ -1,5 +1,5 @@
 // The findings: the card, the list with its filters, the run numbers and the crop and evidence dialogs.
-import { fmt, KIND, KINDS, STATUS, STATUSES, PART, UNCONFIRMED } from './data.js';
+import { fmt, KIND, KINDS, STATUS, STATUSES, PART, UNCONFIRMED, COLS, COL_WORD, pcl } from './data.js';
 
 const el = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text !== undefined) e.textContent = text; return e; };
 const hid = e => { e.setAttribute('aria-hidden', 'true'); return e; };
@@ -20,6 +20,7 @@ export function siblingOf(store, f) {
 export function sentence(store, f) {
   const sib = siblingOf(store, f);
   const v = f.ref === undefined ? null : store.values[f.ref];
+  if (store.report) return reportSentence(store, f, sib);
   if (f.scan === undefined && (f.kind === 'wrong_column' || f.kind === 'wrong_precinct')) {
     return `The file has ${val(f.file)} under precinct ${f.precinct}${f.part && f.part !== 'votes' ? `, ${PART[f.part]}` : ''}. The scan has no value there.`;
   }
@@ -37,8 +38,44 @@ export function sentence(store, f) {
   }
 }
 
-// the line above the loupe: page, contest, row label, precinct
-export const contextLine = (store, f) => [f.page ? `Page ${f.page}` : null, f.office, f.row, f.precinct ? `precinct ${f.precinct}` : null].filter(Boolean).join(' · ');
+// the report layout: the figures of the row that differ between the file's row and the scan's row (indexes into COLS)
+export const differs = f => (f.rv && f.rv.file && f.rv.scan ? COLS.map((_, k) => k).filter(k => f.rv.file[k] !== f.rv.scan[k]) : []);
+function reportSentence(store, f, sib) {
+  if (f.scan === undefined && f.kind !== 'extra_row') return `The file has ${val(f.file)} under ${pcl(f.precinct)}${f.part && f.part !== 'votes' ? `, ${PART[f.part]}` : ''}. The scan has no value there.`;
+  switch (f.kind) {
+    case 'wrong_column':
+      return `On the scan this vote is under ${PART[f.part] || 'one column'}. ` + (sib ? `The file has it under ${PART[sib.part] || 'another column'}.` : 'The file has it under another column.');
+    case 'extra_row': return 'The file has a row here that is not on the scan.';
+    case 'missing_row': return 'The scan has this row. The file has no row for it.';
+    case 'file_row_fails_own_total': return "The parts of this row in the file do not add to the row's own total in the file.";
+    default: {
+      const n = differs(f).length;
+      return n > 1 ? `The file and the scan give different numbers for ${n} figures of this row.` : 'The file and the scan give different numbers for this one value.';
+    }
+  }
+}
+// the status in one plain line; in the report layout a row nothing can decide says why, from the finding's own sums
+export function statusLine(store, f) {
+  const st = STATUS[f.status] || { line: '' };
+  if (!store.report || f.status !== 'cannot_verify') return st.line;
+  const rows = f.sums.filter(s => s.kind === 'report_row');
+  const both = rows.length > 0 && rows.every(s => s.holds_file && s.holds_scan);
+  let t = both ? 'Both rows add up to their own total, and nothing else printed on this page can tell them apart. Left as published.' : st.line;
+  if (f.reread_agrees) t += ' The scan was read twice and both readings agree.';
+  return t;
+}
+// the tag on the loupe: the file's value, or the file's values of every figure of the row that differs
+export function tagText(store, f) {
+  if (f.file === undefined && !(f.rv && f.rv.file)) return 'public file: none';
+  const d = store.report ? differs(f) : [];
+  if (d.length > 1) return 'public file: ' + d.map(k => `${COL_WORD[COLS[k]]} ${f.rv.file[k] === null || f.rv.file[k] === undefined ? 'none' : fmt(f.rv.file[k])}`).join(' · ');
+  return `public file: ${f.file === undefined ? 'none' : fmt(f.file)}`;
+}
+
+// the line above the loupe: page, contest, row label, precinct (report layout: page, precinct, contest, row label)
+export const contextLine = (store, f) => (store.report
+  ? [f.page ? `Page ${f.page}` : null, f.precinct ? pcl(f.precinct) : null, f.office, f.row].filter(Boolean).join(' · ')
+  : [f.page ? `Page ${f.page}` : null, f.office, f.row, f.precinct ? pcl(f.precinct) : null].filter(Boolean).join(' · '));
 
 export function renderFindingCard(root, store, f, { onCrop, onEvidence }) {
   root.replaceChildren();
@@ -46,24 +83,25 @@ export function renderFindingCard(root, store, f, { onCrop, onEvidence }) {
   root.setAttribute('aria-label', 'Selected finding');
   const kind = KIND[f.kind] || { word: f.kind, glyph: '' };
   const st = STATUS[f.status] || { word: f.status, glyph: '', line: '' };
-  const title = [f.row, f.precinct ? `precinct ${f.precinct}` : null, PART[f.part]].filter(Boolean).join(' · ');
+  const title = [f.row, f.precinct ? pcl(f.precinct) : null, PART[f.part]].filter(Boolean).join(' · ');
   const h = el('h2', '', title);
   h.title = [f.office, f.page ? `page ${f.page}` : null, title].filter(Boolean).join(' · ');   // the full label is in the loupe's caption
   root.append(h);
+  if (store.report && f.rv) root.append(reportValues(f));
   const pair = el('div', 'two-values');
-  for (const [label, n, cls] of [['Public file', f.file, 'file'], ['Scan', f.scan, 'scan']]) {
+  for (const [label, n, cls] of store.report && f.rv ? [] : [['Public file', f.file, 'file'], ['Scan', f.scan, 'scan']]) {
     const d = el('div', 'one ' + cls);
     d.append(el('span', 'lab', label), el('span', 'fig', val(n)));
     if (n === undefined || n === null) d.firstChild.after(Object.assign(el('span', 'sr', ': none')));
     pair.append(d);
   }
-  root.append(pair);
+  if (pair.children.length) root.append(pair);
   const k = el('p', 'kind');
   k.append(el('span', 'lab', 'Kind of slip'), el('span', 'kg', kind.glyph), el('span', 'kw', kind.word));
   k.querySelector('.kg').setAttribute('aria-hidden', 'true');
   root.append(k, el('p', 'sentence', sentence(store, f)));
   const status = el('p', 'status ' + (f.status === 'settled_against_file' ? 'ok' : 'open'));
-  status.append(hid(el('span', 'sg', st.glyph)), st.line);
+  status.append(hid(el('span', 'sg', st.glyph)), statusLine(store, f));
   root.append(status);
   root.append(el('p', 'person', UNCONFIRMED));
   if (f.reread_disagrees) {
@@ -76,6 +114,29 @@ export function renderFindingCard(root, store, f, { onCrop, onEvidence }) {
   ev.addEventListener('click', () => onEvidence(f, ev));
   btns.append(crop, ev);
   root.append(btns);
+}
+
+// the row's four figures, the file's and the scan's, each in a line; the figures that differ are the strong ones
+function reportValues(f) {
+  const box = el('div', 'two-values rep');
+  const head = el('div', 'rv head');
+  head.setAttribute('aria-hidden', 'true');
+  head.append(el('span', 'lab', ''), ...COLS.map(c => el('span', 'colh', COL_WORD[c])));
+  box.append(head);
+  const d = new Set(differs(f));
+  for (const [label, row, cls] of [['Public file', f.rv.file, 'file'], ['Scan', f.rv.scan, 'scan']]) {
+    const line = el('div', `rv one ${cls}`);
+    line.setAttribute('role', 'group'); line.setAttribute('aria-label', label);
+    line.append(el('span', 'lab', label));
+    COLS.forEach((c, k) => {
+      const g = el('span', 'fg' + (d.has(k) ? ' d' : ''));
+      g.append(el('span', 'sr', `${COL_WORD[c]} `), document.createTextNode(row ? val(row[k]) : '—'));
+      if (d.has(k)) g.append(el('span', 'sr', ' (differs)'));
+      line.append(g);
+    });
+    box.append(line);
+  }
+  return box;
 }
 
 // ---- the dialog: the group's crop with the sums in words, or the finding's evidence
@@ -101,7 +162,7 @@ export class Dialog {
       const fig = el('figure', 'dlg-fig');
       const img = el('img');
       img.src = g.crop;
-      img.alt = `The scan around ${f.row || 'the row'}, precinct ${f.precinct}, as cropped by the audit`;
+      img.alt = `The scan around ${f.row || 'the row'}, ${pcl(f.precinct)}, as cropped by the audit`;
       fig.append(img);
       nodes.push(fig);
     } else nodes.push(el('p', 'dlg-note', 'No crop was saved for this group.'));
@@ -116,7 +177,7 @@ export class Dialog {
       d.append(ul);
       nodes.push(d);
     }
-    this.open(`Crop · ${[f.row, f.precinct ? `precinct ${f.precinct}` : null, PART[f.part]].filter(Boolean).join(' · ')}`, nodes, opener);
+    this.open(`Crop · ${[f.row, f.precinct ? pcl(f.precinct) : null, PART[f.part]].filter(Boolean).join(' · ')}`, nodes, opener);
   }
   async evidenceFile(store, f, opener) {
     const fd = store.fd;
@@ -171,7 +232,7 @@ export function setHeadline(root, c) {
 }
 
 // ---- the list
-const rowOf = f => (f.precinct ? `precinct ${f.precinct}` : '');
+const rowOf = f => (f.precinct ? pcl(f.precinct) : '');
 
 export class FindingList {
   constructor(root, store, { onPick, none = false, countEl, filterEl, statusEl }) {
@@ -264,7 +325,7 @@ export class FindingList {
     if (r.g) {
       const g = r.g, k = KIND[g.kind] || { word: g.kind, glyph: '' };
       li.className = 'grp'; li.setAttribute('role', 'presentation');
-      const pr = g.precincts && g.precincts.length ? `${g.precincts.length === 1 ? 'precinct' : 'precincts'} ${g.precincts.join(', ')}` : '';
+      const pr = g.precincts && g.precincts.length ? (g.precincts.length === 1 ? pcl(g.precincts[0]) : `precincts ${g.precincts.join(', ')}`) : '';
       li.append(hid(el('span', 'kg', k.glyph)), el('span', 'kw', k.word), el('span', 'rl', g.row || ''), el('span', 'pc', pr));
       return li;
     }
@@ -273,7 +334,7 @@ export class FindingList {
     li.setAttribute('role', 'option');
     li.setAttribute('aria-selected', String(f.id === this.sel));
     li.setAttribute('aria-label', `${KIND[f.kind] ? KIND[f.kind].word : f.kind}, ${f.row || ''}, ${rowOf(f)}, ${PART[f.part] || ''}. Public file ${valWords(f.file)}, scan ${valWords(f.scan)}. ${st.word}.`);
-    li.append(el('span', 'wh', [f.precinct ? `precinct ${f.precinct}` : null, PART[f.part]].filter(Boolean).join(' · ')));
+    li.append(el('span', 'wh', [f.precinct ? pcl(f.precinct) : null, PART[f.part]].filter(Boolean).join(' · ')));
     const v = el('span', 'vs');
     v.append(el('span', 'fv', val(f.file)), el('span', 'ar', '→'), el('span', 'sv', val(f.scan)));
     li.append(v);
@@ -340,8 +401,8 @@ export function readerSentence(fd) {
   const info = fd.run_info || {}, s = info.sample;
   if (!s || !info.reader || s.row_sums === undefined || s.failing === undefined || !s.sampled_with) return '';
   const pages = [...new Set((s.blocks || []).map(b => (/^p(\d+)-/.exec(b) || [])[1]).filter(Boolean))];
-  const what = pages.length === 1 && pages[0] === '1' ? 'the first page' : 'a few pages';
-  return `A sample of ${what} read with ${s.sampled_with} failed ${fmt(s.failing)} of ${fmt(s.row_sums)} row sums, so this county was read with ${info.reader}.`;
+  const what = !s.blocks ? 'A sample' : pages.length === 1 && pages[0] === '1' ? 'A sample of the first page' : 'A sample of a few pages';   // the run may not say which pages
+  return `${what} read with ${s.sampled_with} failed ${fmt(s.failing)} of ${fmt(s.row_sums)} row sums, so this county was read with ${info.reader}.`;
 }
 
 export function renderRun(root, fd) {

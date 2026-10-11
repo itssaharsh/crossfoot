@@ -3,7 +3,7 @@
 //
 // buildTimeline(d) is a plain function of the county's JSON (site/data/<county>.json, keys in crossfoot/sitebuild.py):
 // no page, no DOM. The Replay class plays what it returns.
-import { fmt } from './data.js';
+import { fmt, COL_WORD, COLS } from './data.js';
 
 const SVGNS = 'http://www.w3.org/2000/svg';
 export const SPEEDS = [1, 2, 4];
@@ -41,6 +41,8 @@ export function buildTimeline(d) {
     steps.push({ beat: 'sample', ms: MS.sample, blocks: sample.blocks || [],
                  caption: `A sample read with ${sample.sampled_with} fails ${fmt(sample.failing)} of ${fmt(sample.row_sums)} row sums. The county is read with ${sample.reader}.` });
   }
+
+  if (d.layout === 'report') return reportTimeline(d, ev, steps, items, nPages);
 
   // the reads: two passes when the run chose a reader after a sample, else one
   const reads = ev.map((e, i) => ({ e, i })).filter(({ e }) => e.k === 'block_read' && e.p && e.p.page !== undefined && e.p.block);
@@ -102,9 +104,57 @@ export function buildTimeline(d) {
   return { steps, ms, seconds: ms / 1000 };
 }
 
+// The report layout's own events: a page read (one per page), then each item the run worked, with the rows it read again.
+//   sample, read (one step per page_read event, in order), check, suspect (one per item_start: the rows read again and what
+//   the run made of them), audit, end
+function reportItems(ev) {
+  const out = [], by = new Map();
+  for (const e of ev) {
+    const p = e.p || {};
+    if (e.k === 'item_start') { const o = { item: p.item, page: p.page, block: p.block, rereads: [], verdict: null, reason: null, result: null }; by.set(p.item, o); out.push(o); }
+    else if (e.k === 'reread' && by.has(p.item)) by.get(p.item).rereads.push(p);
+    else if (e.k === 'verdict' && Array.isArray(p.sums)) for (const o of p.sums.map(k => by.get(k)).filter(Boolean)) { o.verdict = p.verdict; o.reason = p.reason; }
+    else if (e.k === 'item_end' && by.has(p.item)) by.get(p.item).result = p.result;
+  }
+  return out;
+}
+const colOf = (a, b) => COLS.find(c => a && b && a[c] !== undefined && b[c] !== undefined && a[c] !== b[c]);
+function reportTimeline(d, ev, steps, items, nPages) {
+  const reads = ev.filter(e => e.k === 'page_read' && e.p && e.p.page !== undefined);
+  reads.forEach((e, i) => steps.push({ beat: 'read', ms: i && e.p.page !== reads[i - 1].p.page ? MS.readTurn : MS.read, page: e.p.page, block: null, k: i + 1, all: reads.length, model: e.p.model,
+                                       first: i === 0, sample: false, caption: `Reading page ${e.p.page} of ${nPages || e.p.page}: ${i + 1} of ${reads.length} pages` }));
+  const worked = reportItems(ev).filter(o => o.rereads.length);
+  const keys = worked.map(o => o.item);
+  const nFail = (d.sm && sumTotal(d.sm.sums_failing_before)) || 0;
+  if (nFail > 0 && d.checks && d.checks.length) steps.push({ beat: 'check', ms: MS.check, sums: keys, caption: `${fmt(nFail)} of ${fmt(d.checks.length)} printed sums do not hold.` });
+  const each = Math.max(900, Math.min(MS.suspect, 24000 / Math.max(1, worked.length)));
+  const blocks = new Map((d.blocks || []).map(b => [`${b.p}:${b.id}`, b]));
+  for (const o of worked) {
+    const r0 = o.rereads[0];
+    const hit = o.rereads.find(r => colOf(r.old, r.reading));
+    const col = hit ? colOf(hit.old, hit.reading) : null;
+    const kind = String(o.item).split(':')[0];
+    const contest = (blocks.get(`${o.page}:${o.block}`) || {}).contest;
+    const target = kind === 'report_contest' ? `the ${COL_WORD[String(o.item).split(':').pop()] || 'column'} column of ${contest || 'a contest'}` : `the row ${r0.row}`;
+    const s = { beat: 'suspect', ms: each, item: o.item, sums: [o.item], entity: [r0.page, r0.block, (hit || r0).row, col || (kind === 'report_contest' ? String(o.item).split(':').pop() : 'total')],
+                rereads: o.rereads.length, changed: hit ? { old: hit.old[col], new: hit.reading[col], col: COL_WORD[col] } : null,
+                first: `Page ${o.page}: the printed sum through ${target} does not hold. Reading the rows again.`,
+                result: o.result, verdict: o.verdict, reason: o.reason, page: o.page };
+    s.caption = suspectCaptions(s).first;
+    steps.push(s);
+  }
+  if (items.length) {
+    const pages = [...new Set(items.map(f => f.page).filter(x => x !== undefined && x !== null))].sort((a, b) => a - b);
+    steps.push({ beat: 'audit', ms: MS.audit, pages, caption: 'Laid against the published file' });
+  }
+  steps.push({ beat: 'end', ms: MS.end, caption: '' });
+  const ms = steps.reduce((a, s) => a + s.ms, 0);
+  return { steps, ms, seconds: ms / 1000 };
+}
+
 // what the suspect step says at each of its moments, from its own figures
 export function suspectCaptions(s) {
-  const first = s.read !== undefined && s.wouldBe !== undefined
+  const first = s.first ? s.first : s.read !== undefined && s.wouldBe !== undefined
     ? `Read ${fmt(s.read)}. The two printed sums that run through it need ${fmt(s.wouldBe)}.`
     : s.computed !== undefined && s.printed !== undefined
       ? `The cells add to ${fmt(s.computed)}. The printed total is ${fmt(s.printed)}.`
@@ -119,7 +169,7 @@ export function suspectCaptions(s) {
     then = `${sentence(s.reason)}. No printed total can decide this.`;
     ring = 'warn';
   } else if (s.changed) {
-    then = `Read again: ${fmt(s.changed.new)}, not ${fmt(s.changed.old)}.${s.result === 'holds' ? ' Both sums now hold.' : ''}`;
+    then = `Read again: ${s.changed.col ? `${s.changed.col} ` : ''}${fmt(s.changed.new)}, not ${fmt(s.changed.old)}.${s.result === 'holds' ? (s.changed.col ? ' The sum now holds.' : ' Both sums now hold.') : ''}`;
     ring = s.result === 'holds' ? 'holds' : null;
   } else if (s.result === 'holds') {
     then = 'Read again: the same value. The sums now hold.';
@@ -221,7 +271,7 @@ export class Replay {
     this.button('Pause replay');
     this.headline.set({ all: 0, settled: 0, cannot: 0, doc: 0, confirmed: 0 });
     this.mem.clear(); this.layer.replaceChildren();
-    for (const pg of this.store.pages) { const im = new Image(); im.src = pg.img; }   // the pages are fetched before they are needed
+    for (const pg of this.store.pages) if (pg.img) { const im = new Image(); im.src = pg.img; }   // the pages are fetched before they are needed
     try {
       this.pos = 0;
       this.clock(tok);
@@ -341,6 +391,11 @@ export class Replay {
     if (page === this.curPage) this.layer.append(this.node(m, true));
   }
   clearLayer() { this.mem.clear(); this.layer.replaceChildren(); }
+  // the part of a page the read values cover (the report layout's blocks have no box of their own)
+  pageBox(page) {
+    const xs = (this.store.byPage.get(page) || []).map(i => this.store.values[i].x).filter(Boolean);
+    return xs.length ? [Math.min(...xs.map(b => b[0])), Math.min(...xs.map(b => b[1])) - 40, Math.max(...xs.map(b => b[2])), Math.max(...xs.map(b => b[3])) + 12] : null;
+  }
   boxOf(page, block) { const b = this.store.blocks.get(`${page}:${block}`); return b && b.x ? b.x : null; }
 
   // ---- the steps
@@ -355,7 +410,7 @@ export class Replay {
   async readStep(s, tok) {
     if (s.first) this.clearLayer();
     await this.page(s.page, tok);
-    const x = this.boxOf(s.page, s.block);
+    const x = s.block ? this.boxOf(s.page, s.block) : this.pageBox(s.page);   // the report layout is read a page at a time
     if (x) this.put(s.page, { type: 'rect', cls: 'wash', x });
   }
   async checkStep(s, tok) {

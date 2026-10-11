@@ -1,5 +1,5 @@
 // The panel's card and the list of sums that do not hold.
-import { fmt } from './data.js';
+import { fmt, COL_WORD } from './data.js';
 
 const STATUS = {
   accepted: 'Both printed sums hold.',
@@ -7,13 +7,23 @@ const STATUS = {
 };
 const el = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text !== undefined) e.textContent = text; return e; };
 
+const sumWord = c => (c.k === 'col' || c.k === 'report_contest' ? 'column' : c.k === 'row' || c.k === 'report_row' ? 'row' : 'small totals');
+
 export function describe(store, v) {
   const b = store.block(v);
+  if (store.report) return { where: [b && b.contest, v.r].filter(Boolean).join(' · '), what: COL_WORD[v.c] || v.c };
   const where = [b && b.contest, b && b.cand].filter(Boolean).join(' · ');
   const what = store.isTotal(v)
     ? (v.r === 'col' ? `Printed total, precinct ${v.c}` : v.r === 'row' ? `Printed row total, ${v.c}` : 'Printed grand total')
     : `${v.r} · precinct ${v.c}`;
   return { where, what };
+}
+
+// a value of the report layout that is not a finding: whether the printed sums through it hold
+function reportStatus(store, v) {
+  const sums = store.sumsFor(v);
+  if (!sums.length) return 'No printed sum was recorded through this value.';
+  return sums.every(x => x.check.ok) ? 'The printed sums through this value hold.' : 'A printed sum through this value does not hold. Not verified.';
 }
 
 export function renderCard(root, store, v) {
@@ -22,20 +32,20 @@ export function renderCard(root, store, v) {
   const { where, what } = describe(store, v);
   const b = store.block(v);
   root.append(el('p', 'eyebrow', `${b ? b.contest : ''} · page ${v.p}`));
-  root.append(el('h2', '', what));
-  if (b && b.cand) root.append(el('p', 'sub', b.cand));
+  root.append(el('h2', '', store.report ? `${v.r} · ${what}` : what));
+  if (b && b.cand && !store.report) root.append(el('p', 'sub', b.cand));
   root.append(el('p', 'big', fmt(v.v)));
-  root.append(el('p', 'status', store.isTotal(v) ? 'Printed on the scan.' : STATUS[v.s] || ''));
+  root.append(el('p', 'status', store.isTotal(v) ? 'Printed on the scan.' : store.report ? reportStatus(store, v) : STATUS[v.s] || ''));
   if (!store.isTotal(v) && v.m) root.append(el('p', 'how', `Read by ${v.m}. Re-read tries: ${v.n ?? 0}.`));
 }
 
 export function stageLabel(store, v, sums, f = null) {
   const { where, what } = describe(store, v);
   if (f) {
-    const s = sums.map(({ check: c }) => `${c.k === 'col' ? 'column' : c.k === 'row' ? 'row' : 'small totals'} sum ${fmt(c.co)}, printed ${fmt(c.pr)}, ${c.ok ? 'holds' : 'does not hold'}`);
+    const s = sums.map(({ check: c }) => `${sumWord(c)} sum ${fmt(c.co)}, printed ${fmt(c.pr)}, ${c.ok ? 'holds' : 'does not hold'}`);
     return `Page ${v.p} of the scan. Selected finding: ${where}, ${what}. Public file ${f.file === undefined ? 'none' : fmt(f.file)}, scan ${f.scan === undefined ? 'none' : fmt(f.scan)}. ${s.join('. ')}.`;
   }
-  const s = sums.map(({ check: c }) => `${c.k === 'col' ? 'column' : c.k === 'row' ? 'row' : 'small totals'} sum ${fmt(c.co)}, printed ${fmt(c.pr)}, ${c.ok ? 'holds' : 'does not hold'}`);
+  const s = sums.map(({ check: c }) => `${sumWord(c)} sum ${fmt(c.co)}, printed ${fmt(c.pr)}, ${c.ok ? 'holds' : 'does not hold'}`);
   return `Page ${v.p} of the scan. Selected: ${where}, ${what}, value ${fmt(v.v)}. ${s.join('. ')}.`;
 }
 
@@ -51,9 +61,9 @@ export class FailList {
     const b = this.store.blocks.get(`${c.p}:${c.b}`);
     const li = el('li');
     li.id = `fail-${n}`; li.setAttribute('role', 'option'); li.setAttribute('aria-selected', 'false');
-    const lab = c.k === 'col' ? `Precinct ${c.y}` : c.k === 'row' ? `Row ${c.y}` : 'Small totals to grand total';
+    const lab = c.k === 'report_row' ? `Row ${c.y}` : c.k === 'report_contest' ? `Contest · ${COL_WORD[c.y] || c.y}` : c.k === 'col' ? `Precinct ${c.y}` : c.k === 'row' ? `Row ${c.y}` : 'Small totals to grand total';
     li.append(el('span', 'a', lab), el('span', 'b', `printed ${fmt(c.pr)}`),
-              el('span', 'c', `Page ${c.p} · ${[b && b.contest, b && b.cand].filter(Boolean).join(' · ')} · adds to ${fmt(c.co)}`));
+              el('span', 'c', `Page ${c.p} · ${[b && b.contest, this.store.report ? null : b && b.cand].filter(Boolean).join(' · ')} · adds to ${fmt(c.co)}`));
     li.addEventListener('click', () => { this.cur = n; this.mark(); this.pick(); });
     return li;
   }

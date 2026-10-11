@@ -16,7 +16,7 @@
 *{box-sizing:border-box}
 [hidden]{display:none!important}
 html,body{margin:0;height:100%}
-body{background:var(--canvas);color:var(--ink);font:400 15px/1.45 var(--ff-body);display:grid;grid-template-rows:52px minmax(0,1fr) auto;min-height:100vh;height:100vh;overflow:hidden}
+body{position:relative;background:var(--canvas);color:var(--ink);font:400 15px/1.45 var(--ff-body);display:grid;grid-template-columns:minmax(0,1fr);grid-template-rows:52px minmax(0,1fr) auto;min-height:100vh;height:100vh;overflow:hidden}
 :focus-visible{outline:2px solid var(--focus);outline-offset:2px}
 button{font:inherit;color:inherit}
 a{color:var(--ink);text-underline-offset:2px}
@@ -24,10 +24,19 @@ a{color:var(--ink);text-underline-offset:2px}
 .bar{display:flex;align-items:center;gap:20px;padding:0 var(--pad);border-bottom:1px solid var(--line);background:var(--canvas)}
 .brand{display:flex;align-items:center;gap:10px;text-decoration:none}
 .word{font:800 20px/1 var(--ff-display);letter-spacing:-.03em}
-.descriptor{margin:0;color:var(--ink-muted);font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.tabs{margin-left:auto;display:flex;border:1px solid var(--line-input);border-radius:var(--r-md);overflow:hidden}
-.tabs button{background:none;border:0;padding:6px 14px;cursor:pointer}
-.tabs button[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink);font-weight:600}
+.descriptor{margin:0;min-width:0;flex:0 1 auto;color:var(--ink-muted);font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.brand{flex:none}
+.tabs{position:relative;margin-left:auto;display:flex;min-width:0;max-width:100%;border:1px solid var(--line-input);border-radius:var(--r-md);overflow-x:auto;overflow-y:hidden;scrollbar-width:none;overscroll-behavior-x:contain}
+.tabs::-webkit-scrollbar{display:none}
+.tabs button{flex:none;background:none;border:0;padding:6px 12px;cursor:pointer;white-space:nowrap}
+.tabs button[aria-selected="true"]{background:var(--accent);color:var(--accent-ink);font-weight:600}
+.tabs button+button{border-left:1px solid var(--line)}
+.tabs button:focus-visible{outline-offset:-3px}
+.tn{font:400 13px/1 var(--ff-mono);font-variant-numeric:tabular-nums;margin-left:3px}
+.tabs button[aria-selected="true"] .tn{font-weight:700}
+.runline{position:absolute;z-index:6;top:53px;left:var(--pad);right:var(--pad);height:16px;margin:0;font:400 12px/16px var(--ff-body);color:var(--ink-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-variant-numeric:tabular-nums}
+.rl-n{font:400 12px/16px var(--ff-mono);color:var(--ink)}
+.rl-dot{color:var(--line-input)}
 
 .main{display:grid;grid-template-columns:minmax(760px,1fr) var(--panel);gap:var(--pad);padding:16px var(--pad);min-height:0}
 .stage{position:relative;min-height:0;background:var(--surface-sunken);border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden}
@@ -55,8 +64,8 @@ a{color:var(--ink);text-underline-offset:2px}
 .focus-ring .light{stroke:var(--focus);stroke-width:calc(2 * var(--u,1))}
 .bands line{stroke-width:calc(7 * var(--u,1));opacity:.35;fill:none}
 .bands line.holds{stroke:var(--data-holds)} .bands line.fails{stroke:var(--data-fails)}
-.bands circle{fill:none;stroke-width:calc(3 * var(--u,1))}
-.bands circle.holds{stroke:var(--data-holds)} .bands circle.fails{stroke:var(--data-fails)} .bands circle.warn{stroke:var(--warning)}
+.bands circle,.bands path{fill:none;stroke-width:calc(3 * var(--u,1));stroke-linecap:round;stroke-linejoin:round}
+.bands circle.holds,.bands path.holds{stroke:var(--data-holds)} .bands circle.fails,.bands path.fails{stroke:var(--data-fails)} .bands circle.warn,.bands path.warn{stroke:var(--warning)}
 
 .ctx{position:absolute;z-index:2;top:17px;left:24px;right:24px;margin:0;font:400 12px/16px var(--ff-body);color:var(--ink-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align:center}
 .loupe{position:absolute;z-index:2;top:40px;left:50%;transform:translateX(-50%);width:min(576px,calc(100% - 48px));height:240px;background:var(--sheet);color:var(--sheet-ink);border:1px solid var(--sheet-ink);box-shadow:0 1px 1px rgba(0,0,0,.5),0 10px 18px -6px rgba(0,0,0,.55);overflow:hidden}
@@ -96,7 +105,7 @@ a{color:var(--ink);text-underline-offset:2px}
 .panel>*{flex:none}
 .panel{display:flex;flex-direction:column;gap:8px;min-height:0;overflow-y:auto;padding:0 2px 2px 0}
 .tapewrap{filter:drop-shadow(0 1px 0 rgba(0,0,0,.6))}
-.tape{background:var(--sheet);color:var(--sheet-ink);padding:6px 14px 12px;font:400 13px/16px var(--ff-mono);min-height:64px;display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:0 18px}
+.tape{position:relative;background:var(--sheet);color:var(--sheet-ink);padding:6px 14px 12px;font:400 13px/16px var(--ff-mono);min-height:64px;display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:0 18px}
 .tape h3{margin:0 0 2px;font:600 13px/16px var(--ff-body);color:#4a4d50}
 .tape .sum{min-width:0}
 .tape .ln{display:flex;justify-content:space-between;gap:12px;white-space:pre}
@@ -314,6 +323,7 @@ body.record{grid-template-rows:60px minmax(0,1fr) auto}
 }
 @media (max-width:1100px){:root{--panel:360px}.main{grid-template-columns:minmax(0,1fr) var(--panel)}}
 @media (max-width:899px){
+  .runline{position:static;height:auto;white-space:normal;padding:8px 16px 0;font-size:12px;line-height:17px;overflow:visible}
   html,body{height:auto}
   body{display:block;min-height:100vh;overflow:auto;overflow-x:hidden;padding-bottom:calc(92px + env(safe-area-inset-bottom))}
   .bar{height:52px;gap:12px;padding:0 16px}.descriptor{display:none}
@@ -408,3 +418,36 @@ body.replaying .headline{color:var(--ink)}
   .loupe{top:36px}
 }
 @keyframes fade{from{opacity:0}to{opacity:1}}
+
+/* ---- every county: the page with no image, the county with nothing found, the county that was not checked */
+.blank-note{position:absolute;left:8%;right:8%;top:42%;margin:0;text-align:center;color:#4a4d50;font:400 calc(var(--w, 400px) * .05)/1.35 var(--ff-body);pointer-events:none}
+.sheet.blank{background:var(--sheet)}
+.sheet.blank img{visibility:hidden}
+body.idle .loupe,body.idle .leader,body.idle .ctx.empty{display:none}
+.card.empty-county{display:block;padding:10px 14px}
+.ec-line{margin:0;font:400 14px/1.4 var(--ff-mono);font-variant-numeric:tabular-nums}
+body[data-state="unchecked"] .statebox{display:block;top:50%;transform:translateY(-50%);max-width:480px;margin:0 auto;font-size:17px}
+body[data-state="unchecked"] .viewport,body[data-state="unchecked"] .loupe,body[data-state="unchecked"] .leader,body[data-state="unchecked"] .ctx,
+body[data-state="unchecked"] .tapewrap,body[data-state="unchecked"] .card,body[data-state="unchecked"] .findings,body[data-state="unchecked"] .run,
+body[data-state="unchecked"] .fails,body[data-state="unchecked"] .judge,body[data-state="unchecked"] #flat,body[data-state="unchecked"] #prev,
+body[data-state="unchecked"] #next,body[data-state="unchecked"] #pageno{display:none}
+/* the finding's card in the report layout: the row's four figures, the file's and the scan's */
+.two-values.rep{display:block;margin-bottom:5px}
+.rv{display:grid;grid-template-columns:76px repeat(4,minmax(0,1fr));gap:0 6px;align-items:baseline}
+.rv.head{margin-bottom:1px}
+.rv .colh{font-size:11px;line-height:14px;color:var(--ink-muted);text-align:right;white-space:nowrap;overflow:hidden;text-overflow:clip}
+.two-values.rep .one{display:grid;border:1px solid var(--line-input);border-radius:var(--r-md);padding:3px 8px;background:var(--surface-sunken);margin-top:3px}
+.two-values.rep .one.scan{border-color:var(--ink)}
+.two-values.rep .one .lab{font-size:12px;line-height:16px;white-space:nowrap}
+.rv .fg{font:400 18px/1.25 var(--ff-mono);font-variant-numeric:tabular-nums;text-align:right;color:var(--ink-muted);letter-spacing:-.02em}
+.rv .fg.d{font-weight:700;color:var(--ink);font-size:21px}
+@media (max-width:420px){.rv{grid-template-columns:64px repeat(4,minmax(0,1fr))}.rv .fg{font-size:16px}.rv .fg.d{font-size:18px}.rv .colh{font-size:10px}}
+
+body.idle .tapewrap{display:none}
+.primary:disabled{opacity:.6}
+.tape.rep .pair .ln>span:first-child{position:relative;min-width:0;overflow:hidden;text-overflow:ellipsis}
+.tape.rep .pair .ln>span:last-child{flex:none}
+.lp-tag.rep{max-width:calc(100% - 24px);overflow:hidden;text-overflow:ellipsis}
+.lp-tag.rep.in-cell::after{display:none}
+@media (max-width:899px){.lp-tag.rep{font-size:12px;letter-spacing:-.02em}}
+@media (max-width:1100px){.rv{grid-template-columns:64px repeat(4,minmax(0,1fr))}.rv .colh{font-size:10px}}

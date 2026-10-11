@@ -20,6 +20,7 @@
   <p class="descriptor">audits public election data against the certified scans</p>
   <nav id="tabs" class="tabs" aria-label="County" hidden></nav>
 </header>
+<p class="runline" id="runline" aria-label="The whole run" hidden></p>
 <main class="main" id="main">
   <section class="stage" id="stage" aria-label="Scanned sheet">
     <div class="controls" id="controls" role="group" aria-label="Stage controls">
@@ -39,7 +40,7 @@
         <div class="pose" id="pose">
           <div class="paper" id="paper" role="img" aria-label="Loading the scan">
             <div class="stack" id="stack"></div>
-            <div class="sheet" id="sheet"><img id="scan" alt="" decoding="async"><div class="far"></div><svg id="bands" class="bands" aria-hidden="true"></svg></div>
+            <div class="sheet" id="sheet"><img id="scan" alt="" decoding="async"><p class="blank-note" id="blank-note" hidden></p><div class="far"></div><svg id="bands" class="bands" aria-hidden="true"></svg></div>
           </div>
           <svg id="marks" class="marks" role="group" aria-label="Values on this page"></svg>
         </div>

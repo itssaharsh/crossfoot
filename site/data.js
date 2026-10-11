@@ -17,6 +17,13 @@ export async function getJSON(file) {
 export class LoadError extends Error { constructor(file, missing = false) { super(file); this.file = file; this.missing = missing; } }
 export const loadMessage = file => `Couldn't load ${file}. Reload, or open the repository's runs folder.`;
 
+// the report layout (one precinct per section, four figures per row): its column keys in print order, and their words
+export const COLS = ['total', 'absentee', 'early', 'election_day'];
+export const COL_WORD = { total: 'total', absentee: 'absentee', early: 'early voting', election_day: 'election day' };
+const TOTAL_ROW = /^(total votes cast|cast votes)$/i;
+// "Precinct 2A" is already a precinct; "101" is not
+export const pcl = p => (/^precinct\b/i.test(String(p)) ? String(p) : `precinct ${p}`);
+
 export const idOf = v => `${v.p}:${v.b}:${v.r}:${v.c}`;
 const isTotal = v => v.r === 'col' || v.r === 'row' || v.r === 'grand';
 
@@ -39,11 +46,32 @@ export class Store {
     this.itemById = new Map(this.items.map(f => [f.id, f]));
     this.itemByRef = new Map(this.items.filter(f => f.ref !== undefined).map(f => [f.ref, f]));
     this.groupById = new Map((this.fd ? this.fd.groups : []).map(g => [g.id, g]));
+    // the report layout: the rows' crops, the contest sums by block and column, the contest total rows
+    this.report = d.layout === 'report';
+    this.rc = d.rc || [];
+    this.rcByRow = new Map(this.rc.map(r => [`${r.p}:${r.b}:${r.r}`, r]));
+    this.contest = new Map(); this.totRow = new Map();
+    this.fileAt = new Map(this.items.filter(f => f.ref !== undefined).map(f => [f.ref, f.file]));   // the file's value where a finding sits on the value
+    if (this.report) {
+      d.checks.forEach(c => { if (c.k === 'report_contest') this.contest.set(`${c.b}:${c.y}`, c); });
+      d.values.forEach((v, i) => { if (TOTAL_ROW.test(String(v.r).trim())) this.totRow.set(`${v.b}:${v.c}`, i); });
+    }
   }
-  isTotal(v) { return isTotal(v); }
+  isTotal(v) { return this.report ? false : isTotal(v); }
+  rowCrop(v) { return this.report ? this.rcByRow.get(`${v.p}:${v.b}:${v.r}`) || null : null; }
+  // the four values of the row of a value of the report layout, in column order (undefined where a cell is missing)
+  rowCells(v) { return COLS.map(c => this.byId.get(`${v.p}:${v.b}:${v.r}:${c}`)); }
   block(v) { return this.blocks.get(`${v.p}:${v.b}`); }
   // the sums a value sits on: [{check, axis}], axis 'col' (down) or 'row' (across), column first
   sumsFor(v) {
+    if (this.report) {
+      const out = [];
+      const k = this.contest.get(`${v.b}:${v.c}`), tot = this.totRow.get(`${v.b}:${v.c}`);
+      if (k && (k.t.includes(v.i) || tot === v.i)) out.push({ check: k, axis: 'col' });
+      const r = this.chk.get(`report_row:${v.p}:${v.b}:${v.r}`);
+      if (r) out.push({ check: r, axis: 'row' });
+      return out;
+    }
     const g = k => this.chk.get(k);
     const out = [];
     const add = (c, axis) => { if (c) out.push({ check: c, axis }); };
@@ -56,12 +84,15 @@ export class Store {
   termsOf(c) { return c.t.map(i => this.values[i]); }
   // the printed total a sum is decided by
   totalOf(c) {
+    if (c.k === 'report_row') { const i = this.byId.get(`${c.p}:${c.b}:${c.y}:total`); return i === undefined ? null : this.values[i]; }
+    if (c.k === 'report_contest') { const i = this.totRow.get(`${c.b}:${c.y}`); return i === undefined ? null : this.values[i]; }
     const key = c.k === 'grand' || c.k === 'grand_row' ? `${c.p}:${c.b}:grand:` : `${c.p}:${c.b}:${c.k}:${c.y}`;
     const i = this.byId.get(key);
     return i === undefined ? null : this.values[i];
   }
   // where to draw a sum, in image pixels, or null when the scan gave no boxes for it
   band(c) {
+    if (c.k === 'report_row' || c.k === 'report_contest') return this.reportBand(c);
     const terms = this.termsOf(c).filter(t => t.x), total = this.totalOf(c);
     const blk = this.block({ p: c.p, b: c.b });
     const tb = total && total.x;
@@ -77,6 +108,23 @@ export class Store {
     const y = ys.reduce((a, b) => a + b, 0) / ys.length;
     const x2 = tb ? tb[2] : Math.max(...terms.map(t => t.x[2]));
     return { x1: labelX, y1: y, x2, y2: y };
+  }
+  // the report layout: a row's sum is a band across the row; a contest's column sum is a band down the figures' column to the
+  // contest total row (null where the ink gave no column)
+  reportBand(c) {
+    const mid = b => (b[1] + b[3]) / 2, tv = this.totalOf(c);
+    if (c.k === 'report_row') {
+      const t = this.termsOf(c).find(x => x.x) || (tv && tv.x ? tv : null);
+      if (!t) return null;
+      const y = mid(t.fx || t.x);
+      return { x1: t.x[0], y1: y, x2: t.x[2], y2: y };
+    }
+    if (!tv || !tv.x) return null;
+    const terms = this.termsOf(c).filter(t => t.x && t.p === tv.p);
+    const col = [tv, ...terms].map(t => t.fx).find(Boolean);
+    if (!col || !terms.length) return null;
+    const x = (col[0] + col[2]) / 2;
+    return { x1: x, y1: Math.min(...terms.map(t => mid(t.fx || t.x))), x2: x, y2: mid(tv.fx || tv.x) };
   }
   // the printed figure's own box in page-image pixels, from the ink box of the block image; null without one
   inkPage(v) {
@@ -96,15 +144,23 @@ export class Store {
   }
   // the opening value: page 1, both sums hold, read as accepted
   defaultOn(page) {
+    if (this.report) {
+      const list = this.byPage.get(page) || [];
+      const good = i => { const v = this.values[i]; return v.x && v.s === 'accepted' && this.sumsFor(v).length > 0 && this.sumsFor(v).every(s => s.check.ok); };
+      const i = list.find(good) ?? list.find(i => this.values[i].x);
+      return i === undefined ? null : i;
+    }
     const ok = v => !isTotal(v) && v.x && v.s === 'accepted' && this.sumsFor(v).length === 2 && this.sumsFor(v).every(s => s.check.ok);
     const list = this.byPage.get(page) || [];
     const i = list.find(i => ok(this.values[i])) ?? list.find(i => this.values[i].x);
     return i === undefined ? null : i;
   }
   // the label of a value as printed on the scan (the block's candidate, else its contest)
-  printedLabel(v) { const b = this.block(v); return b ? b.cand || b.contest || '' : ''; }
-  rowLabel(v) { return v.r === 'col' ? 'Total' : v.r === 'row' ? 'Row total' : v.r === 'grand' ? 'Grand total' : v.r; }
-  colLabel(v) { return v.r === 'grand' ? '' : v.r === 'row' ? '' : `precinct ${v.c}`; }
+  printedLabel(v) { if (this.report) return v.r; const b = this.block(v); return b ? b.cand || b.contest || '' : ''; }
+  rowLabel(v) { if (this.report) return v.r; return this.rowLabelM(v); }
+  rowLabelM(v) { return v.r === 'col' ? 'Total' : v.r === 'row' ? 'Row total' : v.r === 'grand' ? 'Grand total' : v.r; }
+  colLabel(v) { if (this.report) return COL_WORD[v.c] || v.c; return this.colLabelM(v); }
+  colLabelM(v) { return v.r === 'grand' ? '' : v.r === 'row' ? '' : `precinct ${v.c}`; }
 }
 
 // ---- the words of the copy deck (UI-SPEC section 9)

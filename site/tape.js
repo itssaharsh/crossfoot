@@ -1,20 +1,25 @@
 // The adding-machine tape: prints a sum line by line, ending on the printed total.
-import { fmt } from './data.js';
+import { fmt, COL_WORD } from './data.js';
 
 const MAX_TOTAL_MS = 900, STEP_MS = 60;
-const termLabel = (c, t) => (c.k === 'col' ? t.r : c.k === 'grand_row' ? t.c : `Precinct ${t.c}`);
-const heading = c => c.k === 'col' ? `Down the column · precinct ${c.y}` : c.k === 'row' ? `Across the row · ${c.y}`
+const capw = w => (w ? w[0].toUpperCase() + w.slice(1) : w);
+const termLabel = (c, t) => (c.k === 'report_row' ? capw(COL_WORD[t.c]) : c.k === 'report_contest' ? t.r : c.k === 'col' ? t.r : c.k === 'grand_row' ? t.c : `Precinct ${t.c}`);
+const heading = c => c.k === 'report_row' ? `Across the row · ${c.y}` : c.k === 'report_contest' ? `Down the column · ${COL_WORD[c.y] || c.y}` : c.k === 'col' ? `Down the column · precinct ${c.y}` : c.k === 'row' ? `Across the row · ${c.y}`
   : c.k === 'grand_row' ? 'Down the row totals' : 'Across the small totals';
-const kindLabel = (kind, v) => (kind === 'col' ? v.r : kind === 'row' ? `Precinct ${v.c}` : kind === 'grand_row' ? v.c : `Precinct ${v.c}`);
+const kindLabel = (kind, v) => (kind === 'report_row' ? capw(COL_WORD[v.c]) : kind === 'report_contest' ? v.r : kind === 'col' ? v.r : kind === 'row' ? `Precinct ${v.c}` : kind === 'grand_row' ? v.c : `Precinct ${v.c}`);
 // a short name for a deciding sum, carried by the headers of its two columns; the whole name is in the card's crop dialog
 const sumName = (s, f, store) => {
   const v = f.ref === undefined ? null : store.values[f.ref];
+  if (s.kind === 'report_row') return 'row';
+  if (s.kind === 'report_contest') return `${COL_WORD[v ? v.c : f.col] || 'column'} column`;
   return s.kind === 'col' ? `column ${v && !store.isTotal(v) ? v.c : f.precinct || ''}`.trim()
     : s.kind === 'row' ? `row ${v && v.r ? v.r : ''}`.trim()
     : s.kind === 'grand_row' ? 'row totals' : 'small totals';
 };
 const sumHeading = (s, f, store) => {
   const v = f.ref === undefined ? null : store.values[f.ref];
+  if (s.kind === 'report_row') return `Across the row${v ? ` · ${v.r}` : ''}`;
+  if (s.kind === 'report_contest') return `Down the column · ${COL_WORD[v ? v.c : f.col] || 'column'}`;
   return s.kind === 'col' ? `Down the column${v && !store.isTotal(v) ? ` · precinct ${v.c}` : f.precinct ? ` · precinct ${f.precinct}` : ''}`
     : s.kind === 'row' ? `Across the row${v && v.r ? ` · ${v.r}` : ''}`
     : s.kind === 'grand_row' ? 'Down the row totals' : 'Across the small totals';
@@ -61,8 +66,11 @@ export function pairLines(store, f, s) {
   const own = f.ref;
   const rows = s.terms.map(([ref, val]) => {
     const v = ref === null || ref === undefined ? null : store.values[ref];
-    const diff = own !== undefined && ref === own;
-    return { label: v ? kindLabel(s.kind, v) : '…', scan: fmt(val), file: diff ? (f.file === undefined ? '—' : fmt(f.file)) : fmt(val), diff, ref: v ? ref : undefined };
+    // the report layout: every figure of the sum that a finding names shows the file's value (the sum's file column adds those)
+    const at = store.report && ref !== null && ref !== undefined && store.fileAt.has(ref);
+    const diff = store.report ? at : own !== undefined && ref === own;
+    const fileV = store.report ? (at ? store.fileAt.get(ref) : val) : f.file;
+    return { label: v ? kindLabel(s.kind, v) : '…', scan: fmt(val), file: diff ? (fileV === undefined ? '—' : fmt(fileV)) : fmt(val), diff, ref: v ? ref : undefined };
   });
   if (!rows.some(r => r.diff) && f.kind === 'extra_row' && f.file !== undefined) {
     // a row only the file has: no term of the scan's sum is it
@@ -96,6 +104,7 @@ export class Tape {
     this.root.replaceChildren();
     this.root.style.minHeight = '';
     this.root.classList.add('two');
+    this.root.classList.toggle('rep', !!store.report);   // the report layout's long row labels may be cut with an ellipsis
     const steps = [];
     const mk = (box, node) => { node.style.visibility = 'hidden'; box.append(node); steps.push(node); };
     const pair = (cls, a, b, pick) => {
@@ -103,6 +112,7 @@ export class Tape {
       for (const side of [a, b]) {
         const cell = el('div', 'ln' + (side.diff ? ' diff' : '') + (side.cls ? ' ' + side.cls : ''));
         const lab = el('span', '', side.label);
+        if (this.root.classList.contains('rep')) lab.title = side.label;   // a long row label may be cut with an ellipsis
         if (side.diff) lab.append(el('span', 'sr', ' (differs)'));
         cell.append(lab, el('span', '', side.fig));
         if (pick && side.ref !== undefined && !side.diff) {   // the value itself is already selected
@@ -129,7 +139,7 @@ export class Tape {
       }
       mk(box, pair('rule', { label: 'adds to', fig: fmt(s.with_file) }, { label: 'adds to', fig: fmt(s.with_scan) }));
       // when the value the finding sits on is this sum's printed total, the file's column carries the file's value there
-      const ownIsPrinted = f.ref !== undefined && store.isTotal(store.values[f.ref]) && !s.terms.some(t => t[0] === f.ref);
+      const ownIsPrinted = store.report ? s.kind === 'report_row' && f.col === 'total' : f.ref !== undefined && store.isTotal(store.values[f.ref]) && !s.terms.some(t => t[0] === f.ref);
       mk(box, pair('', { label: 'printed total', fig: ownIsPrinted ? val(f.file) : fmt(s.printed), diff: ownIsPrinted },
                        { label: 'printed total', fig: fmt(s.printed), diff: ownIsPrinted }));
       const res = el('div', 'pair res2');

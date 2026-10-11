@@ -36,7 +36,8 @@ export class Stage {
   // the part of the stage the sheet may use: below the loupe, above the controls, 24 px clear inside it
   area() {
     const W = this.viewport.clientWidth, H = this.viewport.clientHeight;
-    const top = this.loupeEl ? this.loupeEl.offsetTop + this.loupeEl.offsetHeight + 12 : 0;
+    // with the loupe out of the way (nothing selected) the sheet starts under the caption line
+    const top = this.loupeEl && this.loupeEl.offsetParent !== null ? this.loupeEl.offsetTop + this.loupeEl.offsetHeight + 12 : 36;
     const bottom = this.controls && this.controls.offsetHeight ? this.controls.offsetTop - 10 : H;
     const c = innerWidth <= NARROW || innerHeight <= 720 ? CLEAR_NARROW : CLEAR;
     const a = { l: c, r: W - c, t: top + c, b: bottom - c };
@@ -173,7 +174,12 @@ export class Stage {
     this.buildMarks();
     this.notice.hidden = true;
     this.setPartial(this.forcePartial);
-    if (!this.forcePartial) await new Promise(res => {
+    // a report county writes the image of the pages that carry a finding and page 1 only: the others are a blank sheet
+    const blank = !pg.img;
+    this.sheet.classList.toggle('blank', blank);
+    if (this.blankNote) { this.blankNote.hidden = !blank; this.blankNote.textContent = blank ? `Page ${n}. No image of this page is included.` : ''; }
+    if (blank) this.scan.removeAttribute('src');
+    if (!this.forcePartial && !blank) await new Promise(res => {
       this.scan.onload = () => { loaded(); res(); };
       this.scan.onerror = () => {
         // no page image: the block's own image is shown flat instead, and only when there is none is it an error
@@ -208,28 +214,35 @@ export class Stage {
     for (const i of this.store.byPage.get(this.page) || []) {
       const v = this.store.values[i];
       if (!v.x) continue;
-      const r = svg('rect', { x: v.x[0], y: v.x[1], width: v.x[2] - v.x[0], height: v.x[3] - v.x[1], tabindex: -1, role: 'button' });
+      const bx = this.store.report && v.fx ? v.fx : v.x;   // a figure of the report layout: its own box where the ink gave it, else its row
+      const r = svg('rect', { x: bx[0], y: bx[1], width: bx[2] - bx[0], height: bx[3] - bx[1], tabindex: -1, role: 'button' });
       r.dataset.i = i; r.dataset.b = v.b;
-      r.addEventListener('focus', () => { this.showFocus(v.x); this.onFocusValue(i); });
+      r.addEventListener('focus', () => { this.showFocus(bx); this.onFocusValue(i); });
       r.addEventListener('blur', () => { this.showFocus(null); setTimeout(() => { if (!this.marks.contains(document.activeElement)) this.onFocusValue(null); }); });
       if (this.store.isTotal(v)) r.classList.add('total');
       r.setAttribute('aria-label', `${v.v}, ${this.store.rowLabel(v)} ${this.store.colLabel(v)}`.trim());
       r.addEventListener('click', () => this.onPick(i));
       r.addEventListener('keydown', e => this.keys(e, r));
       m.append(r);
-      this.rects.push({ r, i, cx: (v.x[0] + v.x[2]) / 2, cy: (v.x[1] + v.x[3]) / 2 });
+      this.rects.push({ r, i, cx: (bx[0] + bx[2]) / 2, cy: (bx[1] + bx[3]) / 2 });
     }
     this.ticks = new Map(); this.tickPaths = [];   // a hollow pencil circle at every finding's value on this page (the selected one has its ring instead)
     const tg = svg('g', { class: 'ticks', 'aria-hidden': 'true' });
+    const rowSeen = new Map();
     for (const f of this.store.items) {
       const v = f.ref === undefined ? null : this.store.values[f.ref];
       if (!v || !v.x || v.p !== this.page) continue;
+      if (this.store.report) {   // one mark per row: the row's figures share a box
+        const key = `${v.b}:${v.r}`;
+        if (rowSeen.has(key)) { this.ticks.set(f.ref, rowSeen.get(key)); continue; }
+      }
       const g = svg('g', { transform: `translate(${v.x[0]} ${(v.x[1] + v.x[3]) / 2})`, class: 'tick ' + (f.status === 'settled_against_file' ? 'settled' : 'open') });
       const path = svg('circle', { cx: 8, cy: 0, r: 4.5 });   // 9 px across at the sheet's scale, 2 px stroke; hollow
       g.append(path);
       this.tickPaths.push(path);
       tg.append(g);
       this.ticks.set(f.ref, g);
+      if (this.store.report) rowSeen.set(`${v.b}:${v.r}`, g);
     }
     m.prepend(tg);
     this.focusRing = svg('g', { class: 'focus-ring', 'aria-hidden': 'true' });
@@ -283,9 +296,13 @@ export class Stage {
     this.markSelected();
     const instant = !animate || this.reduced;
     const first = sums.slice().sort((a, b) => (a.axis === 'row' ? -1 : 1) - (b.axis === 'row' ? -1 : 1));
-    const draws = first.map(s => ({ ...s, line: this.store.band(s.check) })).filter(s => s.line);
     const v = this.store.values[i];
-    const ring = v.x ? this.ringFor(v, draws) : null;
+    let draws, ring;
+    if (this.store.report) ({ draws, ring } = this.reportDraws(v, first, opts.extra || {}));
+    else {
+      draws = first.map(s => ({ ...s, line: this.store.band(s.check) })).filter(s => s.line);
+      ring = v.x ? this.ringFor(v, draws) : null;
+    }
     this.anchor = null;
     if (ring) {
       this.anchor = svg('circle', { cx: ring.x, cy: ring.y, r: ring.r, fill: 'none', stroke: 'none' });
@@ -337,6 +354,33 @@ export class Stage {
     this.go(this.target(), 0);
     this.updateLeader();
   }
+  // the report layout: a band across the row (the row's own sum), a band down the figure's column to the contest total row
+  // where that sum is in the finding, and the ring round the figure (else round the row's figures)
+  reportDraws(v, sums, extra) {
+    const st = this.store, f = extra.f || null;
+    const draws = [];
+    const rowSum = sums.find(s => s.axis === 'row'), colSum = sums.find(s => s.axis === 'col');
+    const own = v.fx || null;
+    const mid = b => (b[1] + b[3]) / 2;
+    const y = own ? mid(own) : mid(v.x);
+    if (rowSum) draws.push({ ...rowSum, line: { x1: v.x[0], y1: y, x2: v.x[2], y2: y } });
+    const wantCol = colSum && (!f || f.sums.some(s => s.kind === 'report_contest'));
+    if (wantCol) {
+      const ti = st.totRow.get(`${v.b}:${v.c}`), tv = ti === undefined ? null : st.values[ti];
+      const xc = own ? (own[0] + own[2]) / 2 : tv && tv.fx ? (tv.fx[0] + tv.fx[2]) / 2 : null;
+      if (tv && tv.x && xc !== null) draws.push({ ...colSum, line: { x1: xc, y1: y, x2: xc, y2: tv.fx ? mid(tv.fx) : mid(tv.x) } });
+    }
+    const ok = draws.every(d => d.check.ok), hs = v.x[3] - v.x[1];
+    let ring;
+    if (own) ring = { x: (own[0] + own[2]) / 2, y: mid(own), r: Math.max(hs * 0.9, 20), ok };
+    else {
+      const fs = st.rowCells(v).map(j => (j === undefined ? null : st.values[j].fx)).filter(Boolean);
+      const box = fs.length ? [Math.min(...fs.map(b => b[0])), Math.min(...fs.map(b => b[1])), Math.max(...fs.map(b => b[2])), Math.max(...fs.map(b => b[3]))]
+                            : [v.x[2] - (v.x[2] - v.x[0]) * 0.45, v.x[1] + 4, v.x[2] - 6, v.x[3] - 4];
+      ring = { x: (box[0] + box[2]) / 2, y: mid(box), r: Math.max((box[3] - box[1]) * 0.9, 20), ok, box };
+    }
+    return { draws, ring };
+  }
   ringFor(v, draws) {
     const h = v.x[3] - v.x[1], ink = this.store.inkPage(v) || v.x;
     return { x: (ink[0] + ink[2]) / 2, y: (ink[1] + ink[3]) / 2, r: Math.max(h * 0.9, 20), ok: draws.every(d => d.check.ok) };
@@ -351,12 +395,13 @@ export class Stage {
     return l.animate([{ strokeDashoffset: len }, { strokeDashoffset: 0 }], { duration: ms, easing: 'cubic-bezier(.23,1,.32,1)', fill: 'backwards' }).finished.catch(() => {});
   }
   svgRing(r, instant, ms = RING_MS) {
-    const c = svg('circle', { cx: r.x, cy: r.y, r: r.r, class: r.ok ? 'holds' : 'fails' });
+    const c = r.box ? svg('path', { d: loopPath(r.box, 6), class: r.ok ? 'holds' : 'fails', pathLength: 1000 })
+                    : svg('circle', { cx: r.x, cy: r.y, r: r.r, class: r.ok ? 'holds' : 'fails' });
     c.style.opacity = 1;
     this.bands.append(c);
-    const len = 2 * Math.PI * r.r;
+    const len = r.box ? 1000 : 2 * Math.PI * r.r;
     c.setAttribute('stroke-dasharray', `${len} ${len}`);
-    c.setAttribute('transform', `rotate(-90 ${r.x} ${r.y})`);
+    if (!r.box) c.setAttribute('transform', `rotate(-90 ${r.x} ${r.y})`);
     if (instant) return Promise.resolve();
     return c.animate([{ strokeDashoffset: len }, { strokeDashoffset: 0 }], { duration: ms, easing: 'ease-out', fill: 'backwards' }).finished.catch(() => {});
   }

@@ -1,9 +1,10 @@
 import { getJSON, LoadError, loadMessage, Store, progress, fmt } from './data.js';
+import { Tabs, renderRunLine, emptyLine } from './tabs.js';
 import { Stage } from './stage.js';
 import { Loupe } from './loupe.js';
 import { Tape } from './tape.js';
 import { renderCard, stageLabel, FailList } from './panel.js';
-import { renderFindingCard, FindingList, Dialog, renderRun, contextLine, siblingOf, setHeadline, runSeconds } from './findings.js';
+import { renderFindingCard, FindingList, Dialog, renderRun, contextLine, siblingOf, setHeadline, runSeconds, tagText } from './findings.js';
 import { Replay } from './replay.js';
 
 const $ = id => document.getElementById(id);
@@ -13,6 +14,7 @@ const coarse = matchMedia('(pointer: coarse)').matches;
 const FIRST_RUN = 'No run has been built into this page yet. Run crossfoot site build.';
 const EMPTY = 'No disagreements in this county.';
 const STATES = ['loading', 'error', 'empty', 'partial', 'first-run'];
+const NOT_CHECKED = 'Nothing on this scan can be cross-checked; left as published.';
 
 // ?reset=1 opens the page as if for the first time: no state, cell or flat parameter is read, and the address is cleaned
 const reset = q.get('reset') === '1';
@@ -23,23 +25,24 @@ if (q.get('record') === '1') document.body.classList.add('record');   // recordi
 const stage = new Stage({
   viewport: $('viewport'), leanEl: $('lean'), pose: $('pose'), paper: $('paper'), sheet: $('sheet'), stack: $('stack'), root: $('stage'),
   loupeEl: $('loupe'), leader: $('leader'), leaderLine: $('leader-line'), controls: $('controls'),
-  scan: $('scan'), bands: $('bands'), marks: $('marks'), notice: $('notice'), flatEl: $('flatblock'),
+  scan: $('scan'), bands: $('bands'), marks: $('marks'), notice: $('notice'), flatEl: $('flatblock'), blankNote: $('blank-note'),
 }, { reduced, coarse, onPick: i => select(i), onError: loadMessage, onFocusValue: i => peek(i) });
 const loupe = new Loupe({ root: $('loupe'), view: $('lp-view'), note: $('lp-note'), ctx: $('ctx') }, { onPick: i => select(i), reduced });
 stage.setLoupe(loupe);
 const tape = new Tape($('tape'), reduced, i => select(i));
 const dialog = new Dialog($('dlg'));
-const state = { replay: null, opening: null, store: null, list: null, flist: null, sel: null, finding: null, index: null, counties: {}, first: true };
+const state = { key: null, tabs: null, replay: null, opening: null, store: null, list: null, flist: null, sel: null, finding: null, index: null, counties: {}, first: true };
 const sorted = c => c.t.slice().sort((a, b) => a - b).join(',');
 
 // ---- the page's state: body[data-state] decides what shows (styles.css); the controls follow it
 function setState(name) {
   document.body.dataset.state = name;
-  const live = !['loading', 'error', 'first-run'].includes(name);
+  const live = !['loading', 'error', 'first-run', 'unchecked'].includes(name);
   for (const id of ['flat', 'prev', 'next']) $(id).disabled = !live;
   const sb = $('statebox');
   if (name === 'loading') sb.textContent = `Loading run… ${progress.n} ${progress.n === 1 ? 'file' : 'files'}`;
   else if (name === 'first-run') sb.textContent = FIRST_RUN;
+  else if (name === 'unchecked') sb.textContent = NOT_CHECKED;
   else sb.textContent = '';
   if (!live) $('pageno').replaceChildren();
 }
@@ -59,6 +62,7 @@ async function select(i, { animate = true, entrance = false, settle = false } = 
   const { store } = state;
   const v = store.values[i];
   if (!v) return;
+  if (document.body.classList.contains('idle')) { document.body.classList.remove('idle'); stage.layout(true); }   // the loupe is back: the sheet makes room
   state.sel = i;
   const f = store.itemByRef.get(i) || null;
   state.finding = f;
@@ -75,7 +79,7 @@ async function select(i, { animate = true, entrance = false, settle = false } = 
   if (v.p !== stage.page) await goPage(v.p, animate, v.p > stage.page ? 1 : -1, false);
   let extra = {};
   if (f) {
-    extra = { tag: `public file: ${f.file === undefined ? 'none' : fmt(f.file)}` };
+    extra = { tag: tagText(store, f), f };
     const sib = f.kind === 'wrong_column' ? siblingOf(store, f) : null;
     if (sib && sib.ref !== undefined) extra.other = sib.ref;
   }
@@ -125,17 +129,27 @@ async function goPage(n, animate, dir, pick = true) {
   }
 }
 
+// the pages the run lists, in order (a page the run could not read has no entry: the pager skips it)
+const pageNums = () => state.store.pages.map(p => p.n);
+const pageStep = d => { const ns = pageNums(), i = ns.indexOf(stage.page); return ns[i + d]; };
+
 function updatePager() {
-  const n = stage.page, total = state.store.pages.length;
-  $('pageno').replaceChildren(Object.assign(document.createElement('span'), { className: 'pw', textContent: 'Page ' }), `${n} of ${total}`);
-  $('prev').disabled = n <= 1; $('next').disabled = n >= total;
+  const n = stage.page, ns = pageNums(), last = ns[ns.length - 1];
+  $('pageno').replaceChildren(Object.assign(document.createElement('span'), { className: 'pw', textContent: 'Page ' }), `${n} of ${last}`);
+  $('prev').disabled = pageStep(-1) === undefined; $('next').disabled = pageStep(1) === undefined;
 }
 
 function setFlatLabel() { $('flat').textContent = stage.flat ? 'Tilt sheet' : 'Lay flat'; }
 
-async function openCounty(key) {
+async function openCounty(key, { push = false } = {}) {
   if (state.replay) { state.replay.stop(); state.replay = null; }
   const entry = state.index.counties.find(c => c.key === key);
+  if (state.tabs) state.tabs.select(key);
+  state.key = key;
+  if (push) { q.set('county', key); for (const k of ['cell', 'finding']) q.delete(k); history.replaceState(null, '', location.pathname + '?' + q); }
+  document.body.classList.remove('unchecked-county');
+  $('panel').scrollTop = 0;
+  if (entry.status === 'unchecked') return openUnchecked(entry);
   let data = state.counties[key];
   if (!data) {
     try { data = state.counties[key] = await getJSON(entry.file); } catch (e) { fail(e.file || entry.file); return; }
@@ -160,11 +174,12 @@ async function openCounty(key) {
   $('fails-sec').open = !store.fd;            // with no findings in the data, the failing sums are what there is to see
   $('fails-sec').hidden = none;
   renderRun($('run'), store.fd);
+  if (store.report && store.fd && !store.items.length && !none) return openEmpty(store, entry);
   let start = null, startFinding = null;
   const want = q.get('cell'), wantF = q.get('finding');
   if (wantF && store.itemById.has(wantF)) startFinding = store.itemById.get(wantF);
   else if (want && store.byId.has(want)) start = store.byId.get(want);
-  else if (hasFindings) startFinding = opening(store);
+  else if (hasFindings) startFinding = store.report ? store.items[0] : opening(store);
   state.opening = startFinding || null;
   if (startFinding) {
     if (startFinding.ref !== undefined) start = startFinding.ref;
@@ -178,6 +193,7 @@ async function openCounty(key) {
   const settle = enter && !stage.flat;
   if (settle) stage.flat = true;
   setState(forced || 'ready');
+  document.body.classList.remove('idle');
   if (enter) $('loupe').classList.add('rise');
   await stage.setPage(v.p, false);
   stage.sel = start;
@@ -186,8 +202,46 @@ async function openCounty(key) {
   await select(start, { animate: enter, entrance: enter, settle });
   state.first = false;
   setFlatLabel();
-  for (const b of document.querySelectorAll('#tabs button')) b.setAttribute('aria-pressed', String(b.dataset.key === key));
   makeReplay(start);
+}
+
+// a county with no disagreements: its first page with nothing marked, and what the data says about its printed sums
+async function openEmpty(store, entry) {
+  state.opening = null; state.sel = null; state.finding = null;
+  setState(forced || 'ready');
+  document.body.classList.add('idle');
+  await stage.setPage(1, false);
+  stage.deselect();
+  stage.layout(true);
+  updatePager();
+  loupe.clear();
+  tape.clear();
+  const card = $('card');
+  card.className = 'card empty-county';
+  card.removeAttribute('aria-label');
+  card.replaceChildren(Object.assign(document.createElement('p'), { className: 'ec-line', textContent: emptyLine(entry) }));
+  $('ctx').textContent = `Page 1 · ${entry.name}`;
+  stage.setLabel(`Page 1 of the scan of ${entry.name}. Nothing on it is marked: the run found no disagreement in this county.`);
+  state.first = false;
+  setFlatLabel();
+  makeReplay(null);
+}
+
+// a county the run did not check: the run's own sentence, and nothing to point at
+function openUnchecked(entry) {
+  state.store = null; state.opening = null; state.sel = null; state.finding = null;
+  const text = NOT_CHECKED;
+  document.body.classList.add('unchecked-county');
+  setState('unchecked');
+  $('statebox').textContent = text;
+  $('fcount').textContent = text;
+  $('card').replaceChildren(); $('tape').replaceChildren();
+  $('ctx').textContent = '';
+  $('paper').setAttribute('aria-label', text);
+  const btn = $('replay');
+  btn.disabled = true; $('speed').hidden = true;
+  $('replay-hint').textContent = text;
+  state.first = false;
 }
 
 // the replay of the county's recorded run; its end puts the page back on the opening value, drawn as on load
@@ -203,7 +257,8 @@ function makeReplay(start = null) {
     headline: { set: c => setHeadline($('fcount'), c), full: () => state.flist.counts() },
     restore: async animate => {
       if (o && o.ref === undefined) await selectPlaceless(o, { animate });
-      else await select(start !== null ? start : o.ref, { animate });
+      else if (start !== null || o) await select(start !== null ? start : o.ref, { animate });
+      else { await stage.setPage(1, animate); stage.deselect(); loupe.clear(); document.body.classList.add('idle'); updatePager(); }   // a county with nothing found: its first page, nothing marked
     },
   });
   stage.layout(true);   // the speed control and the replay label change how tall the controls are
@@ -219,21 +274,21 @@ function opening(store) {
 
 async function openPlaceless(f, entry, key) {
   setState(forced || 'ready');
+  document.body.classList.remove('idle');
   await stage.setPage(f.page || 1, false);
   stage.layout(true);
   updatePager();
   await selectPlaceless(f, { animate: false });
   state.first = false;
   setFlatLabel();
-  for (const b of document.querySelectorAll('#tabs button')) b.setAttribute('aria-pressed', String(b.dataset.key === key));
 }
 
 async function main() {
   stage.flat = q.get('flat') === '1' || reduced || innerWidth < 900;
   setFlatLabel();
   $('flat').onclick = () => { stage.setFlat(!stage.flat); setFlatLabel(); };
-  $('prev').onclick = () => goPage(stage.page - 1, true, -1);
-  $('next').onclick = () => goPage(stage.page + 1, true, 1);
+  $('prev').onclick = () => { const n = pageStep(-1); if (n !== undefined) goPage(n, true, -1); };
+  $('next').onclick = () => { const n = pageStep(1); if (n !== undefined) goPage(n, true, 1); };
   setState('loading');
   if (forced === 'loading') {                 // stays on the loading state, for looking at it; the count is real
     try { const ix = await getJSON('data/index.json'); await getJSON(ix.counties[0].file); } catch (e) { /* the count stays where it is */ }
@@ -249,17 +304,10 @@ async function main() {
   const cs = state.index.counties;
   if (!cs || !cs.length) { setState('first-run'); return; }
   if (forced === 'error') { fail(cs[0].file); return; }
-  if (cs.length > 1) {
-    const nav = $('tabs');
-    nav.hidden = false;
-    cs.forEach(c => {
-      const b = document.createElement('button');
-      b.type = 'button'; b.textContent = c.name; b.dataset.key = c.key;
-      b.onclick = () => openCounty(c.key);
-      nav.append(b);
-    });
-  }
-  await openCounty(cs[0].key);
+  renderRunLine($('runline'), state.index);
+  state.tabs = new Tabs($('tabs'), cs, key => { if (key !== state.key) openCounty(key, { push: true }); });
+  const want = q.get('county');
+  await openCounty(cs.some(c => c.key === want) ? want : cs[0].key);
 }
 
 // ---- shortcuts, matched on the key's position so a keyboard layout does not matter

@@ -1,0 +1,255 @@
+{
+ "axe": "4.12.1",
+ "tags": [
+  "wcag2a",
+  "wcag2aa",
+  "wcag21a",
+  "wcag21aa",
+  "wcag22aa"
+ ],
+ "violations_total": 0,
+ "runs": [
+  {
+   "case": "Panola (opening)",
+   "viewport": "1440x900",
+   "violations": [],
+   "passes": 36,
+   "incomplete": [
+    "aria-prohibited-attr",
+    "color-contrast"
+   ],
+   "pageErrors": []
+  },
+  {
+   "case": "San Saba (opening)",
+   "viewport": "1440x900",
+   "violations": [],
+   "passes": 36,
+   "incomplete": [
+    "aria-prohibited-attr",
+    "color-contrast"
+   ],
+   "pageErrors": []
+  },
+  {
+   "case": "San Saba (a row nothing can decide)",
+   "viewport": "1440x900",
+   "violations": [],
+   "passes": 36,
+   "incomplete": [
+    "aria-prohibited-attr",
+    "color-contrast"
+   ],
+   "pageErrors": []
+  },
+  {
+   "case": "Jones (a settled row)",
+   "viewport": "1440x900",
+   "violations": [],
+   "passes": 36,
+   "incomplete": [
+    "aria-prohibited-attr",
+    "color-contrast"
+   ],
+   "pageErrors": []
+  },
+  {
+   "case": "Jones (a column sum in the finding)",
+   "viewport": "1440x900",
+   "violations": [],
+   "passes": 36,
+   "incomplete": [
+    "aria-prohibited-attr",
+    "color-contrast"
+   ],
+   "pageErrors": []
+  },
+  {
+   "case": "Lynn (wrong column)",
+   "viewport": "1440x900",
+   "violations": [],
+   "passes": 36,
+   "incomplete": [
+    "aria-prohibited-attr",
+    "color-contrast"
+   ],
+   "pageErrors": []
+  },
+  {
+   "case": "Scurry (rows only the file has)",
+   "viewport": "1440x900",
+   "violations": [],
+   "passes": 36,
+   "incomplete": [
+    "aria-prohibited-attr",
+    "color-contrast"
+   ],
+   "pageErrors": []
+  },
+  {
+   "case": "Cottle (nothing found)",
+   "viewport": "1440x900",
+   "violations": [],
+   "passes": 33,
+   "incomplete": [
+    "aria-prohibited-attr",
+    "color-contrast"
+   ],
+   "pageErrors": []
+  },
+  {
+   "case": "Limestone (not checked)",
+   "viewport": "1440x900",
+   "violations": [],
+   "passes": 24,
+   "incomplete": [
+    "aria-prohibited-attr",
+    "color-contrast"
+   ],
+   "pageErrors": []
+  },
+  {
+   "case": "tabs with keyboard focus",
+   "viewport": "1440x900",
+   "violations": [],
+   "passes": 36,
+   "incomplete": [
+    "aria-prohibited-attr",
+    "color-contrast"
+   ],
+   "pageErrors": []
+  },
+  {
+   "case": "San Saba replay paused (a row read again)",
+   "viewport": "1440x900",
+   "violations": [],
+   "passes": 36,
+   "incomplete": [
+    "aria-prohibited-attr",
+    "color-contrast"
+   ],
+   "pageErrors": []
+  },
+  {
+   "case": "Panola (opening)",
+   "viewport": "390x844",
+   "violations": [],
+   "passes": 36,
+   "incomplete": [
+    "aria-prohibited-attr",
+    "color-contrast"
+   ],
+   "pageErrors": []
+  },
+  {
+   "case": "San Saba (opening)",
+   "viewport": "390x844",
+   "violations": [],
+   "passes": 36,
+   "incomplete": [
+    "aria-prohibited-attr",
+    "color-contrast"
+   ],
+   "pageErrors": []
+  },
+  {
+   "case": "San Saba (a row nothing can decide)",
+   "viewport": "390x844",
+   "violations": [],
+   "passes": 36,
+   "incomplete": [
+    "aria-prohibited-attr",
+    "color-contrast"
+   ],
+   "pageErrors": []
+  },
+  {
+   "case": "Jones (a settled row)",
+   "viewport": "390x844",
+   "violations": [],
+   "passes": 36,
+   "incomplete": [
+    "aria-prohibited-attr",
+    "color-contrast"
+   ],
+   "pageErrors": []
+  },
+  {
+   "case": "Jones (a column sum in the finding)",
+   "viewport": "390x844",
+   "violations": [],
+   "passes": 36,
+   "incomplete": [
+    "aria-prohibited-attr",
+    "color-contrast"
+   ],
+   "pageErrors": []
+  },
+  {
+   "case": "Lynn (wrong column)",
+   "viewport": "390x844",
+   "violations": [],
+   "passes": 36,
+   "incomplete": [
+    "aria-prohibited-attr",
+    "color-contrast"
+   ],
+   "pageErrors": []
+  },
+  {
+   "case": "Scurry (rows only the file has)",
+   "viewport": "390x844",
+   "violations": [],
+   "passes": 36,
+   "incomplete": [
+    "aria-prohibited-attr",
+    "color-contrast"
+   ],
+   "pageErrors": []
+  },
+  {
+   "case": "Cottle (nothing found)",
+   "viewport": "390x844",
+   "violations": [],
+   "passes": 34,
+   "incomplete": [
+    "aria-prohibited-attr",
+    "color-contrast"
+   ],
+   "pageErrors": []
+  },
+  {
+   "case": "Limestone (not checked)",
+   "viewport": "390x844",
+   "violations": [],
+   "passes": 25,
+   "incomplete": [
+    "aria-prohibited-attr",
+    "color-contrast"
+   ],
+   "pageErrors": []
+  },
+  {
+   "case": "tabs with keyboard focus",
+   "viewport": "390x844",
+   "violations": [],
+   "passes": 36,
+   "incomplete": [
+    "aria-prohibited-attr",
+    "color-contrast"
+   ],
+   "pageErrors": []
+  },
+  {
+   "case": "San Saba replay paused (a row read again)",
+   "viewport": "390x844",
+   "violations": [],
+   "passes": 36,
+   "incomplete": [
+    "aria-prohibited-attr",
+    "color-contrast"
+   ],
+   "pageErrors": []
+  }
+ ]
+}

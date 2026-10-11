@@ -223,3 +223,209 @@ def test_the_replay_timeline_follows_the_runs_own_events():
         pytest.skip("needs node and the built county data")
     r = subprocess.run([node, str(root / "qa" / "t07b" / "timeline.mjs")], capture_output=True, text=True, cwd=root)
     assert r.returncode == 0, r.stdout + r.stderr
+
+
+# ---- the report layout (T07c): row crops, figures from the ink, the run's index --------------------------------------------
+
+def page_image():
+    """A made-up portrait page at 300 dpi: a contest heading, column headings, six rows of a label and four figures."""
+    from PIL import Image, ImageDraw
+    im = Image.new("L", (1000, 1400), 255)
+    dr = ImageDraw.Draw(im)
+    dr.rectangle([40, 100, 400, 140], fill=0)                       # the contest's title
+    dr.rectangle([40, 150, 160, 168], fill=0)                       # "Vote For 1"
+    for x in (520, 660, 800, 930):
+        dr.rectangle([x - 40, 200, x + 20, 230], fill=0)            # the column headings
+    figs = {}
+    vals = (1234, 12, 345, 6)                                       # each figure is 14 px wide per character, 25 px tall
+    for r in range(6):
+        y = 300 + r * 80                                            # a row pitch of 80 px
+        dr.rectangle([40, y, 300, y + 24], fill=0)                  # the label
+        for c, x in enumerate((520, 660, 800, 930)):
+            w = 14 * len(f"{vals[c]:,}")
+            dr.rectangle([x - w, y, x - 1, y + 24], fill=0)
+            figs[(r, c)] = [x - w, y, x, y + 25]
+        dr.line([40, y + 38, 960, y + 38], fill=200, width=1)       # a dotted rule is a faint line
+    return im, figs
+
+
+def test_the_heading_starts_after_the_blank_band_above_it():
+    from crossfoot.sitebuild import heading_top, _dark
+    im, _ = page_image()
+    dark, _ = _dark(im, [0, 0, 1000, 1400])
+    ink = dark.sum(axis=1) >= 3
+    assert heading_top(ink, 295) == 100                              # the title's first row, not the paper above it
+    assert heading_top([False] * 400, 300) == 130                    # nothing found: a fixed reach above the row
+
+
+def test_a_deep_row_gets_the_heading_and_its_own_neighbourhood_as_two_pieces():
+    from crossfoot.sitebuild import row_pieces, cut_pieces, to_crop, to_page, _dark, SPACER
+    im, _ = page_image()
+    dark, _ = _dark(im, [0, 0, 1000, 1400])
+    ink = dark.sum(axis=1) >= 3
+    strips = [(290 + r * 80, 335 + r * 80) for r in range(6)]
+    top = row_pieces(strips, 0, ink)
+    assert len(top) == 1 and 95 <= top[0][0] <= 100                  # a row near the top: heading and rows in one piece
+    deep = row_pieces(strips, 5, ink)
+    assert len(deep) == 2 and deep[0][1] <= 300                      # the heading ends above the first row
+    assert deep[1][0] >= 480 and deep[1][1] <= 1400                  # two rows above the row, none below (it is the last)
+    crop, parts = cut_pieces(im, deep, 960)
+    assert crop.height == sum(b - a for a, b in deep) + SPACER
+    # nothing is drawn into the crop: every pixel of it is a pixel of the page, or white
+    assert to_page(parts, 50, to_crop(parts, 50, 700)[1]) == (50, 700)
+    assert to_crop(parts, 5, 5) is None
+    band = crop.crop((0, parts[0][1] - parts[0][0], 960, parts[0][1] - parts[0][0] + SPACER))
+    assert band.getextrema() == (255, 255)
+
+
+def test_figures_are_found_from_the_ink_right_to_left_and_a_wrong_count_gives_none():
+    from crossfoot.sitebuild import figure_boxes, COLS
+    im, figs = page_image()
+    vals = {"total": 1234, "absentee": 12, "early": 345, "election_day": 6}
+    boxes, label, h = figure_boxes(im, [0, 295, 960, 335], values={c: vals[c] for c in COLS})
+    # the ink gives each figure's box (within the strip shrunk by 6 px each side): the figure is 25 px tall
+    for c, col in enumerate(COLS):
+        b, want = boxes[col], figs[(0, c)]
+        assert b is not None and abs(b[0] - want[0]) <= 1 and abs(b[2] - want[2]) <= 1 and abs(b[1] - want[1]) <= 1, (col, b, want)
+    assert label is not None and label[0] == 40 and h in (24, 25)
+    # a strip with fewer clusters than columns (here none): nothing is guessed
+    empty, lab, hh = figure_boxes(im, [0, 900, 960, 960], values=None)
+    assert all(v is None for v in empty.values()) and lab is None and hh is None
+    # widths that do not fit the digits of the values (a 4-digit value that is as wide as a 1-digit one) are not trusted
+    odd = figure_boxes(im, [0, 295, 960, 335], values={"total": 1, "absentee": 1234567, "early": 1, "election_day": 1})
+    assert all(v is None for v in odd[0].values())
+
+
+def report_raw():
+    cell = lambda r, c, v, y: {"page": 1, "block": "1|1", "contest": "President", "candidate": "A", "row_kind": r, "column": c,
+                               "value": v, "first_read": v, "status": "accepted", "tries": 0, "model": "m", "reason": None,
+                               "box": [0, y, 950, y + 40]}
+    rows = [("A", [10, 1, 4, 5], 100), ("B", [6, 0, 2, 4], 140), ("Total Votes Cast", [16, 1, 6, 9], 180)]
+    cells = [cell(r, c, v, y) for r, vs, y in rows for c, v in zip(("total", "absentee", "early", "election_day"), vs)]
+    checks = [{"kind": "report_row", "page": 1, "block": "1|1", "key": r, "terms": [[1, "1|1", r, c] for c in ("absentee", "early", "election_day")],
+               "printed": vs[0], "computed": sum(vs[1:]), "ok": True} for r, vs, y in rows]
+    checks.append({"kind": "report_contest", "page": 1, "block": "1|1", "key": "total",
+                   "terms": [[1, "1|1", "A", "total"], [1, "1|1", "B", "total"]], "printed": 16, "computed": 16, "ok": True})
+    return {"county": "tiny", "run_id": "r1", "layout": "report", "pages": [{"number": 1, "width": 1000, "height": 1400, "dpi": 200}],
+            "blocks": [{"id": "1|1", "page": 1, "contest": "President", "candidate": "A", "box": None}], "cells": cells,
+            "totals": [], "checks": checks, "events": [], "summary": {}}
+
+
+def report_findings():
+    sums = [{"name": "the row adds up", "kind": "report_row", "page": 1, "block": "1|1", "printed": 10, "printed_label": "total",
+             "terms": [{"cell": [1, "1|1", "A", c], "value": v} for c, v in (("absentee", 1), ("early", 4), ("election_day", 5))],
+             "computed_with_scan": 10, "holds_with_scan": True, "computed_with_file": 11, "holds_with_file": False},
+            {"name": "the column adds up", "kind": "report_contest", "page": 1, "block": "1|1", "printed": 16, "printed_label": "contest total",
+             "terms": [{"cell": [1, "1|1", "A", "total"], "value": 10}, {"cell": [1, "1|1", "B", "total"], "value": 6}],
+             "computed_with_scan": 16, "holds_with_scan": True, "computed_with_file": 17, "holds_with_file": False}]
+    f = lambda i, part, fv, sv, **kw: {"id": i, "group": "g1", "county": "tiny", "office": "President", "party": "", "candidate": "A",
+                                       "precinct": "Precinct 2", "part": part, "file_value": fv, "scan_value": sv, "kind": "wrong_number",
+                                       "status": "settled_against_file", "reason": "r", "sums": sums, "page": 1, "block": "1|1", "row": "A",
+                                       "box": [0, 100, 950, 140], "crop": None, "reread": None, "confirmed_by_person": False, **kw}
+    return {"county": "tiny", "run_id": "r1", "file": "x.csv",
+            "counts": {"findings": 2, "by_kind": {"wrong_number": 2}, "by_status": {"settled_against_file": 2}, "groups": 1},
+            "findings": [f("f1", "absentee", 0, 1), f("f2", "early_voting", 5, 4, status="cannot_verify",
+                                                      reread={"value": 4, "agrees_with_ledger": True, "error": None})],
+            "groups": [{"id": "g1", "kind": "wrong_number", "office": "President", "district": "", "candidate": "A", "precincts": ["Precinct 2"],
+                        "page": 1, "block": "1|1", "findings": ["f1", "f2"], "crop": None}]}
+
+
+def test_a_report_finding_sits_on_its_figure_and_carries_the_rows_both_readings():
+    d = build_county(report_raw(), {1: (1000, 1400, 1000, 1400)}, findings=report_findings(),
+                     rows={"rc": [{"id": 0, "p": 1, "b": "1|1", "r": "A"}], "fx": {(1, "1|1", "A", "absentee"): [1, 2, 3, 4]},
+                           "rcix": {(1, "1|1", "A"): 0}})
+    v = {(x["r"], x["c"]): i for i, x in enumerate(d["values"])}
+    f1, f2 = d["fd"]["items"]
+    assert f1["ref"] == v[("A", "absentee")] and f2["ref"] == v[("A", "early")]
+    assert f1["col"] == "absentee" and f2["col"] == "early" and f1["rc"] == 0
+    # the row is the label as printed on the scan, not the block's first row
+    assert f1["row"] == "A" and d["fd"]["groups"][0]["row"] == "A"
+    # both findings are on one row: the file's row has both of the file's values
+    assert f1["rv"] == {"file": [10, 0, 5, 5], "scan": [10, 1, 4, 5]} and f2["rv"] == f1["rv"]
+    # the contest total row's value in the figure's column
+    assert d["values"][f1["tot"]]["r"] == "Total Votes Cast" and d["values"][f1["tot"]]["c"] == "absentee"
+    assert f2["reread_agrees"] is True and "reread_agrees" not in f1
+    assert d["values"][f1["ref"]]["fx"] == [1, 2, 3, 4] and "fx" not in d["values"][v[("B", "total")]]
+    assert d["rc"][0]["id"] == 0
+
+
+def test_a_page_without_an_image_is_listed_with_its_number_and_size():
+    from crossfoot.sitebuild import frame_sizes
+    raw = report_raw()
+    assert frame_sizes(raw) == {1: (1000, 1400, 1000, 1400)}
+    raw["pages"].append({"number": 2, "width": 2400, "height": 3000, "dpi": 200})
+    sizes = frame_sizes(raw)
+    assert sizes[2] == (2400, 3000, 1600, 2000)
+    d = build_county(raw, sizes, images={1})
+    assert [p["img"] is None for p in d["pages"]] == [False, True] and d["pages"][1]["w"] == 1600
+
+
+def test_the_rows_that_need_a_crop_are_the_rows_with_a_finding_and_the_rows_read_again():
+    from crossfoot.sitebuild import wanted_rows
+    raw = report_raw()
+    raw["events"] = [{"ts": 1, "kind": "reread", "payload": {"item": "i1", "page": 1, "block": "1|1", "row": "B"}},
+                     {"ts": 2, "kind": "reread", "payload": {"item": "i1", "page": 1, "block": "1|1", "row": "A"}}]
+    crops, tots = wanted_rows(raw, report_findings())
+    assert crops == [(1, "1|1", "A"), (1, "1|1", "B")]               # A for its findings, B for the first re-read of the item
+    assert tots == [(1, "1|1", "Total Votes Cast")]                  # the contest total row only needs its figures
+
+
+def test_the_index_lists_every_county_with_its_figures_and_the_run_totals():
+    from crossfoot.sitebuild import county_entry, unchecked_entry, run_totals
+    summ = {"county": "tiny", "status": "audited", "layout": "report", "second_sum_exists": True,
+            "sums_check": {"in_all": 10, "holding_with_published": 8, "holding_with_corrected": 9}}
+    fs = report_findings()
+    e = county_entry("tiny", summ, fs, 3, "report")
+    assert (e["name"], e["file"], e["pages"], e["status"], e["layout"]) == ("Tiny", "data/tiny.json", 3, "audited", "report")
+    assert e["disagreements"] == 2 and e["by_status"] == {"settled_against_file": 1, "cannot_verify": 1} and e["confirmed"] == 0
+    assert e["sums_check"] == summ["sums_check"] and e["second_sum"] is True
+    none = county_entry("empty", {"status": "audited"}, {"findings": []}, 2, "report")
+    assert none["disagreements"] == 0 and "sums_check" not in none
+    un = unchecked_entry("lime", {"layout": "no_printed_totals", "note": "nothing here"}, None)
+    assert un == {"key": "lime", "name": "Lime", "pages": 0, "status": "unchecked", "layout": "no_printed_totals", "note": "nothing here"}
+    assert "file" not in un
+    t = run_totals([e, none, un], {"totals": {"model_calls": 5, "metered_cost": 1.5, "seconds": 60.0}}, {})
+    assert t == {"counties": 3, "read": 2, "findings": 2, "settled": 1, "cannot_verify": 1, "confirmed": 0, "sums_in_all": 10,
+                 "holding_published": 8, "holding_corrected": 9, "model_calls": 5, "metered_cost": 1.5, "seconds": 60.0}
+    assert "model_calls" not in run_totals([e], None, {})
+
+
+def test_row_crops_are_cut_from_the_page_and_every_figure_is_placed(tmp_path):
+    from PIL import Image
+    from crossfoot.sitebuild import build_rows
+    raw = report_raw()
+    raw["pages"][0].update(width=1000, height=1400)
+    img, figs = page_image()
+    vals = (1234, 12, 345, 6)
+    for c in raw["cells"]:                       # three rows on the page's first rows: the strips of page_image()
+        r = ("A", "B", "Total Votes Cast").index(c["row_kind"])
+        c["box"] = [0, 290 + r * 80, 950, 335 + r * 80]
+        c["value"] = vals[("total", "absentee", "early", "election_day").index(c["column"])]
+    rc, fx, index = build_rows(raw, [(1, "1|1", "B")], [(1, "1|1", "Total Votes Cast")], lambda n: img, lambda n: 1000, lambda n: 0.5,
+                               tmp_path, lambda county, n: f"data/rows/{county}-r{n}.webp")
+    assert index == {(1, "1|1", "B"): 0} and len(rc) == 1
+    r = rc[0]
+    assert (r["p"], r["b"], r["r"]) == (1, "1|1", "B") and r["img"] == "data/rows/tiny-r0.webp"
+    assert Image.open(tmp_path / "tiny-r0.webp").size == (r["w"], r["h"])
+    # every figure is placed inside the crop, in column order (left to right), and sits inside the row's box
+    boxes = [r["fb"][c] for c in ("total", "absentee", "early", "election_day")]
+    assert all(b is not None for b in boxes) and [b[0] for b in boxes] == sorted(b[0] for b in boxes)
+    assert all(r["rb"][1] <= b[1] and b[3] <= r["rb"][3] + 1 and b[2] <= r["w"] for b in boxes)
+    assert 0 <= r["pb"][0] < r["pb"][2] <= 500 and 0 < r["pb"][1] < r["pb"][3] <= 700   # in page-image pixels (half of 1000 x 1400)
+    # the contest total row has the figures' boxes in page-image pixels, and no crop of its own
+    assert fx[(1, "1|1", "Total Votes Cast", "total")] is not None and (1, "1|1", "Total Votes Cast") not in index
+    assert [f.name for f in tmp_path.iterdir()] == ["tiny-r0.webp"]
+    # the blank bands between the lines are listed (their middles), in order, inside the crop and clear of the row's figures
+    assert r["gp"] == sorted(r["gp"]) and r["gp"] and all(0 <= g <= r["h"] for g in r["gp"])
+    assert not any(b[1] <= g <= b[3] for g in r["gp"] for b in boxes)
+
+
+def test_the_replay_timeline_of_the_report_counties_follows_their_events():
+    """qa/t07c/timeline.mjs builds the timelines of San Saba, Jones, Lynn and Cottle from the real data and checks them."""
+    import pathlib, shutil, subprocess
+    root = pathlib.Path(__file__).resolve().parents[1]
+    node = shutil.which("node")
+    if not node or not (root / "site" / "data" / "san_saba.json").exists():
+        pytest.skip("needs node and the built county data")
+    r = subprocess.run([node, str(root / "qa" / "t07c" / "timeline.mjs")], capture_output=True, text=True, cwd=root)
+    assert r.returncode == 0, r.stdout + r.stderr

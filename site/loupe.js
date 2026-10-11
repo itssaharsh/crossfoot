@@ -1,10 +1,14 @@
 // The loupe: the scan itself around the selected value, from the block's own 300 dpi image.
 import { loopPath, boxPath } from './ring.js';
+import { COLS } from './data.js';
 const SVGNS = 'http://www.w3.org/2000/svg';
 const S0 = 1.25, CLEAR = 10, ROW_PAD = 8, FADE_MS = 150, AIR = 8, RING_PX = 2.5, RING_MS = 180;
 const TAG_H = 22, TAG_GAP = 5, LOOP_BELOW = 10;   // the tag, its distance from the ring, and how far the loop reaches below the digits (block px)
 // scale tiers tried in turn when the view is fitted to column edges: [smallest, largest, the row-label column must be whole]
 const TIERS = [[1.0, 1.6, true], [0.8, 1.9, true], [1.0, 1.6, false], [0.8, 1.9, false]];
+const NOTE = "This value has no position in this run's data", NOTE_REPORT = 'No crop was cut for this row: rows with a finding have one.';
+const READ_PX = 17.5, S_MIN = 0.62, S_MAX = 1.15;   // the report layout: figures at least this tall on screen (px), and the scales allowed
+const RIGHT_AIR = 44, LEFT_AIR = 14, COLUMN_AIR = 56, MIN_PX = 16.2;   // COLUMN_AIR: other rows' figures in a column may be wider than the ringed one   // the report layout: clear paper right of the last figure, so the column heading above it is whole
 const EDGE_AIR = 14;   // the loop needs this much clear paper (block pixels) between the digits and the view's edge
 
 const svg = (tag, attrs = {}) => {
@@ -37,7 +41,7 @@ export class Loupe {
     for (const e of [this.tagEl, this.stemEl]) if (e) e.remove();
     this.tagEl = this.stemEl = null; this.setCtx(null);
     for (const l of this.view.querySelectorAll('.lp-layer')) l.remove();
-    this.layer = null; this.note.hidden = true;
+    this.layer = null; this.note.hidden = true; this.note.textContent = NOTE;
   }
 
   // the part of the block image a value takes: [x0, x1, y0, y1] in block-image pixels
@@ -93,6 +97,7 @@ export class Loupe {
   // a ring that waits to be drawn on (reveal) when the selection is animated
   show(store, i, draws, animate = true, extra = {}) {
     const v = store.values[i];
+    if (store.report) return this.showReport(store, i, v, draws, animate, extra);
     const blk = store.block(v);
     this.last = { store, i, draws, extra };
     if (!blk || !blk.bi || !blk.x) { this.clear(); this.last = { store, i, draws, extra }; this.note.hidden = !!v.x; return; }
@@ -113,6 +118,143 @@ export class Loupe {
     this.apply(layer, this.place(layer, ext));
     this.paint(layer, store, blk, v, draws, extra, animate && !this.reduced);
     this.moveTag(layer, v, same && animate);
+  }
+
+  // ---- the report layout: the row's clean crop, read at the size of its figures
+  showReport(store, i, v, draws, animate, extra) {
+    const rc = store.rowCrop(v);
+    this.last = { store, i, draws, extra };
+    if (!rc) { this.clear(); this.last = { store, i, draws, extra }; this.note.textContent = NOTE_REPORT; this.note.hidden = false; return; }
+    this.note.hidden = true;
+    const key = `rc:${rc.id}`;
+    const same = this.layer && this.layer.key === key;
+    let layer = this.layer;
+    if (!same) {
+      const old = this.layer;
+      layer = this.layer = this.buildReport(rc, key);
+      this.view.append(layer.el);
+      this.fadeIn(layer, animate);
+      if (old) this.fadeOut(old, animate);
+    }
+    const ext = this.reportExtent(layer, v);
+    layer.pan.classList.toggle('slide', same && animate);
+    layer.ext = ext;
+    this.apply(layer, this.placeReport(layer, ext, v));
+    this.paintReport(layer, store, v, draws, extra, animate && !this.reduced);
+    this.moveTag(layer, v, same && animate);
+  }
+  buildReport(rc, key) {
+    const el = document.createElement('div');
+    el.className = 'lp-layer';
+    const pan = document.createElement('div');
+    pan.className = 'lp-pan';
+    pan.style.width = `${rc.w}px`; pan.style.height = `${rc.h}px`;
+    const img = document.createElement('img');
+    img.alt = ''; img.decoding = 'async'; img.width = rc.w; img.height = rc.h; img.src = rc.img;
+    const s = svg('svg', { viewBox: `0 0 ${rc.w} ${rc.h}`, width: rc.w, height: rc.h, class: 'lp-svg' });
+    pan.append(img, s);
+    el.append(pan);
+    return { key, rc, report: true, blk: null, el, pan, img, svg: s, top: 0, S: S_MIN, tx: 0, ty: 0, ext: null };
+  }
+  // [x0, x1, y0, y1] in the crop's pixels: the figure, else the row's figures, else the right part of the row
+  reportExtent(layer, v) {
+    const { rc } = layer, fb = rc.fb || {};
+    const one = fb[v.c];
+    const all = COLS.map(c => fb[c]).filter(Boolean);
+    if (one) return [one[0], one[2], one[1], one[3]];
+    if (all.length) return [Math.min(...all.map(b => b[0])), Math.max(...all.map(b => b[2])), Math.min(...all.map(b => b[1])), Math.max(...all.map(b => b[3]))];
+    return [rc.rb[2] * 0.55, rc.rb[2] - 8, rc.rb[1] + 4, rc.rb[3] - 4];
+  }
+  placeReport(layer, ext, v) {
+    const { rc } = layer, W = this.W, H = this.H;
+    const fh = (rc.fb && rc.fb[v.c] ? rc.fb[v.c][3] - rc.fb[v.c][1] : rc.fh) || 24;
+    let S = Math.min(S_MAX, Math.max(S_MIN, READ_PX / fh));
+    const Smin = Math.min(S, Math.max(0.3, MIN_PX / fh));
+    const figs = COLS.map(c => rc.fb && rc.fb[c]);
+    const known = figs.filter(Boolean);
+    const left = Math.min(ext[0], ...known.map(b => b[0])), right = Math.max(ext[1], ...known.map(b => b[2]));
+    let L;
+    // the four figures and the clear paper round them, at the size of the figures: the window is as wide as it needs to be
+    for (; S > Smin + 1e-6 && (right + RIGHT_AIR) - (left - LEFT_AIR - COLUMN_AIR) > W / S; S -= 0.02);
+    S = Math.max(S, Smin);
+    const win = W / S;
+    if (rc.w <= win) L = 0;
+    else if ((right + RIGHT_AIR) - (left - LEFT_AIR - COLUMN_AIR) <= win) L = Math.min(Math.max(0, right + RIGHT_AIR - win), rc.w - win);
+    else {
+      // not all four fit: as many of the figures as fit, the selected one among them, and no figure cut by the window's edge
+      const idx = COLS.indexOf(v.c);
+      let lo = idx < 0 || !figs[idx] ? 0 : idx, hi = lo;
+      const ok = (l, h) => figs[l] && figs[h] && figs[h][2] - figs[l][0] + 20 <= win;
+      for (let grew = true; grew;) {
+        grew = false;
+        if (hi + 1 < figs.length && ok(lo, hi + 1)) { hi++; grew = true; }
+        else if (lo > 0 && ok(lo - 1, hi)) { lo--; grew = true; }
+      }
+      const a1 = lo > 0 && figs[lo - 1] ? figs[lo - 1][2] + 6 : 0, a2 = (figs[lo] ? figs[lo][0] : ext[0]) - 8 - COLUMN_AIR;
+      const b1 = (figs[hi] ? figs[hi][2] : ext[1]) + 8, b2 = hi + 1 < figs.length && figs[hi + 1] ? figs[hi + 1][0] - 6 : rc.w;
+      const lo_ = Math.max(a1, b1 - win), hi_ = Math.min(a2, b2 - win);
+      L = lo_ <= hi_ ? (lo_ + hi_) / 2 : Math.min(Math.max(0, ((figs[lo] ? figs[lo][0] : ext[0]) + (figs[hi] ? figs[hi][2] : ext[1])) / 2 - win / 2), rc.w - win);
+      L = Math.min(Math.max(0, L), rc.w - win);
+    }
+    const lb = rc.lb;
+    if (lb && L > lb[0] && L < lb[1] && lb[1] + 8 <= ext[0] - 20) L = Math.min(lb[1] + 8, Math.max(0, rc.w - win));   // no label cut in half: the label is left out whole
+    // the rows: the window opens on the contest's heading when the row is near it, else on the column headings (a crop of two
+    // pieces) when they fit above the row, else on the row's neighbourhood with its top on a gap between two rows
+    const winH = H / S, rowY = (rc.rb[1] + rc.rb[3]) / 2, pitch = Math.max(30, rc.rb[3] - rc.rb[1]), want = rc.rb[3] + pitch * 1.2;
+    const has = rc.ch !== null && rc.ch !== undefined;
+    const lattice = () => Math.round((rowY - winH / 2 - (rc.rb[1] - 4)) / pitch) * pitch + rc.rb[1] - 4;
+    let t;
+    if (has && want - rc.ch <= winH) t = rc.ch;                       // opens on the column headings; the window may run past the crop's end
+    else if (rc.h <= winH) t = (rc.h - winH) / 2;
+    else if (!has && want <= winH) t = 0;
+    else if (rc.gp && rc.gp.length) {
+      // the window opens and closes on the blank between two lines: of the gaps that keep the row whole, the one that
+      // puts the row nearest the middle and lets the window end in blank paper
+      const lo = Math.max(0, (rc.fr || 0) - 4), hi = rc.h - winH, ideal = rowY - winH / 2;
+      let best = null;
+      for (const g of [lo, ...rc.gp.filter(g => g > lo)]) {
+        if (g > rc.rb[1] - 2 || g + winH < rc.rb[3] + 2 || g > hi + 0.5) continue;
+        const end = g + winH, away = Math.min(...rc.gp.map(q => Math.abs(q - end)), end > rc.h ? 0 : 1e9);
+        const score = Math.abs(g - ideal) * 0.4 + away;
+        if (!best || score < best.score) best = { g, score };
+      }
+      t = best ? best.g : Math.min(Math.max(lo, lattice()), Math.max(0, hi));
+    } else {
+      t = Math.min(Math.max(0, lattice()), rc.h - winH);
+      // a window that opens inside the headings would cut a line of them: it opens on the first row instead
+      if (rc.fr !== undefined && rc.fr !== null && t > 0 && t < rc.fr - 4) t = Math.min(rc.fr - 4, rc.h - winH);
+    }
+    return { S, tx: -L * S, ty: -t * S };
+  }
+  paintReport(layer, store, v, draws, extra, pending = false) {
+    const { svg: s, rc } = layer, S = layer.S;
+    s.replaceChildren();
+    const rowDraw = draws.find(d => d.axis === 'row') || draws[0];
+    const mid = (rc.rb[1] + rc.rb[3]) / 2;
+    s.append(svg('line', { x1: 0, y1: mid, x2: rc.w, y2: mid, 'stroke-width': rc.rb[3] - rc.rb[1], class: !rowDraw || rowDraw.ok ? 'holds' : 'fails' }));
+    store.rowCells(v).forEach((j, k) => {
+      const b = rc.fb && rc.fb[COLS[k]];
+      if (j === undefined || !b) return;
+      const r = svg('rect', { x: b[0] - 4, y: b[1] - 4, width: b[2] - b[0] + 8, height: b[3] - b[1] + 8, class: 'lp-hit' });
+      r.dataset.i = j;
+      r.addEventListener('click', () => this.onPick(j));
+      s.append(r);
+    });
+    const other = extra.other !== undefined ? store.values[extra.other] : null;
+    const ob = other && other.p === v.p && other.b === v.b && other.r === v.r && rc.fb ? rc.fb[other.c] : null;
+    if (ob) {
+      const o = svg('rect', { x: ob[0] - 5, y: ob[1] - 5, width: ob[2] - ob[0] + 10, height: ob[3] - ob[1] + 10, class: 'lp-ring2' });
+      o.style.strokeWidth = 1.5 / S;
+      s.append(o);
+    }
+    const ok = draws.every(d => d.ok), e = layer.ext, one = rc.fb && rc.fb[v.c];
+    const box = [e[0], e[2], e[1], e[3]];
+    const ring = svg('path', { d: one ? loopPath(box, AIR / S) : boxPath([box[0] - 4, box[1] - 4, box[2] + 4, box[3] + 4]), pathLength: 1, class: 'lp-ring ' + (ok ? 'holds' : 'fails') });
+    ring.style.strokeWidth = RING_PX / S;
+    if (pending) { ring.style.strokeDasharray = '1 1'; ring.style.strokeDashoffset = 1; }
+    s.append(ring);
+    this.ringEl = ring; this.peekEl = null;
+    this.tagText = extra.tag === undefined ? null : extra.tag;
   }
 
   fadeIn(layer, animate) {
@@ -224,8 +366,9 @@ export class Loupe {
   setCtx(gap) {
     const c = this.ctxEl;
     if (!c) return;
-    if (!gap) { c.style.left = c.style.right = c.style.textAlign = ''; return; }
+    if (!gap) { c.style.left = c.style.right = c.style.textAlign = c.style.visibility = ''; return; }
     const W = c.parentElement.clientWidth, [l, r] = gap, side = l - 24 >= W - r - 24;
+    c.style.visibility = Math.max(l - 24 - 12, W - r - 24 - 12) < 60 ? 'hidden' : '';   // no room beside the tag: the caption gives way entirely
     if (side) { c.style.left = '24px'; c.style.right = `${W - l + 12}px`; c.style.textAlign = 'right'; }
     else { c.style.left = `${r + 12}px`; c.style.right = '24px'; c.style.textAlign = 'left'; }
   }
@@ -241,10 +384,16 @@ export class Loupe {
     }
     const t = this.tagEl, stem = this.stemEl, blk = layer.blk;
     t.textContent = this.tagText;
+    t.classList.toggle('rep', !!layer.report);   // the report layout's tag: it may name two figures, so it may be long
     if (t.parentNode !== this.view) this.view.append(t);   // measured where it will usually sit
     const w = t.offsetWidth, [a, b, ya, yb] = layer.ext, S = layer.S;
-    const mx = blk.bi.w / (blk.x[2] - blk.x[0]);
-    const cellL = layer.tx + (v.x[0] - blk.x[0]) * mx * S;          // the cell's left edge, in the view
+    // the blank part of the row starts where the label ends (report layout), or at the cell's left edge
+    let cellL;
+    if (layer.report) {   // the blank part ends at the label's end, or at the nearest figure to the left of the ringed one
+      let edge = layer.rc.lb ? layer.rc.lb[1] : 0;
+      for (const c of COLS) { const fb = layer.rc.fb && layer.rc.fb[c]; if (fb && fb[2] <= a + 1 && fb[2] > edge) edge = fb[2]; }
+      cellL = layer.tx + (edge + 6) * S;
+    } else cellL = layer.tx + (v.x[0] - blk.x[0]) * (blk.bi.w / (blk.x[2] - blk.x[0])) * S;
     const ringL = layer.tx + a * S - 12, ringR = layer.tx + b * S + 12;
     const midY = layer.ty + ((ya + yb) / 2) * S, ringTop = layer.ty + ya * S - 12;
     const left = ringL - TAG_GAP - w, need = Math.max(cellL + 3, 4);
@@ -287,7 +436,7 @@ export class Loupe {
   // the keyboard is on another value of the sheet: show it here too, without selecting it (i null: back to the selection)
   peek(store, i) {
     const l = this.layer;
-    if (!l || l.crop) return;
+    if (!l || l.crop || l.report) return;
     if (this.peekEl) { this.peekEl.remove(); this.peekEl = null; }
     const sel = this.last && store.values[this.last.i];
     const v = i === null || i === undefined ? sel : store.values[i];
@@ -322,6 +471,13 @@ export class Loupe {
     l.pan.classList.remove('slide');
     if (this.tagEl) this.tagEl.classList.remove('slide');
     const { store, i } = this.last, v = store.values[i];
+    if (l.report) {
+      l.ext = this.reportExtent(l, v);
+      this.apply(l, this.placeReport(l, l.ext, v));
+      this.paintReport(l, store, v, this.last.draws, this.last.extra, false);
+      this.moveTag(l, v, false);
+      return;
+    }
     const ext = this.extent(store, l.blk, v, l);
     l.ext = ext;
     this.apply(l, this.place(l, ext));

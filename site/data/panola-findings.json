@@ -1,6 +1,7 @@
 {
  "county": "panola",
- "run_id": "20261011-120008",
+ "run_id": "20261011-130414",
+ "layout": "matrix",
  "file": "20241105__tx__general__panola__precinct.csv",
  "policy": {
   "question_id": "document_disagrees_with_itself",
@@ -19,11 +20,11 @@
    "extra_row": 2
   },
   "by_status": {
-   "settled_against_file": 110,
-   "cannot_verify": 11
+   "settled_against_file": 109,
+   "cannot_verify": 12
   },
   "groups": 46,
-  "corrections": 96
+  "corrections": 80
  },
  "findings": [
   {
@@ -241,9 +242,12 @@
     "model": "claude-sonnet-4.6",
     "dpi": 400,
     "value": 1459,
-    "crop": "runs/20261011-120008/crops/audit-reread-0001-reg.png",
+    "crop": "runs/20261011-130414/crops/audit-reread-0001-reg.png",
     "error": null
    },
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": null,
    "file_row": 2,
    "file_line": 4,
    "corrected": false,
@@ -501,13 +505,10 @@
     749
    ],
    "crop": "crops/g002.png",
-   "reread": {
-    "model": "claude-sonnet-4.6",
-    "dpi": 400,
-    "value": 1,
-    "crop": "runs/20261011-120008/crops/audit-reread-0002-p1-b3.png",
-    "error": null
-   },
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": null,
    "file_row": 87,
    "file_line": 89,
    "corrected": true,
@@ -765,13 +766,10 @@
     812
    ],
    "crop": "crops/g002.png",
-   "reread": {
-    "model": "claude-sonnet-4.6",
-    "dpi": 400,
-    "value": 0,
-    "crop": "runs/20261011-120008/crops/audit-reread-0003-p1-b3.png",
-    "error": null
-   },
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": null,
    "file_row": 87,
    "file_line": 89,
    "corrected": true,
@@ -1029,13 +1027,10 @@
     842
    ],
    "crop": "crops/g003.png",
-   "reread": {
-    "model": "claude-sonnet-4.6",
-    "dpi": 400,
-    "value": 1,
-    "crop": "runs/20261011-120008/crops/audit-reread-0004-p1-b3.png",
-    "error": null
-   },
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": null,
    "file_row": 94,
    "file_line": 96,
    "corrected": true,
@@ -1293,13 +1288,10 @@
     812
    ],
    "crop": "crops/g003.png",
-   "reread": {
-    "model": "claude-sonnet-4.6",
-    "dpi": 400,
-    "value": 1,
-    "crop": "runs/20261011-120008/crops/audit-reread-0005-p1-b3.png",
-    "error": null
-   },
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": null,
    "file_row": 94,
    "file_line": 96,
    "corrected": true,
@@ -1557,13 +1549,10 @@
     996
    ],
    "crop": "crops/g004.png",
-   "reread": {
-    "model": "claude-sonnet-4.6",
-    "dpi": 400,
-    "value": 0,
-    "crop": "runs/20261011-120008/crops/audit-reread-0006-p1-b4.png",
-    "error": null
-   },
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": null,
    "file_row": 96,
    "file_line": 98,
    "corrected": true,
@@ -1821,13 +1810,10 @@
     996
    ],
    "crop": "crops/g004.png",
-   "reread": {
-    "model": "claude-sonnet-4.6",
-    "dpi": 400,
-    "value": 1,
-    "crop": "runs/20261011-120008/crops/audit-reread-0008-p1-b4.png",
-    "error": null
-   },
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": null,
    "file_row": 97,
    "file_line": 99,
    "corrected": true,
@@ -2085,13 +2071,10 @@
     966
    ],
    "crop": "crops/g004.png",
-   "reread": {
-    "model": "claude-sonnet-4.6",
-    "dpi": 400,
-    "value": 0,
-    "crop": "runs/20261011-120008/crops/audit-reread-0007-p1-b4.png",
-    "error": null
-   },
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": null,
    "file_row": 96,
    "file_line": 98,
    "corrected": true,
@@ -2349,13 +2332,10 @@
     966
    ],
    "crop": "crops/g004.png",
-   "reread": {
-    "model": "claude-sonnet-4.6",
-    "dpi": 400,
-    "value": 1,
-    "crop": "runs/20261011-120008/crops/audit-reread-0009-p1-b4.png",
-    "error": null
-   },
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": null,
    "file_row": 97,
    "file_line": 99,
    "corrected": true,
@@ -2374,8 +2354,8 @@
    "file_value": 0,
    "scan_value": 1,
    "kind": "wrong_number",
-   "status": "cannot_verify",
-   "reason": "the re-read of the scan gave the file's value 0, but the sums do not all hold with it, so the scan's value is in doubt",
+   "status": "settled_against_file",
+   "reason": "the three cells of precinct 18 add to the small total printed under the column; the small totals under the columns add to the grand total hold(s) with the scan's value and fail(s) with the file's, and no printed total holds with the file's value and fails with the scan's",
    "sums": [
     {
      "name": "the three cells of precinct 18 add to the small total printed under the column",
@@ -2613,16 +2593,13 @@
     996
    ],
    "crop": "crops/g005.png",
-   "reread": {
-    "model": "claude-sonnet-4.6",
-    "dpi": 400,
-    "value": 0,
-    "crop": "runs/20261011-120008/crops/audit-reread-0010-p1-b4.png",
-    "error": null
-   },
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": null,
    "file_row": 106,
    "file_line": 108,
-   "corrected": false,
+   "corrected": true,
    "confirmed_by_person": false
   },
   {
@@ -2877,13 +2854,10 @@
     935
    ],
    "crop": "crops/g005.png",
-   "reread": {
-    "model": "claude-sonnet-4.6",
-    "dpi": 400,
-    "value": 1,
-    "crop": "runs/20261011-120008/crops/audit-reread-0011-p1-b4.png",
-    "error": null
-   },
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": null,
    "file_row": 106,
    "file_line": 108,
    "corrected": true,
@@ -3141,13 +3115,10 @@
     996
    ],
    "crop": "crops/g006.png",
-   "reread": {
-    "model": "claude-sonnet-4.6",
-    "dpi": 400,
-    "value": 2,
-    "crop": "runs/20261011-120008/crops/audit-reread-0012-p1-b4.png",
-    "error": null
-   },
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": null,
    "file_row": 111,
    "file_line": 113,
    "corrected": true,
@@ -3405,13 +3376,10 @@
     904
    ],
    "crop": "crops/g006.png",
-   "reread": {
-    "model": "claude-sonnet-4.6",
-    "dpi": 400,
-    "value": 1,
-    "crop": "runs/20261011-120008/crops/audit-reread-0013-p1-b4.png",
-    "error": null
-   },
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": null,
    "file_row": 111,
    "file_line": 113,
    "corrected": true,
@@ -3669,13 +3637,10 @@
     966
    ],
    "crop": "crops/g006.png",
-   "reread": {
-    "model": "claude-sonnet-4.6",
-    "dpi": 400,
-    "value": 1,
-    "crop": "runs/20261011-120008/crops/audit-reread-0014-p1-b4.png",
-    "error": null
-   },
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": null,
    "file_row": 111,
    "file_line": 113,
    "corrected": true,
@@ -3933,13 +3898,10 @@
     996
    ],
    "crop": "crops/g007.png",
-   "reread": {
-    "model": "claude-sonnet-4.6",
-    "dpi": 400,
-    "value": 1,
-    "crop": "runs/20261011-120008/crops/audit-reread-0015-p1-b4.png",
-    "error": null
-   },
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": null,
    "file_row": 112,
    "file_line": 114,
    "corrected": true,
@@ -4197,13 +4159,10 @@
     904
    ],
    "crop": "crops/g007.png",
-   "reread": {
-    "model": "claude-sonnet-4.6",
-    "dpi": 400,
-    "value": 1,
-    "crop": "runs/20261011-120008/crops/audit-reread-0016-p1-b4.png",
-    "error": null
-   },
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": null,
    "file_row": 112,
    "file_line": 114,
    "corrected": true,
@@ -4461,13 +4420,10 @@
     966
    ],
    "crop": "crops/g007.png",
-   "reread": {
-    "model": "claude-sonnet-4.6",
-    "dpi": 400,
-    "value": 0,
-    "crop": "runs/20261011-120008/crops/audit-reread-0017-p1-b4.png",
-    "error": null
-   },
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": null,
    "file_row": 112,
    "file_line": 114,
    "corrected": true,
@@ -4725,13 +4681,10 @@
     721
    ],
    "crop": "crops/g008.png",
-   "reread": {
-    "model": "claude-sonnet-4.6",
-    "dpi": 400,
-    "value": 2,
-    "crop": "runs/20261011-120008/crops/audit-reread-0018-p2-b2.png",
-    "error": null
-   },
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": null,
    "file_row": 196,
    "file_line": 198,
    "corrected": true,
@@ -4989,13 +4942,10 @@
     721
    ],
    "crop": "crops/g008.png",
-   "reread": {
-    "model": "claude-sonnet-4.6",
-    "dpi": 400,
-    "value": 0,
-    "crop": "runs/20261011-120008/crops/audit-reread-0020-p2-b2.png",
-    "error": null
-   },
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": null,
    "file_row": 207,
    "file_line": 209,
    "corrected": true,
@@ -5253,13 +5203,10 @@
     691
    ],
    "crop": "crops/g008.png",
-   "reread": {
-    "model": "claude-sonnet-4.6",
-    "dpi": 400,
-    "value": 2,
-    "crop": "runs/20261011-120008/crops/audit-reread-0019-p2-b2.png",
-    "error": null
-   },
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": null,
    "file_row": 196,
    "file_line": 198,
    "corrected": true,
@@ -5517,13 +5464,10 @@
     691
    ],
    "crop": "crops/g008.png",
-   "reread": {
-    "model": "claude-sonnet-4.6",
-    "dpi": 400,
-    "value": 0,
-    "crop": "runs/20261011-120008/crops/audit-reread-0021-p2-b2.png",
-    "error": null
-   },
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": null,
    "file_row": 207,
    "file_line": 209,
    "corrected": true,
@@ -5781,13 +5725,10 @@
     1399
    ],
    "crop": "crops/g009.png",
-   "reread": {
-    "model": "claude-sonnet-4.6",
-    "dpi": 400,
-    "value": 4,
-    "crop": "runs/20261011-120008/crops/audit-reread-0022-p2-b6.png",
-    "error": null
-   },
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": null,
    "file_row": 284,
    "file_line": 286,
    "corrected": true,
@@ -5806,8 +5747,8 @@
    "file_value": 0,
    "scan_value": 4,
    "kind": "wrong_number",
-   "status": "cannot_verify",
-   "reason": "the re-read of the scan gave 29, a third value (the ledger has 4, the file 0)",
+   "status": "settled_against_file",
+   "reason": "the PRECINCT cells across the page add to the row total printed at the right end of the row; the three cells of precinct 29 add to the small total printed under the column hold(s) with the scan's value and fail(s) with the file's, and no printed total holds with the file's value and fails with the scan's",
    "sums": [
     {
      "name": "the PRECINCT cells across the page add to the row total printed at the right end of the row",
@@ -6045,16 +5986,13 @@
     1369
    ],
    "crop": "crops/g009.png",
-   "reread": {
-    "model": "claude-sonnet-4.6",
-    "dpi": 400,
-    "value": 29,
-    "crop": "runs/20261011-120008/crops/audit-reread-0023-p2-b6.png",
-    "error": null
-   },
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": null,
    "file_row": 284,
    "file_line": 286,
-   "corrected": false,
+   "corrected": true,
    "confirmed_by_person": false
   },
   {
@@ -6309,13 +6247,10 @@
     775
    ],
    "crop": "crops/g010.png",
-   "reread": {
-    "model": "claude-sonnet-4.6",
-    "dpi": 400,
-    "value": 0,
-    "crop": "runs/20261011-120008/crops/audit-reread-0024-p3-b3.png",
-    "error": null
-   },
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": null,
    "file_row": 369,
    "file_line": 371,
    "corrected": true,
@@ -6573,13 +6508,10 @@
     806
    ],
    "crop": "crops/g010.png",
-   "reread": {
-    "model": "claude-sonnet-4.6",
-    "dpi": 400,
-    "value": 7,
-    "crop": "runs/20261011-120008/crops/audit-reread-0025-p3-b3.png",
-    "error": null
-   },
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": null,
    "file_row": 369,
    "file_line": 371,
    "corrected": true,
@@ -6837,13 +6769,10 @@
     775
    ],
    "crop": "crops/g011.png",
-   "reread": {
-    "model": "claude-sonnet-4.6",
-    "dpi": 400,
-    "value": 1,
-    "crop": "runs/20261011-120008/crops/audit-reread-0026-p3-b3.png",
-    "error": null
-   },
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": null,
    "file_row": 370,
    "file_line": 372,
    "corrected": true,
@@ -7101,13 +7030,10 @@
     806
    ],
    "crop": "crops/g011.png",
-   "reread": {
-    "model": "claude-sonnet-4.6",
-    "dpi": 400,
-    "value": 3,
-    "crop": "runs/20261011-120008/crops/audit-reread-0027-p3-b3.png",
-    "error": null
-   },
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": null,
    "file_row": 370,
    "file_line": 372,
    "corrected": true,
@@ -7365,13 +7291,10 @@
     836
    ],
    "crop": "crops/g012.png",
-   "reread": {
-    "model": "claude-sonnet-4.6",
-    "dpi": 400,
-    "value": 16,
-    "crop": "runs/20261011-120008/crops/audit-reread-0028-p3-b3.png",
-    "error": null
-   },
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": null,
    "file_row": 371,
    "file_line": 373,
    "corrected": true,
@@ -7629,13 +7552,10 @@
     743
    ],
    "crop": "crops/g012.png",
-   "reread": {
-    "model": "claude-sonnet-4.6",
-    "dpi": 400,
-    "value": 13,
-    "crop": "runs/20261011-120008/crops/audit-reread-0029-p3-b3.png",
-    "error": null
-   },
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": null,
    "file_row": 371,
    "file_line": 373,
    "corrected": true,
@@ -7893,13 +7813,10 @@
     806
    ],
    "crop": "crops/g012.png",
-   "reread": {
-    "model": "claude-sonnet-4.6",
-    "dpi": 400,
-    "value": 3,
-    "crop": "runs/20261011-120008/crops/audit-reread-0030-p3-b3.png",
-    "error": null
-   },
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": null,
    "file_row": 371,
    "file_line": 373,
    "corrected": true,
@@ -8157,13 +8074,10 @@
     775
    ],
    "crop": "crops/g013.png",
-   "reread": {
-    "model": "claude-sonnet-4.6",
-    "dpi": 400,
-    "value": 1,
-    "crop": "runs/20261011-120008/crops/audit-reread-0031-p3-b3.png",
-    "error": null
-   },
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": null,
    "file_row": 372,
    "file_line": 374,
    "corrected": true,
@@ -8421,13 +8335,10 @@
     806
    ],
    "crop": "crops/g013.png",
-   "reread": {
-    "model": "claude-sonnet-4.6",
-    "dpi": 400,
-    "value": 10,
-    "crop": "runs/20261011-120008/crops/audit-reread-0032-p3-b3.png",
-    "error": null
-   },
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": null,
    "file_row": 372,
    "file_line": 374,
    "corrected": true,
@@ -8685,13 +8596,10 @@
     775
    ],
    "crop": "crops/g014.png",
-   "reread": {
-    "model": "claude-sonnet-4.6",
-    "dpi": 400,
-    "value": 1,
-    "crop": "runs/20261011-120008/crops/audit-reread-0033-p3-b3.png",
-    "error": null
-   },
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": null,
    "file_row": 377,
    "file_line": 379,
    "corrected": true,
@@ -8949,13 +8857,10 @@
     806
    ],
    "crop": "crops/g014.png",
-   "reread": {
-    "model": "claude-sonnet-4.6",
-    "dpi": 400,
-    "value": 6,
-    "crop": "runs/20261011-120008/crops/audit-reread-0034-p3-b3.png",
-    "error": null
-   },
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": null,
    "file_row": 377,
    "file_line": 379,
    "corrected": true,
@@ -9213,13 +9118,10 @@
     836
    ],
    "crop": "crops/g015.png",
-   "reread": {
-    "model": "claude-sonnet-4.6",
-    "dpi": 400,
-    "value": 10,
-    "crop": "runs/20261011-120008/crops/audit-reread-0035-p3-b3.png",
-    "error": null
-   },
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": null,
    "file_row": 379,
    "file_line": 381,
    "corrected": true,
@@ -9477,13 +9379,10 @@
     743
    ],
    "crop": "crops/g015.png",
-   "reread": {
-    "model": "claude-sonnet-4.6",
-    "dpi": 400,
-    "value": 1,
-    "crop": "runs/20261011-120008/crops/audit-reread-0036-p3-b3.png",
-    "error": null
-   },
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": null,
    "file_row": 379,
    "file_line": 381,
    "corrected": true,
@@ -9502,8 +9401,8 @@
    "file_value": 0,
    "scan_value": 9,
    "kind": "wrong_number",
-   "status": "cannot_verify",
-   "reason": "the re-read of the scan gave 29, a third value (the ledger has 9, the file 0)",
+   "status": "settled_against_file",
+   "reason": "the PRECINCT cells across the page add to the row total printed at the right end of the row; the three cells of precinct 29 add to the small total printed under the column hold(s) with the scan's value and fail(s) with the file's, and no printed total holds with the file's value and fails with the scan's",
    "sums": [
     {
      "name": "the PRECINCT cells across the page add to the row total printed at the right end of the row",
@@ -9741,16 +9640,13 @@
     806
    ],
    "crop": "crops/g015.png",
-   "reread": {
-    "model": "claude-sonnet-4.6",
-    "dpi": 400,
-    "value": 29,
-    "crop": "runs/20261011-120008/crops/audit-reread-0037-p3-b3.png",
-    "error": null
-   },
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": null,
    "file_row": 379,
    "file_line": 381,
-   "corrected": false,
+   "corrected": true,
    "confirmed_by_person": false
   },
   {
@@ -10005,13 +9901,10 @@
     991
    ],
    "crop": "crops/g016.png",
-   "reread": {
-    "model": "claude-sonnet-4.6",
-    "dpi": 400,
-    "value": 4,
-    "crop": "runs/20261011-120008/crops/audit-reread-0038-p3-b4.png",
-    "error": null
-   },
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": null,
    "file_row": 381,
    "file_line": 383,
    "corrected": true,
@@ -10269,13 +10162,10 @@
     898
    ],
    "crop": "crops/g016.png",
-   "reread": {
-    "model": "claude-sonnet-4.6",
-    "dpi": 400,
-    "value": 1,
-    "crop": "runs/20261011-120008/crops/audit-reread-0039-p3-b4.png",
-    "error": null
-   },
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": null,
    "file_row": 381,
    "file_line": 383,
    "corrected": true,
@@ -10533,13 +10423,10 @@
     898
    ],
    "crop": "crops/g017.png",
-   "reread": {
-    "model": "claude-sonnet-4.6",
-    "dpi": 400,
-    "value": 3,
-    "crop": "runs/20261011-120008/crops/audit-reread-0040-p3-b4.png",
-    "error": null
-   },
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": null,
    "file_row": 382,
    "file_line": 384,
    "corrected": true,
@@ -10797,13 +10684,10 @@
     961
    ],
    "crop": "crops/g017.png",
-   "reread": {
-    "model": "claude-sonnet-4.6",
-    "dpi": 400,
-    "value": 0,
-    "crop": "runs/20261011-120008/crops/audit-reread-0041-p3-b4.png",
-    "error": null
-   },
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": null,
    "file_row": 382,
    "file_line": 384,
    "corrected": true,
@@ -11061,13 +10945,10 @@
     991
    ],
    "crop": "crops/g018.png",
-   "reread": {
-    "model": "claude-sonnet-4.6",
-    "dpi": 400,
-    "value": 6,
-    "crop": "runs/20261011-120008/crops/audit-reread-0042-p3-b4.png",
-    "error": null
-   },
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": null,
    "file_row": 384,
    "file_line": 386,
    "corrected": true,
@@ -11325,13 +11206,10 @@
     898
    ],
    "crop": "crops/g018.png",
-   "reread": {
-    "model": "claude-sonnet-4.6",
-    "dpi": 400,
-    "value": 1,
-    "crop": "runs/20261011-120008/crops/audit-reread-0043-p3-b4.png",
-    "error": null
-   },
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": null,
    "file_row": 384,
    "file_line": 386,
    "corrected": true,
@@ -11589,13 +11467,10 @@
     991
    ],
    "crop": "crops/g019.png",
-   "reread": {
-    "model": "claude-sonnet-4.6",
-    "dpi": 400,
-    "value": 1,
-    "crop": "runs/20261011-120008/crops/audit-reread-0044-p3-b4.png",
-    "error": null
-   },
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": null,
    "file_row": 386,
    "file_line": 388,
    "corrected": true,
@@ -11853,13 +11728,10 @@
     961
    ],
    "crop": "crops/g019.png",
-   "reread": {
-    "model": "claude-sonnet-4.6",
-    "dpi": 400,
-    "value": 1,
-    "crop": "runs/20261011-120008/crops/audit-reread-0045-p3-b4.png",
-    "error": null
-   },
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": null,
    "file_row": 386,
    "file_line": 388,
    "corrected": true,
@@ -12117,13 +11989,10 @@
     991
    ],
    "crop": "crops/g020.png",
-   "reread": {
-    "model": "claude-sonnet-4.6",
-    "dpi": 400,
-    "value": 1,
-    "crop": "runs/20261011-120008/crops/audit-reread-0046-p3-b4.png",
-    "error": null
-   },
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": null,
    "file_row": 389,
    "file_line": 391,
    "corrected": true,
@@ -12381,13 +12250,10 @@
     961
    ],
    "crop": "crops/g020.png",
-   "reread": {
-    "model": "claude-sonnet-4.6",
-    "dpi": 400,
-    "value": 0,
-    "crop": "runs/20261011-120008/crops/audit-reread-0047-p3-b4.png",
-    "error": null
-   },
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": null,
    "file_row": 389,
    "file_line": 391,
    "corrected": true,
@@ -12645,13 +12511,10 @@
     991
    ],
    "crop": "crops/g021.png",
-   "reread": {
-    "model": "claude-sonnet-4.6",
-    "dpi": 400,
-    "value": 2,
-    "crop": "runs/20261011-120008/crops/audit-reread-0048-p3-b4.png",
-    "error": null
-   },
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": null,
    "file_row": 390,
    "file_line": 392,
    "corrected": true,
@@ -12909,13 +12772,10 @@
     898
    ],
    "crop": "crops/g021.png",
-   "reread": {
-    "model": "claude-sonnet-4.6",
-    "dpi": 400,
-    "value": 1,
-    "crop": "runs/20261011-120008/crops/audit-reread-0049-p3-b4.png",
-    "error": null
-   },
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": null,
    "file_row": 390,
    "file_line": 392,
    "corrected": true,
@@ -13173,13 +13033,10 @@
     961
    ],
    "crop": "crops/g021.png",
-   "reread": {
-    "model": "claude-sonnet-4.6",
-    "dpi": 400,
-    "value": 1,
-    "crop": "runs/20261011-120008/crops/audit-reread-0050-p3-b4.png",
-    "error": null
-   },
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": null,
    "file_row": 390,
    "file_line": 392,
    "corrected": true,
@@ -13437,13 +13294,10 @@
     991
    ],
    "crop": "crops/g022.png",
-   "reread": {
-    "model": "claude-sonnet-4.6",
-    "dpi": 400,
-    "value": 6,
-    "crop": "runs/20261011-120008/crops/audit-reread-0051-p3-b4.png",
-    "error": null
-   },
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": null,
    "file_row": 391,
    "file_line": 393,
    "corrected": true,
@@ -13701,13 +13555,10 @@
     930
    ],
    "crop": "crops/g022.png",
-   "reread": {
-    "model": "claude-sonnet-4.6",
-    "dpi": 400,
-    "value": 0,
-    "crop": "runs/20261011-120008/crops/audit-reread-0052-p3-b4.png",
-    "error": null
-   },
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": null,
    "file_row": 391,
    "file_line": 393,
    "corrected": true,
@@ -13965,13 +13816,10 @@
     961
    ],
    "crop": "crops/g022.png",
-   "reread": {
-    "model": "claude-sonnet-4.6",
-    "dpi": 400,
-    "value": 2,
-    "crop": "runs/20261011-120008/crops/audit-reread-0053-p3-b4.png",
-    "error": null
-   },
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": null,
    "file_row": 391,
    "file_line": 393,
    "corrected": true,
@@ -14229,13 +14077,10 @@
     991
    ],
    "crop": "crops/g023.png",
-   "reread": {
-    "model": "claude-sonnet-4.6",
-    "dpi": 400,
-    "value": 5,
-    "crop": "runs/20261011-120008/crops/audit-reread-0054-p3-b4.png",
-    "error": null
-   },
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": null,
    "file_row": 396,
    "file_line": 398,
    "corrected": true,
@@ -14493,13 +14338,10 @@
     961
    ],
    "crop": "crops/g023.png",
-   "reread": {
-    "model": "claude-sonnet-4.6",
-    "dpi": 400,
-    "value": 4,
-    "crop": "runs/20261011-120008/crops/audit-reread-0055-p3-b4.png",
-    "error": null
-   },
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": null,
    "file_row": 396,
    "file_line": 398,
    "corrected": true,
@@ -14757,13 +14599,10 @@
     991
    ],
    "crop": "crops/g024.png",
-   "reread": {
-    "model": "claude-sonnet-4.6",
-    "dpi": 400,
-    "value": 13,
-    "crop": "runs/20261011-120008/crops/audit-reread-0056-p3-b4.png",
-    "error": null
-   },
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": null,
    "file_row": 397,
    "file_line": 399,
    "corrected": true,
@@ -15021,13 +14860,10 @@
     898
    ],
    "crop": "crops/g024.png",
-   "reread": {
-    "model": "claude-sonnet-4.6",
-    "dpi": 400,
-    "value": 9,
-    "crop": "runs/20261011-120008/crops/audit-reread-0057-p3-b4.png",
-    "error": null
-   },
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": null,
    "file_row": 397,
    "file_line": 399,
    "corrected": true,
@@ -15285,13 +15121,10 @@
     961
    ],
    "crop": "crops/g024.png",
-   "reread": {
-    "model": "claude-sonnet-4.6",
-    "dpi": 400,
-    "value": 4,
-    "crop": "runs/20261011-120008/crops/audit-reread-0058-p3-b4.png",
-    "error": null
-   },
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": null,
    "file_row": 397,
    "file_line": 399,
    "corrected": true,
@@ -15549,13 +15382,10 @@
     991
    ],
    "crop": "crops/g025.png",
-   "reread": {
-    "model": "claude-sonnet-4.6",
-    "dpi": 400,
-    "value": 1,
-    "crop": "runs/20261011-120008/crops/audit-reread-0059-p3-b4.png",
-    "error": null
-   },
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": null,
    "file_row": 398,
    "file_line": 400,
    "corrected": true,
@@ -15813,13 +15643,10 @@
     898
    ],
    "crop": "crops/g025.png",
-   "reread": {
-    "model": "claude-sonnet-4.6",
-    "dpi": 400,
-    "value": 1,
-    "crop": "runs/20261011-120008/crops/audit-reread-0060-p3-b4.png",
-    "error": null
-   },
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": null,
    "file_row": 398,
    "file_line": 400,
    "corrected": true,
@@ -16077,13 +15904,10 @@
     200
    ],
    "crop": "crops/g026.png",
-   "reread": {
-    "model": "claude-sonnet-4.6",
-    "dpi": 400,
-    "value": 3,
-    "crop": "runs/20261011-120008/crops/audit-reread-0061-p4-b0.png",
-    "error": null
-   },
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": null,
    "file_row": 455,
    "file_line": 457,
    "corrected": true,
@@ -16102,8 +15926,8 @@
    "file_value": 0,
    "scan_value": 1,
    "kind": "wrong_number",
-   "status": "cannot_verify",
-   "reason": "the re-read of the scan gave 61, a third value (the ledger has 1, the file 0)",
+   "status": "settled_against_file",
+   "reason": "the PRECINCT cells across the page add to the row total printed at the right end of the row; the three cells of precinct 29 add to the small total printed under the column hold(s) with the scan's value and fail(s) with the file's, and no printed total holds with the file's value and fails with the scan's",
    "sums": [
     {
      "name": "the PRECINCT cells across the page add to the row total printed at the right end of the row",
@@ -16341,16 +16165,13 @@
     262
    ],
    "crop": "crops/g026.png",
-   "reread": {
-    "model": "claude-sonnet-4.6",
-    "dpi": 400,
-    "value": 61,
-    "crop": "runs/20261011-120008/crops/audit-reread-0062-p4-b0.png",
-    "error": null
-   },
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": null,
    "file_row": 455,
    "file_line": 457,
-   "corrected": false,
+   "corrected": true,
    "confirmed_by_person": false
   },
   {
@@ -16605,13 +16426,10 @@
     631
    ],
    "crop": "crops/g027.png",
-   "reread": {
-    "model": "claude-sonnet-4.6",
-    "dpi": 400,
-    "value": 3,
-    "crop": "runs/20261011-120008/crops/audit-reread-0063-p4-b2.png",
-    "error": null
-   },
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": null,
    "file_row": 493,
    "file_line": 495,
    "corrected": true,
@@ -16869,13 +16687,10 @@
     601
    ],
    "crop": "crops/g027.png",
-   "reread": {
-    "model": "claude-sonnet-4.6",
-    "dpi": 400,
-    "value": 1,
-    "crop": "runs/20261011-120008/crops/audit-reread-0064-p4-b2.png",
-    "error": null
-   },
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": null,
    "file_row": 493,
    "file_line": 495,
    "corrected": true,
@@ -17133,13 +16948,10 @@
     1125
    ],
    "crop": "crops/g028.png",
-   "reread": {
-    "model": "claude-sonnet-4.6",
-    "dpi": 400,
-    "value": 4,
-    "crop": "runs/20261011-120008/crops/audit-reread-0065-p4-b5.png",
-    "error": null
-   },
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": null,
    "file_row": 540,
    "file_line": 542,
    "corrected": true,
@@ -17397,13 +17209,10 @@
     1032
    ],
    "crop": "crops/g028.png",
-   "reread": {
-    "model": "claude-sonnet-4.6",
-    "dpi": 400,
-    "value": 3,
-    "crop": "runs/20261011-120008/crops/audit-reread-0066-p4-b5.png",
-    "error": null
-   },
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": null,
    "file_row": 540,
    "file_line": 542,
    "corrected": true,
@@ -17661,13 +17470,10 @@
     1125
    ],
    "crop": "crops/g029.png",
-   "reread": {
-    "model": "claude-sonnet-4.6",
-    "dpi": 400,
-    "value": 2,
-    "crop": "runs/20261011-120008/crops/audit-reread-0067-p4-b5.png",
-    "error": null
-   },
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": null,
    "file_row": 541,
    "file_line": 543,
    "corrected": true,
@@ -17925,13 +17731,10 @@
     1032
    ],
    "crop": "crops/g029.png",
-   "reread": {
-    "model": "claude-sonnet-4.6",
-    "dpi": 400,
-    "value": 0,
-    "crop": "runs/20261011-120008/crops/audit-reread-0068-p4-b5.png",
-    "error": null
-   },
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": null,
    "file_row": 541,
    "file_line": 543,
    "corrected": true,
@@ -18189,13 +17992,10 @@
     1095
    ],
    "crop": "crops/g029.png",
-   "reread": {
-    "model": "claude-sonnet-4.6",
-    "dpi": 400,
-    "value": 2,
-    "crop": "runs/20261011-120008/crops/audit-reread-0069-p4-b5.png",
-    "error": null
-   },
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": null,
    "file_row": 541,
    "file_line": 543,
    "corrected": true,
@@ -18453,13 +18253,10 @@
     1125
    ],
    "crop": "crops/g030.png",
-   "reread": {
-    "model": "claude-sonnet-4.6",
-    "dpi": 400,
-    "value": 7,
-    "crop": "runs/20261011-120008/crops/audit-reread-0070-p4-b5.png",
-    "error": null
-   },
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": null,
    "file_row": 542,
    "file_line": 544,
    "corrected": true,
@@ -18717,13 +18514,10 @@
     1032
    ],
    "crop": "crops/g030.png",
-   "reread": {
-    "model": "claude-sonnet-4.6",
-    "dpi": 400,
-    "value": 4,
-    "crop": "runs/20261011-120008/crops/audit-reread-0071-p4-b5.png",
-    "error": null
-   },
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": null,
    "file_row": 542,
    "file_line": 544,
    "corrected": true,
@@ -18981,13 +18775,10 @@
     1095
    ],
    "crop": "crops/g030.png",
-   "reread": {
-    "model": "claude-sonnet-4.6",
-    "dpi": 400,
-    "value": 3,
-    "crop": "runs/20261011-120008/crops/audit-reread-0072-p4-b5.png",
-    "error": null
-   },
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": null,
    "file_row": 542,
    "file_line": 544,
    "corrected": true,
@@ -19006,8 +18797,8 @@
    "file_value": 1,
    "scan_value": 4,
    "kind": "wrong_number",
-   "status": "cannot_verify",
-   "reason": "the re-read of the scan gave 0, a third value (the ledger has 4, the file 1)",
+   "status": "settled_against_file",
+   "reason": "the three cells of precinct 29 add to the small total printed under the column; the small totals under the columns add to the grand total hold(s) with the scan's value and fail(s) with the file's, and no printed total holds with the file's value and fails with the scan's",
    "sums": [
     {
      "name": "the three cells of precinct 29 add to the small total printed under the column",
@@ -19245,16 +19036,13 @@
     1125
    ],
    "crop": "crops/g031.png",
-   "reread": {
-    "model": "claude-sonnet-4.6",
-    "dpi": 400,
-    "value": 0,
-    "crop": "runs/20261011-120008/crops/audit-reread-0073-p4-b5.png",
-    "error": null
-   },
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": null,
    "file_row": 550,
    "file_line": 552,
-   "corrected": false,
+   "corrected": true,
    "confirmed_by_person": false
   },
   {
@@ -19270,8 +19058,8 @@
    "file_value": 0,
    "scan_value": 3,
    "kind": "wrong_number",
-   "status": "cannot_verify",
-   "reason": "the re-read of the scan gave 73, a third value (the ledger has 3, the file 0)",
+   "status": "settled_against_file",
+   "reason": "the PRECINCT cells across the page add to the row total printed at the right end of the row; the three cells of precinct 29 add to the small total printed under the column hold(s) with the scan's value and fail(s) with the file's, and no printed total holds with the file's value and fails with the scan's",
    "sums": [
     {
      "name": "the PRECINCT cells across the page add to the row total printed at the right end of the row",
@@ -19509,16 +19297,13 @@
     1095
    ],
    "crop": "crops/g031.png",
-   "reread": {
-    "model": "claude-sonnet-4.6",
-    "dpi": 400,
-    "value": 73,
-    "crop": "runs/20261011-120008/crops/audit-reread-0074-p4-b5.png",
-    "error": null
-   },
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": null,
    "file_row": 550,
    "file_line": 552,
-   "corrected": false,
+   "corrected": true,
    "confirmed_by_person": false
   },
   {
@@ -19773,13 +19558,10 @@
     736
    ],
    "crop": "crops/g032.png",
-   "reread": {
-    "model": "claude-sonnet-4.6",
-    "dpi": 400,
-    "value": 0,
-    "crop": "runs/20261011-120008/crops/audit-reread-0075-p5-b3.png",
-    "error": null
-   },
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": null,
    "file_row": 664,
    "file_line": 666,
    "corrected": true,
@@ -20037,13 +19819,10 @@
     767
    ],
    "crop": "crops/g032.png",
-   "reread": {
-    "model": "claude-sonnet-4.6",
-    "dpi": 400,
-    "value": 2,
-    "crop": "runs/20261011-120008/crops/audit-reread-0076-p5-b3.png",
-    "error": null
-   },
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": null,
    "file_row": 664,
    "file_line": 666,
    "corrected": true,
@@ -20158,6 +19937,17 @@
    ],
    "crop": "crops/g033.png",
    "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": {
+    "file": null,
+    "scan": {
+     "votes": 1347,
+     "absentee": 35,
+     "early_voting": 922,
+     "election_day": 390
+    }
+   },
    "file_row": null,
    "file_line": null,
    "corrected": false,
@@ -20272,6 +20062,17 @@
    ],
    "crop": "crops/g034.png",
    "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": {
+    "file": null,
+    "scan": {
+     "votes": 242,
+     "absentee": 2,
+     "early_voting": 158,
+     "election_day": 82
+    }
+   },
    "file_row": null,
    "file_line": null,
    "corrected": false,
@@ -20413,6 +20214,9 @@
    ],
    "crop": "crops/g035.png",
    "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": null,
    "file_row": null,
    "file_line": null,
    "corrected": false,
@@ -20513,6 +20317,9 @@
    ],
    "crop": "crops/g035.png",
    "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": null,
    "file_row": 761,
    "file_line": 763,
    "corrected": false,
@@ -20654,6 +20461,9 @@
    ],
    "crop": "crops/g036.png",
    "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": null,
    "file_row": null,
    "file_line": null,
    "corrected": false,
@@ -20754,6 +20564,9 @@
    ],
    "crop": "crops/g036.png",
    "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": null,
    "file_row": 764,
    "file_line": 766,
    "corrected": false,
@@ -20895,6 +20708,17 @@
    ],
    "crop": "crops/g037.png",
    "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": {
+    "file": null,
+    "scan": {
+     "votes": 182,
+     "absentee": 3,
+     "early_voting": 81,
+     "election_day": 98
+    }
+   },
    "file_row": null,
    "file_line": null,
    "corrected": false,
@@ -21036,6 +20860,17 @@
    ],
    "crop": "crops/g038.png",
    "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": {
+    "file": null,
+    "scan": {
+     "votes": 571,
+     "absentee": 13,
+     "early_voting": 419,
+     "election_day": 139
+    }
+   },
    "file_row": null,
    "file_line": null,
    "corrected": false,
@@ -21054,8 +20889,8 @@
    "file_value": 181,
    "scan_value": 320,
    "kind": "wrong_precinct",
-   "status": "settled_against_file",
-   "reason": "the three cells of precinct 12 add to the small total printed under the column hold(s) with the scan's value and fail(s) with the file's, and no printed total holds with the file's value and fails with the scan's (the small totals under the columns add to the grand total fail with either value and decide nothing)",
+   "status": "cannot_verify",
+   "reason": "the sums do not decide: the small totals under the columns add to the grand total fail(s) with either value or hold(s) with both, although others hold with the scan's value and fail with the file's",
    "sums": [
     {
      "name": "the three cells of precinct 12 add to the small total printed under the column",
@@ -21216,12 +21051,15 @@
     "model": "claude-sonnet-4.6",
     "dpi": 400,
     "value": 320,
-    "crop": "runs/20261011-120008/crops/audit-reread-0077-p6-b3.png",
+    "crop": "runs/20261011-130414/crops/audit-reread-0002-p6-b3.png",
     "error": null
    },
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": null,
    "file_row": 766,
    "file_line": 768,
-   "corrected": true,
+   "corrected": false,
    "confirmed_by_person": false
   },
   {
@@ -21237,8 +21075,8 @@
    "file_value": 311,
    "scan_value": 181,
    "kind": "wrong_precinct",
-   "status": "settled_against_file",
-   "reason": "the three cells of precinct 13 add to the small total printed under the column hold(s) with the scan's value and fail(s) with the file's, and no printed total holds with the file's value and fails with the scan's (the small totals under the columns add to the grand total fail with either value and decide nothing)",
+   "status": "cannot_verify",
+   "reason": "the sums do not decide: the small totals under the columns add to the grand total fail(s) with either value or hold(s) with both, although others hold with the scan's value and fail with the file's",
    "sums": [
     {
      "name": "the three cells of precinct 13 add to the small total printed under the column",
@@ -21399,12 +21237,15 @@
     "model": "claude-sonnet-4.6",
     "dpi": 400,
     "value": 181,
-    "crop": "runs/20261011-120008/crops/audit-reread-0081-p6-b3.png",
+    "crop": "runs/20261011-130414/crops/audit-reread-0003-p6-b3.png",
     "error": null
    },
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": null,
    "file_row": 767,
    "file_line": 769,
-   "corrected": true,
+   "corrected": false,
    "confirmed_by_person": false
   },
   {
@@ -21420,8 +21261,8 @@
    "file_value": 1363,
    "scan_value": 311,
    "kind": "wrong_precinct",
-   "status": "settled_against_file",
-   "reason": "the three cells of precinct 14 add to the small total printed under the column hold(s) with the scan's value and fail(s) with the file's, and no printed total holds with the file's value and fails with the scan's (the small totals under the columns add to the grand total fail with either value and decide nothing)",
+   "status": "cannot_verify",
+   "reason": "the sums do not decide: the small totals under the columns add to the grand total fail(s) with either value or hold(s) with both, although others hold with the scan's value and fail with the file's",
    "sums": [
     {
      "name": "the three cells of precinct 14 add to the small total printed under the column",
@@ -21582,12 +21423,15 @@
     "model": "claude-sonnet-4.6",
     "dpi": 400,
     "value": 311,
-    "crop": "runs/20261011-120008/crops/audit-reread-0085-p6-b3.png",
+    "crop": "runs/20261011-130414/crops/audit-reread-0004-p6-b3.png",
     "error": null
    },
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": null,
    "file_row": 768,
    "file_line": 770,
-   "corrected": true,
+   "corrected": false,
    "confirmed_by_person": false
   },
   {
@@ -21603,8 +21447,8 @@
    "file_value": 235,
    "scan_value": 1363,
    "kind": "wrong_precinct",
-   "status": "settled_against_file",
-   "reason": "the three cells of precinct 18 add to the small total printed under the column hold(s) with the scan's value and fail(s) with the file's, and no printed total holds with the file's value and fails with the scan's (the small totals under the columns add to the grand total fail with either value and decide nothing)",
+   "status": "cannot_verify",
+   "reason": "the sums do not decide: the small totals under the columns add to the grand total fail(s) with either value or hold(s) with both, although others hold with the scan's value and fail with the file's",
    "sums": [
     {
      "name": "the three cells of precinct 18 add to the small total printed under the column",
@@ -21765,12 +21609,15 @@
     "model": "claude-sonnet-4.6",
     "dpi": 400,
     "value": 1363,
-    "crop": "runs/20261011-120008/crops/audit-reread-0089-p6-b3.png",
+    "crop": "runs/20261011-130414/crops/audit-reread-0005-p6-b3.png",
     "error": null
    },
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": null,
    "file_row": 769,
    "file_line": 771,
-   "corrected": true,
+   "corrected": false,
    "confirmed_by_person": false
   },
   {
@@ -21786,8 +21633,8 @@
    "file_value": 245,
    "scan_value": 235,
    "kind": "wrong_precinct",
-   "status": "settled_against_file",
-   "reason": "the three cells of precinct 19 add to the small total printed under the column hold(s) with the scan's value and fail(s) with the file's, and no printed total holds with the file's value and fails with the scan's (the small totals under the columns add to the grand total fail with either value and decide nothing)",
+   "status": "cannot_verify",
+   "reason": "the sums do not decide: the small totals under the columns add to the grand total fail(s) with either value or hold(s) with both, although others hold with the scan's value and fail with the file's",
    "sums": [
     {
      "name": "the three cells of precinct 19 add to the small total printed under the column",
@@ -21948,12 +21795,15 @@
     "model": "claude-sonnet-4.6",
     "dpi": 400,
     "value": 235,
-    "crop": "runs/20261011-120008/crops/audit-reread-0093-p6-b3.png",
+    "crop": "runs/20261011-130414/crops/audit-reread-0006-p6-b3.png",
     "error": null
    },
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": null,
    "file_row": 770,
    "file_line": 772,
-   "corrected": true,
+   "corrected": false,
    "confirmed_by_person": false
   },
   {
@@ -21969,8 +21819,8 @@
    "file_value": 108,
    "scan_value": 245,
    "kind": "wrong_precinct",
-   "status": "settled_against_file",
-   "reason": "the three cells of precinct 20 add to the small total printed under the column hold(s) with the scan's value and fail(s) with the file's, and no printed total holds with the file's value and fails with the scan's (the small totals under the columns add to the grand total fail with either value and decide nothing)",
+   "status": "cannot_verify",
+   "reason": "the sums do not decide: the small totals under the columns add to the grand total fail(s) with either value or hold(s) with both, although others hold with the scan's value and fail with the file's",
    "sums": [
     {
      "name": "the three cells of precinct 20 add to the small total printed under the column",
@@ -22131,12 +21981,15 @@
     "model": "claude-sonnet-4.6",
     "dpi": 400,
     "value": 245,
-    "crop": "runs/20261011-120008/crops/audit-reread-0097-p6-b3.png",
+    "crop": "runs/20261011-130414/crops/audit-reread-0007-p6-b3.png",
     "error": null
    },
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": null,
    "file_row": 771,
    "file_line": 773,
-   "corrected": true,
+   "corrected": false,
    "confirmed_by_person": false
   },
   {
@@ -22152,8 +22005,8 @@
    "file_value": null,
    "scan_value": 108,
    "kind": "wrong_precinct",
-   "status": "settled_against_file",
-   "reason": "the three cells of precinct 26 add to the small total printed under the column hold(s) with the scan's value and fail(s) with the file's, and no printed total holds with the file's value and fails with the scan's (the small totals under the columns add to the grand total fail with either value and decide nothing)",
+   "status": "cannot_verify",
+   "reason": "the sums do not decide: the small totals under the columns add to the grand total fail(s) with either value or hold(s) with both, although others hold with the scan's value and fail with the file's",
    "sums": [
     {
      "name": "the three cells of precinct 26 add to the small total printed under the column",
@@ -22311,6 +22164,9 @@
    ],
    "crop": "crops/g039.png",
    "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": null,
    "file_row": null,
    "file_line": null,
    "corrected": false,
@@ -22447,6 +22303,9 @@
    ],
    "crop": "crops/g039.png",
    "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": null,
    "file_row": 765,
    "file_line": 767,
    "corrected": false,
@@ -22623,16 +22482,13 @@
     885
    ],
    "crop": "crops/g039.png",
-   "reread": {
-    "model": "claude-sonnet-4.6",
-    "dpi": 400,
-    "value": 14,
-    "crop": "runs/20261011-120008/crops/audit-reread-0078-p6-b3.png",
-    "error": null
-   },
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": "the corrected votes 181 would not equal the corrected parts 14 + 168 + 138 = 320",
+   "row_values": null,
    "file_row": 766,
    "file_line": 768,
-   "corrected": true,
+   "corrected": false,
    "confirmed_by_person": false
   },
   {
@@ -22806,16 +22662,13 @@
     885
    ],
    "crop": "crops/g039.png",
-   "reread": {
-    "model": "claude-sonnet-4.6",
-    "dpi": 400,
-    "value": 5,
-    "crop": "runs/20261011-120008/crops/audit-reread-0082-p6-b3.png",
-    "error": null
-   },
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": "the corrected votes 311 would not equal the corrected parts 5 + 102 + 74 = 181",
+   "row_values": null,
    "file_row": 767,
    "file_line": 769,
-   "corrected": true,
+   "corrected": false,
    "confirmed_by_person": false
   },
   {
@@ -22989,16 +22842,13 @@
     885
    ],
    "crop": "crops/g039.png",
-   "reread": {
-    "model": "claude-sonnet-4.6",
-    "dpi": 400,
-    "value": 3,
-    "crop": "runs/20261011-120008/crops/audit-reread-0086-p6-b3.png",
-    "error": null
-   },
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": "the corrected votes 1363 would not equal the corrected parts 3 + 195 + 113 = 311",
+   "row_values": null,
    "file_row": 768,
    "file_line": 770,
-   "corrected": true,
+   "corrected": false,
    "confirmed_by_person": false
   },
   {
@@ -23172,16 +23022,13 @@
     885
    ],
    "crop": "crops/g039.png",
-   "reread": {
-    "model": "claude-sonnet-4.6",
-    "dpi": 400,
-    "value": 35,
-    "crop": "runs/20261011-120008/crops/audit-reread-0090-p6-b3.png",
-    "error": null
-   },
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": "the corrected votes 235 would not equal the corrected parts 35 + 938 + 390 = 1363",
+   "row_values": null,
    "file_row": 769,
    "file_line": 771,
-   "corrected": true,
+   "corrected": false,
    "confirmed_by_person": false
   },
   {
@@ -23355,16 +23202,13 @@
     885
    ],
    "crop": "crops/g039.png",
-   "reread": {
-    "model": "claude-sonnet-4.6",
-    "dpi": 400,
-    "value": 5,
-    "crop": "runs/20261011-120008/crops/audit-reread-0094-p6-b3.png",
-    "error": null
-   },
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": "the corrected votes 245 would not equal the corrected parts 5 + 115 + 115 = 235",
+   "row_values": null,
    "file_row": 770,
    "file_line": 772,
-   "corrected": true,
+   "corrected": false,
    "confirmed_by_person": false
   },
   {
@@ -23538,16 +23382,13 @@
     853
    ],
    "crop": "crops/g039.png",
-   "reread": {
-    "model": "claude-sonnet-4.6",
-    "dpi": 400,
-    "value": 168,
-    "crop": "runs/20261011-120008/crops/audit-reread-0079-p6-b3.png",
-    "error": null
-   },
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": "the corrected votes 181 would not equal the corrected parts 14 + 168 + 138 = 320",
+   "row_values": null,
    "file_row": 766,
    "file_line": 768,
-   "corrected": true,
+   "corrected": false,
    "confirmed_by_person": false
   },
   {
@@ -23721,16 +23562,13 @@
     853
    ],
    "crop": "crops/g039.png",
-   "reread": {
-    "model": "claude-sonnet-4.6",
-    "dpi": 400,
-    "value": 102,
-    "crop": "runs/20261011-120008/crops/audit-reread-0083-p6-b3.png",
-    "error": null
-   },
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": "the corrected votes 311 would not equal the corrected parts 5 + 102 + 74 = 181",
+   "row_values": null,
    "file_row": 767,
    "file_line": 769,
-   "corrected": true,
+   "corrected": false,
    "confirmed_by_person": false
   },
   {
@@ -23904,16 +23742,13 @@
     853
    ],
    "crop": "crops/g039.png",
-   "reread": {
-    "model": "claude-sonnet-4.6",
-    "dpi": 400,
-    "value": 195,
-    "crop": "runs/20261011-120008/crops/audit-reread-0087-p6-b3.png",
-    "error": null
-   },
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": "the corrected votes 1363 would not equal the corrected parts 3 + 195 + 113 = 311",
+   "row_values": null,
    "file_row": 768,
    "file_line": 770,
-   "corrected": true,
+   "corrected": false,
    "confirmed_by_person": false
   },
   {
@@ -24087,16 +23922,13 @@
     853
    ],
    "crop": "crops/g039.png",
-   "reread": {
-    "model": "claude-sonnet-4.6",
-    "dpi": 400,
-    "value": 938,
-    "crop": "runs/20261011-120008/crops/audit-reread-0091-p6-b3.png",
-    "error": null
-   },
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": "the corrected votes 235 would not equal the corrected parts 35 + 938 + 390 = 1363",
+   "row_values": null,
    "file_row": 769,
    "file_line": 771,
-   "corrected": true,
+   "corrected": false,
    "confirmed_by_person": false
   },
   {
@@ -24270,16 +24102,13 @@
     853
    ],
    "crop": "crops/g039.png",
-   "reread": {
-    "model": "claude-sonnet-4.6",
-    "dpi": 400,
-    "value": 115,
-    "crop": "runs/20261011-120008/crops/audit-reread-0095-p6-b3.png",
-    "error": null
-   },
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": "the corrected votes 245 would not equal the corrected parts 5 + 115 + 115 = 235",
+   "row_values": null,
    "file_row": 770,
    "file_line": 772,
-   "corrected": true,
+   "corrected": false,
    "confirmed_by_person": false
   },
   {
@@ -24453,16 +24282,13 @@
     853
    ],
    "crop": "crops/g039.png",
-   "reread": {
-    "model": "claude-sonnet-4.6",
-    "dpi": 400,
-    "value": 160,
-    "crop": "runs/20261011-120008/crops/audit-reread-0098-p6-b3.png",
-    "error": null
-   },
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": "the corrected votes 108 would not equal the corrected parts 2 + 160 + 83 = 245",
+   "row_values": null,
    "file_row": 771,
    "file_line": 773,
-   "corrected": true,
+   "corrected": false,
    "confirmed_by_person": false
   },
   {
@@ -24636,16 +24462,13 @@
     916
    ],
    "crop": "crops/g039.png",
-   "reread": {
-    "model": "claude-sonnet-4.6",
-    "dpi": 400,
-    "value": 138,
-    "crop": "runs/20261011-120008/crops/audit-reread-0080-p6-b3.png",
-    "error": null
-   },
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": "the corrected votes 181 would not equal the corrected parts 14 + 168 + 138 = 320",
+   "row_values": null,
    "file_row": 766,
    "file_line": 768,
-   "corrected": true,
+   "corrected": false,
    "confirmed_by_person": false
   },
   {
@@ -24819,16 +24642,13 @@
     916
    ],
    "crop": "crops/g039.png",
-   "reread": {
-    "model": "claude-sonnet-4.6",
-    "dpi": 400,
-    "value": 74,
-    "crop": "runs/20261011-120008/crops/audit-reread-0084-p6-b3.png",
-    "error": null
-   },
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": "the corrected votes 311 would not equal the corrected parts 5 + 102 + 74 = 181",
+   "row_values": null,
    "file_row": 767,
    "file_line": 769,
-   "corrected": true,
+   "corrected": false,
    "confirmed_by_person": false
   },
   {
@@ -25002,16 +24822,13 @@
     916
    ],
    "crop": "crops/g039.png",
-   "reread": {
-    "model": "claude-sonnet-4.6",
-    "dpi": 400,
-    "value": 113,
-    "crop": "runs/20261011-120008/crops/audit-reread-0088-p6-b3.png",
-    "error": null
-   },
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": "the corrected votes 1363 would not equal the corrected parts 3 + 195 + 113 = 311",
+   "row_values": null,
    "file_row": 768,
    "file_line": 770,
-   "corrected": true,
+   "corrected": false,
    "confirmed_by_person": false
   },
   {
@@ -25185,16 +25002,13 @@
     916
    ],
    "crop": "crops/g039.png",
-   "reread": {
-    "model": "claude-sonnet-4.6",
-    "dpi": 400,
-    "value": 390,
-    "crop": "runs/20261011-120008/crops/audit-reread-0092-p6-b3.png",
-    "error": null
-   },
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": "the corrected votes 235 would not equal the corrected parts 35 + 938 + 390 = 1363",
+   "row_values": null,
    "file_row": 769,
    "file_line": 771,
-   "corrected": true,
+   "corrected": false,
    "confirmed_by_person": false
   },
   {
@@ -25368,16 +25182,13 @@
     916
    ],
    "crop": "crops/g039.png",
-   "reread": {
-    "model": "claude-sonnet-4.6",
-    "dpi": 400,
-    "value": 115,
-    "crop": "runs/20261011-120008/crops/audit-reread-0096-p6-b3.png",
-    "error": null
-   },
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": "the corrected votes 245 would not equal the corrected parts 5 + 115 + 115 = 235",
+   "row_values": null,
    "file_row": 770,
    "file_line": 772,
-   "corrected": true,
+   "corrected": false,
    "confirmed_by_person": false
   },
   {
@@ -25551,16 +25362,13 @@
     916
    ],
    "crop": "crops/g039.png",
-   "reread": {
-    "model": "claude-sonnet-4.6",
-    "dpi": 400,
-    "value": 83,
-    "crop": "runs/20261011-120008/crops/audit-reread-0099-p6-b3.png",
-    "error": null
-   },
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": "the corrected votes 108 would not equal the corrected parts 2 + 160 + 83 = 245",
+   "row_values": null,
    "file_row": 771,
    "file_line": 773,
-   "corrected": true,
+   "corrected": false,
    "confirmed_by_person": false
   },
   {
@@ -25576,8 +25384,8 @@
    "file_value": null,
    "scan_value": 1263,
    "kind": "wrong_precinct",
-   "status": "settled_against_file",
-   "reason": "the three cells of precinct 28 add to the small total printed under the column hold(s) with the scan's value and fail(s) with the file's, and no printed total holds with the file's value and fails with the scan's (the small totals under the columns add to the grand total fail with either value and decide nothing)",
+   "status": "cannot_verify",
+   "reason": "the sums do not decide: the small totals under the columns add to the grand total fail(s) with either value or hold(s) with both, although others hold with the scan's value and fail with the file's",
    "sums": [
     {
      "name": "the three cells of precinct 28 add to the small total printed under the column",
@@ -25735,6 +25543,9 @@
    ],
    "crop": "crops/g040.png",
    "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": null,
    "file_row": null,
    "file_line": null,
    "corrected": false,
@@ -25871,6 +25682,9 @@
    ],
    "crop": "crops/g040.png",
    "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": null,
    "file_row": 772,
    "file_line": 774,
    "corrected": false,
@@ -26048,6 +25862,17 @@
    ],
    "crop": "crops/g041.png",
    "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": {
+    "file": null,
+    "scan": {
+     "votes": 1079,
+     "absentee": 44,
+     "early_voting": 818,
+     "election_day": 214
+    }
+   },
    "file_row": null,
    "file_line": null,
    "corrected": false,
@@ -26216,6 +26041,9 @@
    ],
    "crop": "crops/g042.png",
    "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": null,
    "file_row": null,
    "file_line": null,
    "corrected": false,
@@ -26383,13 +26211,10 @@
     1159
    ],
    "crop": "crops/g042.png",
-   "reread": {
-    "model": "claude-sonnet-4.6",
-    "dpi": 400,
-    "value": 187,
-    "crop": "runs/20261011-120008/crops/audit-reread-0100-p6-b4.png",
-    "error": null
-   },
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": null,
    "file_row": 780,
    "file_line": 782,
    "corrected": true,
@@ -26557,13 +26382,10 @@
     1098
    ],
    "crop": "crops/g042.png",
-   "reread": {
-    "model": "claude-sonnet-4.6",
-    "dpi": 400,
-    "value": 3,
-    "crop": "runs/20261011-120008/crops/audit-reread-0101-p6-b4.png",
-    "error": null
-   },
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": null,
    "file_row": 780,
    "file_line": 782,
    "corrected": true,
@@ -26731,13 +26553,10 @@
     1066
    ],
    "crop": "crops/g042.png",
-   "reread": {
-    "model": "claude-sonnet-4.6",
-    "dpi": 400,
-    "value": 81,
-    "crop": "runs/20261011-120008/crops/audit-reread-0102-p6-b4.png",
-    "error": null
-   },
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": null,
    "file_row": 780,
    "file_line": 782,
    "corrected": true,
@@ -26905,13 +26724,10 @@
     1129
    ],
    "crop": "crops/g042.png",
-   "reread": {
-    "model": "claude-sonnet-4.6",
-    "dpi": 400,
-    "value": 103,
-    "crop": "runs/20261011-120008/crops/audit-reread-0103-p6-b4.png",
-    "error": null
-   },
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": null,
    "file_row": 780,
    "file_line": 782,
    "corrected": true,
@@ -27080,6 +26896,17 @@
    ],
    "crop": "crops/g043.png",
    "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": {
+    "file": null,
+    "scan": {
+     "votes": 575,
+     "absentee": 13,
+     "early_voting": 415,
+     "election_day": 147
+    }
+   },
    "file_row": null,
    "file_line": null,
    "corrected": false,
@@ -27207,6 +27034,17 @@
    ],
    "crop": "crops/g044.png",
    "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": {
+    "file": {
+     "votes": 81,
+     "absentee": 3,
+     "early_voting": 41,
+     "election_day": 37
+    },
+    "scan": null
+   },
    "file_row": 781,
    "file_line": 783,
    "corrected": false,
@@ -27334,6 +27172,17 @@
    ],
    "crop": "crops/g045.png",
    "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": {
+    "file": {
+     "votes": 187,
+     "absentee": 3,
+     "early_voting": 103,
+     "election_day": 81
+    },
+    "scan": null
+   },
    "file_row": 782,
    "file_line": 784,
    "corrected": false,
@@ -27352,8 +27201,8 @@
    "file_value": 178,
    "scan_value": 179,
    "kind": "file_row_fails_own_total",
-   "status": "cannot_verify",
-   "reason": "the file's votes 178 differ from its parts 3 + 81 + 95 = 179; the re-read of the scan gave the file's value 178, but the sums do not all hold with it, so the scan's value is in doubt",
+   "status": "settled_against_file",
+   "reason": "the file's votes 178 differ from its parts 3 + 81 + 95 = 179; the three cells of precinct 22 add to the small total printed under the column; the small totals under the columns add to the grand total hold(s) with the scan's value and fail(s) with the file's, and no printed total holds with the file's value and fails with the scan's",
    "sums": [
     {
      "name": "the three cells of precinct 22 add to the small total printed under the column",
@@ -27591,16 +27440,13 @@
     1338
    ],
    "crop": "crops/g046.png",
-   "reread": {
-    "model": "claude-sonnet-4.6",
-    "dpi": 400,
-    "value": 178,
-    "crop": "runs/20261011-120008/crops/audit-reread-0104-p5-b6.png",
-    "error": null
-   },
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": null,
    "file_row": 717,
    "file_line": 719,
-   "corrected": false,
+   "corrected": true,
    "confirmed_by_person": false
   }
  ],
@@ -27622,6 +27468,7 @@
    "statuses": {
     "cannot_verify": 1
    },
+   "what_to_do": null,
    "crop": "crops/g001.png"
   },
   {
@@ -27642,6 +27489,7 @@
    "statuses": {
     "settled_against_file": 2
    },
+   "what_to_do": null,
    "crop": "crops/g002.png"
   },
   {
@@ -27662,6 +27510,7 @@
    "statuses": {
     "settled_against_file": 2
    },
+   "what_to_do": null,
    "crop": "crops/g003.png"
   },
   {
@@ -27685,6 +27534,7 @@
    "statuses": {
     "settled_against_file": 4
    },
+   "what_to_do": "Move the same 1 rows of values, each labelled 1 precinct earlier than where the scan has it, back to the precinct the scan puts them under, and 1 more row(s) of the group have no counterpart (see the missing and extra rows).",
    "crop": "crops/g004.png"
   },
   {
@@ -27703,9 +27553,9 @@
     "f011"
    ],
    "statuses": {
-    "settled_against_file": 1,
-    "cannot_verify": 1
+    "settled_against_file": 2
    },
+   "what_to_do": null,
    "crop": "crops/g005.png"
   },
   {
@@ -27727,6 +27577,7 @@
    "statuses": {
     "settled_against_file": 3
    },
+   "what_to_do": null,
    "crop": "crops/g006.png"
   },
   {
@@ -27748,6 +27599,7 @@
    "statuses": {
     "settled_against_file": 3
    },
+   "what_to_do": null,
    "crop": "crops/g007.png"
   },
   {
@@ -27771,6 +27623,7 @@
    "statuses": {
     "settled_against_file": 4
    },
+   "what_to_do": "Move the same 1 rows of values, each labelled 11 precincts later than where the scan has it, back to the precinct the scan puts them under, and 1 more row(s) of the group have no counterpart (see the missing and extra rows).",
    "crop": "crops/g008.png"
   },
   {
@@ -27789,9 +27642,9 @@
     "f023"
    ],
    "statuses": {
-    "settled_against_file": 1,
-    "cannot_verify": 1
+    "settled_against_file": 2
    },
+   "what_to_do": null,
    "crop": "crops/g009.png"
   },
   {
@@ -27812,6 +27665,7 @@
    "statuses": {
     "settled_against_file": 2
    },
+   "what_to_do": null,
    "crop": "crops/g010.png"
   },
   {
@@ -27832,6 +27686,7 @@
    "statuses": {
     "settled_against_file": 2
    },
+   "what_to_do": null,
    "crop": "crops/g011.png"
   },
   {
@@ -27853,6 +27708,7 @@
    "statuses": {
     "settled_against_file": 3
    },
+   "what_to_do": null,
    "crop": "crops/g012.png"
   },
   {
@@ -27873,6 +27729,7 @@
    "statuses": {
     "settled_against_file": 2
    },
+   "what_to_do": null,
    "crop": "crops/g013.png"
   },
   {
@@ -27893,6 +27750,7 @@
    "statuses": {
     "settled_against_file": 2
    },
+   "what_to_do": null,
    "crop": "crops/g014.png"
   },
   {
@@ -27912,9 +27770,9 @@
     "f037"
    ],
    "statuses": {
-    "settled_against_file": 2,
-    "cannot_verify": 1
+    "settled_against_file": 3
    },
+   "what_to_do": null,
    "crop": "crops/g015.png"
   },
   {
@@ -27935,6 +27793,7 @@
    "statuses": {
     "settled_against_file": 2
    },
+   "what_to_do": null,
    "crop": "crops/g016.png"
   },
   {
@@ -27955,6 +27814,7 @@
    "statuses": {
     "settled_against_file": 2
    },
+   "what_to_do": null,
    "crop": "crops/g017.png"
   },
   {
@@ -27975,6 +27835,7 @@
    "statuses": {
     "settled_against_file": 2
    },
+   "what_to_do": null,
    "crop": "crops/g018.png"
   },
   {
@@ -27995,6 +27856,7 @@
    "statuses": {
     "settled_against_file": 2
    },
+   "what_to_do": null,
    "crop": "crops/g019.png"
   },
   {
@@ -28015,6 +27877,7 @@
    "statuses": {
     "settled_against_file": 2
    },
+   "what_to_do": null,
    "crop": "crops/g020.png"
   },
   {
@@ -28036,6 +27899,7 @@
    "statuses": {
     "settled_against_file": 3
    },
+   "what_to_do": null,
    "crop": "crops/g021.png"
   },
   {
@@ -28057,6 +27921,7 @@
    "statuses": {
     "settled_against_file": 3
    },
+   "what_to_do": null,
    "crop": "crops/g022.png"
   },
   {
@@ -28077,6 +27942,7 @@
    "statuses": {
     "settled_against_file": 2
    },
+   "what_to_do": null,
    "crop": "crops/g023.png"
   },
   {
@@ -28098,6 +27964,7 @@
    "statuses": {
     "settled_against_file": 3
    },
+   "what_to_do": null,
    "crop": "crops/g024.png"
   },
   {
@@ -28118,6 +27985,7 @@
    "statuses": {
     "settled_against_file": 2
    },
+   "what_to_do": null,
    "crop": "crops/g025.png"
   },
   {
@@ -28136,9 +28004,9 @@
     "f062"
    ],
    "statuses": {
-    "settled_against_file": 1,
-    "cannot_verify": 1
+    "settled_against_file": 2
    },
+   "what_to_do": null,
    "crop": "crops/g026.png"
   },
   {
@@ -28159,6 +28027,7 @@
    "statuses": {
     "settled_against_file": 2
    },
+   "what_to_do": null,
    "crop": "crops/g027.png"
   },
   {
@@ -28179,6 +28048,7 @@
    "statuses": {
     "settled_against_file": 2
    },
+   "what_to_do": null,
    "crop": "crops/g028.png"
   },
   {
@@ -28200,6 +28070,7 @@
    "statuses": {
     "settled_against_file": 3
    },
+   "what_to_do": null,
    "crop": "crops/g029.png"
   },
   {
@@ -28221,6 +28092,7 @@
    "statuses": {
     "settled_against_file": 3
    },
+   "what_to_do": null,
    "crop": "crops/g030.png"
   },
   {
@@ -28239,8 +28111,9 @@
     "f074"
    ],
    "statuses": {
-    "cannot_verify": 2
+    "settled_against_file": 2
    },
+   "what_to_do": null,
    "crop": "crops/g031.png"
   },
   {
@@ -28261,6 +28134,7 @@
    "statuses": {
     "settled_against_file": 2
    },
+   "what_to_do": null,
    "crop": "crops/g032.png"
   },
   {
@@ -28280,6 +28154,7 @@
    "statuses": {
     "settled_against_file": 1
    },
+   "what_to_do": null,
    "crop": "crops/g033.png"
   },
   {
@@ -28299,6 +28174,7 @@
    "statuses": {
     "settled_against_file": 1
    },
+   "what_to_do": null,
    "crop": "crops/g034.png"
   },
   {
@@ -28320,6 +28196,7 @@
    "statuses": {
     "settled_against_file": 2
    },
+   "what_to_do": "Move the same 1 rows of values to the precinct where the scan has them (3 to 7), and 1 more row(s) of the group have no counterpart (see the missing and extra rows).",
    "crop": "crops/g035.png"
   },
   {
@@ -28341,6 +28218,7 @@
    "statuses": {
     "settled_against_file": 2
    },
+   "what_to_do": "Move the same 1 rows of values to the precinct where the scan has them (28 to 10), and 1 more row(s) of the group have no counterpart (see the missing and extra rows).",
    "crop": "crops/g036.png"
   },
   {
@@ -28360,6 +28238,7 @@
    "statuses": {
     "settled_against_file": 1
    },
+   "what_to_do": null,
    "crop": "crops/g037.png"
   },
   {
@@ -28379,6 +28258,7 @@
    "statuses": {
     "settled_against_file": 1
    },
+   "what_to_do": null,
    "crop": "crops/g038.png"
   },
   {
@@ -28427,9 +28307,10 @@
     "f109"
    ],
    "statuses": {
-    "settled_against_file": 24,
-    "cannot_verify": 1
+    "settled_against_file": 17,
+    "cannot_verify": 8
    },
+   "what_to_do": "Move the same 7 rows of values to the precinct where the scan has them (12 to 13, 13 to 14, 14 to 18, 18 to 19, 19 to 20, 20 to 26, 10 to 12), and 1 more row(s) of the group have no counterpart (see the missing and extra rows).",
    "crop": "crops/g039.png"
   },
   {
@@ -28449,9 +28330,9 @@
     "f111"
    ],
    "statuses": {
-    "settled_against_file": 1,
-    "cannot_verify": 1
+    "cannot_verify": 2
    },
+   "what_to_do": "Move the same 1 rows of values to the precinct where the scan has them (27 to 28), and 1 more row(s) of the group have no counterpart (see the missing and extra rows).",
    "crop": "crops/g040.png"
   },
   {
@@ -28471,6 +28352,7 @@
    "statuses": {
     "cannot_verify": 1
    },
+   "what_to_do": null,
    "crop": "crops/g041.png"
   },
   {
@@ -28495,6 +28377,7 @@
    "statuses": {
     "settled_against_file": 5
    },
+   "what_to_do": "Move the same 1 rows of values, each labelled 1 precinct later than where the scan has it, back to the precinct the scan puts them under, and 1 more row(s) of the group have no counterpart (see the missing and extra rows).",
    "crop": "crops/g042.png"
   },
   {
@@ -28514,6 +28397,7 @@
    "statuses": {
     "settled_against_file": 1
    },
+   "what_to_do": null,
    "crop": "crops/g043.png"
   },
   {
@@ -28533,6 +28417,7 @@
    "statuses": {
     "settled_against_file": 1
    },
+   "what_to_do": null,
    "crop": "crops/g044.png"
   },
   {
@@ -28552,6 +28437,7 @@
    "statuses": {
     "settled_against_file": 1
    },
+   "what_to_do": null,
    "crop": "crops/g045.png"
   },
   {
@@ -28569,8 +28455,9 @@
     "f121"
    ],
    "statuses": {
-    "cannot_verify": 1
+    "settled_against_file": 1
    },
+   "what_to_do": null,
    "crop": "crops/g046.png"
   }
  ],
@@ -28628,6 +28515,13 @@
    "finding": "f009",
    "file_row": 97,
    "part": "election_day",
+   "old": 0,
+   "new": 1
+  },
+  {
+   "finding": "f010",
+   "file_row": 106,
+   "part": "votes",
    "old": 0,
    "new": 1
   },
@@ -28712,6 +28606,13 @@
    "finding": "f022",
    "file_row": 284,
    "part": "votes",
+   "old": 0,
+   "new": 4
+  },
+  {
+   "finding": "f023",
+   "file_row": 284,
+   "part": "election_day",
    "old": 0,
    "new": 4
   },
@@ -28805,6 +28706,13 @@
    "part": "early_voting",
    "old": 0,
    "new": 1
+  },
+  {
+   "finding": "f037",
+   "file_row": 379,
+   "part": "election_day",
+   "old": 0,
+   "new": 9
   },
   {
    "finding": "f038",
@@ -28975,6 +28883,13 @@
    "new": 3
   },
   {
+   "finding": "f062",
+   "file_row": 455,
+   "part": "election_day",
+   "old": 0,
+   "new": 1
+  },
+  {
    "finding": "f063",
    "file_row": 493,
    "part": "votes",
@@ -29045,6 +28960,20 @@
    "new": 3
   },
   {
+   "finding": "f073",
+   "file_row": 550,
+   "part": "votes",
+   "old": 1,
+   "new": 4
+  },
+  {
+   "finding": "f074",
+   "file_row": 550,
+   "part": "election_day",
+   "old": 0,
+   "new": 3
+  },
+  {
    "finding": "f075",
    "file_row": 664,
    "part": "absentee",
@@ -29057,167 +28986,6 @@
    "part": "election_day",
    "old": 0,
    "new": 2
-  },
-  {
-   "finding": "f085",
-   "file_row": 766,
-   "part": "votes",
-   "old": 181,
-   "new": 320
-  },
-  {
-   "finding": "f086",
-   "file_row": 767,
-   "part": "votes",
-   "old": 311,
-   "new": 181
-  },
-  {
-   "finding": "f087",
-   "file_row": 768,
-   "part": "votes",
-   "old": 1363,
-   "new": 311
-  },
-  {
-   "finding": "f088",
-   "file_row": 769,
-   "part": "votes",
-   "old": 235,
-   "new": 1363
-  },
-  {
-   "finding": "f089",
-   "file_row": 770,
-   "part": "votes",
-   "old": 245,
-   "new": 235
-  },
-  {
-   "finding": "f090",
-   "file_row": 771,
-   "part": "votes",
-   "old": 108,
-   "new": 245
-  },
-  {
-   "finding": "f093",
-   "file_row": 766,
-   "part": "absentee",
-   "old": 5,
-   "new": 14
-  },
-  {
-   "finding": "f094",
-   "file_row": 767,
-   "part": "absentee",
-   "old": 3,
-   "new": 5
-  },
-  {
-   "finding": "f095",
-   "file_row": 768,
-   "part": "absentee",
-   "old": 35,
-   "new": 3
-  },
-  {
-   "finding": "f096",
-   "file_row": 769,
-   "part": "absentee",
-   "old": 5,
-   "new": 35
-  },
-  {
-   "finding": "f097",
-   "file_row": 770,
-   "part": "absentee",
-   "old": 2,
-   "new": 5
-  },
-  {
-   "finding": "f098",
-   "file_row": 766,
-   "part": "early_voting",
-   "old": 102,
-   "new": 168
-  },
-  {
-   "finding": "f099",
-   "file_row": 767,
-   "part": "early_voting",
-   "old": 195,
-   "new": 102
-  },
-  {
-   "finding": "f100",
-   "file_row": 768,
-   "part": "early_voting",
-   "old": 938,
-   "new": 195
-  },
-  {
-   "finding": "f101",
-   "file_row": 769,
-   "part": "early_voting",
-   "old": 115,
-   "new": 938
-  },
-  {
-   "finding": "f102",
-   "file_row": 770,
-   "part": "early_voting",
-   "old": 160,
-   "new": 115
-  },
-  {
-   "finding": "f103",
-   "file_row": 771,
-   "part": "early_voting",
-   "old": 52,
-   "new": 160
-  },
-  {
-   "finding": "f104",
-   "file_row": 766,
-   "part": "election_day",
-   "old": 74,
-   "new": 138
-  },
-  {
-   "finding": "f105",
-   "file_row": 767,
-   "part": "election_day",
-   "old": 113,
-   "new": 74
-  },
-  {
-   "finding": "f106",
-   "file_row": 768,
-   "part": "election_day",
-   "old": 390,
-   "new": 113
-  },
-  {
-   "finding": "f107",
-   "file_row": 769,
-   "part": "election_day",
-   "old": 115,
-   "new": 390
-  },
-  {
-   "finding": "f108",
-   "file_row": 770,
-   "part": "election_day",
-   "old": 83,
-   "new": 115
-  },
-  {
-   "finding": "f109",
-   "file_row": 771,
-   "part": "election_day",
-   "old": 54,
-   "new": 83
   },
   {
    "finding": "f114",
@@ -29246,8 +29014,211 @@
    "part": "election_day",
    "old": 77,
    "new": 103
+  },
+  {
+   "finding": "f121",
+   "file_row": 717,
+   "part": "votes",
+   "old": 178,
+   "new": 179
   }
  ],
+ "could_not_correct": [
+  {
+   "file_row": 766,
+   "file_line": 768,
+   "office": "Constable",
+   "candidate": "Jeff Ivy",
+   "precinct": "12",
+   "findings": [
+    "f093",
+    "f098",
+    "f104"
+   ],
+   "reason": "the corrected votes 181 would not equal the corrected parts 14 + 168 + 138 = 320"
+  },
+  {
+   "file_row": 767,
+   "file_line": 769,
+   "office": "Constable",
+   "candidate": "Jeff Ivy",
+   "precinct": "13",
+   "findings": [
+    "f094",
+    "f099",
+    "f105"
+   ],
+   "reason": "the corrected votes 311 would not equal the corrected parts 5 + 102 + 74 = 181"
+  },
+  {
+   "file_row": 768,
+   "file_line": 770,
+   "office": "Constable",
+   "candidate": "Jeff Ivy",
+   "precinct": "14",
+   "findings": [
+    "f095",
+    "f100",
+    "f106"
+   ],
+   "reason": "the corrected votes 1363 would not equal the corrected parts 3 + 195 + 113 = 311"
+  },
+  {
+   "file_row": 769,
+   "file_line": 771,
+   "office": "Constable",
+   "candidate": "Jeff Ivy",
+   "precinct": "18",
+   "findings": [
+    "f096",
+    "f101",
+    "f107"
+   ],
+   "reason": "the corrected votes 235 would not equal the corrected parts 35 + 938 + 390 = 1363"
+  },
+  {
+   "file_row": 770,
+   "file_line": 772,
+   "office": "Constable",
+   "candidate": "Jeff Ivy",
+   "precinct": "19",
+   "findings": [
+    "f097",
+    "f102",
+    "f108"
+   ],
+   "reason": "the corrected votes 245 would not equal the corrected parts 5 + 115 + 115 = 235"
+  },
+  {
+   "file_row": 771,
+   "file_line": 773,
+   "office": "Constable",
+   "candidate": "Jeff Ivy",
+   "precinct": "20",
+   "findings": [
+    "f103",
+    "f109"
+   ],
+   "reason": "the corrected votes 108 would not equal the corrected parts 2 + 160 + 83 = 245"
+  }
+ ],
+ "sums_check": {
+  "in_all": 984,
+  "holding_with_ledger": 981,
+  "holding_with_published": 949,
+  "holding_with_corrected": 978,
+  "still_failing": [
+   {
+    "name": "the registered-voters row (its cells add to the printed total of the row; this row has no other sum)",
+    "kind": "row",
+    "page": 1,
+    "block": "reg",
+    "key": "REGISTERED",
+    "printed": 17921,
+    "computed": 17917,
+    "reasons": [
+     "a value that could not be verified (f001: Registered Voters, precinct 3, votes)"
+    ]
+   },
+   {
+    "name": "the EARLY cells across the page add to the row total printed at the right end of the row",
+    "kind": "row",
+    "page": 6,
+    "block": "p6-b3",
+    "key": "EARLY",
+    "printed": 3616,
+    "computed": 3500,
+    "reasons": [
+     "a row missing from the file (precinct 1, page 6, block p6-b3)",
+     "a row that could not be corrected as a whole (f098)",
+     "a row that could not be corrected as a whole (f099)",
+     "a row that could not be corrected as a whole (f100)",
+     "a row that could not be corrected as a whole (f101)",
+     "a row that could not be corrected as a whole (f102)",
+     "a row that could not be corrected as a whole (f103)",
+     "a row missing from the file (precinct 26, page 6, block p6-b3)",
+     "a row missing from the file (precinct 28, page 6, block p6-b3)"
+    ]
+   },
+   {
+    "name": "the ABSENTEE cells across the page add to the row total printed at the right end of the row",
+    "kind": "row",
+    "page": 6,
+    "block": "p6-b3",
+    "key": "ABSENTEE",
+    "printed": 149,
+    "computed": 137,
+    "reasons": [
+     "a row missing from the file (precinct 1, page 6, block p6-b3)",
+     "a row that could not be corrected as a whole (f093)",
+     "a row that could not be corrected as a whole (f094)",
+     "a row that could not be corrected as a whole (f095)",
+     "a row that could not be corrected as a whole (f096)",
+     "a row that could not be corrected as a whole (f097)",
+     "a row missing from the file (precinct 26, page 6, block p6-b3)",
+     "a row missing from the file (precinct 28, page 6, block p6-b3)"
+    ]
+   },
+   {
+    "name": "the PRECINCT cells across the page add to the row total printed at the right end of the row",
+    "kind": "row",
+    "page": 6,
+    "block": "p6-b3",
+    "key": "PRECINCT",
+    "printed": 1555,
+    "computed": 1471,
+    "reasons": [
+     "a row missing from the file (precinct 1, page 6, block p6-b3)",
+     "a row that could not be corrected as a whole (f104)",
+     "a row that could not be corrected as a whole (f105)",
+     "a row that could not be corrected as a whole (f106)",
+     "a row that could not be corrected as a whole (f107)",
+     "a row that could not be corrected as a whole (f108)",
+     "a row that could not be corrected as a whole (f109)",
+     "a row missing from the file (precinct 26, page 6, block p6-b3)",
+     "a row missing from the file (precinct 28, page 6, block p6-b3)"
+    ]
+   },
+   {
+    "name": "the three cells of precinct 1 add to the small total printed under the column",
+    "kind": "col",
+    "page": 6,
+    "block": "p6-b3",
+    "key": "1",
+    "printed": 1079,
+    "computed": 1076,
+    "reasons": [
+     "a row missing from the file (precinct 1, page 6, block p6-b3)"
+    ]
+   },
+   {
+    "name": "the small totals under the columns add to the grand total",
+    "kind": "grand_col",
+    "page": 6,
+    "block": "p6-b3",
+    "key": "",
+    "printed": 5320,
+    "computed": 5111,
+    "reasons": [
+     "a row missing from the file (precinct 1, page 6, block p6-b3)",
+     "a value that could not be verified (f085: Jeff Ivy, precinct 12, votes)",
+     "a value that could not be verified (f086: Jeff Ivy, precinct 13, votes)",
+     "a value that could not be verified (f087: Jeff Ivy, precinct 14, votes)",
+     "a value that could not be verified (f088: Jeff Ivy, precinct 18, votes)",
+     "a value that could not be verified (f089: Jeff Ivy, precinct 19, votes)",
+     "a value that could not be verified (f090: Jeff Ivy, precinct 20, votes)",
+     "a row missing from the file (precinct 26, page 6, block p6-b3)",
+     "a value that could not be verified (f091: Jeff Ivy, precinct 26, votes)",
+     "a row missing from the file (precinct 28, page 6, block p6-b3)",
+     "a value that could not be verified (f110: Jeff Ivy, precinct 28, votes)"
+    ]
+   }
+  ],
+  "rows_failing_own_total": {
+   "published": 1,
+   "corrected": 0
+  }
+ },
  "unmatched": {
   "scan": [],
   "file": [],
@@ -29328,10 +29299,11 @@
  "corrected_events": [],
  "audit": {
   "disagreements_found": 121,
-  "rereads": 104,
-  "rereads_agreed_with_ledger": 97,
-  "rereads_agreed_with_file": 2,
+  "rereads": 7,
+  "rereads_skipped_sums_decide": 97,
+  "rereads_agreed_with_ledger": 7,
+  "rereads_agreed_with_file": 0,
   "ledger_corrected": 0,
-  "seconds": 158.2
+  "seconds": 14.4
  }
 }
