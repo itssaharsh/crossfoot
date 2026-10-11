@@ -10,7 +10,7 @@ SCHEMA = """
 CREATE TABLE IF NOT EXISTS cells(
   id INTEGER PRIMARY KEY, county TEXT, page INTEGER, block_id TEXT, contest TEXT, candidate TEXT,
   row_kind TEXT, column TEXT, value INTEGER, first_read INTEGER, status TEXT DEFAULT 'first_read',
-  tries INTEGER DEFAULT 0, model TEXT, x0 INTEGER, y0 INTEGER, x1 INTEGER, y1 INTEGER,
+  tries INTEGER DEFAULT 0, model TEXT, x0 INTEGER, y0 INTEGER, x1 INTEGER, y1 INTEGER, reason TEXT,
   UNIQUE(county, page, block_id, row_kind, column));
 CREATE TABLE IF NOT EXISTS totals(
   county TEXT, page INTEGER, block_id TEXT, direction TEXT, key TEXT, value INTEGER,
@@ -28,6 +28,8 @@ class Ledger:
         self.db = sqlite3.connect(str(path))
         self.db.row_factory = sqlite3.Row
         self.db.executescript(SCHEMA)
+        if "reason" not in {r["name"] for r in self.db.execute("PRAGMA table_info(cells)")}:
+            self.db.execute("ALTER TABLE cells ADD COLUMN reason TEXT")  # ledgers made before the loop existed
 
     def close(self):
         self.db.close()
@@ -43,11 +45,18 @@ class Ledger:
             (county, page, block_id, contest, candidate, row_kind, column, value, value, model, *box))
         self.db.commit()
 
-    def set_status(self, county, page, block_id, row_kind, column, status):
+    def set_status(self, county, page, block_id, row_kind, column, status, reason=None):
         if status not in STATUSES:
             raise ValueError(f"unknown status {status!r}")
-        self.db.execute("UPDATE cells SET status=? WHERE county=? AND page=? AND block_id=? AND row_kind=? AND column=?",
-                        (status, county, page, block_id, row_kind, column))
+        self.db.execute("UPDATE cells SET status=?, reason=? WHERE county=? AND page=? AND block_id=? AND row_kind=? "
+                        "AND column=?", (status, reason, county, page, block_id, row_kind, column))
+        self.db.commit()
+
+    def reread_cell(self, county, page, block_id, row_kind, column, value, model=None):
+        """Record one re-read of a cell: tries goes up by one, the value is the one kept, the model only if it changed it."""
+        self.db.execute("UPDATE cells SET value=?, tries=tries+1, model=COALESCE(?, model) WHERE county=? AND page=? "
+                        "AND block_id=? AND row_kind=? AND column=? AND status!='accepted'",
+                        (value, model, county, page, block_id, row_kind, column))
         self.db.commit()
 
     def put_total(self, county, page, block_id, direction, key, value):

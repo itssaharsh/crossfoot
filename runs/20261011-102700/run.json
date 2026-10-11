@@ -1,0 +1,15 @@
+{
+ "run_id": "20261011-102700",
+ "started": "2026-10-11T10:27:00",
+ "ended": "2026-10-11T10:46:41",
+ "commit": "7de82e73dfd8c6c42570672f4f9c5af01dc9cf64",
+ "command": "crossfoot close --county panola --resume 20261011-094115",
+ "counties": [
+  "panola"
+ ],
+ "resumed_from": "20261011-094115",
+ "model_calls": 565,
+ "prompt_tokens": 565521,
+ "completion_tokens": 50446,
+ "metered_cost_estimate": 0.8601
+}

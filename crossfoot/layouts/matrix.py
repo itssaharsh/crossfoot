@@ -14,6 +14,7 @@ from PIL import Image
 from .. import checks, tracing
 from ..model import BudgetExceeded
 from ..render import crop, page_png
+from .. import segment
 from ..segment import find_blocks
 
 ROWS = ("EARLY", "ABSENTEE", "PRECINCT")
@@ -306,3 +307,166 @@ def read_county(county, gw, led, *, run_id="", pages=None, dpi=200, log=print, d
              completion_tokens=gw.completion_tokens, metered_cost_estimate=round(gw.cost, 4),
              seconds=round(time.time() - t0, 1), stopped=stopped, blocks=block_log)
     return s
+
+
+# ---- where things are on the page (for re-reads and for the results page); boxes are in 200 dpi pixels ----
+
+HEADER_ROWS = ("REGISTERED",) + ROWS + ("SMALL",)   # page 1's first block: one more row, and its small
+# totals sit inside the ruled box, as its last row
+GEO_DPI = 200
+PAD = 8             # pixels of page around a crop, at 200 dpi
+SMALL_ROW = 30      # height of the row of small printed totals under the ruled rows, at 200 dpi
+MIN_DIGIT_PX = 40   # a re-read crop is enlarged until its digits are at least this tall
+# printed digit height at 200 dpi, measured by eye on the Panola scan: cells and large totals about 10 px, the small
+# totals about 6 px
+DIGIT_200 = {"cell": 10, "row_total": 10, "grand": 10, "col_total": 6, "column": 6}
+
+
+def digit_px(dpi: int, kind: str) -> float:
+    return DIGIT_200[kind] * dpi / GEO_DPI
+
+
+def scale_for(dpi: int, kind: str) -> float:
+    return max(1.0, round(MIN_DIGIT_PX / digit_px(dpi, kind) + 0.01, 2))
+
+
+class GeometryError(Exception):
+    pass
+
+
+class Geometry:
+    """Boxes of cells, printed totals and blocks of one matrix-layout county, and crops of them from the scan."""
+
+    def __init__(self, county, cols, root=None):
+        from ..sources import DATA
+        self.county, self.cols, self.root = county, list(cols), root or DATA
+        self._pages: dict = {}
+        self._rule_cache: dict = {}
+        self._cur_page = None
+
+    def _page(self, page):
+        if page not in self._pages:
+            blocks = find_blocks(page_png(self.county, page, GEO_DPI, self.root))
+            self._pages[page] = (blocks, _edges(blocks, len(self.cols)))
+        return self._pages[page]
+
+    def _block(self, page, bid):
+        blocks, edges = self._page(page)
+        i = 0 if bid in ("reg", "cast") else int(bid.rsplit("-b", 1)[1])
+        if i >= len(blocks) or edges is None:
+            raise GeometryError(f"no column lines found for {bid} on page {page}")
+        rows = HEADER_ROWS if bid in ("reg", "cast") else ROWS
+        self._cur_page = page
+        self._rules(blocks[i], edges)
+        return blocks[i], edges, rows
+
+    def _rules(self, b, edges):
+        """y of each horizontal rule across the precinct columns inside the block's ruled height, found in the image."""
+        key = (b.y0, b.x0)
+        if key not in self._rule_cache:
+            import numpy as np
+            png = page_png(self.county, self._cur_page, GEO_DPI, self.root)
+            with Image.open(png) as im:
+                g = np.asarray(im.convert("L"))[b.rule_y0 - 3:b.rule_y1 + 4, edges[0]:edges[-2]]
+            cover = (g < 110).mean(axis=1) >= 0.6
+            ys = []
+            for s_, e_ in segment._runs(cover):
+                ys.append(b.rule_y0 - 3 + (s_ + e_) // 2)
+            self._rule_cache[key] = ys
+        return self._rule_cache[key]
+
+    def _row(self, b, rows, kind):
+        i = rows.index(kind)
+        ys = self._rule_cache.get((b.y0, b.x0)) or []
+        h = (b.rule_y1 - b.rule_y0) / len(rows)
+
+        def edge(j):    # an even split, moved onto a drawn rule when one lies within 5 px
+            y = b.rule_y0 + j * h
+            near = min(ys, key=lambda r: abs(r - y), default=None)
+            return round(near if near is not None and abs(near - y) <= 5 else y)
+        return edge(i), edge(i + 1)
+
+    def block_box(self, page, bid):
+        try:
+            return self._block(page, bid)[0].box
+        except GeometryError:
+            return None
+
+    def cell_box(self, page, bid, row, col):
+        b, edges, rows = self._block(page, bid)
+        y0, y1 = self._row(b, rows, row)
+        ci = self.cols.index(col)
+        return (edges[ci], y0, edges[ci + 1], y1)
+
+    def total_box(self, page, bid, direction, key):
+        try:
+            b, edges, rows = self._block(page, bid)
+            n = len(self.cols)
+            if direction == "row":
+                y0, y1 = self._row(b, rows, key)
+                return (edges[n], y0, b.x1, y1)
+            if bid == "reg":
+                return None
+            if direction == "col":
+                ci = self.cols.index(key)
+                if bid == "cast":
+                    y0, y1 = self._row(b, rows, "SMALL")
+                    return (edges[ci], y0, edges[ci + 1], y1)
+                return (edges[ci], b.rule_y1, edges[ci + 1], min(b.y1, b.rule_y1 + SMALL_ROW))
+            if bid == "cast":
+                y0, y1 = self._row(b, rows, "SMALL")
+                return (edges[n], y0, b.x1, b.y1)
+            return (edges[n], b.rule_y1, b.x1, b.y1)
+        except (GeometryError, ValueError):
+            return None
+
+    def target_box(self, page, bid, t):
+        """The box of a re-read target, without padding."""
+        b, edges, rows = self._block(page, bid)
+        kind = t["kind"]
+        if kind == "cell":
+            return self.cell_box(page, bid, t["row"], t["column"])
+        if kind == "column":
+            ci = self.cols.index(t["column"])
+            y0 = self._row(b, rows, "EARLY")[0]
+            if bid == "cast":
+                return (edges[ci], y0, edges[ci + 1], self._row(b, rows, "SMALL")[1])
+            return (edges[ci], y0, edges[ci + 1], min(b.y1, b.rule_y1 + SMALL_ROW))
+        if kind == "row_total":
+            return self.total_box(page, bid, "row", t["row"])
+        if kind == "col_total":
+            return self.total_box(page, bid, "col", t["column"])
+        if kind == "grand":
+            return self.total_box(page, bid, "grand", "")
+        raise GeometryError(f"unknown target kind {kind!r}")
+
+    def crop(self, page, bid, t, dpi, dest: Path):
+        """Cut the target out of the page at `dpi`, with padding, enlarged so its digits are at least 40 px tall.
+        Returns (path, box at 200 dpi)."""
+        try:
+            box = self.target_box(page, bid, t)
+        except ValueError:
+            box = None
+        if box is None:
+            raise GeometryError(f"cannot place {t} in {bid} on page {page}")
+        k = dpi / GEO_DPI
+        x0, y0, x1, y1 = box
+        with Image.open(page_png(self.county, page, dpi, self.root)) as im:
+            win = (max(0, round((x0 - PAD) * k)), max(0, round((y0 - PAD) * k)),
+                   min(im.width, round((x1 + PAD) * k)), min(im.height, round((y1 + PAD) * k)))
+            c = im.crop(win)
+        s = scale_for(dpi, t["kind"])
+        if s > 1:
+            c = c.resize((round(c.width * s), round(c.height * s)), Image.LANCZOS)
+        dest.parent.mkdir(parents=True, exist_ok=True)
+        c.save(dest)
+        return dest, box
+
+
+def precinct_order(led, county) -> list[str]:
+    """The precinct columns left to right, as the header block's registered-voters row was read."""
+    seen = []
+    for c in led.cells(county):
+        if c["block_id"] == "reg" and c["column"] not in seen:
+            seen.append(c["column"])
+    return seen

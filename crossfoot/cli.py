@@ -127,6 +127,73 @@ def cmd_read(args) -> int:
     return 2 if s["stopped"] else 0
 
 
+def cmd_close(args) -> int:
+    import json
+    import shutil
+    import time
+    from pathlib import Path
+
+    from . import agent, outputs, tracing
+    from .layouts import matrix
+    from .ledger import Ledger
+    from .model import Gateway, gateway_spend
+    if args.county != "panola":
+        print(f"{args.county}: only the matrix layout (panola) is built so far", file=sys.stderr)
+        return 1
+    src = Path("runs") / args.resume / "ledger.sqlite"
+    if not src.exists():
+        print(f"{src} does not exist", file=sys.stderr)
+        return 1
+    note = tracing.init()
+    if note:
+        print(note)
+    try:
+        before = gateway_spend()[0]
+    except (KeyError, OSError, ValueError):
+        before = None
+    started = time.strftime("%Y-%m-%dT%H:%M:%S")
+    run_id = time.strftime("%Y%m%d-%H%M%S")
+    out = Path("runs") / run_id
+    out.mkdir(parents=True)
+    shutil.copy(src, out / "ledger.sqlite")      # the run resumed from is never changed
+    led = Ledger(out / "ledger.sqlite")
+    cols = matrix.precinct_order(led, args.county)
+    if not cols:
+        print("the ledger has no header block (registered voters row); nothing to place columns by", file=sys.stderr)
+        return 1
+    geo = matrix.Geometry(args.county, cols)
+    gw = Gateway(budget=args.budget)
+    print(f"run {run_id}: closing {args.county} from {args.resume}, run budget ${args.budget:.2f}")
+    try:
+        s = agent.close_county(args.county, gw, led, geo, run_id=run_id, max_items=args.max_items)
+    except RenderError as e:
+        print(e, file=sys.stderr)
+        return 1
+    finally:
+        tracing.shutdown()
+    try:
+        s["gateway_spend_before"], s["gateway_spend_after"] = before, gateway_spend()[0]
+        s["gateway_spend_change"] = round(s["gateway_spend_after"] - before, 4)
+    except (KeyError, OSError, ValueError, TypeError):
+        pass
+    outputs.write_county(out, args.county, run_id, led, geo, s)
+    outputs.write_run(out, run_id, started=started, ended=time.strftime("%Y-%m-%dT%H:%M:%S"),
+                      command="crossfoot " + " ".join(sys.argv[1:]), counties=[args.county], gw=gw,
+                      resumed_from=args.resume)
+    b, a = s["sums_failing_before"], s["sums_failing_after"]
+    print(f"sums failing before: {b['row']} row, {b['col']} column, {b['grand']} grand")
+    print(f"sums failing after:  {a['row']} row, {a['col']} column, {a['grand']} grand")
+    print(f"cells re-read: {s['cells_reread']}; changed: {s['cells_changed']}; cannot_verify: {s['cells_cannot_verify']}; "
+          f"accepted: {s['cells_accepted']} of {s['cells_total']}; still open: {s['cells_open']}")
+    print(f"model calls: {s['model_calls']}; tokens: {s['prompt_tokens']} in, {s['completion_tokens']} out; "
+          f"metered cost (estimate): ${s['metered_cost_estimate']:.4f}; seconds: {s['seconds']}")
+    if "gateway_spend_change" in s:
+        print(f"gateway spend: ${s['gateway_spend_before']:.4f} -> ${s['gateway_spend_after']:.4f} "
+              f"(change ${s['gateway_spend_change']:.4f})")
+    print(f"written: {out / args.county / 'county.json'}, {out / 'run.json'}")
+    return 2 if s["stopped"] else 0
+
+
 def main(argv=None) -> int:
     p = argparse.ArgumentParser(prog="crossfoot")
     sub = p.add_subparsers(dest="cmd", required=True)
@@ -147,6 +214,13 @@ def main(argv=None) -> int:
     s.add_argument("--budget", type=float, default=2.00, help="dollars this run may meter (default 2.00)")
     s.add_argument("--pages", help="comma-separated pages, default all")
     s.set_defaults(fn=cmd_read)
+    s = sub.add_parser("close", help="work every failing sum of a first-read ledger until each cell is accepted or "
+                                     "cannot_verify")
+    s.add_argument("--county", required=True, choices=list(sources.COUNTIES))
+    s.add_argument("--resume", required=True, help="run id whose ledger is copied into a new run")
+    s.add_argument("--budget", type=float, default=1.50, help="dollars this run may meter (default 1.50)")
+    s.add_argument("--max-items", type=int, help="work at most this many failing sums (for trials)")
+    s.set_defaults(fn=cmd_close)
     s = sub.add_parser("budget", help="print the gateway's spend and limit for the key")
     s.set_defaults(fn=cmd_budget)
     args = p.parse_args(argv)

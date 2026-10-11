@@ -91,3 +91,16 @@ def locate(rows: list[Check], cols: list[Check]) -> list[tuple]:
     bad_rows = {k for ch in rows if not ch.ok for k, _ in ch.terms}
     bad_cols = {k for ch in cols if not ch.ok for k, _ in ch.terms}
     return sorted(bad_rows & bad_cols)
+
+
+def all_checks(cells: list[dict], totals: list[dict]) -> list[Check]:
+    return row_checks(cells, totals) + column_checks(cells, totals) + grand_checks(totals)
+
+
+def crossing(cells: list[dict], totals: list[dict]) -> dict:
+    """For each cell key, the row and column checks it sits on (a cell on no printed sum maps to an empty list)."""
+    on: dict = {cell_key(c): [] for c in cells if c["column"] != ROW_TOTAL_COLUMN}
+    for ch in row_checks(cells, totals) + column_checks(cells, totals):
+        for k, _ in ch.terms:
+            on[k].append(ch)
+    return on
