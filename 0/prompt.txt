@@ -1,0 +1,3 @@
+Read AGENTS.md, then .prod-build/briefs/T03b.md and do exactly that task.
+Run checks through `python3 .prod-build/pb.py` as the brief says.
+Finish by writing .prod-build/reports/T03b.md in the format at the end of the brief, commit (do not push), and reply with the report.
