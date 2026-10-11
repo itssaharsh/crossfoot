@@ -220,6 +220,24 @@ def _latest_closed_run() -> str | None:
     return runs[-1] if runs else None
 
 
+def _print_audit(d, gw, spend, seconds, out, county, reader) -> None:
+    c = d["counts"]
+    print(f"reader: {reader}; findings: {c['findings']} in {c['groups']} groups; by kind {c['by_kind']}; by status "
+          f"{c['by_status']}; values changed in the corrected file: {c['corrections']}")
+    print(f"ledger values corrected by a re-read: {d['audit']['ledger_corrected']}; re-reads made: {d['audit']['rereads']} "
+          f"(skipped because the printed sums decide: {d['audit']['rereads_skipped_sums_decide']})")
+    sc = d["sums_check"]
+    print(f"printed sums in all: {sc['in_all']}; holding with the published file's values: {sc['holding_with_published']}; "
+          f"holding with the corrected file's values: {sc['holding_with_corrected']}; still failing: {len(sc['still_failing'])}; "
+          f"rows failing their own total, published {sc['rows_failing_own_total']['published']}, corrected "
+          f"{sc['rows_failing_own_total']['corrected']}; rows not corrected as a whole: {len(d['could_not_correct'])}")
+    print(f"model calls: {gw.calls} {gw.calls_by_model()}; tokens: {gw.prompt_tokens} in, {gw.completion_tokens} out; "
+          f"metered cost (estimate): ${gw.cost:.4f}; seconds: {seconds}")
+    if spend:
+        print(f"gateway spend: ${spend['before']:.4f} -> ${spend['after']:.4f} (change ${spend['change']:.4f})")
+    print(f"written: {out / county}/ (findings.json, report.md, changes.diff, corrected/, crops/), {out / 'run.json'}")
+
+
 def cmd_audit(args) -> int:
     import json
     import shutil
@@ -231,9 +249,12 @@ def cmd_audit(args) -> int:
     from .ledger import Ledger
     from .model import BudgetExceeded, gateway_spend
     from .render import RenderError
+    if args.all:
+        return _audit_all(args)
+    if args.budget is None:
+        args.budget = 2.00
     if args.county != "panola":
-        print(f"{args.county}: only the matrix layout (panola) is built so far", file=sys.stderr)
-        return 1
+        return _audit_report(args)
     src = None
     if args.resume:
         resume = _latest_closed_run() if args.resume == "latest" else args.resume
@@ -338,15 +359,182 @@ def cmd_audit(args) -> int:
     if stopped:
         print("the run stopped before the audit finished; nothing was written beyond run.json", file=sys.stderr)
         return 2
-    c = d["counts"]
-    print(f"reader: {reader}; findings: {c['findings']} in {c['groups']} groups; by kind {c['by_kind']}; by status "
-          f"{c['by_status']}; values changed in the corrected file: {c['corrections']}")
-    print(f"ledger values corrected by a re-read: {d['audit']['ledger_corrected']}; re-reads: {d['audit']['rereads']}")
-    print(f"model calls: {gw.calls} {gw.calls_by_model()}; tokens: {gw.prompt_tokens} in, {gw.completion_tokens} out; "
-          f"metered cost (estimate): ${gw.cost:.4f}; seconds: {seconds}")
-    if spend:
-        print(f"gateway spend: ${spend['before']:.4f} -> ${spend['after']:.4f} (change ${spend['change']:.4f})")
-    print(f"written: {out / args.county}/ (findings.json, report.md, changes.diff, corrected/, crops/), {out / 'run.json'}")
+    _print_audit(d, gw, spend, seconds, out, args.county, reader)
+    return 0
+
+
+def _audit_all(args) -> int:
+    """`audit --all`: every county in a fixed order, no input, one budget; --resume <run_id> continues that run's folder."""
+    import time
+    from pathlib import Path
+
+    from . import allrun, audit, outputs, tracing
+    from .ledger import Ledger
+    from .model import gateway_spend
+    resume = args.resume
+    if resume == "latest":
+        found = sorted(p.parent.name for p in Path("runs").glob("*/summary.json"))
+        resume = found[-1] if found else None
+    if args.resume and not (resume and (Path("runs") / resume / "summary.json").exists()):
+        print(f"no run with a summary.json to resume from (runs/{resume or args.resume})", file=sys.stderr)
+        return 1
+    run_id = resume or time.strftime("%Y%m%d-%H%M%S")
+    out = Path("runs") / run_id
+    out.mkdir(parents=True, exist_ok=True)
+    note = tracing.init()
+    if note:
+        print(note, flush=True)
+    try:
+        before = gateway_spend()[0]
+    except (KeyError, OSError, ValueError):
+        before = None
+    log = lambda *a: print(*a, flush=True)
+    budget = args.budget if args.budget is not None else 9.00
+    gw = audit.AuditGateway(budget=budget)
+    led = Ledger(out / "ledger.sqlite")
+    started = time.strftime("%Y-%m-%dT%H:%M:%S")
+    log(f"run {run_id}: auditing {', '.join(allrun.ORDER)}{' (continuing)' if resume else ''}, run budget ${budget:.2f}")
+    try:
+        summary = allrun.run_all(out, run_id, gw, led, allrun.audit_one, resume=bool(resume), log=log,
+                                 command="crossfoot " + " ".join(sys.argv[1:]), budget=budget, started=started)
+    finally:
+        tracing.shutdown()
+    try:
+        after = gateway_spend()[0]
+        summary["gateway_spend"] = {"before": before, "after": after, "change": round(after - before, 4)}
+        allrun.write_summary(out, summary)
+        log(f"gateway spend: ${before:.4f} -> ${after:.4f} (change ${after - before:.4f})")
+    except (KeyError, OSError, ValueError, TypeError):
+        pass
+    outputs.write_run(out, run_id, started=started, ended=summary["ended"], command=summary["command"],
+                      counties=list(allrun.ORDER), gw=gw, resumed_from=resume)
+    t = summary["totals"]
+    log(f"{t['closed']} of {t['counties']} counties closed; model calls {t['model_calls']}; metered cost (estimate) "
+        f"${t['metered_cost']:.4f}; seconds {t['seconds']}")
+    if summary["not_reached"]:
+        log(f"not reached: {', '.join(summary['not_reached'])}")
+    log(f"written: {out / 'summary.json'}, {out / 'summary.md'}")
+    return 0 if t["closed"] == t["counties"] else 2
+
+
+def _audit_report(args) -> int:
+    """`audit` for a county that is not a matrix sheet: decide the layout from page 1, read, close, audit."""
+    import json
+    import shutil
+    import time
+    from pathlib import Path
+
+    from . import agent, audit, outputs, policy, tracing
+    from .layouts import report
+    from .ledger import Ledger
+    from .model import BudgetExceeded, gateway_spend
+    from .render import RenderError
+    county = args.county
+    src = None
+    if args.resume:
+        resume = _latest_closed_run() if args.resume == "latest" else args.resume
+        src = Path("runs") / str(resume) / "ledger.sqlite"
+        if not resume or not src.exists():
+            print(f"no closed run to resume from ({src})", file=sys.stderr)
+            return 1
+    try:
+        sources.fetch(county)
+    except sources.FetchError as e:
+        print(e, file=sys.stderr)
+        return 1
+    note = tracing.init()
+    if note:
+        print(note)
+    try:
+        before = gateway_spend()[0]
+    except (KeyError, OSError, ValueError):
+        before = None
+    t0 = time.time()
+    started = time.strftime("%Y-%m-%dT%H:%M:%S")
+    run_id = time.strftime("%Y%m%d-%H%M%S")
+    out = Path("runs") / run_id
+    out.mkdir(parents=True)
+    log = lambda *a: print(*a, flush=True)
+    phases, stopped, reader, sample, d = {}, None, None, None, None
+    gw = audit.AuditGateway(budget=args.budget)
+    urls = {"scan": sources.scan_url(county), "file": sources.file_url(county)}
+    try:
+        if src:
+            shutil.copy(src, out / "ledger.sqlite")
+            led = Ledger(out / "ledger.sqlite")
+            print(f"run {run_id}: auditing {county} on the ledger of {src.parent.name} (no new read)")
+            lay = report.layout_event(led, county)
+            read = {"layout": "report", "layout_decision": lay, "pages_failed": []}
+        else:
+            led = Ledger(out / "ledger.sqlite")
+            print(f"run {run_id}: deciding the layout of {county} from its first page, then reading, closing and "
+                  f"auditing it, run budget ${args.budget:.2f}")
+            t1 = time.time()
+            read = report.read_county(county, gw, led, run_id=run_id, log=log)
+            phases["read"] = round(time.time() - t1, 1)
+        sample = read.get("sample")
+        if read.get("stopped"):
+            stopped = read["stopped"]
+        elif read["layout"] != "report":
+            outputs.write_unchecked(out, county, run_id, read, urls)
+            print(f"{county}: layout {read['layout']}: {read.get('note')}")
+        else:
+            lay = report.layout_event(led, county)
+            if src:
+                report.reopen(led, county)
+            report.refit_boxes(led, county, x_right=lay.get("x_right"))
+            geo = report.ReportGeometry(county, x_right=lay.get("x_right"))
+            chosen = next((json.loads(e["payload_json"]) for e in reversed(led.events(county))
+                           if e["kind"] == "choose_reader"), None)
+            reader = (chosen or {}).get("reader") or "claude-haiku"
+            sample = sample or chosen
+            gw.model = reader
+            t1 = time.time()
+            closed = report.close_county(county, gw, led, geo, reader=reader, run_id=run_id, log=log)
+            phases["close"] = round(time.time() - t1, 1)
+            stopped = closed["stopped"]
+            if not stopped:
+                summary = dict(closed, layout="report", layout_decision=read.get("layout_decision"), sample=sample,
+                               pages_failed=read.get("pages_failed"))
+                t1 = time.time()
+                pol = policy.write_for_run(out)
+                rows = sources.read_published(county)
+                fname = sources.file_url(county).rsplit("/", 1)[1]
+                raw = sources.file_path(county).read_bytes()
+                res = audit.audit_report_county(county, led, geo, gw, rows, run_dir=out, log=log, file_name=fname,
+                                                reader=reader, run_id=run_id)
+                phases["audit"] = round(time.time() - t1, 1)
+                outputs.make_row_crops(county, res, geo)
+                outputs.write_county(out, county, run_id, led, geo, summary, layout="report")
+                d = outputs.write_findings(out, county, run_id, res, policy=pol, raw_file=raw, file_name=fname,
+                                           file_urls=urls, verdicts=led.verdicts(county))
+    except BudgetExceeded as e:
+        stopped = str(e)
+        print(f"stopped: {e}", file=sys.stderr)
+    except RenderError as e:
+        print(e, file=sys.stderr)
+        return 1
+    finally:
+        tracing.shutdown()
+    spend = None
+    try:
+        after = gateway_spend()[0]
+        spend = {"before": before, "after": after, "change": round(after - before, 4)}
+    except (KeyError, OSError, ValueError, TypeError):
+        pass
+    seconds = round(time.time() - t0, 1)
+    outputs.write_audit_run(out, run_id, started=started, ended=time.strftime("%Y-%m-%dT%H:%M:%S"), seconds=seconds,
+                            command="crossfoot " + " ".join(sys.argv[1:]), county=county, gw=gw, reader=reader,
+                            sample=sample, resumed_from=(src.parent.name if src else None), phases=phases, spend=spend)
+    if stopped:
+        print("the run stopped before the audit finished; nothing was written beyond run.json", file=sys.stderr)
+        return 2
+    if d is None:
+        if spend:
+            print(f"gateway spend: ${spend['before']:.4f} -> ${spend['after']:.4f} (change ${spend['change']:.4f})")
+        print(f"written: {out / county}/ (county.json, report.md), {out / 'run.json'}")
+        return 0 if read["layout"] == "no_printed_totals" else 1
+    _print_audit(d, gw, spend, seconds, out, county, reader)
     return 0
 
 
@@ -423,10 +611,14 @@ def main(argv=None) -> int:
     s.set_defaults(fn=cmd_close)
     s = sub.add_parser("audit", help="read (or reuse a ledger), close it, compare it with the published file, write "
                                      "findings, a corrected file, a diff and a report")
-    s.add_argument("--county", required=True, choices=list(sources.COUNTIES))
+    g = s.add_mutually_exclusive_group(required=True)
+    g.add_argument("--county", choices=list(sources.COUNTIES))
+    g.add_argument("--all", action="store_true", help="every county in turn, no input; --resume <run_id> continues "
+                   "that run in its own folder")
     s.add_argument("--resume", help="run id whose ledger is reused instead of reading again, or 'latest' for the "
-                   "newest run with a county.json")
-    s.add_argument("--budget", type=float, default=2.00, help="dollars this run may meter (default 2.00)")
+                   "newest run with a county.json (with --all: the run to continue)")
+    s.add_argument("--budget", type=float, default=None, help="dollars this run may meter (default 2.00 for a county, "
+                   "9.00 with --all)")
     s.set_defaults(fn=cmd_audit)
     s = sub.add_parser("verify-known", help="check the newest findings.json against the answer key in tests/")
     s.add_argument("--county", required=True, choices=list(sources.COUNTIES))

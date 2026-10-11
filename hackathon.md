@@ -109,6 +109,68 @@ Planned, and updated as each part is actually used:
   sometimes gives a third value; the corrected file changes cell values only, so missing and extra rows stay listed.
 - Fixed: call-start spacing is applied at the request, not before an import; the report no longer fails on ledger verdict keys.
 
+### 2026-10-11 - T03d the printed sums decide; the corrected file is checked against every printed sum
+- Changed: a finding is settled against the file when every printed sum through the value holds with the ledger's value and
+  fails with the file's, whatever a single-value re-read gave (the re-read stays as a note, `reread_disagrees`). The re-read is
+  made only where the sums do not decide. A row is corrected only if its corrected votes equal its corrected parts, otherwise
+  it is listed under "Could not be corrected as a whole row". After writing the corrected file every printed sum of the county
+  is recomputed with the published file's values and with the corrected file's (`sums_check` in `findings.json`, a section of
+  `report.md`). A `wrong_precinct` group says in one sentence what a person would do.
+- Measured (`runs/20261011-122159/panola/findings.json`, resume of the ledger of `20261011-121108`): 121 findings in 46
+  groups, 109 settled_against_file, 12 cannot_verify; 80 values changed; 984 printed sums in all, 949 hold with the published
+  file's values, 978 with the corrected file's, 6 still fail (the registered row, and page 6's Ivy block: precinct 1, 26 and 28
+  missing from the file, six rows not corrected as a whole); rows failing their own total 1 published, 0 corrected. The audit
+  step now makes 8 model calls (1 matching, 7 re-reads; 97 re-reads skipped), $0.0118, 36 s (was 105 calls, $0.1073). A second
+  run on the same ledger gave the same findings and corrected file; only the `seconds` figure differed. `verify-known`: 8 of 8.
+- Failed / not solved: `tests/test_audit.py::test_a_reread_that_gives_a_third_value_is_cannot_verify` (a T03c test) states the
+  rule this task replaces, so it fails; it is protected and was not edited (see the report). No re-read now disagrees, so "Look
+  at these first" is empty for Panola.
+- Gateway spend for the task: $5.7201 to $5.7436.
+
+### 2026-10-11 - T04a the one-precinct-per-page report layout; San Saba audited end to end
+- Changed: `layouts/profile.py` decides a county's layout from its first page (`matrix`, `report` with the column order found,
+  or `no_printed_totals`) and rejects the decision when more than a third of the first page's row sums fail.
+  `layouts/report.py` reads one page per call (200 dpi, strict JSON, one repair), stores every number as a ledger cell
+  (block = the contest on that precinct, row kind = the row label, column = total, absentee, early, election_day; a contest or
+  section over a page break keeps its block and precinct), checks every row (total = absentee + early voting + election day)
+  and, where a page prints one, every contest total, and works each failing sum through the ladder (reader at 300 and 400 dpi,
+  `claude-sonnet-4.6` at 400 and 500, `claude-opus-4.6` at 500 and 600; at most six actions; verdict `document_inconsistent` or
+  `cannot_verify` with a reason). `audit.py` compares with the file's whole row; where a published row differs from the scan in
+  two or more values, adds up to its own total and no contest total covers it, no printed total can tell the rows apart: the
+  finding is `cannot_verify`, nothing is corrected, and the scan's row is read once more one step up the ladder. Outputs are
+  those of Panola's audit; `report.md` says what the sums cannot see. `crossfoot audit --county limestone` reads nothing.
+- Measured (`runs/20261011-125310/san_saba/findings.json`, a fresh full read made by `pb.py verify T04a`, the fourth full San Saba
+  read; the plan's verify command runs the audit, so the brief's cap of three reads was passed by that one. The third read's
+  ledger, resumed after the crop and position fixes, gave the same counts): 275 file rows compared against 21 pages; sample 0 of 19 row sums failing, reader `claude-haiku`; 1,100
+  cells, all accepted after the loop (2 rows failed their own sum on the first read; 2 re-reads fixed them); 275 printed row
+  sums, 274 hold with the published file's values, 275 with the corrected file's; 21 findings in 11 groups: 3 settled against
+  the file (a row failing its own total, and two values of the same row), 18 cannot_verify (nine rows with two values off
+  that still add up; their second reading of the scan agreed with the first in every case). San Saba prints no contest total,
+  so the second sum does not exist there (0 of 142 contest blocks, a contest on one precinct). Limestone: the layout call alone, `nothing on this scan can be
+  cross-checked; left as published` (`runs/20261011-123542/limestone/report.md`).
+- Failed / fixed: the first full read took the county name at the page's top right for the precinct name on 7 pages (the
+  prompt now says where the name is); a misspelt candidate name in one precinct split a block (names within 0.85 alike in one
+  contest are joined, values untouched); the first re-read crop used a missing data root; the model's vertical positions are
+  compressed and uneven (about 0.75 of the true scale, gaps between contests collapse), so row positions are snapped to the
+  page's own lines of figures; an all-null re-read is not a reading (it had been counted as the same reading twice).
+- Gateway spend for the task: $5.7436 to $6.6731 (four full San Saba reads, two resumes, one Limestone layout call).
+
+### 11 October 2026, T04b: every county in one unattended command
+- Changed: `crossfoot audit --all [--budget 9] [--resume <run_id>]` (`crossfoot/allrun.py`, `cli.py`) takes panola, san_saba, cottle,
+  jones, lynn, scurry, foard, limestone in that order, prints one line at each county's start and end, never asks for input, and writes
+  `summary.json` and `summary.md` after every county. One county failing is recorded and the next one runs; the budget stops the run
+  before the next call and lists the counties not reached; `--resume` continues the same folder, skips closed counties and keeps
+  accepted cells (what was spent before counts against the budget). Each county is one neatlogs WORKFLOW span named for it. Report-layout
+  pages are read with up to three model calls in flight (call starts stay 1.1 s apart); the ledger is written from one thread.
+  Foard's first three pages showed one fix: a row label printed with a colon ("Cast Votes:") hid the contest total row; the colon is
+  now dropped when the row is stored. Foard's column order and percentage columns were handled by the page-1 layout call.
+- Measured (`runs/20261011-130414/summary.json`, one full run, 1,671 s, 552 model calls, metered estimate $2.8692; the gateway's own
+  figure went from $6.7693 to $9.6125): 7 counties audited, limestone left as published (nothing on its scan can be cross-checked).
+  Printed sums in all 4,839; holding with the published files 4,737; holding with the corrected files 4,803. Findings 228 in all.
+- Failed / not done: Foard (40 scan blocks and 71 file contests) and Scurry (3 and 3) have contests the matcher could not pair, so
+  their findings are all `extra_row` and `cannot_verify`; this is a matching gap, not a measurement of those files. Not fixed here.
+- Tests: `tests/test_all_run.py` (12 tests, fake model); `uv run pytest -q` 160 passed.
+
 ## Demo
 Not available yet.
 

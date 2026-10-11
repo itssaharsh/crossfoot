@@ -1,0 +1,436 @@
+{
+ "run_id": "20261011-130414",
+ "command": "crossfoot audit --all --budget 9",
+ "budget": 9.0,
+ "started": "2026-10-11T13:04:17",
+ "ended": "2026-10-11T13:32:08",
+ "resumed": false,
+ "counties": [
+  {
+   "county": "panola",
+   "status": "audited",
+   "layout": "matrix",
+   "pages": 6,
+   "cells_read": 2324,
+   "sums_first_read": {
+    "passing": 935,
+    "failing": 6
+   },
+   "cells_reread": 20,
+   "cells_accepted": 2302,
+   "cannot_verify": 12,
+   "findings_by_kind": {
+    "file_row_fails_own_total": 1,
+    "wrong_number": 64,
+    "wrong_column": 4,
+    "wrong_precinct": 44,
+    "missing_row": 6,
+    "extra_row": 2
+   },
+   "findings_by_status": {
+    "settled_against_file": 109,
+    "cannot_verify": 12
+   },
+   "second_sum_exists": true,
+   "sums_check": {
+    "in_all": 984,
+    "holding_with_published": 949,
+    "holding_with_corrected": 978
+   },
+   "reader": "claude-sonnet-4.6",
+   "model_calls": 168,
+   "model_calls_by_model": {
+    "claude-haiku": {
+     "calls": 19,
+     "prompt_tokens": 13621,
+     "completion_tokens": 4022,
+     "cost": 0.0371
+    },
+    "claude-opus-4.6": {
+     "calls": 4,
+     "prompt_tokens": 1503,
+     "completion_tokens": 91,
+     "cost": 0.0108
+    },
+    "claude-sonnet-4.6": {
+     "calls": 145,
+     "prompt_tokens": 102309,
+     "completion_tokens": 23151,
+     "cost": 0.7196
+    }
+   },
+   "prompt_tokens": 117433,
+   "completion_tokens": 27264,
+   "metered_cost": 0.7675,
+   "seconds": 474.9
+  },
+  {
+   "county": "san_saba",
+   "status": "audited",
+   "layout": "report",
+   "pages": 21,
+   "cells_read": 1100,
+   "sums_first_read": {
+    "passing": 273,
+    "failing": 2
+   },
+   "cells_reread": 8,
+   "cells_accepted": 1100,
+   "cannot_verify": 18,
+   "findings_by_kind": {
+    "file_row_fails_own_total": 1,
+    "wrong_number": 20
+   },
+   "findings_by_status": {
+    "settled_against_file": 3,
+    "cannot_verify": 18
+   },
+   "second_sum_exists": false,
+   "sums_check": {
+    "in_all": 275,
+    "holding_with_published": 274,
+    "holding_with_corrected": 275
+   },
+   "reader": "claude-haiku",
+   "model_calls": 34,
+   "model_calls_by_model": {
+    "claude-haiku": {
+     "calls": 24,
+     "prompt_tokens": 45611,
+     "completion_tokens": 23222,
+     "cost": 0.1779
+    },
+    "claude-sonnet-4.6": {
+     "calls": 10,
+     "prompt_tokens": 8074,
+     "completion_tokens": 612,
+     "cost": 0.0368
+    }
+   },
+   "prompt_tokens": 53685,
+   "completion_tokens": 23834,
+   "metered_cost": 0.2146,
+   "seconds": 97.6
+  },
+  {
+   "county": "cottle",
+   "status": "audited",
+   "layout": "report",
+   "pages": 12,
+   "cells_read": 664,
+   "sums_first_read": {
+    "passing": 166,
+    "failing": 0
+   },
+   "cells_reread": 0,
+   "cells_accepted": 664,
+   "cannot_verify": 0,
+   "findings_by_kind": {},
+   "findings_by_status": {},
+   "second_sum_exists": false,
+   "sums_check": {
+    "in_all": 166,
+    "holding_with_published": 166,
+    "holding_with_corrected": 166
+   },
+   "reader": "claude-haiku",
+   "model_calls": 22,
+   "model_calls_by_model": {
+    "claude-haiku": {
+     "calls": 21,
+     "prompt_tokens": 52386,
+     "completion_tokens": 24876,
+     "cost": 0.1944
+    },
+    "claude-sonnet-4.6": {
+     "calls": 1,
+     "prompt_tokens": 457,
+     "completion_tokens": 88,
+     "cost": 0.0029
+    }
+   },
+   "prompt_tokens": 52843,
+   "completion_tokens": 24964,
+   "metered_cost": 0.1974,
+   "seconds": 103.1
+  },
+  {
+   "county": "jones",
+   "status": "audited",
+   "layout": "report",
+   "pages": 20,
+   "cells_read": 1784,
+   "sums_first_read": {
+    "passing": 738,
+    "failing": 20
+   },
+   "cells_reread": 0,
+   "cells_accepted": 1614,
+   "cannot_verify": 8,
+   "findings_by_kind": {
+    "wrong_number": 26
+   },
+   "findings_by_status": {
+    "settled_against_file": 18,
+    "cannot_verify": 8
+   },
+   "second_sum_exists": true,
+   "sums_check": {
+    "in_all": 758,
+    "holding_with_published": 726,
+    "holding_with_corrected": 738
+   },
+   "reader": "claude-haiku",
+   "model_calls": 144,
+   "model_calls_by_model": {
+    "claude-haiku": {
+     "calls": 143,
+     "prompt_tokens": 137345,
+     "completion_tokens": 39488,
+     "cost": 0.3683
+    },
+    "claude-sonnet-4.6": {
+     "calls": 1,
+     "prompt_tokens": 1454,
+     "completion_tokens": 685,
+     "cost": 0.0161
+    }
+   },
+   "prompt_tokens": 138799,
+   "completion_tokens": 40173,
+   "metered_cost": 0.3844,
+   "seconds": 346.3
+  },
+  {
+   "county": "lynn",
+   "status": "audited",
+   "layout": "report",
+   "pages": 37,
+   "cells_read": 3324,
+   "sums_first_read": {
+    "passing": 1401,
+    "failing": 26
+   },
+   "cells_reread": 36,
+   "cells_accepted": 3256,
+   "cannot_verify": 5,
+   "findings_by_kind": {
+    "wrong_number": 37,
+    "wrong_column": 6
+   },
+   "findings_by_status": {
+    "settled_against_file": 38,
+    "cannot_verify": 5
+   },
+   "second_sum_exists": true,
+   "sums_check": {
+    "in_all": 1427,
+    "holding_with_published": 1393,
+    "holding_with_corrected": 1417
+   },
+   "reader": "claude-haiku",
+   "model_calls": 106,
+   "model_calls_by_model": {
+    "claude-haiku": {
+     "calls": 104,
+     "prompt_tokens": 132960,
+     "completion_tokens": 65896,
+     "cost": 0.5087
+    },
+    "claude-sonnet-4.6": {
+     "calls": 2,
+     "prompt_tokens": 2943,
+     "completion_tokens": 905,
+     "cost": 0.0247
+    }
+   },
+   "prompt_tokens": 135903,
+   "completion_tokens": 66801,
+   "metered_cost": 0.5333,
+   "seconds": 345.0
+  },
+  {
+   "county": "scurry",
+   "status": "audited",
+   "layout": "report",
+   "pages": 38,
+   "cells_read": 2116,
+   "sums_first_read": {
+    "passing": 529,
+    "failing": 0
+   },
+   "cells_reread": 0,
+   "cells_accepted": 2116,
+   "cannot_verify": 15,
+   "findings_by_kind": {
+    "extra_row": 15
+   },
+   "findings_by_status": {
+    "cannot_verify": 15
+   },
+   "second_sum_exists": false,
+   "sums_check": {
+    "in_all": 529,
+    "holding_with_published": 529,
+    "holding_with_corrected": 529
+   },
+   "reader": "claude-haiku",
+   "model_calls": 58,
+   "model_calls_by_model": {
+    "claude-haiku": {
+     "calls": 57,
+     "prompt_tokens": 140265,
+     "completion_tokens": 70783,
+     "cost": 0.5436
+    },
+    "claude-sonnet-4.6": {
+     "calls": 1,
+     "prompt_tokens": 606,
+     "completion_tokens": 529,
+     "cost": 0.0107
+    }
+   },
+   "prompt_tokens": 140871,
+   "completion_tokens": 71312,
+   "metered_cost": 0.5543,
+   "seconds": 199.8
+  },
+  {
+   "county": "foard",
+   "status": "audited",
+   "layout": "report",
+   "pages": 16,
+   "cells_read": 1616,
+   "sums_first_read": {
+    "passing": 698,
+    "failing": 2
+   },
+   "cells_reread": 4,
+   "cells_accepted": 1616,
+   "cannot_verify": 2,
+   "findings_by_kind": {
+    "extra_row": 2
+   },
+   "findings_by_status": {
+    "cannot_verify": 2
+   },
+   "second_sum_exists": true,
+   "sums_check": {
+    "in_all": 700,
+    "holding_with_published": 700,
+    "holding_with_corrected": 700
+   },
+   "reader": "claude-haiku",
+   "model_calls": 19,
+   "model_calls_by_model": {
+    "claude-haiku": {
+     "calls": 18,
+     "prompt_tokens": 34219,
+     "completion_tokens": 27991,
+     "cost": 0.1916
+    },
+    "claude-sonnet-4.6": {
+     "calls": 1,
+     "prompt_tokens": 2919,
+     "completion_tokens": 874,
+     "cost": 0.024
+    }
+   },
+   "prompt_tokens": 37138,
+   "completion_tokens": 28865,
+   "metered_cost": 0.2156,
+   "seconds": 102.8
+  },
+  {
+   "county": "limestone",
+   "status": "unchecked",
+   "layout": "no_printed_totals",
+   "note": "nothing on this scan can be cross-checked; left as published",
+   "cells_read": 0,
+   "pages": 0,
+   "sums_first_read": {
+    "passing": 0,
+    "failing": 0
+   },
+   "model_calls": 1,
+   "model_calls_by_model": {
+    "claude-haiku": {
+     "calls": 1,
+     "prompt_tokens": 1772,
+     "completion_tokens": 24,
+     "cost": 0.0021
+    }
+   },
+   "prompt_tokens": 1772,
+   "completion_tokens": 24,
+   "metered_cost": 0.0021,
+   "seconds": 1.8
+  }
+ ],
+ "totals": {
+  "counties": 8,
+  "closed": 8,
+  "model_calls": 552,
+  "prompt_tokens": 678444,
+  "completion_tokens": 283237,
+  "metered_cost": 2.8692,
+  "seconds": 1671.3,
+  "model_calls_by_model": {
+   "claude-haiku": {
+    "calls": 387,
+    "prompt_tokens": 558179,
+    "completion_tokens": 256302,
+    "cost": 2.0237
+   },
+   "claude-opus-4.6": {
+    "calls": 4,
+    "prompt_tokens": 1503,
+    "completion_tokens": 91,
+    "cost": 0.0108
+   },
+   "claude-sonnet-4.6": {
+    "calls": 161,
+    "prompt_tokens": 118762,
+    "completion_tokens": 26844,
+    "cost": 0.8348
+   }
+  },
+  "cells_read": 12928,
+  "cells_reread": 68,
+  "cells_accepted": 12668,
+  "cannot_verify": 60,
+  "sums_first_read": {
+   "passing": 4740,
+   "failing": 56
+  },
+  "sums_check": {
+   "in_all": 4839,
+   "holding_with_published": 4737,
+   "holding_with_corrected": 4803
+  },
+  "findings_by_kind": {
+   "file_row_fails_own_total": 2,
+   "wrong_number": 147,
+   "wrong_column": 10,
+   "wrong_precinct": 44,
+   "missing_row": 6,
+   "extra_row": 19
+  },
+  "findings_by_status": {
+   "settled_against_file": 168,
+   "cannot_verify": 60
+  }
+ },
+ "not_reached": [],
+ "skipped": [
+  {
+   "county": "limestone",
+   "reason": "nothing on this scan can be cross-checked; left as published"
+  }
+ ],
+ "gateway_spend": {
+  "before": 6.769327054999994,
+  "after": 9.612459654999995,
+  "change": 2.8431
+ }
+}

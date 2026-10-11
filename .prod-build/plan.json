@@ -24,6 +24,7 @@
       "tasks": [
         "T04a",
         "T04b",
+        "T04c",
         "T05"
       ]
     },
@@ -323,8 +324,14 @@
         "uv run crossfoot verify-known --county panola"
       ],
       "rollback": "git revert the task's commits",
-      "status": "todo",
-      "notes": "Added 2026-10-11 after the orchestrator compared T03c's corrected file with printed totals read by eye."
+      "status": "done",
+      "notes": "Added 2026-10-11 after the orchestrator compared T03c's corrected file with printed totals read by eye.\n[2026-10-11 done] The session's verify had one failing test: the T03c test of the rule this task replaces by decision; the orchestrator removed it with a commit that says so (121 passed). Checked independently: for 11 candidates the corrected file's sums equal the printed row totals read by eye on the scan; 0 corrected rows fail their own total; verify-known 8 of 8; printed sums holding 949 of 984 with the published file and 978 with the corrected file.",
+      "base": "9448ad5",
+      "started_after": 39,
+      "evidence": [
+        "E0042",
+        "E0043"
+      ]
     },
     {
       "id": "T04a",
@@ -352,8 +359,14 @@
         "uv run crossfoot audit --county san_saba"
       ],
       "rollback": "git revert the task's commits; committed runs are never changed",
-      "status": "todo",
-      "notes": "Split from T04 on 2026-10-11."
+      "status": "done",
+      "notes": "Split from T04 on 2026-10-11.\n[2026-10-11 done] Verify runs passed inside the task's session on commit fb07bda (148 tests; San Saba audit run 20261011-125310). The orchestrator re-ran pytest (148 passed), read findings.json and run.json, and looked at two crops by eye: Precinct 2A's row reads 506 / 9 / 306 / 191 and Precinct 3A's 364 / 13 / 186 / 165, as the findings say.",
+      "base": "c4a0f79",
+      "started_after": 44,
+      "evidence": [
+        "E0052",
+        "E0053"
+      ]
     },
     {
       "id": "T04b",
@@ -380,8 +393,46 @@
         "uv run pytest -q"
       ],
       "rollback": "git revert the task's commits; committed runs are never changed",
+      "status": "done",
+      "notes": "Split from T04 on 2026-10-11. The full run is made once inside the task and recorded with `pb.py run`.\n[2026-10-11 done] Verify passed inside the task's session on commit 4c7553a (160 tests); the orchestrator re-ran pytest (160 passed) and read summary.md: 8 of 8 counties closed, 552 calls, 1,671 s, 2.87 dollars metered. Not accepted as finished for two counties: Scurry and Foard are marked audited although the label matcher left contests unpaired (their findings are matching artefacts); a real stop-and-resume was not run. T04c takes both.",
+      "base": "1858d20",
+      "started_after": 53,
+      "evidence": [
+        "E0056"
+      ]
+    },
+    {
+      "id": "T04c",
+      "title": "Coverage of the comparison in every output; Foard and Scurry paired; a real stop and resume",
+      "objective": "Every output says how many published rows were compared; Foard and Scurry are audited again from the existing ledger; a real run is stopped by its budget and continued",
+      "role": "product-engineer",
+      "size": "M",
+      "deps": [
+        "T04b"
+      ],
+      "writes": [
+        "crossfoot/audit.py",
+        "crossfoot/allrun.py",
+        "crossfoot/outputs.py",
+        "crossfoot/cli.py",
+        "crossfoot/layouts/report.py",
+        "tests/**",
+        "docs/evidence/recovery.md",
+        "runs/**",
+        "hackathon.md",
+        ".prod-build/reports/T04c.md",
+        ".prod-build/evidence.jsonl"
+      ],
+      "acceptance": [
+        "WHEN a county is audited THE SYSTEM SHALL say how many published rows were compared and which were not",
+        "AC-4"
+      ],
+      "verify": [
+        "uv run pytest -q"
+      ],
+      "rollback": "git revert the task's commits; committed runs are never changed",
       "status": "todo",
-      "notes": "Split from T04 on 2026-10-11. The full run is made once inside the task and recorded with `pb.py run`."
+      "notes": "Added 2026-10-11 after reading the full run's summary: two counties were marked audited without their rows being compared."
     },
     {
       "id": "T05",
@@ -390,7 +441,7 @@
       "role": "product-engineer",
       "size": "M",
       "deps": [
-        "T04b"
+        "T04c"
       ],
       "writes": [
         "crossfoot/score.py",

@@ -186,3 +186,72 @@ def crossing(cells: list[dict], totals: list[dict]) -> dict:
         for k, _ in ch.terms:
             on[k].append(ch)
     return on
+
+
+# ---- the report layout: one row per candidate, four numbers each --------------------------------------------------------
+# A row's cells are keyed (page, block, row label, column) with column in REPORT_COLS. A block is one contest on one
+# precinct, and may run over a page break (its cells then carry different pages and the same block id).
+
+REPORT_COLS = ("total", "absentee", "early", "election_day")
+_CONTEST_TOTAL = ("total votes cast", "cast votes")
+_NOT_A_CANDIDATE = ("overvotes", "over votes", "undervotes", "under votes")
+
+
+def row_label_kind(label) -> str:
+    """'total' for the printed contest total, 'skip' for over/under votes (they are not candidates), else 'candidate'."""
+    s = " ".join(str(label or "").lower().split())
+    return "total" if s in _CONTEST_TOTAL else "skip" if s in _NOT_A_CANDIDATE else "candidate"
+
+
+def _rows_of(cells):
+    rows: dict = {}
+    for c in cells:
+        rows.setdefault((c["page"], c["block_id"], c["row_kind"]), {})[c["column"]] = c
+    return rows
+
+
+def report_row_checks(cells: list[dict]) -> list[Check]:
+    """One check per row that prints a total and all three parts: total = absentee + early voting + election day."""
+    out = []
+    for (page, block, label), cols in _rows_of(cells).items():
+        if "total" not in cols or any(k not in cols for k in REPORT_COLS[1:]):
+            continue
+        t = cols["total"]
+        ch = _make("report_row", page, block, label, [cols[k] for k in REPORT_COLS[1:]], t["value"],
+                   (page, block, label, "total"))
+        out.append(ch)
+    return out
+
+
+def report_contest_checks(cells: list[dict]) -> list[Check]:
+    """For a contest that prints a total row: per column, the candidates' figures add to the total row's figure."""
+    by_block: dict = {}
+    for (page, block, label), cols in _rows_of(cells).items():
+        by_block.setdefault(block, []).append((page, label, cols))
+    out = []
+    for block, rows in by_block.items():
+        totals = [r for r in rows if row_label_kind(r[1]) == "total"]
+        if not totals:
+            continue
+        tp, tl, tcols = totals[0]
+        cands = [r for r in rows if row_label_kind(r[1]) == "candidate"]
+        for col in REPORT_COLS:
+            if col not in tcols:
+                continue
+            terms = [r[2][col] for r in cands if col in r[2]]
+            out.append(_make("report_contest", tp, block, col, terms, tcols[col]["value"], (tp, block, tl, col)))
+    return out
+
+
+def report_checks(cells: list[dict]) -> list[Check]:
+    return report_row_checks(cells) + report_contest_checks(cells)
+
+
+def report_crossing(cells: list[dict]) -> dict:
+    """For each cell key, the report checks it sits on (as a term or as the printed total); empty when none."""
+    on: dict = {cell_key(c): [] for c in cells}
+    for ch in report_checks(cells):
+        for k in [k for k, _ in ch.terms] + ([ch.printed_key] if ch.printed_key else []):
+            if k in on:
+                on[k].append(ch)
+    return on

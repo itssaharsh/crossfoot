@@ -1,0 +1,22 @@
+{
+ "run_id": "20261011-130414",
+ "started": "2026-10-11T13:04:17",
+ "ended": "2026-10-11T13:32:08",
+ "commit": "1574583347951fb69111fd3589994bd923d25295",
+ "command": "crossfoot audit --all --budget 9",
+ "counties": [
+  "panola",
+  "san_saba",
+  "cottle",
+  "jones",
+  "lynn",
+  "scurry",
+  "foard",
+  "limestone"
+ ],
+ "resumed_from": null,
+ "model_calls": 552,
+ "prompt_tokens": 678444,
+ "completion_tokens": 283237,
+ "metered_cost_estimate": 2.8693
+}
