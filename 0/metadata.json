@@ -1,0 +1,78 @@
+{
+  "cli_version": "0.11.4",
+  "checkpoint_id": "01M4NK9E9PQR8H20JTPATXXP9D",
+  "session_id": "fe19079d-b580-40c5-a643-65e27e200414",
+  "strategy": "manual-commit",
+  "created_at": "2026-10-11T13:44:05.168328575Z",
+  "branch": "site",
+  "checkpoints_count": 1,
+  "files_touched": [
+    ".prod-build/reports/T07b.md",
+    "site/replay.js"
+  ],
+  "agent": "Claude Code",
+  "model": "claude-sonnet-5-5",
+  "turn_id": "2aee0c633738",
+  "compact_transcript_start": 0,
+  "token_usage": {
+    "input_tokens": 244,
+    "cache_creation_tokens": 333886,
+    "cache_read_tokens": 30550093,
+    "output_tokens": 137667,
+    "api_call_count": 122
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-10-11T13:44:04.282923838Z",
+    "agent_lines": 0,
+    "agent_removed": 0,
+    "human_added": 0,
+    "human_modified": 14,
+    "human_removed": 91,
+    "total_committed": 35,
+    "total_lines_changed": 210,
+    "agent_percentage": 0,
+    "metric_version": 2
+  },
+  "prompt_attributions": [
+    {
+      "checkpoint_number": 1,
+      "user_lines_added": 1698,
+      "user_lines_removed": 105,
+      "agent_lines_added": 0,
+      "agent_lines_removed": 0,
+      "user_added_per_file": {
+        "crossfoot/sitebuild.py": 37,
+        "qa/t07b/axe.json": 153,
+        "qa/t07b/axe.py": 35,
+        "qa/t07b/check.py": 102,
+        "qa/t07b/checks.json": 379,
+        "qa/t07b/lib.py": 17,
+        "qa/t07b/shoot.py": 60,
+        "qa/t07b/timeline.mjs": 40,
+        "qa/t07b/zoom.py": 27,
+        "qa/t07b/zoom160.json": 83,
+        "site/app.js": 37,
+        "site/data/panola.json": 1,
+        "site/findings.js": 42,
+        "site/index.html": 3,
+        "site/loupe.js": 67,
+        "site/replay.js": 459,
+        "site/stage.js": 2,
+        "site/styles.css": 94,
+        "site/tape.js": 23,
+        "tests/test_sitebuild.py": 37
+      },
+      "user_removed_per_file": {
+        "crossfoot/sitebuild.py": 2,
+        "site/app.js": 6,
+        "site/data/panola.json": 1,
+        "site/findings.js": 20,
+        "site/index.html": 1,
+        "site/loupe.js": 19,
+        "site/stage.js": 2,
+        "site/styles.css": 41,
+        "site/tape.js": 13
+      }
+    }
+  ]
+}

@@ -1,0 +1,274 @@
+Read AGENTS.md, then .prod-build/briefs/T07b.md and do exactly that task.
+Finish by writing .prod-build/reports/T07b.md in the format at the end of the brief, commit on this branch (do not push), and reply with the report.
+
+---
+
+<task-notification>
+<task-id>b2tthecmo</task-id>
+<tool-use-id>toolu_011AfAHv7bYdSCBvGeKs3ZV9</tool-use-id>
+<output-file>/tmp/claude-1000/-home-saharsh-contri-crossfoot-site/fe19079d-b580-40c5-a643-65e27e200414/tasks/b2tthecmo.output</output-file>
+<status>completed</status>
+<summary>Background command "cat &gt; qa/t07b/check.py &lt;&lt;'E'
+"""Behaviour checks for T07b: python qa/t07b/check.py. Writes qa/t07b/checks.json."""
+import sys, json, time
+sys.path.insert(0, str(__import__("pathlib").Path(__file__).resolve().parent))
+from lib import *
+from playwright.sync_api import sync_playwright
+out = {}
+
+FIRST = """() =&gt; { const q = s =&gt; document.querySelector(s); const bb = e =&gt; { const b = e.getBoundingClientRect(); return {top: Math.round(b.top), bottom: Math.round(b.bottom)}; };
+  const panel = q('#panel').getBoundingClientRect();
+  const inside = e =&gt; { const b = e.getBoundingClientRect(); return b.top &gt;= panel.top - 0.5 &amp;&amp; b.bottom &lt;= panel.bottom + 0.5; };
+  const rows = [...document.querySelectorAll('#flist li.fnd')].filter(inside).length, groups = [...document.querySelectorAll('#flist li.grp')].filter(inside).length;
+  return { viewport: [innerWidth, innerHeight], panel: bb(q('#panel')), panelScrollTop: q('#panel').scrollTop, headline: q('#fcount').innerText, headlineInside: inside(q('#fcount')),
+    headlineFigureFont: getComputedStyle(q('.hl-n.settled')).fontFamily.slice(0, 40),
+    values: [...document.querySelectorAll('.two-values .one')].map(e =&gt; ({text: e.innerText.replace(/\\n/g, ' '), inside: inside(e)})),
+    tapeSums: [...document.querySelectorAll('#tape .sum.two')].map(e =&gt; ({heads: [...e.querySelectorAll('h4')].map(h =&gt; h.innerText), verdicts: [...e.querySelectorAll('.res')].map(r =&gt; r.innerText), inside: inside(e)})),
+    card: {top: bb(q('#card')).top, bottom: bb(q('#card')).bottom, inside: inside(q('#card'))}, groupLines: groups, findingRowsFullyInside: rows,
+    chipsOneLine: (() =&gt; { const c = [...document.querySelectorAll('.chip')]; return new Set(c.map(x =&gt; Math.round(x.getBoundingClientRect().top))).size === 1; })(),
+    sheetSideways: document.documentElement.scrollWidth &gt; innerWidth, replayLabel: q('#replay-hint').innerText, replayDisabled: q('#replay').disabled, speed: q('#speed').innerText,
+    dockTop: Math.round(q('.dock').getBoundingClientRect().top), valuesBottom: Math.round(q('.two-values').getBoundingClientRect().bottom), ticks: document.querySelectorAll('.tick').length,
+    tickShape: (() =&gt; { const t = q('.tick circle'); const s = getComputedStyle(t); return {tag: t.tagName, r: t.getAttribute('r'), strokeWidth: s.strokeWidth, fill: s.fill, stroke: s.stroke}; })() }; }"""
+
+def wait_done(pg, secs=70):
+    pg.wait_for_function("!document.body.classList.contains('replaying')", timeout=secs * 1000)
+
+with sync_playwright() as p:
+    b = p.chromium.launch()
+    # 1. the first screen with no input
+    for w, h in ((1440, 900), (1024, 768), (390, 844), (320, 640)):
+        ctx, pg, errs = open_page(b, w, h)
+        r = pg.evaluate(FIRST); r["errors"] = errs; out[f"first-{w}x{h}"] = r; ctx.close()
+    # 2. the replay at 1x: its measured length, its label, pause / resume, and the finished state it returns to
+    ctx, pg, errs = open_page(b, 1440, 900)
+    label = pg.evaluate("document.getElementById('replay-hint').innerText")
+    before = pg.evaluate("({sel: document.querySelector('#flist li[aria-selected=true]').dataset.id, h2: document.querySelector('#card h2').innerText, tag: document.querySelector('.lp-tag').innerText, count: document.getElementById('fcount').innerText, page: document.getElementById('pageno').innerText})")
+    pg.get_by_role("button", name="Replay the audit").click()
+    t0 = time.time()
+    pg.wait_for_timeout(1500)
+    run = {"label": label, "buttonWhileRunning": pg.evaluate("document.getElementById('replay').textContent"),
+           "busy": pg.evaluate("[document.getElementById('card').getAttribute('aria-busy'), document.getElementById('findings').getAttribute('aria-busy')]"),
+           "captionLive": pg.evaluate("document.getElementById('rp-cap').getAttribute('aria-live')"), "captionFont": pg.evaluate("getComputedStyle(document.getElementById('rp-cap')).fontSize")}
+    pg.keyboard.press("Escape"); pg.wait_for_timeout(300)
+    run["afterEscape"] = pg.evaluate("document.getElementById('replay').textContent")
+    c1 = pg.evaluate("document.getElementById('rp-cap').textContent"); pg.wait_for_timeout(1500)
+    run["captionHeldWhilePaused"] = c1 == pg.evaluate("document.getElementById('rp-cap').textContent")
+    pg.keyboard.press("Alt+Shift+P"); pg.wait_for_timeout(300)
+    run["afterAltShiftP"] = pg.evaluate("document.getElementById('replay').textContent")
+    pg.get_by_role("button", name="Pause replay").click(); pg.wait_for_timeout(200)
+    run["afterButton"] = pg.evaluate("document.getElementById('replay').textContent")
+    pg.get_by_role("button", name="Resume replay").click()
+    paused_s = 1.5 + 0.3 + 0.0
+    wait_done(pg)
+    total = time.time() - t0
+    run["wallSecondsIncludingPause"] = round(total, 1)
+    pg.wait_for_timeout(1200)
+    run["after"] = pg.evaluate("({sel: document.querySelector('#flist li[aria-selected=true]').dataset.id, h2: document.querySelector('#card h2').innerText, tag: document.querySelector('.lp-tag').innerText, count: document.getElementById('fcount').innerText, page: document.getElementById('pageno').innerText, button: document.getElementById('replay').textContent, busy: document.getElementById('card').getAttribute('aria-busy'), cap: document.getElementById('rp-cap').textContent})")
+    run["before"] = before; run["sameFinishedState"] = {k: before[k] == run["after"][k] for k in before}
+    run["errors"] = errs; out["replay-1x"] = run; ctx.close()
+    # 3. a length with no pause at all, and what the label says
+    ctx, pg, errs = open_page(b, 1440, 900)
+    pg.get_by_role("button", name="Replay the audit").click(); t0 = time.time(); pg.wait_for_timeout(500)
+    wait_done(pg); out["replay-length"] = {"seconds": round(time.time() - t0, 1), "label": label, "errors": errs}; ctx.close()
+    # 4. speed cycles 1x, 2x, 4x and the label follows
+    ctx, pg, errs = open_page(b, 1440, 900)
+    seen = []
+    for _ in range(4):
+        seen.append([pg.evaluate("document.getElementById('speed').innerText"), pg.evaluate("document.getElementById('replay-hint').innerText")])
+        pg.get_by_role("button", name="Speed", exact=False).click()
+    out["speed"] = {"cycle": seen}
+    pg.get_by_role("button", name="Speed", exact=False).click()   # 2x
+    pg.get_by_role("button", name="Replay the audit").click(); t0 = time.time(); pg.wait_for_timeout(500)
+    wait_done(pg); out["speed"]["secondsAt2x"] = round(time.time() - t0, 1)
+    out["speed"]["labelAt2x"] = pg.evaluate("document.getElementById('replay-hint').innerText"); out["speed"]["errors"] = errs; ctx.close()
+    # 5. a selection by hand stops the replay and leaves the finished state
+    ctx, pg, errs = open_page(b, 1440, 900)
+    pg.get_by_role("button", name="Replay the audit").click(); pg.wait_for_timeout(3500)
+    pg.evaluate("document.querySelectorAll('#flist li.fnd')[3].click()"); pg.wait_for_timeout(2200)
+    out["hand-select"] = pg.evaluate("({replaying: document.body.classList.contains('replaying'), button: document.getElementById('replay').textContent, cap: document.getElementById('rp-cap').textContent, busy: document.getElementById('card').getAttribute('aria-busy'), count: document.getElementById('fcount').innerText, sel: document.querySelector('#flist li[aria-selected=true]').dataset.id, loupeHidden: document.getElementById('loupe').classList.contains('rp-off')})"); out["hand-select"]["errors"] = errs
+    ctx.close()
+    # 6. reduced motion: the same steps, no wash or draw-on animation
+    ctx, pg, errs = open_page(b, 1440, 900, reduced_motion="reduce")
+    pg.get_by_role("button", name="Replay the audit").click(); t0 = time.time()
+    seen = {"maxRunning": 0, "captions": set()}
+    while pg.evaluate("document.body.classList.contains('replaying')") or time.time() - t0 &lt; 2:
+        n = pg.evaluate("document.getAnimations().filter(a =&gt; a.playState === 'running' &amp;&amp; !(a.effect.target &amp;&amp; a.effect.target.matches &amp;&amp; a.effect.target.matches('.rp .fade, .tick.pop, .wash.fade'))).map(a =&gt; a.animationName || a.constructor.name).join(',')")
+        seen["maxRunning"] = max(seen["maxRunning"], len([x for x in n.split(',') if x]))
+        seen["captions"].add(pg.evaluate("document.getElementById('rp-cap').textContent")[:30])
+        pg.wait_for_timeout(250)
+        if time.time() - t0 &gt; 70: break
+    out["reduced"] = {"seconds": round(time.time() - t0, 1), "otherAnimationsRunning": seen["maxRunning"], "captionsSeen": len(seen["captions"]), "washAnimation": pg.evaluate("getComputedStyle(document.body).animationName"), "errors": errs}; ctx.close()
+    # 7. no events: the button is disabled with the reason beside it
+    ctx = b.new_context(viewport={"width": 1440, "height": 900}); pg = ctx.new_page()
+    def strip(route):
+        r = route.fetch(); d = r.json(); d["events"] = []
+        route.fulfill(response=r, body=json.dumps(d))
+    pg.route("**/data/panola.json", strip)
+    pg.goto(BASE); pg.wait_for_timeout(2500)
+    out["no-events"] = pg.evaluate("({disabled: document.getElementById('replay').disabled, hint: document.getElementById('replay-hint').innerText, speedHidden: document.getElementById('speed').hidden, describedby: document.getElementById('replay').getAttribute('aria-describedby')})"); ctx.close()
+    b.close()
+(OUT / "checks.json").write_text(json.dumps(out, indent=1))
+print(json.dumps(out, indent=1))
+E
+timeout 590 python3 qa/t07b/check.py &gt; /tmp/claude-1000/-home-saharsh-contri-crossfoot-site/fe19079d-b580-40c5-a643-65e27e200414/scratchpad/check.out 2&gt;&amp;1; tail -5 /tmp/claude-1000/-home-saharsh-contri-crossfoot-site/fe19079d-b580-40c5-a643-65e27e200414/scratchpad/check.out" completed (exit code 0)</summary>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>byxyzr97z</task-id>
+<tool-use-id>toolu_016qKvDGqSoVfUxpPGKp8Ttd</tool-use-id>
+<output-file>/tmp/claude-1000/-home-saharsh-contri-crossfoot-site/fe19079d-b580-40c5-a643-65e27e200414/tasks/byxyzr97z.output</output-file>
+<status>completed</status>
+<summary>Monitor "axe output after wait" ended without producing output (exit 0)</summary>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>bim6zcv2n</task-id>
+<tool-use-id>toolu_01WcPJGAVdzGimWER3kHoB17</tool-use-id>
+<output-file>/tmp/claude-1000/-home-saharsh-contri-crossfoot-site/fe19079d-b580-40c5-a643-65e27e200414/tasks/bim6zcv2n.output</output-file>
+<status>completed</status>
+<summary>Monitor "wait" stream ended</summary>
+<event>waited</event>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>buc0cq365</task-id>
+<tool-use-id>toolu_01767E78NSaHdoUFZJ1TGTLS</tool-use-id>
+<output-file>/tmp/claude-1000/-home-saharsh-contri-crossfoot-site/fe19079d-b580-40c5-a643-65e27e200414/tasks/buc0cq365.output</output-file>
+<status>completed</status>
+<summary>Monitor "wait for axe" stream ended</summary>
+<event>waited</event>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>biu7h02o1</task-id>
+<tool-use-id>toolu_01ThKNXSfp2K9Mr5jWkVRRqT</tool-use-id>
+<output-file>/tmp/claude-1000/-home-saharsh-contri-crossfoot-site/fe19079d-b580-40c5-a643-65e27e200414/tasks/biu7h02o1.output</output-file>
+<status>completed</status>
+<summary>Background command "timeout 900 python3 qa/t07b/axe.py 2&gt;&amp;1 | tail -20" completed (exit code 0)</summary>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>bgn3r3lzr</task-id>
+<tool-use-id>toolu_014cgy1xZDeJbLLERFvVKbhx</tool-use-id>
+<output-file>/tmp/claude-1000/-home-saharsh-contri-crossfoot-site/fe19079d-b580-40c5-a643-65e27e200414/tasks/bgn3r3lzr.output</output-file>
+<status>completed</status>
+<summary>Monitor "axe run output" stream ended</summary>
+<event>1440 / 0 []
+1440 / replay paused (reading) 0 []
+1440 / replay paused (a suspect re-read) 0 []
+1440 / replay paused (the document disagrees) 0 []
+1440 / replay paused (the audit) 0 []
+1440 /?record=1 0 []
+1440 /?record=1 replay paused 0 []
+390 / 0 []
+390 / replay paused (reading) 0 []
+390 / replay paused (a suspect re-read) 0 []
+390 / replay paused (the document disagrees) 0 []
+390 / replay paused (the audit) 0 []
+390 /?record=1 0 []
+390 /?record=1 replay paused 0 []
+total violations 0
+[exited with code 0]</event>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>bcfnxy1bf</task-id>
+<tool-use-id>toolu_01A2J5PHC5TbJyiaSyPUPYm6</tool-use-id>
+<output-file>/tmp/claude-1000/-home-saharsh-contri-crossfoot-site/fe19079d-b580-40c5-a643-65e27e200414/tasks/bcfnxy1bf.output</output-file>
+<status>completed</status>
+<summary>Monitor "axe.json written (re-armed)" stream ended</summary>
+<event>axe.json written</event>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>buy5v2qqu</task-id>
+<tool-use-id>toolu_01RV1LSDw6CSJtdwcov3FJLg</tool-use-id>
+<output-file>/tmp/claude-1000/-home-saharsh-contri-crossfoot-site/fe19079d-b580-40c5-a643-65e27e200414/tasks/buy5v2qqu.output</output-file>
+<status>completed</status>
+<summary>Monitor "axe.json written (final wait)" stream ended</summary>
+<event>axe.json written</event>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>bxy8asttm</task-id>
+<tool-use-id>toolu_01ApTQM6uUiirgx95NieAqwr</tool-use-id>
+<output-file>/tmp/claude-1000/-home-saharsh-contri-crossfoot-site/fe19079d-b580-40c5-a643-65e27e200414/tasks/bxy8asttm.output</output-file>
+<status>completed</status>
+<summary>Monitor "axe run finished" stream ended</summary>
+<event>1440 / 0 []
+1440 / replay paused (reading) 0 []
+1440 / replay paused (a suspect re-read) 0 []
+1440 / replay paused (the document disagrees) 0 []
+1440 / replay paused (the audit) 0 []
+1440 /?record=1 0 []
+1440 /?record=1 replay paused 0 []
+390 / 0 []
+390 / replay paused (reading) 0 []
+390 / replay paused (a suspect re-read) 0 []
+390 / replay paused (the document disagrees) 0 []
+390 / replay paused (the audit) 0 []
+390 /?record=1 0 []
+390 /?record=1 replay paused 0 []
+total violations 0
+[exited with code 0]</event>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>bsftwp7jd</task-id>
+<tool-use-id>toolu_01FZCNNDU2A3bbp4GJiKGwg9</tool-use-id>
+<output-file>/tmp/claude-1000/-home-saharsh-contri-crossfoot-site/fe19079d-b580-40c5-a643-65e27e200414/tasks/bsftwp7jd.output</output-file>
+<status>completed</status>
+<summary>Monitor "axe.json written" stream ended</summary>
+<event>axe.json written</event>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>bxuxtjzd9</task-id>
+<tool-use-id>toolu_01Jagb8PwUJep2HUMWEsQAcc</tool-use-id>
+<output-file>/tmp/claude-1000/-home-saharsh-contri-crossfoot-site/fe19079d-b580-40c5-a643-65e27e200414/tasks/bxuxtjzd9.output</output-file>
+<status>completed</status>
+<summary>Monitor "axe.json written" stream ended</summary>
+<event>axe.json written</event>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>bwdtmb0m2</task-id>
+<tool-use-id>toolu_01QJTVotB8dtqt26iKzMhju7</tool-use-id>
+<output-file>/tmp/claude-1000/-home-saharsh-contri-crossfoot-site/fe19079d-b580-40c5-a643-65e27e200414/tasks/bwdtmb0m2.output</output-file>
+<status>completed</status>
+<summary>Monitor "axe.json written" stream ended</summary>
+<event>axe.json written</event>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>b0g8pnbxo</task-id>
+<tool-use-id>toolu_01JiGXC6sXUfKU8ZySp6PiWd</tool-use-id>
+<output-file>/tmp/claude-1000/-home-saharsh-contri-crossfoot-site/fe19079d-b580-40c5-a643-65e27e200414/tasks/b0g8pnbxo.output</output-file>
+<status>completed</status>
+<summary>Monitor "wait" stream ended</summary>
+<event>waited</event>
+</task-notification>
