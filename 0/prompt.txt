@@ -1,0 +1,18 @@
+Read AGENTS.md, then .prod-build/briefs/T07c.md and do exactly that task.
+Finish by writing .prod-build/reports/T07c.md in the format at the end of the brief, commit on this branch (do not push), and reply with the report.
+
+---
+
+<task-notification>
+<task-id>bqwaz6bu5</task-id>
+<tool-use-id>toolu_01MJf9mkijzg7My714CukscA</tool-use-id>
+<output-file>/tmp/claude-1000/-home-saharsh-contri-crossfoot-site/b57f2287-1d78-4626-b1b8-de4c14d6fbe9/tasks/bqwaz6bu5.output</output-file>
+<status>completed</status>
+<summary>Background command "cd /home/saharsh/contri/crossfoot-site; python3 - &lt;&lt;'E'
+p='site/styles.css'
+s=open(p).read()
+s=s.replace(".descriptor{margin:0;color:var(--ink-muted);font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}",".descriptor{margin:0;min-width:0;flex:0 1 auto;color:var(--ink-muted);font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}\n.brand{flex:none}")
+open(p,'w').write(s)
+E
+time uv run python -m crossfoot.sitebuild --run 20261011-130414 2&gt;&amp;1 | tail -5; du -sh site/data; du -sh site/data/*" completed (exit code 0)</summary>
+</task-notification>
