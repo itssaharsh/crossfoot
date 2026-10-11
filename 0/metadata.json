@@ -1,0 +1,99 @@
+{
+  "cli_version": "0.11.4",
+  "checkpoint_id": "01M4NE5QXTJA9H8AASDJQ2ED6B",
+  "session_id": "0aa7a6fb-66ed-44bd-86f5-31ce08709671",
+  "strategy": "manual-commit",
+  "created_at": "2026-10-11T12:14:36.725612088Z",
+  "branch": "main",
+  "checkpoints_count": 1,
+  "save_step_count": 1,
+  "files_touched": [
+    ".prod-build/evidence.jsonl",
+    ".prod-build/plan.json",
+    "crossfoot/agent.py",
+    "crossfoot/cli.py",
+    "crossfoot/ledger.py",
+    "crossfoot/outputs.py"
+  ],
+  "agent": "Claude Code",
+  "model": "claude-sonnet-5-5",
+  "turn_id": "28ecd6302a6c",
+  "compact_transcript_start": 0,
+  "token_usage": {
+    "input_tokens": 138,
+    "cache_creation_tokens": 231253,
+    "cache_read_tokens": 12376907,
+    "output_tokens": 115945,
+    "api_call_count": 68
+  },
+  "session_metrics": {
+    "turn_count": 1
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-10-11T12:14:36.560677166Z",
+    "agent_lines": 0,
+    "agent_removed": 0,
+    "human_added": 62253,
+    "human_modified": 2,
+    "human_removed": 0,
+    "total_committed": 62253,
+    "total_lines_changed": 62255,
+    "agent_percentage": 0,
+    "metric_version": 2
+  },
+  "prompt_attributions": [
+    {
+      "checkpoint_number": 1,
+      "user_lines_added": 32766,
+      "user_lines_removed": 2,
+      "agent_lines_added": 0,
+      "agent_lines_removed": 0,
+      "user_added_per_file": {
+        ".prod-build/evidence.jsonl": 5,
+        ".prod-build/plan.json": 4,
+        "crossfoot/agent.py": 22,
+        "crossfoot/audit.py": 866,
+        "crossfoot/cli.py": 191,
+        "crossfoot/ledger.py": 12,
+        "crossfoot/outputs.py": 201,
+        "crossfoot/policy.py": 52,
+        "runs/20261011-115650/panola/changes.diff": 99,
+        "runs/20261011-115650/panola/corrected/20241105__tx__general__panola__precinct.csv": 784,
+        "runs/20261011-115650/panola/county.json": 1,
+        "runs/20261011-115650/panola/findings.json": 29291,
+        "runs/20261011-115650/panola/report.md": 834,
+        "runs/20261011-115650/policy.json": 6,
+        "runs/20261011-115650/run.json": 52,
+        "runs/20261011-120008/policy.json": 6,
+        "tests/known_panola.json": 9,
+        "tests/test_audit.py": 331
+      },
+      "user_removed_per_file": {
+        ".prod-build/plan.json": 2
+      }
+    },
+    {
+      "checkpoint_number": 2,
+      "user_lines_added": 62214,
+      "user_lines_removed": 0,
+      "agent_lines_added": 1699,
+      "agent_lines_removed": 2,
+      "user_added_per_file": {
+        ".prod-build/evidence.jsonl": 4,
+        "runs/20261011-120008/panola/changes.diff": 102,
+        "runs/20261011-120008/panola/corrected/20241105__tx__general__panola__precinct.csv": 784,
+        "runs/20261011-120008/panola/county.json": 1,
+        "runs/20261011-120008/panola/findings.json": 29337,
+        "runs/20261011-120008/panola/report.md": 827,
+        "runs/20261011-120008/run.json": 65,
+        "runs/20261011-121108/panola/changes.diff": 102,
+        "runs/20261011-121108/panola/corrected/20241105__tx__general__panola__precinct.csv": 784,
+        "runs/20261011-121108/panola/county.json": 1,
+        "runs/20261011-121108/panola/findings.json": 29319,
+        "runs/20261011-121108/panola/report.md": 830,
+        "runs/20261011-121108/policy.json": 6,
+        "runs/20261011-121108/run.json": 52
+      }
+    }
+  ]
+}
