@@ -321,6 +321,7 @@ the history (last present in commit `247425f`), and each session's task and repo
 - Checked after it: `uv run pytest -q`, `tools/readme_tables.py --check` and `tools/named_paths.py --check`.
 
 ## Demo
+- Live: https://crossfoot-zeta.vercel.app/ (deployed from `site/` on 11 October 2026; no sign-in).
 - The results page is static. From a clone: `python3 -m http.server -d site 8000`, then open http://localhost:8000/.
   It opens on a finished run with one finding drawn on the scan; `Replay the audit` plays the run's recorded events;
   the tabs switch county. Add `?record=1` for recording.
@@ -341,5 +342,5 @@ Confirmed requirements (event page, read 11 October 2026): a public quote post o
 repository and demo link; a demo video of three minutes or less that covers neatlogs, Entire and cfo.ai; evidence in
 the repository.
 
-Outstanding on 11 October: the public repository and the deployed page (being published), the cfo.ai business plan,
-the demo video, the post on X.
+Done on 11 October: the public repository (https://github.com/itssaharsh/crossfoot) and the deployed page
+(https://crossfoot-zeta.vercel.app/). Outstanding: the cfo.ai business plan, the demo video, the post on X.

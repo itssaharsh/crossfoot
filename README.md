@@ -9,7 +9,7 @@ error with the document's own printed totals, and proposes the fix.
 *Panola County, page 1, Chase Oliver, precinct 29, election day. The published file has 0; the scan has 1. The row's printed total is 12: the cells add to 12 with the scan's value and to 11 with the file's, so the printed total decides (finding f005 in [runs/20261011-135350/panola/findings.json](runs/20261011-135350/panola/findings.json); not confirmed by a person).*
 <!-- picture:end -->
 
-Open: [the results page](site/) · [traces and the detection](docs/evidence/traces.md) ·
+Open: **[the live results page](https://crossfoot-zeta.vercel.app/)** ([its source](site/)) · [traces and the detection](docs/evidence/traces.md) ·
 [checkpoints](docs/evidence/checkpoints.txt) · [the design](ARCHITECTURE.md) ·
 [the build log](hackathon.md)
 
