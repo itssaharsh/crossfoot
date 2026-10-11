@@ -123,8 +123,10 @@
         "uv run crossfoot read --county panola"
       ],
       "rollback": "git revert the task's commit; no data migration",
-      "status": "todo",
-      "notes": ""
+      "status": "doing",
+      "notes": "",
+      "base": "ea25f64",
+      "started_after": 10
     },
     {
       "id": "T03",
