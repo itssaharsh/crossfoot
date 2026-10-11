@@ -2,7 +2,7 @@
 
 ## A run stopped by its budget and continued
 
-Two small counties (San Saba, Cottle), real model calls, run 20261011-135519 (`runs/20261011-135519/`). Ledger events and
+Two small counties (San Saba, Cottle), real model calls, run 20261011-135519 (`runs/20261011-135519/`; trace of the resumed part, Cottle: `6b289ce0c777683ca054674468c29dbd`; none found for the first part). Ledger events and
 the counts come from `runs/20261011-135519/ledger.sqlite` and `summary.json`. Evidence ids are in `.prod-build/evidence.jsonl`.
 
 1. `crossfoot audit --all --only san_saba,cottle --budget 0.25` (E0071, exit 2, expected)
@@ -24,12 +24,11 @@ none of them had been accepted). Gateway's own figure for the two commands: $9.9
 ## Where a read failed and what the program did next
 
 Quoted from the events kept in the committed runs' `county.json` files. Times are the event clock (UTC, as the runs record it).
-Neatlogs trace ids are not given: see `docs/evidence/traces.md`. No run file stores a trace id, and the neatlogs server did not answer
-in the session that wrote this.
+Neatlogs trace ids are in `docs/evidence/traces.md`; no run file stores one, so each is paired by start time.
 
 ### 1. A re-read gave the same value and went one step up the ladder, and the document disagreed with itself
 
-Run `20261011-112935` (`crossfoot close --county panola --resume latest`), `runs/20261011-112935/panola/county.json`, item
+Run `20261011-112935` (trace: none found, see `traces.md`) (`crossfoot close --county panola --resume latest`), `runs/20261011-112935/panola/county.json`, item
 `col:6:p6-b3:1` (page 6, the small total under precinct 1's column):
 
     11:29:58 suspect   read 1079, would_be 1076 (the three cells above add to 1076)
@@ -62,7 +61,7 @@ Six actions, then the program stopped rather than loop. The cells stayed as read
 
 ### 3. A model answer the program refused
 
-Run `20261011-130414` (`crossfoot audit --all --budget 9`), `runs/20261011-130414/scurry/county.json`, Scurry page 18:
+Run `20261011-130414` (`crossfoot audit --all --budget 9`; Scurry trace `50d31f20696f092c1bad57ab707a3a55`), `runs/20261011-130414/scurry/county.json`, Scurry page 18:
 
     13:28:47 page_failed  page 18, error: "y" of 'REP John Bailey' must be a number from 0 to 1000
 

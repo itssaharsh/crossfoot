@@ -239,6 +239,17 @@ Planned, and updated as each part is actually used:
   JSON; the third recovery case is a refused answer that parsed as JSON.
 - Evidence: E0086 (red), E0088, E0090, and `uv run pytest -q` (200 passed). No model spend.
 
+### 11 October 2026, T05b: trace ids and one detection in neatlogs
+- The neatlogs server answered. `docs/evidence/traces.md` now pairs committed runs with trace ids by start time (27 distinct traces came back
+  from the searches; 11 committed runs paired, others "none found" with the reason), says how to open one, and quotes spans from two
+  traces (Panola run 130414; Cottle, the resume of 135519). `docs/evidence/recovery.md` has the trace ids of the runs its cases come from (case 1 and 2: none found).
+- One detection created: "Crossfoot slow haiku call (over 20 s)", id `ee3ce3bc-f2cc-44f6-aecb-387ebfdb3727`, conditional, latency over 20,000 ms and model
+  claude-haiku. Preview matched 1 span (a close-county planning call, not a page read). The brief's first two choices could not be written: a `reread*` span has no
+  output and the repair call has no span. No code changed.
+- Found: some images in the traces show as `image WxH sha256:...`, others as a `neatlogs_media` record with state `failed` ("upload unavailable:
+  backend_upload_contract_unavailable"). Server refused: search with `fields`, and the `get_trace_context` options (`not_enabled`).
+- Evidence: see `.prod-build/reports/T05b.md`. No model spend.
+
 ## Demo
 Not available yet.
 
