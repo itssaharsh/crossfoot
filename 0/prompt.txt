@@ -1,0 +1,33 @@
+Read AGENTS.md, then .prod-build/briefs/T03a.md and do exactly that task.
+Run checks through `python3 .prod-build/pb.py` as the brief says.
+Finish by writing .prod-build/reports/T03a.md in the format at the end of the brief, commit (do not push), and reply with the report.
+
+---
+
+<task-notification>
+<task-id>ba6vyp9sk</task-id>
+<tool-use-id>toolu_01WELLXSWoBmEuN8Ta6MTeuE</tool-use-id>
+<output-file>/tmp/claude-1000/-home-saharsh-contri-crossfoot/095d8142-0cd6-4d0d-a5cf-2841ac8d2aac/tasks/ba6vyp9sk.output</output-file>
+<status>completed</status>
+<summary>Background command "cat /tmp/claude-1000/-home-saharsh-contri-crossfoot/095d8142-0cd6-4d0d-a5cf-2841ac8d2aac/tasks/bspcz9r0e.output; ls /home/saharsh/contri/crossfoot/runs | tail -2" completed (exit code 0)</summary>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>bspcz9r0e</task-id>
+<tool-use-id>toolu_01Smuv9FSHhXt2muDoRuBws9</tool-use-id>
+<output-file>/tmp/claude-1000/-home-saharsh-contri-crossfoot/095d8142-0cd6-4d0d-a5cf-2841ac8d2aac/tasks/bspcz9r0e.output</output-file>
+<status>completed</status>
+<summary>Background command "until grep -q "written:" /tmp/claude-1000/-home-saharsh-contri-crossfoot/095d8142-0cd6-4d0d-a5cf-2841ac8d2aac/scratchpad/full1.log || ! pgrep -f "crossfoot close" &gt;/dev/null; do sleep 20; done; tail -12 /tmp/claude-1000/-home-saharsh-contri-crossfoot/095d8142-0cd6-4d0d-a5cf-2841ac8d2aac/scratchpad/full1.log" completed (exit code 0)</summary>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>b3ymgdr7a</task-id>
+<tool-use-id>toolu_01PafUUTk4ibA2qenkFGMh3L</tool-use-id>
+<output-file>/tmp/claude-1000/-home-saharsh-contri-crossfoot/095d8142-0cd6-4d0d-a5cf-2841ac8d2aac/tasks/b3ymgdr7a.output</output-file>
+<status>completed</status>
+<summary>Background command "cd /home/saharsh/contri/crossfoot; python3 .prod-build/pb.py verify T03a &gt; /tmp/claude-1000/-home-saharsh-contri-crossfoot/095d8142-0cd6-4d0d-a5cf-2841ac8d2aac/scratchpad/verify.log 2&gt;&amp;1; tail -8 /tmp/claude-1000/-home-saharsh-contri-crossfoot/095d8142-0cd6-4d0d-a5cf-2841ac8d2aac/scratchpad/verify.log" completed (exit code 0)</summary>
+</task-notification>
