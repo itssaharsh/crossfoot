@@ -215,13 +215,13 @@ def test_total_seconds_adds_the_runs_a_run_resumed(tmp_path):
 
 
 def test_the_replay_timeline_follows_the_runs_own_events():
-    """qa/t07b/timeline.mjs builds the timeline from the real county data and checks its order and counts against the events."""
+    """tools/qa/timeline_panola.mjs builds the timeline from the real county data and checks its order and counts against the events."""
     import pathlib, shutil, subprocess
     root = pathlib.Path(__file__).resolve().parents[1]
     node = shutil.which("node")
     if not node or not (root / "site" / "data" / "panola.json").exists():
         pytest.skip("needs node and the built county data")
-    r = subprocess.run([node, str(root / "qa" / "t07b" / "timeline.mjs")], capture_output=True, text=True, cwd=root)
+    r = subprocess.run([node, str(root / "tools" / "qa" / "timeline_panola.mjs")], capture_output=True, text=True, cwd=root)
     assert r.returncode == 0, r.stdout + r.stderr
 
 
@@ -421,11 +421,11 @@ def test_row_crops_are_cut_from_the_page_and_every_figure_is_placed(tmp_path):
 
 
 def test_the_replay_timeline_of_the_report_counties_follows_their_events():
-    """qa/t07c/timeline.mjs builds the timelines of San Saba, Jones, Lynn and Cottle from the real data and checks them."""
+    """tools/qa/timeline_report.mjs builds the timelines of San Saba, Jones, Lynn and Cottle from the real data and checks them."""
     import pathlib, shutil, subprocess
     root = pathlib.Path(__file__).resolve().parents[1]
     node = shutil.which("node")
     if not node or not (root / "site" / "data" / "san_saba.json").exists():
         pytest.skip("needs node and the built county data")
-    r = subprocess.run([node, str(root / "qa" / "t07c" / "timeline.mjs")], capture_output=True, text=True, cwd=root)
+    r = subprocess.run([node, str(root / "tools" / "qa" / "timeline_report.mjs")], capture_output=True, text=True, cwd=root)
     assert r.returncode == 0, r.stdout + r.stderr

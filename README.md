@@ -10,7 +10,7 @@ error with the document's own printed totals, and proposes the fix.
 <!-- picture:end -->
 
 Open: [the results page](site/) · [traces and the detection](docs/evidence/traces.md) ·
-[checkpoints](docs/evidence/checkpoints.txt) · [the plan](.prod-build/contract.md) ·
+[checkpoints](docs/evidence/checkpoints.txt) · [the design](ARCHITECTURE.md) ·
 [the build log](hackathon.md)
 
 ## What it found
@@ -133,13 +133,14 @@ Calls, cost and seconds are those of the run that read each county, [`runs/20261
 
 Built during neatHack: the first commit is dated 2026-10-11T08:50:59Z and every commit is inside the event window.
 The code was written by Claude Code sessions (Anthropic's coding agent, Claude Sonnet), each given one written task
-from `.prod-build/briefs/` and reporting in `.prod-build/reports/`; a planning session wrote the tasks, checked each
-result against the run files and the scans, and decided what came next. Every session is recorded with Entire and
+and reporting on it; a planning session wrote the tasks, checked each result against the run files and the scans,
+and decided what came next. Every session is recorded with Entire and
 tied to its commit. The models that read the scans at run time are `claude-haiku`, `claude-sonnet-4.6` and
 `claude-opus-4.6` through the event's gateway.
 
 ## What existed before the event
 
-The idea and the plan: [ARCHITECTURE.md](ARCHITECTURE.md), [UI-SPEC.md](UI-SPEC.md) and
-[.prod-build/contract.md](.prod-build/contract.md) were written before any code. No code existed before the event.
-`.prod-build/briefs/` and `.prod-build/reports/` hold the task given to each coding session and what it reported.
+The idea and the plan. The plan (the architecture, a specification of the results page, a list of requirements and
+the tasks) was written before any code and is the repository's first commit, `82a6b67`. No code existed before the
+event. The planning and task files were taken out of the tree at the end to keep it to what a reader needs; they are
+in the history, and each coding session's task and report are in the session recorded with its commit.

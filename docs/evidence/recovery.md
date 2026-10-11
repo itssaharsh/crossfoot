@@ -3,7 +3,7 @@
 ## A run stopped by its budget and continued
 
 Two small counties (San Saba, Cottle), real model calls, run 20261011-135519 (`runs/20261011-135519/`; trace of the resumed part, Cottle: `6b289ce0c777683ca054674468c29dbd`; none found for the first part). Ledger events and
-the counts come from `runs/20261011-135519/ledger.sqlite` and `summary.json`. Evidence ids are in `.prod-build/evidence.jsonl`.
+the counts come from `runs/20261011-135519/ledger.sqlite` and `summary.json`. Evidence ids (E0071 and the like) are entries of the build's command ledger, which is in the repository's history.
 
 1. `crossfoot audit --all --only san_saba,cottle --budget 0.25` (E0071, exit 2, expected)
    - Last lines of the run's summary: San Saba `audited` (33 calls, $0.2076); Cottle `stopped`: "run budget $0.25 reached

@@ -12,15 +12,23 @@ verified answer key for grading document-reading models.
 Team Saharsh.
 
 ## Stack
-Planned, and updated as each part is actually used:
+What is actually used:
 - Python 3.12 with uv; SQLite for the run ledger; Pillow and pdftoppm for page images.
-- Models through the event's LiteLLM gateway (`claude-haiku` first, `claude-sonnet-4.6` only for cells that fail).
-- neatlogs for traces of every model and tool call.
-- Entire for a checkpoint of the coding session behind every commit.
-- cfo.ai for the business plan, built from the measured cost per county.
-- A static results page (plain HTML, CSS and JS).
+- Models through the event's LiteLLM gateway: `claude-haiku` for the sample of each county and for counties whose
+  sample holds, `claude-sonnet-4.6` where it does not and for looking again, `claude-opus-4.6` as the last step of a
+  re-read.
+- neatlogs: a span for every model and tool call, its MCP server for reading traces back during the build, and one
+  detection (`docs/evidence/traces.md`).
+- Entire: the coding session behind every commit a session made (`docs/evidence/checkpoints.txt`); the graph
+  plugin's instructions for coding agents are in `AGENTS.md`.
+- cfo.ai: the business plan from the measured cost per county (see Submission).
+- A static results page (plain HTML, CSS and JS, no build step).
 
 ## Build log
+
+Entries below name files under `.prod-build/` (the plan, each session's task and its report, a ledger of commands
+run) and `UI-SPEC.md`. They were taken out of the tree on 11 October to keep it to what a reader needs; they are in
+the history (last present in commit `247425f`), and each session's task and report are in its recorded session.
 
 ### 2026-10-11 (hour 26 of the window)
 - Planning came first: the idea, the contract (`.prod-build/contract.md`), the architecture (`ARCHITECTURE.md`), the
@@ -305,10 +313,33 @@ Planned, and updated as each part is actually used:
   now exists (`tools/qa/check.py` wrote it). `runs/20261011-140000` is kept: this log names it and `summarize` follows it back.
 - Not measured: the cost of an audit from nothing for a county other than as the one unattended run recorded it.
 
-## Known limitations
-See the Limits section of [README.md](README.md).
+### 2026-10-11 - the tree cut down to what a reader needs
+- Removed from the tree, kept in the history: the planning and task files (`.prod-build/`, `UI-SPEC.md`, `docs/memory/`), the
+  screenshots of earlier stages of the page (`qa/t06*`, `qa/t07*`; `qa/final/` stays) and one run folder that no document
+  names (`20261011-085948`). The two replay-timeline checks moved to `tools/qa/`. `ARCHITECTURE.md` was brought up to
+  date with what was built and now lists the requirements it answers; `AGENTS.md` keeps the project's rules.
+- Checked after it: `uv run pytest -q`, `tools/readme_tables.py --check` and `tools/named_paths.py --check`.
+
+## Demo
+- The results page is static. From a clone: `python3 -m http.server -d site 8000`, then open http://localhost:8000/.
+  It opens on a finished run with one finding drawn on the scan; `Replay the audit` plays the run's recorded events;
+  the tabs switch county. Add `?record=1` for recording.
+- To make the results again: the commands under "Run it" in [README.md](README.md). One county from nothing takes
+  2 to 8 minutes and between $0.20 and $0.77 of model calls (the README's cost table).
+
+## Known limitations and next steps
+Limits: see the Limits section of [README.md](README.md).
+
+Next steps, none of them done:
+- A person looks at each finding on its crop and confirms it. Nothing has been confirmed and nothing has been sent to
+  the OpenElections project.
+- The rows that were not compared (40 of 3,061, mostly registered-voter rows with no block of their own on the scan).
+- A scan that prints nothing to add up (Limestone) needs another kind of second source.
 
 ## Submission
 Confirmed requirements (event page, read 11 October 2026): a public quote post on X with team, name, project, public
 repository and demo link; a demo video of three minutes or less that covers neatlogs, Entire and cfo.ai; evidence in
-the repository. Outstanding: all of them.
+the repository.
+
+Outstanding on 11 October: the public repository and the deployed page (being published), the cfo.ai business plan,
+the demo video, the post on X.

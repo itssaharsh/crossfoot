@@ -1,4 +1,4 @@
-// The replay's timeline check: node qa/t07b/timeline.mjs [county.json]
+// The replay's timeline check: node tools/qa/timeline_panola.mjs [county.json]
 // Builds the timeline from the real county data (site/data/panola.json by default) and checks it against the run's own events:
 // the sample step first, one read step per block_read event in event order, one suspect step per suspect event in event order,
 // then the audit step, then the end; every step has a caption and a length; the whole lasts 25 to 35 seconds.

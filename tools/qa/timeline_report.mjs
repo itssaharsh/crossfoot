@@ -1,4 +1,4 @@
-// The replay timeline of the report counties: node qa/t07c/timeline.mjs [county ...]   (default: san_saba jones lynn cottle)
+// The replay timeline of the report counties: node tools/qa/timeline_report.mjs [county ...]   (default: san_saba jones lynn cottle)
 // Builds the timeline from the real county data (site/data/<county>.json) and checks it against the run's own events: the sample
 // step first, one read step per page_read event in event order, one step per item the run worked (an item with re-reads), in
 // event order, then the audit step when the county has findings, then the end; every step has a caption and a length; every

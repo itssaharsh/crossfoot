@@ -3,7 +3,7 @@
     python3 tools/named_paths.py          print the table
     python3 tools/named_paths.py --check  exit 1 if a named run folder (or a path under it) or qa path is missing
 
-Documents read: README.md, hackathon.md, docs/, .prod-build/reports/, tests/. A run id counts as present when runs/<id> exists;
+Documents read: README.md, hackathon.md, docs/, tests/. A run id counts as present when runs/<id> exists;
 a path like runs/<id>/<rest> counts as present when that file exists. Lines that say "not committed", raw diff-stat lines of
 old reports and the made-up ids in tests/ are skipped, and so is a sentence that says something was removed, deleted or
 renamed (and the lines that continue its bullet): what it names is meant to be gone."""
@@ -11,7 +11,7 @@ import re, sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-SOURCES = ["README.md", "hackathon.md", "docs", ".prod-build/reports", "tests"]
+SOURCES = ["README.md", "hackathon.md", "docs", "tests"]
 RUN = re.compile(r"\b(2026\d{4}-\d{6})\b")
 RUNPATH = re.compile(r"runs/(2026\d{4}-\d{6})/([\w./*<>-]+)")
 GONE = re.compile(r"\b(removed|deleted|renamed)\b", re.I)

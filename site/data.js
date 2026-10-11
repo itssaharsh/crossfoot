@@ -163,7 +163,7 @@ export class Store {
   colLabelM(v) { return v.r === 'grand' ? '' : v.r === 'row' ? '' : `precinct ${v.c}`; }
 }
 
-// ---- the words of the copy deck (UI-SPEC section 9)
+// ---- the page's wording, in one place
 export const KINDS = ['wrong_number', 'wrong_column', 'wrong_precinct', 'missing_row', 'file_row_fails_own_total', 'extra_row'];
 export const KIND = {
   wrong_number: { word: 'wrong number', glyph: '≠' },
