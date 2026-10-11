@@ -23,8 +23,9 @@ findings.json
                                     missing_row | extra_row
               status                settled_against_file | document_inconsistent | cannot_verify
               reason                the status in words
-              sums  [{name, kind, terms [{cell, value}], printed, printed_label, computed_with_scan, holds_with_scan,
-                      computed_with_file, holds_with_file}]   the printed totals that decide it
+              sums  [{name, kind, terms [{cell, value}], printed, printed_label, printed_with_scan, computed_with_scan,
+                      holds_with_scan, printed_with_file, computed_with_file, holds_with_file}]  (printed_with_X is the
+                      printed total as it stands on that side: a finding on a printed total replaces it on the file's side)   the printed totals that decide it
               page, block, box      where the scan's cell is ([x0, y0, x1, y1] at 200 dpi), or null
               crop                  path of the group's picture, relative to the county folder
               reread                {model, dpi, value, crop} or null: the single-value re-read of the scan
@@ -631,8 +632,9 @@ def sums_for(ent, scan_value, file_value, cells, totals) -> list[dict]:
         name, label = describe_sum(sch)
         out.append({"name": name, "kind": sch.kind, "page": sch.page, "block": sch.block_id,
                     "terms": [{"cell": list(kk), "value": v} for kk, v in sch.terms], "printed": sch.printed,
-                    "printed_label": label, "computed_with_scan": sch.computed, "holds_with_scan": sch.ok,
-                    "computed_with_file": fch.computed, "holds_with_file": fch.ok})
+                    "printed_label": label, "printed_with_scan": sch.printed, "computed_with_scan": sch.computed,
+                    "holds_with_scan": sch.ok, "printed_with_file": fch.printed, "computed_with_file": fch.computed,
+                    "holds_with_file": fch.ok})
     order = {"row": 0, "col": 1, "grand_col": 2, "grand_row": 3, "report_row": 0, "report_contest": 1,
              "report_writein": 1, "report_ballots": 1}
     out.sort(key=lambda s: order[s["kind"]])
@@ -1260,8 +1262,9 @@ def sums_for_report(row: Row, part: str, cells) -> list[dict]:
         name, label = describe_sum(sch)
         out.append({"name": name, "kind": sch.kind, "page": sch.page, "block": sch.block_id,
                     "terms": [{"cell": list(kk), "value": v} for kk, v in sch.terms], "printed": sch.printed,
-                    "printed_label": label, "computed_with_scan": sch.computed, "holds_with_scan": sch.ok,
-                    "computed_with_file": fch.computed, "holds_with_file": fch.ok})
+                    "printed_label": label, "printed_with_scan": sch.printed, "computed_with_scan": sch.computed,
+                    "holds_with_scan": sch.ok, "printed_with_file": fch.printed, "computed_with_file": fch.computed,
+                    "holds_with_file": fch.ok})
     out.sort(key=lambda s: 0 if s["kind"] == "report_row" else 1)
     return out
 

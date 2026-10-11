@@ -656,6 +656,35 @@ def cmd_summarize(args) -> int:
     return 0
 
 
+def cmd_score(args) -> int:
+    import json
+    from pathlib import Path
+    from . import score, sources
+    runs = sorted(p.parent.parent.name for p in Path("runs").glob(f"*/{args.county}/findings.json")
+                  if (p.parent / "county.json").exists())
+    run = runs[-1] if args.resume == "latest" and runs else args.resume
+    src = Path("runs") / run / args.county / "findings.json"
+    if not src.exists():
+        print(f"no audit of {args.county} to score against ({src})", file=sys.stderr)
+        return 1
+    audit_doc = json.loads(src.read_text())
+    claims_path = Path(args.findings)
+    claims = json.loads(claims_path.read_text())
+    res = score.score(claims, audit_doc["findings"], sources.read_published(args.county), audit_doc.get("not_compared") or [])
+    res = {"county": args.county, "claims_file": str(claims_path), "audit_run": run, "audit_findings_file": str(src),
+           "audit_side": score.audit_side(run, args.county), **res}
+    out = claims_path.parent / "score.json"
+    out.write_text(json.dumps(res, indent=1) + "\n")
+    c = res["counts"]
+    print(f"claims {c['claims']} scored against the audit of {args.county} (run {run}: {res['audit_findings']} findings, "
+          f"{res['audit_settled']} settled)")
+    for g in score.GROUPS:
+        print(f"  {g}: {c[g]}")
+    print(f"  audit's settled findings the list does not contain: {len(res['missed_settled'])}")
+    print(f"written: {out}")
+    return 0
+
+
 def build_parser():
     p = argparse.ArgumentParser(prog="crossfoot")
     sub = p.add_subparsers(dest="cmd", required=True)
@@ -707,6 +736,11 @@ def build_parser():
     s = sub.add_parser("verify-known", help="check the newest findings.json against the answer key in tests/")
     s.add_argument("--county", required=True, choices=list(sources.COUNTIES))
     s.set_defaults(fn=cmd_verify_known)
+    s = sub.add_parser("score", help="score a claimed list of disagreements against the newest audit's findings")
+    s.add_argument("--findings", required=True, help="json list of {office, candidate, precinct, part, file_value, scan_value}")
+    s.add_argument("--county", required=True, choices=list(sources.COUNTIES))
+    s.add_argument("--resume", default="latest", help="run id of the audit to score against, or 'latest'")
+    s.set_defaults(fn=cmd_score)
     s = sub.add_parser("policy", help="the one question the audit asks a person")
     s.add_argument("action", choices=["set", "show"])
     s.add_argument("--answer", help="cells or totals (with `set`)")

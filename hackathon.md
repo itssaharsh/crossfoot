@@ -221,6 +221,24 @@ Planned, and updated as each part is actually used:
   sums only; they are findings against a volunteer file, not checked by a person. The ballots equation was not used for 4 Jones blocks and 1
   Lynn block.
 
+### 11 October 2026, T05: the one-prompt baseline scored against the audit; recovery evidence
+- Carried over: every sum record in `findings.json` now carries `printed_with_scan` and `printed_with_file`, the printed total as it
+  stands on each side (a finding on a printed total replaces that total on the file's side). Test: for every sum and side, `holds` is
+  exactly `computed == printed` on that side (`tests/test_score.py`). Runs made before this change do not have the two fields.
+- `crossfoot score --findings <list> --county panola --resume latest` (`crossfoot/score.py`) puts each claimed disagreement in one
+  group (settled, same_but_undecided, contradicted, other_value, not_matched) and lists the audit's settled findings the list lacks.
+  `other_value` is a fifth group not in the brief: the audit has a finding there but reads neither the claim's value. No model call.
+  Result in `docs/evidence/baseline/score.json` against run `20261011-135350`: of 74 claims, 73 settled, 1 same_but_undecided (the
+  registered-voters figure for one precinct, whose row has no second sum), 0 contradicted, 0 other_value, 0 not_matched; 36 of the audit's
+  109 settled findings are not in the list. Written up in `docs/evidence/baseline.md`; cost and time of each side are from `run.json`
+  and the run files, and are different kinds of figure (api equivalent against the program's metered estimate).
+- `docs/evidence/recovery.md`: three places from the committed runs (a re-read that gave the same value and went up the ladder to
+  `document_inconsistent`; a value that ended `cannot_verify` after six actions; a model answer refused by the checks, Scurry page 18).
+- Failed / not done: the neatlogs server did not connect in this session (HTTP 503), so no detection was created and no trace id was
+  looked up; `docs/evidence/traces.md` says so. The run files hold no trace ids. No event in the runs records an answer that was not
+  JSON; the third recovery case is a refused answer that parsed as JSON.
+- Evidence: E0086 (red), E0088, E0090, and `uv run pytest -q` (200 passed). No model spend.
+
 ## Demo
 Not available yet.
 
