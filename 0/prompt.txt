@@ -1,0 +1,181 @@
+Read AGENTS.md, then .prod-build/briefs/T12.md and do exactly that task.
+Run checks through `python3 .prod-build/pb.py` as the brief says.
+Finish by writing .prod-build/reports/T12.md in the format at the end of the brief, commit (do not push), and reply with the report.
+
+---
+
+<task-notification>
+<task-id>bym7fh8m2</task-id>
+<tool-use-id>toolu_01BJP32EEkk18qUfRe5Abw2C</tool-use-id>
+<output-file>/tmp/claude-1000/-home-saharsh-contri-crossfoot/36989449-f530-4cfe-9ded-ae39ce17fcd5/tasks/bym7fh8m2.output</output-file>
+<status>completed</status>
+<summary>Monitor "noop" stream ended</summary>
+<event>waiting</event>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>bezgig98v</task-id>
+<tool-use-id>toolu_01EpmVGx3spAVZdnVejQuZYa</tool-use-id>
+<output-file>/tmp/claude-1000/-home-saharsh-contri-crossfoot/36989449-f530-4cfe-9ded-ae39ce17fcd5/tasks/bezgig98v.output</output-file>
+<status>completed</status>
+<summary>Background command "cat &gt; axe.py &lt;&lt;'E'
+"""axe-core (tools/qa/axe.min.js, injected) at 1440x900 and 390x844 on the top of the page, the explorer with a finding, a county with
+nothing found, the county that was not checked, and both dialogs. Writes qa/final/axe.json.   python3 tools/qa/axe.py"""
+import sys, json
+sys.path.insert(0, str(__import__("pathlib").Path(__file__).resolve().parent))
+from lib import *
+from playwright.sync_api import sync_playwright
+AXE = (ROOT / "tools" / "qa" / "axe.min.js").read_text()
+TAGS = ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"]
+
+def explorer(pg): pg.evaluate("document.getElementById('counties').scrollIntoView()"); pg.wait_for_timeout(2200)
+def crop_dialog(pg): explorer(pg); pg.get_by_role("button", name="Open the full crop").click(); pg.wait_for_timeout(600)
+def evidence_dialog(pg): explorer(pg); pg.get_by_role("button", name="Evidence (JSON)").click(); pg.wait_for_timeout(1200)
+def tape_open(pg): explorer(pg); pg.locator(".every summary").click(); pg.wait_for_timeout(400)
+
+CASES = [("top of the page", "", None), ("how it works", "", lambda pg: pg.evaluate("document.getElementById('how').scrollIntoView()")),
+         ("explorer, Panola finding", "", explorer), ("explorer, Panola, the tape open", "", tape_open),
+         ("explorer, Jones (a row)", "?county=jones", explorer), ("explorer, San Saba (a row nothing can decide)", "?county=san_saba&amp;finding=f003", explorer),
+         ("explorer, Cottle (nothing found)", "?county=cottle", explorer), ("explorer, Limestone (not checked)", "?county=limestone", explorer),
+         ("the run and the limits", "", lambda pg: pg.evaluate("document.getElementById('run').scrollIntoView()")),
+         ("crop dialog", "", crop_dialog), ("evidence dialog", "", evidence_dialog)]
+res, total = [], 0
+with sync_playwright() as p:
+    b = p.chromium.launch()
+    for w, h in [(1440, 900), (390, 844)]:
+        for name, q, act in CASES:
+            ctx, pg, errs = open_page(b, w, h, q, wait=3000)
+            if act: act(pg)
+            pg.wait_for_timeout(500)
+            pg.evaluate(AXE)
+            r = pg.evaluate("tags =&gt; axe.run(document, {runOnly: {type: 'tag', values: tags}})", TAGS)
+            v = [{"id": x["id"], "impact": x["impact"], "help": x["help"], "nodes": [{"target": n["target"], "summary": n.get("failureSummary", "")[:300]} for n in x["nodes"]]} for x in r["violations"]]
+            total += len(v)
+            res.append({"case": name, "viewport": f"{w}x{h}", "violations": v, "passes": len(r["passes"]), "incomplete": [x["id"] for x in r["incomplete"]], "pageErrors": errs})
+            print(w, name, len(v), [x["id"] for x in v], flush=True)
+            ctx.close()
+    b.close()
+(OUT / "axe.json").write_text(json.dumps({"axe": "4.12.1", "tags": TAGS, "violations_total": total, "runs": res}, indent=1))
+print("total violations", total)
+E
+cd ../.. &amp;&amp; python3 tools/qa/axe.py 2&gt;&amp;1 | tail -30" completed (exit code 0)</summary>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>bc51np3oy</task-id>
+<tool-use-id>toolu_01XfaP8jGzTi2BAeZZxc46vg</tool-use-id>
+<output-file>/tmp/claude-1000/-home-saharsh-contri-crossfoot/36989449-f530-4cfe-9ded-ae39ce17fcd5/tasks/bc51np3oy.output</output-file>
+<status>completed</status>
+<summary>Monitor "axe results" stream ended</summary>
+<event>1440 top of the page 0 []
+1440 how it works 0 []
+1440 explorer, Panola finding 0 []
+1440 explorer, Panola, the tape open 0 []
+1440 explorer, Jones (a row) 0 []
+1440 explorer, San Saba (a row nothing can decide) 0 []
+1440 explorer, Cottle (nothing found) 0 []
+1440 explorer, Limestone (not checked) 0 []
+1440 the run and the limits 0 []
+1440 crop dialog 0 []
+1440 evidence dialog 0 []
+390 top of the page 0 []
+390 how it works 0 []
+390 explorer, Panola finding 0 []
+390 explorer, Panola, the tape open 0 []
+390 explorer, Jones (a row) 0 []
+390 explorer, San Saba (a row nothing can decide) 0 []
+390 explorer, Cottle (nothing found) 0 []
+390 explorer, Limestone (not checked) 0 []
+390 the run and the limits 0 []
+390 crop dialog 0 []
+390 evidence dialog 0 []
+total violations 0
+[exited with code 0]</event>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>bwr7qdl8o</task-id>
+<tool-use-id>toolu_01Lsj22PJLUhnj5upwvixc41</tool-use-id>
+<output-file>/tmp/claude-1000/-home-saharsh-contri-crossfoot/36989449-f530-4cfe-9ded-ae39ce17fcd5/tasks/bwr7qdl8o.output</output-file>
+<status>completed</status>
+<summary>Monitor "axe run finishing" stream ended</summary>
+<event>1440 top of the page 0 []
+1440 how it works 0 []
+1440 explorer, Panola finding 0 []
+1440 explorer, Panola, the tape open 0 []
+1440 explorer, Jones (a row) 0 []
+1440 explorer, San Saba (a row nothing can decide) 0 []
+1440 explorer, Cottle (nothing found) 0 []
+1440 explorer, Limestone (not checked) 0 []
+1440 the run and the limits 0 []
+1440 crop dialog 0 []
+1440 evidence dialog 0 []
+390 top of the page 0 []
+390 how it works 0 []
+390 explorer, Panola finding 0 []
+390 explorer, Panola, the tape open 0 []
+390 explorer, Jones (a row) 0 []
+390 explorer, San Saba (a row nothing can decide) 0 []
+390 explorer, Cottle (nothing found) 0 []
+390 explorer, Limestone (not checked) 0 []
+390 the run and the limits 0 []
+390 crop dialog 0 []
+390 evidence dialog 0 []
+total violations 0
+[exited with code 0]</event>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>bbnjrxhnm</task-id>
+<tool-use-id>toolu_01DRakjCpj4J4LQt9A6c9pSf</tool-use-id>
+<output-file>/tmp/claude-1000/-home-saharsh-contri-crossfoot/36989449-f530-4cfe-9ded-ae39ce17fcd5/tasks/bbnjrxhnm.output</output-file>
+<status>completed</status>
+<summary>Background command "cp qa/final/axe.json /tmp/axe_keep.json &amp;&amp; git rm -rq qa/final --cached &gt;/dev/null; find qa/final -type f ! -name axe.json -delete; (python3 tools/qa/shoot.py &gt; /tmp/shoot.log 2&gt;&amp;1; python3 tools/qa/check.py &gt; /tmp/check.log 2&gt;&amp;1) &amp; 
+sleep 1; echo started" completed (exit code 0)</summary>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>bnanwz2pd</task-id>
+<tool-use-id>toolu_014C9sPu1YhgkLCrBgmTFJag</tool-use-id>
+<output-file>/tmp/claude-1000/-home-saharsh-contri-crossfoot/36989449-f530-4cfe-9ded-ae39ce17fcd5/tasks/bnanwz2pd.output</output-file>
+<status>completed</status>
+<summary>Monitor "checks.json appears" stream ended</summary>
+<event>checks-written</event>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>bw6ffcyy7</task-id>
+<tool-use-id>toolu_019SdPAhC1x2UmyuizELsQcd</tool-use-id>
+<output-file>/tmp/claude-1000/-home-saharsh-contri-crossfoot/36989449-f530-4cfe-9ded-ae39ce17fcd5/tasks/bw6ffcyy7.output</output-file>
+<status>completed</status>
+<summary>Background command "sed -i 's/pg.get_by_role("button", name="Watch the agent work").click()/pg.evaluate("document.getElementById(\x27counties\x27).scrollIntoView()"); pg.click("#replay")/' tools/qa/shoot.py &amp;&amp; (python3 tools/qa/shoot.py &gt; /tmp/shoot.log 2&gt;&amp;1; python3 tools/qa/check.py &gt; /tmp/check.log 2&gt;&amp;1; echo done &gt; /tmp/qa.done) &gt; /dev/null 2&gt;&amp;1 &amp;
+rm -f /tmp/qa.done; echo bg" completed (exit code 0)</summary>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>bmfvsfawz</task-id>
+<summary>Monitor event: "axe process ends"</summary>
+<event>[Monitor expired after 10m with no events delivered. Re-arm it if you still need the watch — and widen the filter if silence was unexpected.]</event>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>brmp70pcg</task-id>
+<summary>Monitor event: "axe process ends (retry)"</summary>
+<event>[Monitor expired after 10m with no events delivered. Re-arm it if you still need the watch — and widen the filter if silence was unexpected.]</event>
+</task-notification>
