@@ -196,20 +196,25 @@ def write_findings(run_dir, county, run_id, res, *, policy, raw_file, file_name,
     out = Path(run_dir) / county
     out.mkdir(parents=True, exist_ok=True)
     fs = res["findings"]
-    new, diff, applied = audit.apply_corrections(raw_file, fs)
+    allowed, could = audit.whole_rows(raw_file, fs)
+    new, diff, applied = audit.apply_corrections(raw_file, allowed)
     done = {a["finding"] for a in applied}
+    refused = {i: c["reason"] for c in could for i in c["findings"]}
     for f in fs:
         f["corrected"] = f["id"] in done
+        f["row_not_corrected"] = refused.get(f["id"])
     (out / "corrected").mkdir(exist_ok=True)
     (out / "corrected" / file_name).write_bytes(new)
     diff = diff.replace("a/published file", f"a/{file_name}").replace("b/published file", f"b/corrected/{file_name}")
     (out / "changes.diff").write_text(diff)
     m = res["matching"]
+    check = audit.sums_check(res["cells"], res["totals"], res["row_objs"], fs, applied, m)
     d = {"county": county, "run_id": run_id, "file": file_name, "policy": policy,
          "counts": {"findings": len(fs), "by_kind": _count(fs, "kind", audit.KINDS),
                     "by_status": _count(fs, "status", audit.STATUSES), "groups": len(res["groups"]),
                     "corrections": len(applied)},
-         "findings": fs, "groups": res["groups"], "corrections": applied,
+         "findings": fs, "groups": res["groups"], "corrections": applied, "could_not_correct": could,
+         "sums_check": check,
          "unmatched": {"scan": m.unmatched_scan, "file": m.unmatched_file, "rejected": m.rejected, "model": m.model},
          "corrected_events": res["corrected_events"], "audit": res["audit"]}
     (out / "findings.json").write_text(json.dumps(d, indent=1))
@@ -224,6 +229,11 @@ def _sum_line(s) -> str:
             f"({w}); with the file's value they add to {s['computed_with_file']} ({f}).")
 
 
+def _parts(p) -> str:
+    return (f"votes {p['votes']} = absentee {p['absentee']} + early voting {p['early_voting']} + election day "
+            f"{p['election_day']}")
+
+
 def report_text(d, verdicts, urls) -> str:
     """report.md in plain words. Counts, one section per group, then what could not be verified."""
     c = d["counts"]
@@ -236,6 +246,37 @@ def report_text(d, verdicts, urls) -> str:
          "corrected file.", "", "| kind | findings |", "|---|---|"]
     L += [f"| {k} | {v} |" for k, v in c["by_kind"].items()] or ["| none | 0 |"]
     L += ["", "| status | findings |", "|---|---|"] + ([f"| {k} | {v} |" for k, v in c["by_status"].items()] or ["| none | 0 |"])
+    sc = d["sums_check"]
+    L += ["", "## Printed sums, checked against the published file and the corrected file", "",
+          f"Printed sums in all: {sc['in_all']} printed sums (row totals, small totals, grand totals). Recomputed with the "
+          f"published file's values in place of the scan's (matched rows only): {sc['holding_with_published']} hold. "
+          f"Recomputed with the corrected file's values: {sc['holding_with_corrected']} hold. Rows whose votes differ from "
+          f"their three parts: {sc['rows_failing_own_total']['published']} in the published file, "
+          f"{sc['rows_failing_own_total']['corrected']} in the corrected file.", ""]
+    if sc["still_failing"]:
+        L += [f"{len(sc['still_failing'])} sums still fail with the corrected file's values:", ""]
+        L += [f"- page {x['page']}, block {x['block']}: {x['name']} (printed {x['printed']}, adds to {x['computed']}). "
+              f"Why: {'; '.join(x['reasons'])}." for x in sc["still_failing"]]
+    else:
+        L += ["No sum fails with the corrected file's values."]
+    first = [f for f in d["findings"] if f.get("reread_disagrees")]
+    L += ["", "## Look at these first", ""]
+    if first:
+        L += ["A single-value look at the scan gave a number other than the one the printed sums settle on. "
+              "Whatever the status, a person should read the cell.", ""]
+        L += [f"- {f['id']} (group {f['group']}), {f['candidate'] or f['office']}, precinct {f['precinct']}, {f['part']}: "
+              f"status {f['status']}; the file has {f['file_value']}, the ledger {f['scan_value']}, the re-read gave "
+              f"{f['reread']['value']}." for f in first]
+    else:
+        L += ["None: no single-value re-read disagreed with the ledger."]
+    L += ["", "## Could not be corrected as a whole row", ""]
+    if d["could_not_correct"]:
+        L += ["Each row below has a finding settled against the file, but the row would not add up after the change, so no "
+              "part of it is changed.", ""]
+        L += [f"- file line {c['file_line']}: {c['candidate'] or c['office']}, precinct {c['precinct']} "
+              f"(findings {', '.join(c['findings'])}): {c['reason']}." for c in d["could_not_correct"]]
+    else:
+        L += ["None."]
     p = d["policy"]
     L += ["", f"Where the scan disagrees with itself, the answer in use is '{p['answer']}' ({p['meaning']}); "
           f"answered by: {p['answered_by']}. It never changes a value; only a printed total that decides can.", ""]
@@ -246,6 +287,8 @@ def report_text(d, verdicts, urls) -> str:
         L += [f"### {g['id']}: {g['kind']}, {g['candidate'] or g['office']}, precinct {', '.join(g['precincts'])}", "",
               f"{place}. Page {g['page']}, block {g['block']}. Statuses: " +
               ", ".join(f"{k} {v}" for k, v in g["statuses"].items()) + ".", ""]
+        if g.get("what_to_do"):
+            L += [g["what_to_do"], ""]
         if g["crop"]:
             L += [f"![{g['id']}]({g['crop']})", ""]
         for fid in g["findings"]:
@@ -254,6 +297,10 @@ def report_text(d, verdicts, urls) -> str:
             sv = "no row" if f["scan_value"] is None else f["scan_value"]
             L += [f"- Precinct {f['precinct']}, {f['part']}: the file has {fv}, the scan has {sv}. "
                   f"Status {f['status']}: {f['reason']}" + (" Changed in the corrected file." if f["corrected"] else "")]
+            if f.get("row_values"):
+                rv = f["row_values"]
+                L += [f"  - The scan shows: {_parts(rv['scan'])}." if rv["scan"] else "  - The scan has no such row.",
+                      f"  - The file shows: {_parts(rv['file'])}." if rv["file"] else "  - The file has no such row."]
             L += [_sum_line(s) for s in f["sums"]]
             if f["reread"] and f["reread"]["value"] is not None:
                 L += [f"  - Looked at the scan again ({f['reread']['model']}, {f['reread']['dpi']} dpi): it reads "

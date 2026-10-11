@@ -323,8 +323,10 @@
         "uv run crossfoot verify-known --county panola"
       ],
       "rollback": "git revert the task's commits",
-      "status": "todo",
-      "notes": "Added 2026-10-11 after the orchestrator compared T03c's corrected file with printed totals read by eye."
+      "status": "doing",
+      "notes": "Added 2026-10-11 after the orchestrator compared T03c's corrected file with printed totals read by eye.",
+      "base": "9448ad5",
+      "started_after": 39
     },
     {
       "id": "T04a",

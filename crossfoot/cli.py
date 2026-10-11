@@ -341,7 +341,13 @@ def cmd_audit(args) -> int:
     c = d["counts"]
     print(f"reader: {reader}; findings: {c['findings']} in {c['groups']} groups; by kind {c['by_kind']}; by status "
           f"{c['by_status']}; values changed in the corrected file: {c['corrections']}")
-    print(f"ledger values corrected by a re-read: {d['audit']['ledger_corrected']}; re-reads: {d['audit']['rereads']}")
+    print(f"ledger values corrected by a re-read: {d['audit']['ledger_corrected']}; re-reads made: {d['audit']['rereads']} "
+          f"(skipped because the printed sums decide: {d['audit']['rereads_skipped_sums_decide']})")
+    sc = d["sums_check"]
+    print(f"printed sums in all: {sc['in_all']}; holding with the published file's values: {sc['holding_with_published']}; "
+          f"holding with the corrected file's values: {sc['holding_with_corrected']}; still failing: {len(sc['still_failing'])}; "
+          f"rows failing their own total, published {sc['rows_failing_own_total']['published']}, corrected "
+          f"{sc['rows_failing_own_total']['corrected']}; rows not corrected as a whole: {len(d['could_not_correct'])}")
     print(f"model calls: {gw.calls} {gw.calls_by_model()}; tokens: {gw.prompt_tokens} in, {gw.completion_tokens} out; "
           f"metered cost (estimate): ${gw.cost:.4f}; seconds: {seconds}")
     if spend:

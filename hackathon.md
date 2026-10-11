@@ -109,6 +109,24 @@ Planned, and updated as each part is actually used:
   sometimes gives a third value; the corrected file changes cell values only, so missing and extra rows stay listed.
 - Fixed: call-start spacing is applied at the request, not before an import; the report no longer fails on ledger verdict keys.
 
+### 2026-10-11 - T03d the printed sums decide; the corrected file is checked against every printed sum
+- Changed: a finding is settled against the file when every printed sum through the value holds with the ledger's value and
+  fails with the file's, whatever a single-value re-read gave (the re-read stays as a note, `reread_disagrees`). The re-read is
+  made only where the sums do not decide. A row is corrected only if its corrected votes equal its corrected parts, otherwise
+  it is listed under "Could not be corrected as a whole row". After writing the corrected file every printed sum of the county
+  is recomputed with the published file's values and with the corrected file's (`sums_check` in `findings.json`, a section of
+  `report.md`). A `wrong_precinct` group says in one sentence what a person would do.
+- Measured (`runs/20261011-122159/panola/findings.json`, resume of the ledger of `20261011-121108`): 121 findings in 46
+  groups, 109 settled_against_file, 12 cannot_verify; 80 values changed; 984 printed sums in all, 949 hold with the published
+  file's values, 978 with the corrected file's, 6 still fail (the registered row, and page 6's Ivy block: precinct 1, 26 and 28
+  missing from the file, six rows not corrected as a whole); rows failing their own total 1 published, 0 corrected. The audit
+  step now makes 8 model calls (1 matching, 7 re-reads; 97 re-reads skipped), $0.0118, 36 s (was 105 calls, $0.1073). A second
+  run on the same ledger gave the same findings and corrected file; only the `seconds` figure differed. `verify-known`: 8 of 8.
+- Failed / not solved: `tests/test_audit.py::test_a_reread_that_gives_a_third_value_is_cannot_verify` (a T03c test) states the
+  rule this task replaces, so it fails; it is protected and was not edited (see the report). No re-read now disagrees, so "Look
+  at these first" is empty for Panola.
+- Gateway spend for the task: $5.7201 to $5.7436.
+
 ## Demo
 Not available yet.
 
