@@ -368,6 +368,8 @@ list are gone.
   no errored span). The findings are the final run's, record for record: 21 and 26. The only text that differs is the
   run id inside a crop path. Written up in [docs/evidence/traces.md](docs/evidence/traces.md).
 - Not changed: the README, the page and every figure in them still come from run `20261011-161207`.
+- Added: [docs/evidence/trace-panola-final.md](docs/evidence/trace-panola-final.md), the final run's Panola trace as the neatlogs server
+  returns it (`get_trace_context`): 394 spans, 172 model calls and 507,019 ms, against 172 calls and 507.0 s in the run's own summary.
 
 ## Demo
 - Live: https://crossfoot-zeta.vercel.app/ (deployed from `site/` on 11 October 2026; no sign-in).

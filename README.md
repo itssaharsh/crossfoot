@@ -110,7 +110,8 @@ Calls, cost and seconds are those of the run that read each county, [`runs/20261
 
 - **neatlogs.** Every model and tool call is a span. Two changes to the program were made from what the runs showed
   ([before-after.md](docs/evidence/before-after.md)), and one detection was created
-  ([traces.md](docs/evidence/traces.md)).
+  ([traces.md](docs/evidence/traces.md)). One trace as the server returns it, with its span tree and a masked image:
+  [trace-panola-final.md](docs/evidence/trace-panola-final.md).
 - **Entire.** Every coding session's commit carries an `Entire-Checkpoint` trailer
   ([checkpoints.txt](docs/evidence/checkpoints.txt)). The graph plugin's instructions for coding agents are in
   [AGENTS.md](AGENTS.md).

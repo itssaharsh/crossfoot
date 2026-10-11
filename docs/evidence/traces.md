@@ -84,6 +84,8 @@ Run 20261011-130414 (`crossfoot audit --all --budget 9`, started 13:04:17), one 
 
 ## The final run, `20261011-161207` (one `audit --all` from nothing on the final code)
 
+The Panola trace of this run is laid out, header, span tree and one model span, in [trace-panola-final.md](trace-panola-final.md).
+
 Looked up on 11 October 2026 at about 16:40 UTC with `search_traces` (several queries, `date_from` 16:10 and `date_to` 16:40).
 Each county's run is one trace whose root span is the county's name.
 
