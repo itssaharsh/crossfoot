@@ -3,7 +3,12 @@ name = "crossfoot"
 version = "0.1.0"
 description = "Audits published data against the scanned documents it was copied from, using the documents' own printed totals."
 requires-python = ">=3.12"
-dependencies = ["pillow"]
+dependencies = [
+    "neatlogs[openai]>=1.4.26",
+    "numpy>=2.5.4",
+    "openai>=3.28.0",
+    "pillow",
+]
 
 [project.scripts]
 crossfoot = "crossfoot.cli:main"

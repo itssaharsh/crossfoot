@@ -40,6 +40,23 @@ Planned, and updated as each part is actually used:
 - `uv run crossfoot render --county panola --page 1` wrote a 2781x1687 px PNG at 200 dpi.
 - Nothing failed. Evidence: `uv run pytest -q` passed (12 tests), recorded in `.prod-build/evidence.jsonl`.
 
+### 2026-10-11 - T02 model client, tracing, block finding, first read of Panola
+- Added `crossfoot read --county panola` and `crossfoot budget`; the gateway client (`model.py`) with a cost meter, a
+  per-run budget guard, one repair request for bad JSON or a wrong column count, and one retry of a 429 or timeout;
+  `tracing.py` (neatlogs, a no-op without the key); `segment.py` (blocks and column lines from the image); and the
+  matrix layout reader. `uv run python -m neatlogs doctor --local --json` reported status "pass" (SDK 1.4.26).
+- Block finding on the six Panola pages at 200 dpi found 7, 8, 7, 8, 8 and 5 blocks (43 in all; checked by eye on
+  pages 1, 2 and 6). Only page 1 prints the precinct header, so its 19 precincts are reused for pages 2 to 6.
+- First read, `runs/20261011-090307/first-read.json` (43 model calls with `claude-haiku`, no failed blocks):
+  2312 cells; 941 printed totals; row sums 39 pass and 91 fail; column sums 565 pass and 203 fail; grand totals 8 pass
+  and 35 fail. Metered cost (token estimate) $0.1031; gateway spend rose by $0.1084 in that run. The failing sums are
+  first-read slips to be re-read in a later task; none has been looked at one by one.
+- What went wrong on the way: the first block finder merged neighbouring blocks because the thick bar under the TOTAL
+  column bridges the gaps; band finding now ignores the right edge. A page-2-only trial (`runs/20261011-085854`) came
+  first; two full reads were run.
+- Evidence: the RED run of `tests/test_budget.py`, then `uv run pytest -q` (23 tests), `uv run crossfoot budget` and
+  `uv run crossfoot read --county panola`, all in `.prod-build/evidence.jsonl`.
+
 ## Demo
 Not available yet.
 

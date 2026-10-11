@@ -56,6 +56,77 @@ def cmd_render(args) -> int:
     return 0
 
 
+def cmd_budget(args) -> int:
+    from .model import gateway_spend
+    try:
+        spend, limit = gateway_spend()
+    except (KeyError, OSError, ValueError) as e:
+        print(f"cannot read the gateway's spend: {type(e).__name__} (is LITELLM_BASE_URL / LITELLM_API_KEY set?)",
+              file=sys.stderr)
+        return 1
+    print(f"gateway spend so far: ${spend:.4f}; limit: " + (f"${limit:.2f}" if limit is not None else "none"))
+    return 0
+
+
+def cmd_read(args) -> int:
+    import json
+    import time
+    from pathlib import Path
+
+    from . import tracing
+    from .ledger import Ledger
+    from .layouts import matrix
+    from .model import Gateway, gateway_spend
+    note = tracing.init()
+    if note:
+        print(note)
+    if args.county != "panola":
+        print(f"{args.county}: only the matrix layout (panola) is built so far", file=sys.stderr)
+        return 1
+    try:
+        sources.fetch(args.county)
+    except sources.FetchError as e:
+        print(e, file=sys.stderr)
+        return 1
+    try:
+        before = gateway_spend()[0]
+    except (KeyError, OSError, ValueError):
+        before = None
+    run_id = time.strftime("%Y%m%d-%H%M%S")
+    out = Path("runs") / run_id
+    out.mkdir(parents=True, exist_ok=True)
+    led = Ledger(out / "ledger.sqlite")
+    gw = Gateway(budget=args.budget)
+    pages = [int(x) for x in args.pages.split(",")] if args.pages else None
+    print(f"run {run_id}: reading {args.county} with {gw.model}, run budget ${args.budget:.2f}")
+    try:
+        s = matrix.read_county(args.county, gw, led, run_id=run_id, pages=pages)
+    except (RenderError, RuntimeError) as e:
+        print(e, file=sys.stderr)
+        return 1
+    finally:
+        tracing.shutdown()
+    try:
+        s["gateway_spend_before"], s["gateway_spend_after"] = before, gateway_spend()[0]
+        s["gateway_spend_change"] = round(s["gateway_spend_after"] - before, 4)
+    except (KeyError, OSError, ValueError, TypeError):
+        pass
+    s["ledger"] = str(out / "ledger.sqlite")
+    (out / "first-read.json").write_text(json.dumps(s, indent=2))
+    print(f"blocks found: {s['blocks_found']} (failed {s['blocks_failed']})")
+    print(f"cells read: {s['cells_read']} (failed {s['failed_cells']})")
+    print(f"row sums: {s['row_sums_pass']} pass, {s['row_sums_fail']} fail")
+    print(f"column sums: {s['col_sums_pass']} pass, {s['col_sums_fail']} fail")
+    print(f"grand totals: {s['grand_sums_pass']} pass, {s['grand_sums_fail']} fail")
+    print(f"model calls: {s['model_calls']}; tokens: {s['prompt_tokens']} in, {s['completion_tokens']} out; "
+          f"metered cost (estimate): ${s['metered_cost_estimate']:.4f}; seconds: {s['seconds']}")
+    if "gateway_spend_change" in s:
+        print(f"gateway spend: ${s['gateway_spend_before']:.4f} -> ${s['gateway_spend_after']:.4f} "
+              f"(change ${s['gateway_spend_change']:.4f})")
+    print(f"written: {out / 'first-read.json'}")
+    return 2 if s["stopped"] else 0
+
+
 def main(argv=None) -> int:
     p = argparse.ArgumentParser(prog="crossfoot")
     sub = p.add_subparsers(dest="cmd", required=True)
@@ -71,6 +142,13 @@ def main(argv=None) -> int:
     s.add_argument("--page", type=int, required=True)
     s.add_argument("--dpi", type=int, default=200)
     s.set_defaults(fn=cmd_render)
+    s = sub.add_parser("read", help="first read of a county's scan into a new run's ledger")
+    s.add_argument("--county", required=True, choices=list(sources.COUNTIES))
+    s.add_argument("--budget", type=float, default=2.00, help="dollars this run may meter (default 2.00)")
+    s.add_argument("--pages", help="comma-separated pages, default all")
+    s.set_defaults(fn=cmd_read)
+    s = sub.add_parser("budget", help="print the gateway's spend and limit for the key")
+    s.set_defaults(fn=cmd_budget)
     args = p.parse_args(argv)
     return args.fn(args)
 
