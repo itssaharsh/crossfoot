@@ -249,6 +249,10 @@ def cmd_audit(args) -> int:
     from .ledger import Ledger
     from .model import BudgetExceeded, gateway_spend
     from .render import RenderError
+    if args.all:
+        return _audit_all(args)
+    if args.budget is None:
+        args.budget = 2.00
     if args.county != "panola":
         return _audit_report(args)
     src = None
@@ -357,6 +361,60 @@ def cmd_audit(args) -> int:
         return 2
     _print_audit(d, gw, spend, seconds, out, args.county, reader)
     return 0
+
+
+def _audit_all(args) -> int:
+    """`audit --all`: every county in a fixed order, no input, one budget; --resume <run_id> continues that run's folder."""
+    import time
+    from pathlib import Path
+
+    from . import allrun, audit, outputs, tracing
+    from .ledger import Ledger
+    from .model import gateway_spend
+    resume = args.resume
+    if resume == "latest":
+        found = sorted(p.parent.name for p in Path("runs").glob("*/summary.json"))
+        resume = found[-1] if found else None
+    if args.resume and not (resume and (Path("runs") / resume / "summary.json").exists()):
+        print(f"no run with a summary.json to resume from (runs/{resume or args.resume})", file=sys.stderr)
+        return 1
+    run_id = resume or time.strftime("%Y%m%d-%H%M%S")
+    out = Path("runs") / run_id
+    out.mkdir(parents=True, exist_ok=True)
+    note = tracing.init()
+    if note:
+        print(note, flush=True)
+    try:
+        before = gateway_spend()[0]
+    except (KeyError, OSError, ValueError):
+        before = None
+    log = lambda *a: print(*a, flush=True)
+    budget = args.budget if args.budget is not None else 9.00
+    gw = audit.AuditGateway(budget=budget)
+    led = Ledger(out / "ledger.sqlite")
+    started = time.strftime("%Y-%m-%dT%H:%M:%S")
+    log(f"run {run_id}: auditing {', '.join(allrun.ORDER)}{' (continuing)' if resume else ''}, run budget ${budget:.2f}")
+    try:
+        summary = allrun.run_all(out, run_id, gw, led, allrun.audit_one, resume=bool(resume), log=log,
+                                 command="crossfoot " + " ".join(sys.argv[1:]), budget=budget, started=started)
+    finally:
+        tracing.shutdown()
+    try:
+        after = gateway_spend()[0]
+        summary["gateway_spend"] = {"before": before, "after": after, "change": round(after - before, 4)}
+        allrun.write_summary(out, summary)
+        log(f"gateway spend: ${before:.4f} -> ${after:.4f} (change ${after - before:.4f})")
+    except (KeyError, OSError, ValueError, TypeError):
+        pass
+    outputs.write_run(out, run_id, started=started, ended=summary["ended"], command=summary["command"],
+                      counties=list(allrun.ORDER), gw=gw, resumed_from=resume)
+    t = summary["totals"]
+    log(f"{t['closed']} of {t['counties']} counties closed; model calls {t['model_calls']}; metered cost (estimate) "
+        f"${t['metered_cost']:.4f}; seconds {t['seconds']}")
+    if summary["not_reached"]:
+        log(f"not reached: {', '.join(summary['not_reached'])}")
+    log(f"written: {out / 'summary.json'}, {out / 'summary.md'}")
+    return 0 if t["closed"] == t["counties"] else 2
 
 
 def _audit_report(args) -> int:
@@ -553,10 +611,14 @@ def main(argv=None) -> int:
     s.set_defaults(fn=cmd_close)
     s = sub.add_parser("audit", help="read (or reuse a ledger), close it, compare it with the published file, write "
                                      "findings, a corrected file, a diff and a report")
-    s.add_argument("--county", required=True, choices=list(sources.COUNTIES))
+    g = s.add_mutually_exclusive_group(required=True)
+    g.add_argument("--county", choices=list(sources.COUNTIES))
+    g.add_argument("--all", action="store_true", help="every county in turn, no input; --resume <run_id> continues "
+                   "that run in its own folder")
     s.add_argument("--resume", help="run id whose ledger is reused instead of reading again, or 'latest' for the "
-                   "newest run with a county.json")
-    s.add_argument("--budget", type=float, default=2.00, help="dollars this run may meter (default 2.00)")
+                   "newest run with a county.json (with --all: the run to continue)")
+    s.add_argument("--budget", type=float, default=None, help="dollars this run may meter (default 2.00 for a county, "
+                   "9.00 with --all)")
     s.set_defaults(fn=cmd_audit)
     s = sub.add_parser("verify-known", help="check the newest findings.json against the answer key in tests/")
     s.add_argument("--county", required=True, choices=list(sources.COUNTIES))

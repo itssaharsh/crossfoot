@@ -21,6 +21,7 @@ import json
 import re
 import subprocess
 import time
+from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
 from PIL import Image
@@ -34,6 +35,7 @@ COLS = checks.REPORT_COLS
 HALF_ROW = 20          # half the height of a row's box, pixels at 200 dpi
 ROW_PAD = 100          # a re-read crop reaches this far above and below the row's centre, pixels at 200 dpi
 GEO_DPI = 200
+PARALLEL = 3           # model calls in flight while a county's pages are read
 MAX_ACTIONS = agent.MAX_ACTIONS
 NOTE_NO_TOTALS = "nothing on this scan can be cross-checked; left as published"
 
@@ -175,7 +177,7 @@ def store_page(led, county, page, ans, st: State, *, model, size, x_right) -> in
 
     def put_row(block, contest, r):
         nonlocal n
-        label = " ".join(r["label"].split())
+        label = " ".join(r["label"].split()).rstrip(":").strip() or r["label"].strip()   # Foard prints "Cast Votes:"
         if (block, label) in st.labels:
             label += " (2)"
         st.labels.add((block, label))
@@ -376,14 +378,20 @@ def read_county(county, gw, led, *, run_id="", log=print, png_fn=page_png, n_pag
             x_right = ink_right(png1)
             st = State()
 
-            def read_page(page, mdl):
+            def ask_page(page, mdl):
+                """The model call for one page (safe to run on a worker thread: it touches no ledger)."""
                 png = png_fn(county, page, GEO_DPI, root)
                 with tracing.trace("read_page", kind="TOOL", run=run_id, county=county, page=page, model=mdl):
-                    ans = gw.ask_json(PAGE_PROMPT.format(order=order_text(order)), png, validate=page_validator, model=mdl)
+                    return png, gw.ask_json(PAGE_PROMPT.format(order=order_text(order)), png, validate=page_validator, model=mdl)
+
+            def put_page(page, png, ans, mdl):
                 n = store_page(led, county, page, ans, st, model=mdl, size=Image.open(png).size, x_right=x_right)
                 led.event(county, "page_read", {"page": page, "precinct": ans["precinct"], "model": mdl, "cells": n,
                                                 "contests": len(ans["contests"])})
                 return n
+
+            def read_page(page, mdl):
+                return put_page(page, *ask_page(page, mdl), mdl)
 
             try:
                 read_page(1, profile.SAMPLE_MODEL)
@@ -423,18 +431,25 @@ def read_county(county, gw, led, *, run_id="", log=print, png_fn=page_png, n_pag
             out["reader"] = gw.model
             out["pages_read"].append(1)
             n = n_pages or page_count(county, root)
-            for page in (pages or range(2, n + 1)):
-                if page == 1:
-                    continue
+            todo = [p for p in (pages or range(2, n + 1)) if p != 1]
+            # up to PARALLEL model calls in flight; the answers are put in the ledger here, one thread, in page order
+            with ThreadPoolExecutor(PARALLEL) as ex:
+                futs = [(p, ex.submit(ask_page, p, gw.model)) for p in todo]
                 try:
-                    read_page(page, gw.model)
-                    out["pages_read"].append(page)
-                except BudgetExceeded:
-                    raise
-                except ValueError as e:
-                    led.event(county, "page_failed", {"page": page, "error": str(e)[:300]})
-                    out["pages_failed"].append(page)
-                    log(f"  page {page}: failed ({str(e)[:100]})")
+                    for page, f in futs:
+                        try:
+                            png, ans = f.result()
+                            put_page(page, png, ans, gw.model)
+                            out["pages_read"].append(page)
+                        except BudgetExceeded:
+                            raise
+                        except ValueError as e:
+                            led.event(county, "page_failed", {"page": page, "error": str(e)[:300]})
+                            out["pages_failed"].append(page)
+                            log(f"  page {page}: failed ({str(e)[:100]})")
+                finally:
+                    for _, f in futs:
+                        f.cancel()
     except BudgetExceeded as e:
         out["stopped"] = str(e)
         log(f"stopped: {e}")

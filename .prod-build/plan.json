@@ -392,8 +392,10 @@
         "uv run pytest -q"
       ],
       "rollback": "git revert the task's commits; committed runs are never changed",
-      "status": "todo",
-      "notes": "Split from T04 on 2026-10-11. The full run is made once inside the task and recorded with `pb.py run`."
+      "status": "doing",
+      "notes": "Split from T04 on 2026-10-11. The full run is made once inside the task and recorded with `pb.py run`.",
+      "base": "1858d20",
+      "started_after": 53
     },
     {
       "id": "T05",

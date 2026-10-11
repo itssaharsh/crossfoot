@@ -5,6 +5,7 @@ import base64
 import json
 import os
 import re
+import threading
 import time
 import urllib.request
 from pathlib import Path
@@ -87,6 +88,7 @@ class Gateway:
         self.calls = self.prompt_tokens = self.completion_tokens = 0
         self.cost = 0.0
         self._last = 0.0
+        self._meter = threading.Lock()      # reads overlap (three calls in flight); the counters must not race
 
     def _guard(self):
         est = self.cost / self.calls if self.calls else FIRST_CALL_ESTIMATE
@@ -110,10 +112,11 @@ class Gateway:
                     raise
                 self.sleep(self.retry_wait)
         u = r.usage
-        self.calls += 1
-        self.prompt_tokens += u.prompt_tokens
-        self.completion_tokens += u.completion_tokens
-        self.cost += price(model, u.prompt_tokens, u.completion_tokens)
+        with self._meter:
+            self.calls += 1
+            self.prompt_tokens += u.prompt_tokens
+            self.completion_tokens += u.completion_tokens
+            self.cost += price(model, u.prompt_tokens, u.completion_tokens)
         return r.choices[0].message.content or ""
 
     def ask_json(self, prompt: str, image=None, *, validate=None, model=None):

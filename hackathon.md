@@ -155,6 +155,22 @@ Planned, and updated as each part is actually used:
   page's own lines of figures; an all-null re-read is not a reading (it had been counted as the same reading twice).
 - Gateway spend for the task: $5.7436 to $6.6731 (four full San Saba reads, two resumes, one Limestone layout call).
 
+### 11 October 2026, T04b: every county in one unattended command
+- Changed: `crossfoot audit --all [--budget 9] [--resume <run_id>]` (`crossfoot/allrun.py`, `cli.py`) takes panola, san_saba, cottle,
+  jones, lynn, scurry, foard, limestone in that order, prints one line at each county's start and end, never asks for input, and writes
+  `summary.json` and `summary.md` after every county. One county failing is recorded and the next one runs; the budget stops the run
+  before the next call and lists the counties not reached; `--resume` continues the same folder, skips closed counties and keeps
+  accepted cells (what was spent before counts against the budget). Each county is one neatlogs WORKFLOW span named for it. Report-layout
+  pages are read with up to three model calls in flight (call starts stay 1.1 s apart); the ledger is written from one thread.
+  Foard's first three pages showed one fix: a row label printed with a colon ("Cast Votes:") hid the contest total row; the colon is
+  now dropped when the row is stored. Foard's column order and percentage columns were handled by the page-1 layout call.
+- Measured (`runs/20261011-130414/summary.json`, one full run, 1,671 s, 552 model calls, metered estimate $2.8692; the gateway's own
+  figure went from $6.7693 to $9.6125): 7 counties audited, limestone left as published (nothing on its scan can be cross-checked).
+  Printed sums in all 4,839; holding with the published files 4,737; holding with the corrected files 4,803. Findings 228 in all.
+- Failed / not done: Foard (40 scan blocks and 71 file contests) and Scurry (3 and 3) have contests the matcher could not pair, so
+  their findings are all `extra_row` and `cannot_verify`; this is a matching gap, not a measurement of those files. Not fixed here.
+- Tests: `tests/test_all_run.py` (12 tests, fake model); `uv run pytest -q` 160 passed.
+
 ## Demo
 Not available yet.
 
