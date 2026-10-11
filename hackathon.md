@@ -371,6 +371,18 @@ list are gone.
 - Added: [docs/evidence/trace-panola-final.md](docs/evidence/trace-panola-final.md), the final run's Panola trace as the neatlogs server
   returns it (`get_trace_context`): 394 spans, 172 model calls and 507,019 ms, against 172 calls and 507.0 s in the run's own summary.
 
+### 2026-10-11 - the business plan, made in cfo.ai from the measured cost
+- The owner gave cfo.ai the final run's figures and our assumptions (a minute of a person's time per proven finding at $30 an
+  hour; three prices; $200 a month fixed; $5,000 to start; two new customers a month from month 3).
+- What came back, and what we had not seen: the model costs $0.29 a file and the person $13.21, so the $300 subscription and
+  the $1,500 one-off offer lose money on every file (gross margin -125.1% and -80.1%); $15 a file makes 9.9%. Cash runs out in
+  about 4.3 months with the assumed sales, and sooner with more. The plan's advice is to sell self-service at $15 a file and
+  to quote human review separately.
+- In the repository: [docs/evidence/business-plan.md](docs/evidence/business-plan.md) (the plan's figures as the shared page
+  showed them on 11 October at 22:45 UTC) and three screenshots in `docs/evidence/business-plan/`.
+- Not done: nothing in the plan is validated. No customer has been asked, and the minute per finding is a guess until a
+  person has confirmed findings.
+
 ## Demo
 - Live: https://crossfoot-zeta.vercel.app/ (deployed from `site/` on 11 October 2026; no sign-in).
 - The results page is static. From a clone: `python3 -m http.server -d site 8000`, then open http://localhost:8000/.
@@ -393,5 +405,6 @@ Confirmed requirements (event page, read 11 October 2026): a public quote post o
 repository and demo link; a demo video of three minutes or less that covers neatlogs, Entire and cfo.ai; evidence in
 the repository.
 
-Done on 11 October: the public repository (https://github.com/itssaharsh/crossfoot) and the deployed page
-(https://crossfoot-zeta.vercel.app/). Outstanding: the cfo.ai business plan, the demo video, the post on X.
+Done on 11 October: the public repository (https://github.com/itssaharsh/crossfoot), the deployed page
+(https://crossfoot-zeta.vercel.app/) and the cfo.ai business plan (https://app.cfo.ai/s/aRFg86F21pDO1EQN, summarised in
+[docs/evidence/business-plan.md](docs/evidence/business-plan.md)). Outstanding: the demo video's link and the post on X.

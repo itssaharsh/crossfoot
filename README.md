@@ -115,6 +115,10 @@ Calls, cost and seconds are those of the run that read each county, [`runs/20261
 - **Entire.** Every coding session's commit carries an `Entire-Checkpoint` trailer
   ([checkpoints.txt](docs/evidence/checkpoints.txt)). The graph plugin's instructions for coding agents are in
   [AGENTS.md](AGENTS.md).
+- **cfo.ai.** The business plan, made from the run's measured cost and our stated assumptions:
+  [the shared plan](https://app.cfo.ai/s/aRFg86F21pDO1EQN) and what it says
+  ([business-plan.md](docs/evidence/business-plan.md)). The model costs $0.29 a file and a person confirming the
+  findings $13.21, so two of the three prices we tried lose money on every file.
 
 ## Limits
 
