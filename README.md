@@ -129,6 +129,15 @@ Calls, cost and seconds are those of the run that read each county, [`runs/20261
 - A person still has to open the scan for each finding, confirm it, and send it to the project. None has been confirmed.
 - Not built: sending anything to anyone, and reading a scan that has no printed totals.
 
+## How and when it was built
+
+Built during neatHack: the first commit is dated 2026-10-11T08:50:59Z and every commit is inside the event window.
+The code was written by Claude Code sessions (Anthropic's coding agent, Claude Sonnet), each given one written task
+from `.prod-build/briefs/` and reporting in `.prod-build/reports/`; a planning session wrote the tasks, checked each
+result against the run files and the scans, and decided what came next. Every session is recorded with Entire and
+tied to its commit. The models that read the scans at run time are `claude-haiku`, `claude-sonnet-4.6` and
+`claude-opus-4.6` through the event's gateway.
+
 ## What existed before the event
 
 The idea and the plan: [ARCHITECTURE.md](ARCHITECTURE.md), [UI-SPEC.md](UI-SPEC.md) and
