@@ -1,8 +1,9 @@
-import { getJSON, LoadError, loadMessage, Store, progress } from './data.js';
+import { getJSON, LoadError, loadMessage, Store, progress, fmt } from './data.js';
 import { Stage } from './stage.js';
 import { Loupe } from './loupe.js';
 import { Tape } from './tape.js';
 import { renderCard, stageLabel, FailList } from './panel.js';
+import { renderFindingCard, FindingList, Dialog, renderRun, contextLine, siblingOf } from './findings.js';
 
 const $ = id => document.getElementById(id);
 const q = new URLSearchParams(location.search);
@@ -26,7 +27,9 @@ const stage = new Stage({
 const loupe = new Loupe({ root: $('loupe'), view: $('lp-view'), note: $('lp-note') }, { onPick: i => select(i), reduced });
 stage.setLoupe(loupe);
 const tape = new Tape($('tape'), reduced, i => select(i));
-const state = { store: null, list: null, sel: null, index: null, counties: {}, first: true };
+const dialog = new Dialog($('dlg'));
+const state = { store: null, list: null, flist: null, sel: null, finding: null, index: null, counties: {}, first: true };
+const sorted = c => c.t.slice().sort((a, b) => a - b).join(',');
 
 // ---- the page's state: body[data-state] decides what shows (styles.css); the controls follow it
 function setState(name) {
@@ -49,21 +52,61 @@ function fail(file) {
 }
 
 // ---- selection
+// a value of the sheet; when a finding sits on it, the page shows the finding
 async function select(i, { animate = true, entrance = false, settle = false } = {}) {
   const { store } = state;
   const v = store.values[i];
   if (!v) return;
   state.sel = i;
+  const f = store.itemByRef.get(i) || null;
+  state.finding = f;
   const sums = store.sumsFor(v);
-  renderCard($('card'), store, v);
-  stage.setLabel(stageLabel(store, v, sums));
+  const card = $('card');
+  card.className = 'card';
+  if (f) renderFindingCard(card, store, f, { onCrop: (x, b) => dialog.crop(store, x, b), onEvidence: (x, b) => dialog.evidenceFile(store, x, b) });
+  else renderCard(card, store, v);
+  setContext(f ? contextLine(store, f) : [`Page ${v.p}`, store.block(v) && store.block(v).contest, store.printedLabel(v), store.isTotal(v) ? null : `precinct ${v.c}`].filter(Boolean).join(' · '));
+  stage.setLabel(stageLabel(store, v, sums, f));
   state.list.follow(sums);
+  state.flist.select(f ? f.id : null);
   tape.clear();
   if (v.p !== stage.page) await goPage(v.p, animate, v.p > stage.page ? 1 : -1, false);
-  const done = await stage.select(i, sums, animate, { settle });
-  if (done && state.sel === i) tape.print(store, sums, animate, entrance ? 260 : undefined);
+  let extra = {};
+  if (f) {
+    extra = { tag: `public file: ${f.file === undefined ? 'none' : fmt(f.file)}` };
+    const sib = f.kind === 'wrong_column' ? siblingOf(store, f) : null;
+    if (sib && sib.ref !== undefined) extra.other = sib.ref;
+  }
+  const done = await stage.select(i, sums, animate, { settle, extra });
+  if (done && state.sel === i) {
+    if (f) {
+      const dec = new Set(f.sums.map(s => s.terms.map(t => t[0]).filter(x => x !== null && x !== undefined).sort((a, b) => a - b).join(',')));
+      tape.printFinding(store, f, sums.filter(s => !dec.has(sorted(s.check))), animate, entrance ? 260 : undefined);
+    } else tape.print(store, sums, animate, entrance ? 260 : undefined);
+  }
   updatePager();
 }
+
+// a finding the sheet has no place for: the group's crop, flat, and no ring
+async function selectPlaceless(f, { animate = true } = {}) {
+  const { store } = state;
+  state.sel = null; state.finding = f;
+  const card = $('card');
+  renderFindingCard(card, store, f, { onCrop: (x, b) => dialog.crop(store, x, b), onEvidence: (x, b) => dialog.evidenceFile(store, x, b) });
+  setContext(contextLine(store, f));
+  stage.setLabel(`Page ${f.page} of the scan. Selected: ${contextLine(store, f)}. This value has no place on the sheet; the group's crop is shown.`);
+  state.flist.select(f.id);
+  tape.clear();
+  if (f.page && f.page !== stage.page) await goPage(f.page, animate, f.page > stage.page ? 1 : -1, false);
+  stage.deselect();
+  const g = store.groupById.get(f.group);
+  if (g && g.crop) loupe.showCrop(g.crop, `The scan around ${f.row || 'the row'}, as cropped by the audit`, animate);
+  else { loupe.clear(); loupe.note.hidden = false; }
+  tape.printFinding(store, f, [], animate);
+  updatePager();
+}
+const selectFinding = (f, o) => (f.ref !== undefined ? select(f.ref, o) : selectPlaceless(f, o));
+function setContext(text) { $('ctx').textContent = text; }
 
 // the keyboard is on a value of the sheet: the loupe shows it too, and goes back to the selection when focus leaves
 function peek(i) { if (state.store) loupe.peek(state.store, i); }
@@ -72,7 +115,8 @@ async function goPage(n, animate, dir, pick = true) {
   await stage.setPage(n, animate, dir);
   updatePager();
   if (pick) {
-    const i = state.store.defaultOn(n);
+    const f = state.store.items.find(x => x.page === n && x.ref !== undefined);
+    const i = f ? f.ref : state.store.defaultOn(n);
     if (i !== null) await select(i, { animate });
   }
 }
@@ -98,13 +142,28 @@ async function openCounty(key) {
     const i = store.firstValue(c);
     if (i !== null) select(i);
   }, { none: forced === 'empty' });
-  const none = !state.list.items.length;
-  $('fails-h').textContent = none ? EMPTY : 'Sums that do not hold';
-  $('fails').hidden = none;
-  $('fails-sec').classList.toggle('none', none);
-  let start = null;
-  const want = q.get('cell');
-  if (want && store.byId.has(want)) start = store.byId.get(want);
+  if (state.flist) state.flist.destroy();
+  const none = forced === 'empty';
+  state.flist = new FindingList($('flist'), store, {
+    onPick: f => selectFinding(f), none, countEl: $('fcount'), filterEl: $('filters'), statusEl: $('fshowing'),
+  });
+  const hasFindings = !!store.fd && store.items.length > 0 && !none;
+  $('findings-h').textContent = !store.fd || hasFindings ? 'Disagreements' : EMPTY;
+  $('flist').hidden = !hasFindings;
+  $('findings').classList.toggle('none', !hasFindings);
+  $('findings').hidden = !store.fd && !none;
+  $('fails-sec').open = !store.fd;            // with no findings in the data, the failing sums are what there is to see
+  $('fails-sec').hidden = none;
+  renderRun($('run'), store.fd);
+  let start = null, startFinding = null;
+  const want = q.get('cell'), wantF = q.get('finding');
+  if (wantF && store.itemById.has(wantF)) startFinding = store.itemById.get(wantF);
+  else if (want && store.byId.has(want)) start = store.byId.get(want);
+  else if (hasFindings) startFinding = opening(store);
+  if (startFinding) {
+    if (startFinding.ref !== undefined) start = startFinding.ref;
+    else { await openPlaceless(startFinding, entry, key); return; }
+  }
   if (start === null) start = store.defaultOn(1);
   if (start === null) { fail(entry.file); return; }
   const v = store.values[start];
@@ -119,6 +178,25 @@ async function openCounty(key) {
   stage.layout(true);
   updatePager();
   await select(start, { animate: enter, entrance: enter, settle });
+  state.first = false;
+  setFlatLabel();
+  for (const b of document.querySelectorAll('#tabs button')) b.setAttribute('aria-pressed', String(b.dataset.key === key));
+}
+
+// the opening finding: the first wrong-column group the printed sums all settled, else the first settled finding
+function opening(store) {
+  const settled = f => f.status === 'settled_against_file';
+  const g = store.fd.groups.find(g => g.kind === 'wrong_column' && g.findings.length && g.findings.every(id => settled(store.itemById.get(id))));
+  if (g) { const fs = g.findings.map(id => store.itemById.get(id)); return fs.find(f => f.ref !== undefined) || fs[0]; }
+  return store.items.find(f => settled(f) && f.ref !== undefined) || store.items.find(settled) || store.items[0];
+}
+
+async function openPlaceless(f, entry, key) {
+  setState(forced || 'ready');
+  await stage.setPage(f.page || 1, false);
+  stage.layout(true);
+  updatePager();
+  await selectPlaceless(f, { animate: false });
   state.first = false;
   setFlatLabel();
   for (const b of document.querySelectorAll('#tabs button')) b.setAttribute('aria-pressed', String(b.dataset.key === key));

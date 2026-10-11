@@ -106,6 +106,8 @@ export class Stage {
     this.pose.style.transform = `translate(${P.tx}px, ${P.ty}px) rotateX(${P.rx}deg) rotateZ(${P.rz}deg) scale(${P.f})`;
     const st = this.pose.style;
     st.setProperty('--u', 1 / (this.k * P.f)); st.setProperty('--inv', 1 / P.f);
+    const u = 1 / (this.k * P.f);
+    for (const p of this.tickPaths || []) p.setAttribute('transform', `scale(${u.toFixed(4)})`);
   }
   go(P, ms) {
     cancelAnimationFrame(this.tw);
@@ -217,6 +219,19 @@ export class Stage {
       m.append(r);
       this.rects.push({ r, i, cx: (v.x[0] + v.x[2]) / 2, cy: (v.x[1] + v.x[3]) / 2 });
     }
+    this.ticks = new Map(); this.tickPaths = [];   // a pencil tick at every finding's value on this page (the selected one has its ring instead)
+    const tg = svg('g', { class: 'ticks', 'aria-hidden': 'true' });
+    for (const f of this.store.items) {
+      const v = f.ref === undefined ? null : this.store.values[f.ref];
+      if (!v || !v.x || v.p !== this.page) continue;
+      const g = svg('g', { transform: `translate(${v.x[0]} ${(v.x[1] + v.x[3]) / 2})`, class: 'tick ' + (f.status === 'settled_against_file' ? 'settled' : 'open') });
+      const path = svg('path', { d: 'M3 0L7 5L15 -7' });
+      g.append(path);
+      this.tickPaths.push(path);
+      tg.append(g);
+      this.ticks.set(f.ref, g);
+    }
+    m.prepend(tg);
     this.focusRing = svg('g', { class: 'focus-ring', 'aria-hidden': 'true' });
     for (const cls of ['dark', 'light']) this.focusRing.append(svg('rect', { class: cls }));
     this.focusRing.setAttribute('display', 'none');
@@ -235,6 +250,7 @@ export class Stage {
     g.removeAttribute('display');
   }
   markSelected() {
+    for (const [r, g] of this.ticks || []) { if (r === this.sel) g.setAttribute('display', 'none'); else g.removeAttribute('display'); }
     for (const o of this.rects || []) o.r.setAttribute('tabindex', o.i === this.sel ? 0 : -1);
     if (!this.rects.some(o => o.i === this.sel) && this.rects[0]) this.rects[0].r.setAttribute('tabindex', 0);
   }
@@ -276,7 +292,7 @@ export class Stage {
       this.bands.append(this.anchor);
     }
     const loupeDraws = draws.map(d => ({ line: d.line, ok: d.check.ok, axis: d.axis }));
-    if (this.loupe) this.loupe.show(this.store, i, loupeDraws, !instant);
+    if (this.loupe) this.loupe.show(this.store, i, loupeDraws, !instant, opts.extra || {});
     this.flatArgs = { v, draws: loupeDraws };
     if (this.partial) this.updateFlat();
     if (opts.settle) {   // the first load: the sheet settles from flat into its tilt
@@ -309,6 +325,17 @@ export class Stage {
     if (tk !== this.token) return false;
     await Promise.all([ring ? this.svgRing(ring, false) : null, this.loupe ? this.loupe.reveal(true) : null]);
     return tk === this.token;
+  }
+  // a finding with no place on the sheet: nothing is ringed, no sum is drawn; the sheet stays where it is
+  deselect() {
+    this.token++;
+    this.sel = null;
+    this.clearBands();
+    this.anchor = null;
+    this.flatArgs = null;
+    this.markSelected();
+    this.go(this.target(), 0);
+    this.updateLeader();
   }
   ringFor(v, draws) {
     const h = v.x[3] - v.x[1], ink = this.store.inkPage(v) || v.x;

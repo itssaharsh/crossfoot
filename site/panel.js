@@ -29,8 +29,12 @@ export function renderCard(root, store, v) {
   if (!store.isTotal(v) && v.m) root.append(el('p', 'how', `Read by ${v.m}. Re-read tries: ${v.n ?? 0}.`));
 }
 
-export function stageLabel(store, v, sums) {
+export function stageLabel(store, v, sums, f = null) {
   const { where, what } = describe(store, v);
+  if (f) {
+    const s = sums.map(({ check: c }) => `${c.k === 'col' ? 'column' : c.k === 'row' ? 'row' : 'small totals'} sum ${fmt(c.co)}, printed ${fmt(c.pr)}, ${c.ok ? 'holds' : 'does not hold'}`);
+    return `Page ${v.p} of the scan. Selected finding: ${where}, ${what}. Public file ${f.file === undefined ? 'none' : fmt(f.file)}, scan ${f.scan === undefined ? 'none' : fmt(f.scan)}. ${s.join('. ')}.`;
+  }
   const s = sums.map(({ check: c }) => `${c.k === 'col' ? 'column' : c.k === 'row' ? 'row' : 'small totals'} sum ${fmt(c.co)}, printed ${fmt(c.pr)}, ${c.ok ? 'holds' : 'does not hold'}`);
   return `Page ${v.p} of the scan. Selected: ${where}, ${what}, value ${fmt(v.v)}. ${s.join('. ')}.`;
 }

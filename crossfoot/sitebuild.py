@@ -18,15 +18,32 @@ Short keys in <county>.json
             (printed total), v value, s status (cells only), x box in image pixels or null (never a zero box),
             ix = the ink box: the box of the printed figure itself, in the pixels of the block's 300 dpi image,
             or null when no ink is found in the value's box (a zero is ink), m model and n tries (cells only)
-  checks  [{k, p, b, y, ok, pr, co, t}]          k row | col | grand, y key, pr printed, co computed,
+  checks  [{k, p, b, y, ok, pr, co, t}]          k row | col | grand (the small totals add to the grand total) |
+            grand_row (the row totals add to it), y key, pr printed, co computed,
             t = indexes into values, in the order the sum is added
   events  [{t, k, p}]                            ts, kind, payload, as recorded
   layout, run, county                            as recorded
+  fd      the audit's findings, when the run has a findings.json (a field the run lacks is left out, never zero-filled):
+            path       the findings file's path in the repository; evidence = its copy, data/<county>-findings.json
+            run        the run id
+            counts     {findings, groups, by_kind, by_status, confirmed}   confirmed = findings a person confirmed
+            sums_check the file's own sums check, when the findings file has one
+            groups     [{id, kind, office, row, precincts, page, block, findings [ids], crop}]
+            items      [{id, group, kind, status, office, row, precinct, part, file, scan, reason, page, block, ref,
+                         reread_disagrees, reread_value, sums}]
+                       row = the row label as printed on the scan (the block's candidate, else its contest);
+                       ref = index into values of the value on the sheet, absent when it has no place there;
+                       file / scan = the values, absent for a row the file or the scan lacks;
+                       sums = [{kind, name, label, printed, with_file, with_scan, holds_file, holds_scan,
+                                terms [[ref or null, value]]}]
+            figures    {cells, right_first, right_after, reread, disagreements, settled}   what the run recorded
+            run_info   {reader, sample, seconds, phases_seconds, model_calls_by_model, metered_cost_estimate}
 """
 from __future__ import annotations
 
 import argparse
 import json
+import shutil
 from pathlib import Path
 
 MAX_WIDTH = 1600
@@ -36,6 +53,7 @@ INK_SHRINK = 3      # pixels cut off each side of a value's box, so ruled lines 
 INK_BELOW = 160     # a pixel darker than this (0 black, 255 white) is ink
 RULE_FRACTION = 0.9  # a row or column of the box this dark is a ruled line, not a figure
 RULE_FRINGE = 2      # pixels cleared beside a ruled line, for its soft edge
+SCAN_ROW = {"absentee": "ABSENTEE", "early_voting": "EARLY", "election_day": "PRECINCT"}   # as in crossfoot.audit
 
 
 def ink_box(im, box, shrink=INK_SHRINK, below=INK_BELOW):
@@ -99,11 +117,118 @@ def rule_top(im, box, reach=24, dark=0.6, below=110):
     return None
 
 
+def _same_box(a, b):
+    return bool(a) and bool(b) and len(a) == len(b) == 4 and all(abs(x - y) < 1.5 for x, y in zip(a, b))
+
+
+def build_findings(raw: dict, index: dict, doc: dict, run: dict | None = None, path=None, evidence=None,
+                   crop_path=lambda county, gid, src: None) -> dict:
+    """The `fd` part of the county's JSON from a findings.json (`doc`), the run's run.json (`run`) and the county's
+    values (`index`: (page, block, row, column) -> index into values). See the module's docstring."""
+    county = raw["county"]
+    blocks = {b["id"]: b for b in raw["blocks"]}
+    boxed = [(c["page"], c["block"], c["row_kind"], str(c["column"]), c.get("box")) for c in raw["cells"]] + \
+            [(t["page"], t["block"], t["direction"], str(t["key"]), t.get("box")) for t in raw["totals"]]
+
+    def label(bid, f=None):
+        b = blocks.get(bid)
+        if b and (b.get("candidate") or b.get("contest")):
+            return b.get("candidate") or b["contest"]
+        return (f or {}).get("candidate") or (f or {}).get("office") or None
+
+    def ref_of(f):
+        """The finding's value on the sheet: the cell the audit compares (as crossfoot.audit.entity_key), else the
+        value whose box is the finding's box."""
+        p, b, part, pr = f.get("page"), f.get("block"), f.get("part"), str(f.get("precinct"))
+        if part == "votes":
+            keys = [(p, b, "REGISTERED", pr)] if b == "reg" else [(p, b, "col", pr)]
+        else:
+            keys = [(p, b, SCAN_ROW.get(part), pr)]
+        for k in keys:
+            if k in index:
+                return index[k]
+        for (bp, bb, r, c, box) in boxed:
+            if (bp, bb) == (p, b) and _same_box(box, f.get("box")) and (bp, bb, r, c) in index:
+                return index[(bp, bb, r, c)]
+        return None
+
+    items = []
+    for f in doc["findings"]:
+        it = {"id": f["id"], "group": f.get("group"), "kind": f["kind"], "status": f["status"]}
+        for k, v in (("office", f.get("office")), ("row", label(f.get("block"), f)), ("precinct", f.get("precinct")),
+                     ("part", f.get("part")), ("file", f.get("file_value")), ("scan", f.get("scan_value")),
+                     ("reason", f.get("reason")), ("page", f.get("page")), ("block", f.get("block"))):
+            if v is not None and v != "":
+                it[k] = v
+        r = ref_of(f)
+        if r is not None:
+            it["ref"] = r
+        if f.get("reread_disagrees"):
+            it["reread_disagrees"] = True
+            rv = (f.get("reread") or {}).get("value")
+            if rv is not None:
+                it["reread_value"] = rv
+        it["sums"] = []
+        for s in f.get("sums") or []:
+            d = {"kind": s["kind"], "name": s["name"]}
+            for k, v in (("label", s.get("printed_label")), ("printed", s.get("printed")),
+                         ("with_file", s.get("computed_with_file")), ("with_scan", s.get("computed_with_scan")),
+                         ("holds_file", s.get("holds_with_file")), ("holds_scan", s.get("holds_with_scan"))):
+                if v is not None:
+                    d[k] = v
+            d["terms"] = [[index.get((t["cell"][0], t["cell"][1], t["cell"][2], str(t["cell"][3]))), t["value"]]
+                          for t in s.get("terms") or []]
+            it["sums"].append(d)
+        if f.get("confirmed_by_person"):
+            it["confirmed_by_person"] = True
+        items.append(it)
+
+    groups = []
+    for g in doc.get("groups") or []:
+        d = {"id": g["id"], "kind": g["kind"], "findings": list(g.get("findings") or [])}
+        for k, v in (("office", g.get("office")), ("row", label(g.get("block"), g)), ("precincts", g.get("precincts")),
+                     ("page", g.get("page")), ("block", g.get("block")),
+                     ("crop", crop_path(county, g["id"], g.get("crop")))):
+            if v not in (None, "", []):
+                d[k] = v
+        groups.append(d)
+
+    counts = dict(doc.get("counts") or {})
+    counts["confirmed"] = sum(1 for f in doc["findings"] if f.get("confirmed_by_person"))
+    fd = {"run": doc.get("run_id") or raw["run_id"], "counts": counts, "groups": groups, "items": items}
+    if path:
+        fd["path"] = path
+    if evidence:
+        fd["evidence"] = evidence
+    if doc.get("sums_check"):
+        fd["sums_check"] = doc["sums_check"]
+
+    cells = raw["cells"]
+    fig = {"cells": len(cells),
+           "right_first": sum(1 for c in cells if c["status"] == "accepted" and not c.get("tries")),
+           "right_after": sum(1 for c in cells if c["status"] == "accepted" and c.get("tries")),
+           "disagreements": len(items),
+           "settled": sum(1 for i in items if i["status"] == "settled_against_file")}
+    rr = (raw.get("summary") or {}).get("cells_reread")
+    if rr is not None:
+        fig["reread"] = rr
+    fd["figures"] = fig
+    if run:
+        info = {k: run[k] for k in ("reader", "sample", "seconds", "phases_seconds", "model_calls_by_model",
+                                    "metered_cost_estimate", "resumed_from") if run.get(k) is not None}
+        if info:
+            fd["run_info"] = info
+    return fd
+
+
 def build_county(raw: dict, sizes: dict, img_path=lambda county, n: f"data/pages/{county}-p{n}.webp",
-                 block_path=lambda county, bid: f"data/blocks/{county}-{bid}.webp", ink=None, rules=None) -> dict:
+                 block_path=lambda county, bid: f"data/blocks/{county}-{bid}.webp", ink=None, rules=None,
+                 findings=None, run=None, findings_path=None, evidence=None,
+                 crop_path=lambda county, gid, src: None) -> dict:
     """The county's JSON for the page. `sizes` maps page number -> (render_w, render_h, img_w, img_h);
     `ink` maps (page, block, row, column) -> ink box in block-image pixels, `rules` maps (page, block) -> the y of
-    the ruled line above the block's first row (see render_blocks)."""
+    the ruled line above the block's first row (see render_blocks); `findings` is the county's findings.json, `run`
+    the run's run.json."""
     ink, rules = ink or {}, rules or {}
     county = raw["county"]
     pages, sc_of, frame_of = [], {}, {}
@@ -139,14 +264,14 @@ def build_county(raw: dict, sizes: dict, img_path=lambda county, n: f"data/pages
     checks = []
     for ch in raw["checks"]:
         refs = []
-        for key, _ in ch["terms"]:
-            p, b, r, c = key
+        for term in ch["terms"]:
+            p, b, r, c = term if len(term) == 4 and not isinstance(term[0], list) else term[0]   # a key, or [key, value]
             k = (p, b, r, str(c))
             if k not in index:
                 raise ValueError(f"check {ch['kind']} {ch['page']}:{ch['block']}:{ch['key']} names a term "
                                  f"{p}:{b}:{r}:{c} that is not a value")
             refs.append(index[k])
-        checks.append({"k": ch["kind"], "p": ch["page"], "b": ch["block"], "y": str(ch["key"]), "ok": bool(ch["ok"]),
+        checks.append({"k": "grand" if ch["kind"] == "grand_col" else ch["kind"], "p": ch["page"], "b": ch["block"], "y": str(ch["key"]), "ok": bool(ch["ok"]),
                        "pr": ch["printed"], "co": ch["computed"], "t": refs})
 
     blocks = []
@@ -159,9 +284,12 @@ def build_county(raw: dict, sizes: dict, img_path=lambda county, n: f"data/pages
             bi = {"img": block_path(county, b["id"]), "w": w, "h": h, "rt": rules.get((b["page"], b["id"]))}
         blocks.append({"id": b["id"], "p": b["page"], "contest": b["contest"], "cand": b.get("candidate"),
                        "x": _scale_box(box, sc_of.get(b["page"], 1.0)), "bi": bi})
-    return {"county": county, "run": raw["run_id"], "layout": raw["layout"], "pages": pages, "blocks": blocks,
-            "values": values, "checks": checks,
-            "events": [{"t": e["ts"], "k": e["kind"], "p": e["payload"]} for e in raw["events"]]}
+    out = {"county": county, "run": raw["run_id"], "layout": raw["layout"], "pages": pages, "blocks": blocks,
+           "values": values, "checks": checks,
+           "events": [{"t": e["ts"], "k": e["kind"], "p": e["payload"]} for e in raw["events"]]}
+    if findings:
+        out["fd"] = build_findings(raw, index, findings, run, findings_path, evidence, crop_path)
+    return out
 
 
 def render_pages(county: str, page_numbers, out_dir: Path, data_root=None, max_width=MAX_WIDTH) -> dict:
@@ -221,7 +349,17 @@ def render_blocks(raw: dict, sizes: dict, out_dir: Path, data_root=None) -> dict
     return inks, rules
 
 
+def latest_run(runs_dir="runs") -> str:
+    """The newest run that has a findings.json."""
+    ids = sorted(p.parent.parent.name for p in Path(runs_dir).glob("*/*/findings.json"))
+    if not ids:
+        raise SystemExit(f"no run under {runs_dir} has a findings.json")
+    return ids[-1]
+
+
 def build(run_id: str, runs_dir="runs", out="site/data", counties=None, data_root=None) -> list[str]:
+    if run_id == "latest":
+        run_id = latest_run(runs_dir)
     run_dir = Path(runs_dir) / run_id
     out = Path(out)
     out.mkdir(parents=True, exist_ok=True)
@@ -236,7 +374,22 @@ def build(run_id: str, runs_dir="runs", out="site/data", counties=None, data_roo
         raw = json.loads((run_dir / key / "county.json").read_text())
         sizes = render_pages(key, [p["number"] for p in raw["pages"]], out / "pages", data_root)
         inks, rules = render_blocks(raw, sizes, out / "blocks", data_root)
-        d = build_county(raw, sizes, ink=inks, rules=rules)
+        fpath = run_dir / key / "findings.json"
+        findings = json.loads(fpath.read_text()) if fpath.exists() else None
+        crops = out / "crops"
+
+        def crop_path(county, gid, src, _dir=run_dir / key):
+            if not src or not (_dir / src).exists():
+                return None
+            crops.mkdir(parents=True, exist_ok=True)
+            shutil.copyfile(_dir / src, crops / f"{county}-{gid}.png")
+            return f"data/crops/{county}-{gid}.png"
+
+        d = build_county(raw, sizes, ink=inks, rules=rules, findings=findings, run=meta,
+                         findings_path=fpath.as_posix() if findings else None,
+                         evidence=f"data/{key}-findings.json" if findings else None, crop_path=crop_path)
+        if findings:
+            shutil.copyfile(fpath, out / f"{key}-findings.json")
         (out / f"{key}.json").write_text(json.dumps(d, separators=(",", ":")))
         index["counties"].append({"key": key, "name": key.replace("_", " ").title(), "file": f"data/{key}.json",
                                   "pages": len(d["pages"])})
@@ -247,7 +400,7 @@ def build(run_id: str, runs_dir="runs", out="site/data", counties=None, data_roo
 
 def main(argv=None):
     ap = argparse.ArgumentParser(prog="python -m crossfoot.sitebuild")
-    ap.add_argument("--run", required=True)
+    ap.add_argument("--run", required=True, help="a run id, or latest: the newest run that has a findings.json")
     ap.add_argument("--runs-dir", default="runs")
     ap.add_argument("--out", default="site/data")
     ap.add_argument("--county", action="append")

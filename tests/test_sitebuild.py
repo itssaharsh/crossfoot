@@ -111,3 +111,78 @@ def test_rule_top_finds_the_ruled_line_above_a_row():
     ImageDraw.Draw(im).rectangle([0, 40, 299, 43], fill=0)
     assert rule_top(im, [20, 44, 120, 90]) == 40
     assert rule_top(im, [20, 100, 120, 119]) is None
+
+
+def findings_doc():
+    ref = lambda r, c: [1, "b1", r, c]
+    sums = [{"name": "the cells of precinct 1 add to the small total", "kind": "col", "page": 1, "block": "b1",
+             "terms": [{"cell": ref("A", "1"), "value": 1}, {"cell": ref("B", "1"), "value": 4}], "printed": 5,
+             "printed_label": "small total printed under the column", "computed_with_scan": 5, "holds_with_scan": True,
+             "computed_with_file": 4, "holds_with_file": False}]
+    f = lambda i, **kw: {"id": i, "group": "g1", "county": "tiny", "office": "X", "district": "", "party": "",
+                         "candidate": "A", "precinct": "1", "part": "early_voting", "file_value": 0, "scan_value": 1,
+                         "kind": "wrong_column", "status": "settled_against_file", "reason": "r", "sums": sums,
+                         "page": 1, "block": "b1", "box": [200, 200, 300, 250], "crop": "crops/g1.png",
+                         "reread": None, "confirmed_by_person": False, **kw}
+    return {"county": "tiny", "run_id": "r1", "file": "x.csv",
+            "counts": {"findings": 2, "by_kind": {"wrong_column": 2}, "by_status": {"settled_against_file": 2},
+                       "groups": 1, "corrections": 1},
+            "findings": [f("f1"), f("f2", part="votes", precinct="9", box=[1, 1, 2, 2], file_value=None,
+                               reread={"value": 7}, reread_disagrees=True)],
+            "groups": [{"id": "g1", "kind": "wrong_column", "office": "X", "district": "", "candidate": "A",
+                        "precincts": ["1"], "page": 1, "block": "b1", "findings": ["f1", "f2"], "crop": "crops/g1.png"}]}
+
+
+def test_findings_resolve_to_values_and_leave_out_what_is_missing():
+    run = {"reader": "m1", "seconds": 60.0, "sample": {"row_sums": 22, "failing": 6, "sampled_with": "m0"}}
+    d = build_county(raw(), {1: (2000, 1000, 1000, 500)}, findings=findings_doc(), run=run,
+                     findings_path="runs/r1/tiny/findings.json", evidence="data/tiny-findings.json",
+                     crop_path=lambda county, gid, src: f"data/crops/{county}-{gid}.png")
+    fd = d["fd"]
+    v = {(x["r"], x["c"]): i for i, x in enumerate(d["values"])}
+    f1, f2 = fd["items"]
+    assert f1["ref"] == v[("A", "1")] and d["values"][f1["ref"]]["v"] == 1
+    assert f1["row"] == "A" and f1["file"] == 0 and f1["scan"] == 1          # a zero is a value, not a missing one
+    assert [d["values"][t[0]]["v"] for t in f1["sums"][0]["terms"]] == [1, 4]
+    assert f1["sums"][0]["holds_file"] is False and f1["sums"][0]["with_file"] == 4
+    assert "ref" not in f2 and "file" not in f2                               # no place on the sheet, no file value
+    assert f2["reread_disagrees"] is True and f2["reread_value"] == 7 and "reread_disagrees" not in f1
+    assert fd["groups"][0]["crop"] == "data/crops/tiny-g1.png" and fd["groups"][0]["row"] == "A"
+    assert fd["counts"]["confirmed"] == 0 and fd["counts"]["findings"] == 2
+    assert fd["path"] == "runs/r1/tiny/findings.json" and fd["evidence"] == "data/tiny-findings.json"
+    assert "sums_check" not in fd
+    assert fd["figures"] == {"cells": 4, "right_first": 4, "right_after": 0, "disagreements": 2, "settled": 2}
+    assert fd["run_info"] == {"reader": "m1", "seconds": 60.0, "sample": run["sample"]}
+    assert "run_info" not in build_county(raw(), {1: (2000, 1000, 1000, 500)}, findings=findings_doc())["fd"]
+
+
+def test_no_findings_file_means_no_fd_and_a_missing_crop_is_left_out():
+    assert "fd" not in build_county(raw(), {1: (2000, 1000, 1000, 500)})
+    d = build_county(raw(), {1: (2000, 1000, 1000, 500)}, findings=findings_doc())
+    assert "crop" not in d["fd"]["groups"][0]
+
+
+def test_sums_check_is_passed_on_when_the_file_has_one():
+    doc = findings_doc()
+    doc["sums_check"] = {"checked": 3, "failing": 0}
+    assert build_county(raw(), {1: (2000, 1000, 1000, 500)}, findings=doc)["fd"]["sums_check"] == doc["sums_check"]
+
+
+def test_terms_without_values_and_the_two_grand_sums():
+    r = raw()
+    r["checks"][2]["kind"] = "grand_col"
+    r["checks"][2]["terms"] = [[1, "b1", "col", "1"]]
+    r["checks"].append({"kind": "grand_row", "page": 1, "block": "b1", "key": "", "terms": [[1, "b1", "row", "A"]],
+                        "printed": 9, "computed": 3, "ok": False})
+    d = build_county(r, {1: (2000, 1000, 1000, 500)})
+    assert [c["k"] for c in d["checks"]] == ["row", "col", "grand", "grand_row"]
+    assert d["values"][d["checks"][3]["t"][0]]["r"] == "row"
+
+
+def test_latest_is_the_newest_run_with_findings(tmp_path):
+    from crossfoot.sitebuild import latest_run
+    for rid, has in (("20261011-100000", True), ("20261011-110000", True), ("20261011-120000", False)):
+        (tmp_path / rid / "c").mkdir(parents=True)
+        if has:
+            (tmp_path / rid / "c" / "findings.json").write_text("{}")
+    assert latest_run(tmp_path) == "20261011-110000"

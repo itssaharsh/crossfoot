@@ -33,6 +33,12 @@ export class Store {
     });
     this.chk = new Map();
     d.checks.forEach((c, i) => { c.i = i; this.chk.set(`${c.k}:${c.p}:${c.b}:${c.y}`, c); });
+    // the audit's findings, when the run has them: by id, by the value they sit on, and by group
+    this.fd = d.fd || null;
+    this.items = this.fd ? this.fd.items : [];
+    this.itemById = new Map(this.items.map(f => [f.id, f]));
+    this.itemByRef = new Map(this.items.filter(f => f.ref !== undefined).map(f => [f.ref, f]));
+    this.groupById = new Map((this.fd ? this.fd.groups : []).map(g => [g.id, g]));
   }
   isTotal(v) { return isTotal(v); }
   block(v) { return this.blocks.get(`${v.p}:${v.b}`); }
@@ -43,14 +49,14 @@ export class Store {
     const add = (c, axis) => { if (c) out.push({ check: c, axis }); };
     if (!isTotal(v)) { add(g(`col:${v.p}:${v.b}:${v.c}`), 'col'); add(g(`row:${v.p}:${v.b}:${v.r}`), 'row'); }
     else if (v.r === 'col') { add(g(`col:${v.p}:${v.b}:${v.c}`), 'col'); add(g(`grand:${v.p}:${v.b}:`), 'row'); }
-    else if (v.r === 'row') add(g(`row:${v.p}:${v.b}:${v.c}`), 'row');
-    else add(g(`grand:${v.p}:${v.b}:`), 'row');
+    else if (v.r === 'row') { add(g(`row:${v.p}:${v.b}:${v.c}`), 'row'); add(g(`grand_row:${v.p}:${v.b}:`), 'col'); }
+    else { add(g(`grand:${v.p}:${v.b}:`), 'row'); add(g(`grand_row:${v.p}:${v.b}:`), 'col'); }
     return out;
   }
   termsOf(c) { return c.t.map(i => this.values[i]); }
   // the printed total a sum is decided by
   totalOf(c) {
-    const key = c.k === 'grand' ? `${c.p}:${c.b}:grand:` : `${c.p}:${c.b}:${c.k}:${c.y}`;
+    const key = c.k === 'grand' || c.k === 'grand_row' ? `${c.p}:${c.b}:grand:` : `${c.p}:${c.b}:${c.k}:${c.y}`;
     const i = this.byId.get(key);
     return i === undefined ? null : this.values[i];
   }
@@ -62,7 +68,7 @@ export class Store {
     if (!tb && !terms.length) return null;
     const mid = (a, b) => (a + b) / 2;
     const labelX = blk && blk.x ? blk.x[0] : Math.min(...terms.map(t => t.x[0])) - 20;
-    if (c.k === 'col') {
+    if (c.k === 'col' || c.k === 'grand_row') {
       const x = tb ? mid(tb[0], tb[2]) : mid(terms[0].x[0], terms[0].x[2]);
       const y1 = terms.length ? Math.min(...terms.map(t => t.x[1])) : (blk && blk.x ? blk.x[1] : tb[1]);
       return { x1: x, y1, x2: x, y2: tb ? mid(tb[1], tb[3]) : Math.max(...terms.map(t => t.x[3])) };
@@ -95,6 +101,27 @@ export class Store {
     const i = list.find(i => ok(this.values[i])) ?? list.find(i => this.values[i].x);
     return i === undefined ? null : i;
   }
+  // the label of a value as printed on the scan (the block's candidate, else its contest)
+  printedLabel(v) { const b = this.block(v); return b ? b.cand || b.contest || '' : ''; }
   rowLabel(v) { return v.r === 'col' ? 'Total' : v.r === 'row' ? 'Row total' : v.r === 'grand' ? 'Grand total' : v.r; }
   colLabel(v) { return v.r === 'grand' ? '' : v.r === 'row' ? '' : `precinct ${v.c}`; }
 }
+
+// ---- the words of the copy deck (UI-SPEC section 9)
+export const KINDS = ['wrong_number', 'wrong_column', 'wrong_precinct', 'missing_row', 'file_row_fails_own_total', 'extra_row'];
+export const KIND = {
+  wrong_number: { word: 'wrong number', glyph: '≠' },
+  wrong_column: { word: 'wrong column', glyph: '↔' },
+  wrong_precinct: { word: 'wrong precinct', glyph: '↕' },
+  missing_row: { word: 'missing row', glyph: '∅' },
+  file_row_fails_own_total: { word: 'row fails its own total', glyph: 'Σ' },
+  extra_row: { word: 'row not on the scan', glyph: '+' },
+};
+export const STATUSES = ['settled_against_file', 'cannot_verify', 'document_inconsistent'];
+export const STATUS = {
+  settled_against_file: { word: 'settled', glyph: '✓', line: 'Settled by the printed totals', count: 'settled by the printed totals' },
+  cannot_verify: { word: 'cannot verify', glyph: '?', line: 'No printed total can decide this. Left as published.', count: 'cannot be verified' },
+  document_inconsistent: { word: 'document disagrees', glyph: '!', line: 'The document disagrees with itself. Listed for a person.', count: 'where the document disagrees with itself' },
+};
+export const PART = { votes: 'total', absentee: 'absentee', early_voting: 'early voting', election_day: 'election day' };
+export const UNCONFIRMED = 'Read from the scan by the agent. A person has not confirmed this yet.';

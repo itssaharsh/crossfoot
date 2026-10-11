@@ -44,6 +44,7 @@
       </div>
     </div>
     <div class="flatblock" id="flatblock" hidden></div>
+    <p class="ctx" id="ctx"></p>
     <div class="loupe" id="loupe" role="group" aria-label="The scan around the selected value, enlarged">
       <div class="lp-view" id="lp-view"></div>
       <p class="lp-note" id="lp-note" role="status" hidden>This value has no position in this run's data</p>
@@ -53,17 +54,33 @@
     <p class="statebox" id="statebox" role="status"></p>
     <div class="notice" id="notice" role="alert" hidden></div>
   </section>
-  <aside class="panel" id="panel" aria-label="The sums">
+  <aside class="panel" id="panel" aria-label="The findings and the sums">
     <div class="skeleton" aria-hidden="true"><div class="sk-tape"><i></i><i></i><i></i><i></i></div><div class="sk-card"><i></i><i></i><i></i></div></div>
-    <div class="tapewrap"><section class="tape" id="tape" aria-label="The arithmetic"></section></div>
     <section class="card" id="card" aria-label="Selected value"></section>
-    <section class="fails" id="fails-sec" aria-labelledby="fails-h">
-      <h2 id="fails-h">Sums that do not hold</h2>
+    <div class="tapewrap"><section class="tape" id="tape" aria-label="The arithmetic"></section></div>
+    <section class="findings" id="findings" aria-labelledby="findings-h">
+      <h2 id="findings-h">Disagreements</h2>
+      <p class="count" id="fcount"></p>
+      <div class="filters" id="filters"></div>
+      <p class="showing" id="fshowing" role="status"></p>
+      <ul id="flist" class="flist" role="listbox" tabindex="0" aria-labelledby="findings-h"></ul>
+    </section>
+    <section class="run" id="run" aria-label="Run numbers"></section>
+    <details class="fails" id="fails-sec">
+      <summary id="fails-h">Printed sums that do not hold on the scan itself</summary>
       <ul id="fails" class="list" role="listbox" tabindex="0" aria-labelledby="fails-h"></ul>
+    </details>
+    <section class="judge judge-only" aria-labelledby="judge-h">
+      <h2 id="judge-h">Judge this in 90 seconds</h2>
+      <ol><li>Replay the audit</li><li>Pick a finding</li><li>Open its crop and add it up yourself</li></ol>
     </section>
   </aside>
 </main>
 <footer class="foot">These are transcription slips in a volunteer dataset. Each county's certified scan is the source of truth. Sources: the <a href="https://github.com/openelections/openelections-sources-tx">OpenElections sources</a> and <a href="https://github.com/openelections/openelections-data-tx">data repositories</a> for the 2024 Texas general election.</footer>
+<dialog class="dlg" id="dlg" aria-labelledby="dlg-title">
+  <div class="dlg-head"><h2 class="dlg-title" id="dlg-title"></h2><button type="button" class="dlg-close">Close</button></div>
+  <div class="dlg-body"></div>
+</dialog>
 <script type="module" src="app.js"></script>
 </body>
 </html>
