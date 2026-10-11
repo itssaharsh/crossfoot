@@ -1,6 +1,6 @@
 {
  "county": "foard",
- "run_id": "20261011-141152",
+ "run_id": "20261011-161207",
  "layout": "report",
  "file": "20241105__tx__general__foard__precinct.csv",
  "policy": {
@@ -145,6 +145,6 @@
   "contest_totals_printed": 74,
   "second_sum_exists": true,
   "ballot_sums_not_used": [],
-  "seconds": 1.8
+  "seconds": 1.4
  }
 }

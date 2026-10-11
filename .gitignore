@@ -14,3 +14,6 @@ __pycache__/
 /site/data.new/
 # deploy metadata
 .vercel
+
+# a run folder keeps its results; a new ledger is not committed (the ones documents quote from stay tracked)
+/runs/*/ledger.sqlite

@@ -64,8 +64,8 @@ def cost_table(s: dict) -> str:
     fig = lambda c: (f"{name(c)} ({c['read_run']['model_calls']} model calls, ${c['read_run']['metered_cost']:.4f}, "
                      f"{c['read_run']['seconds']} seconds)")
     note = (f"Calls, cost and seconds are those of the run that read each county, [`runs/{run}/summary.json`](runs/{run}/summary.json) "
-            f"(one unattended `audit --all` run). The last column is what the audits made again from the same ledgers added "
-            f"(`summary.json` keeps both under `read_run` and `audit_again`). An audit from nothing costs, for the dearest "
+            f"(one unattended `audit --all` run). The last column is what audits made again from the same ledgers added, "
+            f"where there were any. An audit from nothing costs, for the dearest "
             f"checked county, {fig(dear)}, and for the cheapest, {fig(cheap)}; Limestone, which prints nothing to add up, took "
             f"{next(c for c in s['counties'] if c['county'] == 'limestone')['read_run']['model_calls']} call to be listed as not checked.")
     return "\n".join([head, *rows, "", note])
@@ -86,8 +86,18 @@ def picture(s: dict) -> str:
             f"total decides (finding {fid} in [{base}/findings.json]({base}/findings.json); not confirmed by a person).*")
 
 
+def whole(s: dict) -> dict:
+    """A summary written by `audit --all` itself has no `read_run`: the run that read each county is that run."""
+    own = lambda d: {"run_id": s["run_id"], "model_calls": d["model_calls"], "metered_cost": d["metered_cost"], "seconds": d["seconds"]}
+    for c in s["counties"]:
+        c.setdefault("read_run", own(c))
+        c.setdefault("from_run", s["run_id"])
+    s["totals"].setdefault("read_run", own(s["totals"]))
+    return s
+
+
 def blocks(run: str) -> dict:
-    s = json.loads((ROOT / "runs" / run / "summary.json").read_text())
+    s = whole(json.loads((ROOT / "runs" / run / "summary.json").read_text()))
     return {"table": findings_table(s), "cost": cost_table(s), "picture": picture(s), "run": f"`runs/{run}`"}
 
 

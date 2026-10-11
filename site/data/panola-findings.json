@@ -1,6 +1,6 @@
 {
  "county": "panola",
- "run_id": "20261011-135350",
+ "run_id": "20261011-161207",
  "layout": "matrix",
  "file": "20241105__tx__general__panola__precinct.csv",
  "policy": {
@@ -226,8 +226,10 @@
      ],
      "printed": 17921,
      "printed_label": "printed total at the right end of the row",
+     "printed_with_scan": 17921,
      "computed_with_scan": 17923,
      "holds_with_scan": false,
+     "printed_with_file": 17921,
      "computed_with_file": 17917,
      "holds_with_file": false
     }
@@ -245,7 +247,7 @@
     "model": "claude-sonnet-4.6",
     "dpi": 400,
     "value": 1459,
-    "crop": "runs/20261011-135350/crops/audit-reread-0001-reg.png",
+    "crop": "runs/20261011-161207/crops/audit-reread-0001-reg.png",
     "error": null
    },
    "reread_disagrees": false,
@@ -452,8 +454,10 @@
      ],
      "printed": 10,
      "printed_label": "printed total at the right end of the row",
+     "printed_with_scan": 10,
      "computed_with_scan": 10,
      "holds_with_scan": true,
+     "printed_with_file": 10,
      "computed_with_file": 9,
      "holds_with_file": false
     },
@@ -493,8 +497,10 @@
      ],
      "printed": 1,
      "printed_label": "small total printed under the column",
+     "printed_with_scan": 1,
      "computed_with_scan": 1,
      "holds_with_scan": true,
+     "printed_with_file": 1,
      "computed_with_file": 0,
      "holds_with_file": false
     }
@@ -713,8 +719,10 @@
      ],
      "printed": 12,
      "printed_label": "printed total at the right end of the row",
+     "printed_with_scan": 12,
      "computed_with_scan": 12,
      "holds_with_scan": true,
+     "printed_with_file": 12,
      "computed_with_file": 13,
      "holds_with_file": false
     },
@@ -754,8 +762,10 @@
      ],
      "printed": 1,
      "printed_label": "small total printed under the column",
+     "printed_with_scan": 1,
      "computed_with_scan": 1,
      "holds_with_scan": true,
+     "printed_with_file": 1,
      "computed_with_file": 2,
      "holds_with_file": false
     }
@@ -830,8 +840,10 @@
      ],
      "printed": 1,
      "printed_label": "small total printed under the column",
+     "printed_with_scan": 1,
      "computed_with_scan": 1,
      "holds_with_scan": true,
+     "printed_with_file": 0,
      "computed_with_file": 1,
      "holds_with_file": false
     },
@@ -1015,8 +1027,10 @@
      ],
      "printed": 23,
      "printed_label": "grand total",
+     "printed_with_scan": 23,
      "computed_with_scan": 23,
      "holds_with_scan": true,
+     "printed_with_file": 23,
      "computed_with_file": 22,
      "holds_with_file": false
     }
@@ -1235,8 +1249,10 @@
      ],
      "printed": 12,
      "printed_label": "printed total at the right end of the row",
+     "printed_with_scan": 12,
      "computed_with_scan": 12,
      "holds_with_scan": true,
+     "printed_with_file": 12,
      "computed_with_file": 11,
      "holds_with_file": false
     },
@@ -1276,8 +1292,10 @@
      ],
      "printed": 1,
      "printed_label": "small total printed under the column",
+     "printed_with_scan": 1,
      "computed_with_scan": 1,
      "holds_with_scan": true,
+     "printed_with_file": 1,
      "computed_with_file": 0,
      "holds_with_file": false
     }
@@ -1352,8 +1370,10 @@
      ],
      "printed": 0,
      "printed_label": "small total printed under the column",
+     "printed_with_scan": 0,
      "computed_with_scan": 0,
      "holds_with_scan": true,
+     "printed_with_file": 1,
      "computed_with_file": 0,
      "holds_with_file": false
     },
@@ -1537,8 +1557,10 @@
      ],
      "printed": 9,
      "printed_label": "grand total",
+     "printed_with_scan": 9,
      "computed_with_scan": 9,
      "holds_with_scan": true,
+     "printed_with_file": 9,
      "computed_with_file": 10,
      "holds_with_file": false
     }
@@ -1613,8 +1635,10 @@
      ],
      "printed": 1,
      "printed_label": "small total printed under the column",
+     "printed_with_scan": 1,
      "computed_with_scan": 1,
      "holds_with_scan": true,
+     "printed_with_file": 0,
      "computed_with_file": 1,
      "holds_with_file": false
     },
@@ -1798,8 +1822,10 @@
      ],
      "printed": 9,
      "printed_label": "grand total",
+     "printed_with_scan": 9,
      "computed_with_scan": 9,
      "holds_with_scan": true,
+     "printed_with_file": 9,
      "computed_with_file": 8,
      "holds_with_file": false
     }
@@ -2018,8 +2044,10 @@
      ],
      "printed": 4,
      "printed_label": "printed total at the right end of the row",
+     "printed_with_scan": 4,
      "computed_with_scan": 4,
      "holds_with_scan": true,
+     "printed_with_file": 4,
      "computed_with_file": 5,
      "holds_with_file": false
     },
@@ -2059,8 +2087,10 @@
      ],
      "printed": 0,
      "printed_label": "small total printed under the column",
+     "printed_with_scan": 0,
      "computed_with_scan": 0,
      "holds_with_scan": true,
+     "printed_with_file": 0,
      "computed_with_file": 1,
      "holds_with_file": false
     }
@@ -2279,8 +2309,10 @@
      ],
      "printed": 4,
      "printed_label": "printed total at the right end of the row",
+     "printed_with_scan": 4,
      "computed_with_scan": 4,
      "holds_with_scan": true,
+     "printed_with_file": 4,
      "computed_with_file": 3,
      "holds_with_file": false
     },
@@ -2320,8 +2352,10 @@
      ],
      "printed": 1,
      "printed_label": "small total printed under the column",
+     "printed_with_scan": 1,
      "computed_with_scan": 1,
      "holds_with_scan": true,
+     "printed_with_file": 1,
      "computed_with_file": 0,
      "holds_with_file": false
     }
@@ -2396,8 +2430,10 @@
      ],
      "printed": 1,
      "printed_label": "small total printed under the column",
+     "printed_with_scan": 1,
      "computed_with_scan": 1,
      "holds_with_scan": true,
+     "printed_with_file": 0,
      "computed_with_file": 1,
      "holds_with_file": false
     },
@@ -2581,8 +2617,10 @@
      ],
      "printed": 9,
      "printed_label": "grand total",
+     "printed_with_scan": 9,
      "computed_with_scan": 9,
      "holds_with_scan": true,
+     "printed_with_file": 9,
      "computed_with_file": 8,
      "holds_with_file": false
     }
@@ -2801,8 +2839,10 @@
      ],
      "printed": 1,
      "printed_label": "printed total at the right end of the row",
+     "printed_with_scan": 1,
      "computed_with_scan": 1,
      "holds_with_scan": true,
+     "printed_with_file": 1,
      "computed_with_file": 0,
      "holds_with_file": false
     },
@@ -2842,8 +2882,10 @@
      ],
      "printed": 1,
      "printed_label": "small total printed under the column",
+     "printed_with_scan": 1,
      "computed_with_scan": 1,
      "holds_with_scan": true,
+     "printed_with_file": 1,
      "computed_with_file": 0,
      "holds_with_file": false
     }
@@ -2918,8 +2960,10 @@
      ],
      "printed": 2,
      "printed_label": "small total printed under the column",
+     "printed_with_scan": 2,
      "computed_with_scan": 2,
      "holds_with_scan": true,
+     "printed_with_file": 0,
      "computed_with_file": 2,
      "holds_with_file": false
     },
@@ -3103,8 +3147,10 @@
      ],
      "printed": 9,
      "printed_label": "grand total",
+     "printed_with_scan": 9,
      "computed_with_scan": 9,
      "holds_with_scan": true,
+     "printed_with_file": 9,
      "computed_with_file": 7,
      "holds_with_file": false
     }
@@ -3323,8 +3369,10 @@
      ],
      "printed": 4,
      "printed_label": "printed total at the right end of the row",
+     "printed_with_scan": 4,
      "computed_with_scan": 4,
      "holds_with_scan": true,
+     "printed_with_file": 4,
      "computed_with_file": 3,
      "holds_with_file": false
     },
@@ -3364,8 +3412,10 @@
      ],
      "printed": 2,
      "printed_label": "small total printed under the column",
+     "printed_with_scan": 2,
      "computed_with_scan": 2,
      "holds_with_scan": true,
+     "printed_with_file": 2,
      "computed_with_file": 1,
      "holds_with_file": false
     }
@@ -3584,8 +3634,10 @@
      ],
      "printed": 4,
      "printed_label": "printed total at the right end of the row",
+     "printed_with_scan": 4,
      "computed_with_scan": 4,
      "holds_with_scan": true,
+     "printed_with_file": 4,
      "computed_with_file": 3,
      "holds_with_file": false
     },
@@ -3625,8 +3677,10 @@
      ],
      "printed": 2,
      "printed_label": "small total printed under the column",
+     "printed_with_scan": 2,
      "computed_with_scan": 2,
      "holds_with_scan": true,
+     "printed_with_file": 2,
      "computed_with_file": 1,
      "holds_with_file": false
     }
@@ -3701,8 +3755,10 @@
      ],
      "printed": 1,
      "printed_label": "small total printed under the column",
+     "printed_with_scan": 1,
      "computed_with_scan": 1,
      "holds_with_scan": true,
+     "printed_with_file": 4,
      "computed_with_file": 1,
      "holds_with_file": false
     },
@@ -3886,8 +3942,10 @@
      ],
      "printed": 9,
      "printed_label": "grand total",
+     "printed_with_scan": 9,
      "computed_with_scan": 9,
      "holds_with_scan": true,
+     "printed_with_file": 9,
      "computed_with_file": 12,
      "holds_with_file": false
     }
@@ -4106,8 +4164,10 @@
      ],
      "printed": 4,
      "printed_label": "printed total at the right end of the row",
+     "printed_with_scan": 4,
      "computed_with_scan": 4,
      "holds_with_scan": true,
+     "printed_with_file": 4,
      "computed_with_file": 3,
      "holds_with_file": false
     },
@@ -4147,8 +4207,10 @@
      ],
      "printed": 1,
      "printed_label": "small total printed under the column",
+     "printed_with_scan": 1,
      "computed_with_scan": 1,
      "holds_with_scan": true,
+     "printed_with_file": 1,
      "computed_with_file": 0,
      "holds_with_file": false
     }
@@ -4367,8 +4429,10 @@
      ],
      "printed": 4,
      "printed_label": "printed total at the right end of the row",
+     "printed_with_scan": 4,
      "computed_with_scan": 4,
      "holds_with_scan": true,
+     "printed_with_file": 4,
      "computed_with_file": 8,
      "holds_with_file": false
     },
@@ -4408,8 +4472,10 @@
      ],
      "printed": 1,
      "printed_label": "small total printed under the column",
+     "printed_with_scan": 1,
      "computed_with_scan": 1,
      "holds_with_scan": true,
+     "printed_with_file": 1,
      "computed_with_file": 5,
      "holds_with_file": false
     }
@@ -4484,8 +4550,10 @@
      ],
      "printed": 2,
      "printed_label": "small total printed under the column",
+     "printed_with_scan": 2,
      "computed_with_scan": 2,
      "holds_with_scan": true,
+     "printed_with_file": 0,
      "computed_with_file": 2,
      "holds_with_file": false
     },
@@ -4669,8 +4737,10 @@
      ],
      "printed": 2,
      "printed_label": "grand total",
+     "printed_with_scan": 2,
      "computed_with_scan": 2,
      "holds_with_scan": true,
+     "printed_with_file": 2,
      "computed_with_file": 0,
      "holds_with_file": false
     }
@@ -4745,8 +4815,10 @@
      ],
      "printed": 0,
      "printed_label": "small total printed under the column",
+     "printed_with_scan": 0,
      "computed_with_scan": 0,
      "holds_with_scan": true,
+     "printed_with_file": 2,
      "computed_with_file": 0,
      "holds_with_file": false
     },
@@ -4930,8 +5002,10 @@
      ],
      "printed": 2,
      "printed_label": "grand total",
+     "printed_with_scan": 2,
      "computed_with_scan": 2,
      "holds_with_scan": true,
+     "printed_with_file": 2,
      "computed_with_file": 4,
      "holds_with_file": false
     }
@@ -5150,8 +5224,10 @@
      ],
      "printed": 2,
      "printed_label": "printed total at the right end of the row",
+     "printed_with_scan": 2,
      "computed_with_scan": 2,
      "holds_with_scan": true,
+     "printed_with_file": 2,
      "computed_with_file": 0,
      "holds_with_file": false
     },
@@ -5191,8 +5267,10 @@
      ],
      "printed": 2,
      "printed_label": "small total printed under the column",
+     "printed_with_scan": 2,
      "computed_with_scan": 2,
      "holds_with_scan": true,
+     "printed_with_file": 2,
      "computed_with_file": 0,
      "holds_with_file": false
     }
@@ -5411,8 +5489,10 @@
      ],
      "printed": 2,
      "printed_label": "printed total at the right end of the row",
+     "printed_with_scan": 2,
      "computed_with_scan": 2,
      "holds_with_scan": true,
+     "printed_with_file": 2,
      "computed_with_file": 4,
      "holds_with_file": false
     },
@@ -5452,8 +5532,10 @@
      ],
      "printed": 0,
      "printed_label": "small total printed under the column",
+     "printed_with_scan": 0,
      "computed_with_scan": 0,
      "holds_with_scan": true,
+     "printed_with_file": 0,
      "computed_with_file": 2,
      "holds_with_file": false
     }
@@ -5528,8 +5610,10 @@
      ],
      "printed": 4,
      "printed_label": "small total printed under the column",
+     "printed_with_scan": 4,
      "computed_with_scan": 4,
      "holds_with_scan": true,
+     "printed_with_file": 0,
      "computed_with_file": 4,
      "holds_with_file": false
     },
@@ -5713,8 +5797,10 @@
      ],
      "printed": 143,
      "printed_label": "grand total",
+     "printed_with_scan": 143,
      "computed_with_scan": 143,
      "holds_with_scan": true,
+     "printed_with_file": 143,
      "computed_with_file": 139,
      "holds_with_file": false
     }
@@ -5933,8 +6019,10 @@
      ],
      "printed": 72,
      "printed_label": "printed total at the right end of the row",
+     "printed_with_scan": 72,
      "computed_with_scan": 72,
      "holds_with_scan": true,
+     "printed_with_file": 72,
      "computed_with_file": 68,
      "holds_with_file": false
     },
@@ -5974,8 +6062,10 @@
      ],
      "printed": 4,
      "printed_label": "small total printed under the column",
+     "printed_with_scan": 4,
      "computed_with_scan": 4,
      "holds_with_scan": true,
+     "printed_with_file": 4,
      "computed_with_file": 0,
      "holds_with_file": false
     }
@@ -6194,8 +6284,10 @@
      ],
      "printed": 6,
      "printed_label": "printed total at the right end of the row",
+     "printed_with_scan": 6,
      "computed_with_scan": 6,
      "holds_with_scan": true,
+     "printed_with_file": 6,
      "computed_with_file": 9,
      "holds_with_file": false
     },
@@ -6235,8 +6327,10 @@
      ],
      "printed": 13,
      "printed_label": "small total printed under the column",
+     "printed_with_scan": 13,
      "computed_with_scan": 13,
      "holds_with_scan": true,
+     "printed_with_file": 13,
      "computed_with_file": 16,
      "holds_with_file": false
     }
@@ -6455,8 +6549,10 @@
      ],
      "printed": 129,
      "printed_label": "printed total at the right end of the row",
+     "printed_with_scan": 129,
      "computed_with_scan": 129,
      "holds_with_scan": true,
+     "printed_with_file": 129,
      "computed_with_file": 126,
      "holds_with_file": false
     },
@@ -6496,8 +6592,10 @@
      ],
      "printed": 13,
      "printed_label": "small total printed under the column",
+     "printed_with_scan": 13,
      "computed_with_scan": 13,
      "holds_with_scan": true,
+     "printed_with_file": 13,
      "computed_with_file": 10,
      "holds_with_file": false
     }
@@ -6716,8 +6814,10 @@
      ],
      "printed": 6,
      "printed_label": "printed total at the right end of the row",
+     "printed_with_scan": 6,
      "computed_with_scan": 6,
      "holds_with_scan": true,
+     "printed_with_file": 6,
      "computed_with_file": 5,
      "holds_with_file": false
     },
@@ -6757,8 +6857,10 @@
      ],
      "printed": 5,
      "printed_label": "small total printed under the column",
+     "printed_with_scan": 5,
      "computed_with_scan": 5,
      "holds_with_scan": true,
+     "printed_with_file": 5,
      "computed_with_file": 4,
      "holds_with_file": false
     }
@@ -6977,8 +7079,10 @@
      ],
      "printed": 129,
      "printed_label": "printed total at the right end of the row",
+     "printed_with_scan": 129,
      "computed_with_scan": 129,
      "holds_with_scan": true,
+     "printed_with_file": 129,
      "computed_with_file": 130,
      "holds_with_file": false
     },
@@ -7018,8 +7122,10 @@
      ],
      "printed": 5,
      "printed_label": "small total printed under the column",
+     "printed_with_scan": 5,
      "computed_with_scan": 5,
      "holds_with_scan": true,
+     "printed_with_file": 5,
      "computed_with_file": 6,
      "holds_with_file": false
     }
@@ -7094,8 +7200,10 @@
      ],
      "printed": 16,
      "printed_label": "small total printed under the column",
+     "printed_with_scan": 16,
      "computed_with_scan": 16,
      "holds_with_scan": true,
+     "printed_with_file": 7,
      "computed_with_file": 16,
      "holds_with_file": false
     },
@@ -7279,8 +7387,10 @@
      ],
      "printed": 364,
      "printed_label": "grand total",
+     "printed_with_scan": 364,
      "computed_with_scan": 364,
      "holds_with_scan": true,
+     "printed_with_file": 364,
      "computed_with_file": 355,
      "holds_with_file": false
     }
@@ -7499,8 +7609,10 @@
      ],
      "printed": 229,
      "printed_label": "printed total at the right end of the row",
+     "printed_with_scan": 229,
      "computed_with_scan": 229,
      "holds_with_scan": true,
+     "printed_with_file": 229,
      "computed_with_file": 219,
      "holds_with_file": false
     },
@@ -7540,8 +7652,10 @@
      ],
      "printed": 16,
      "printed_label": "small total printed under the column",
+     "printed_with_scan": 16,
      "computed_with_scan": 16,
      "holds_with_scan": true,
+     "printed_with_file": 16,
      "computed_with_file": 6,
      "holds_with_file": false
     }
@@ -7760,8 +7874,10 @@
      ],
      "printed": 129,
      "printed_label": "printed total at the right end of the row",
+     "printed_with_scan": 129,
      "computed_with_scan": 129,
      "holds_with_scan": true,
+     "printed_with_file": 129,
      "computed_with_file": 130,
      "holds_with_file": false
     },
@@ -7801,8 +7917,10 @@
      ],
      "printed": 16,
      "printed_label": "small total printed under the column",
+     "printed_with_scan": 16,
      "computed_with_scan": 16,
      "holds_with_scan": true,
+     "printed_with_file": 16,
      "computed_with_file": 17,
      "holds_with_file": false
     }
@@ -8021,8 +8139,10 @@
      ],
      "printed": 6,
      "printed_label": "printed total at the right end of the row",
+     "printed_with_scan": 6,
      "computed_with_scan": 6,
      "holds_with_scan": true,
+     "printed_with_file": 6,
      "computed_with_file": 7,
      "holds_with_file": false
     },
@@ -8062,8 +8182,10 @@
      ],
      "printed": 40,
      "printed_label": "small total printed under the column",
+     "printed_with_scan": 40,
      "computed_with_scan": 40,
      "holds_with_scan": true,
+     "printed_with_file": 40,
      "computed_with_file": 41,
      "holds_with_file": false
     }
@@ -8282,8 +8404,10 @@
      ],
      "printed": 129,
      "printed_label": "printed total at the right end of the row",
+     "printed_with_scan": 129,
      "computed_with_scan": 129,
      "holds_with_scan": true,
+     "printed_with_file": 129,
      "computed_with_file": 128,
      "holds_with_file": false
     },
@@ -8323,8 +8447,10 @@
      ],
      "printed": 40,
      "printed_label": "small total printed under the column",
+     "printed_with_scan": 40,
      "computed_with_scan": 40,
      "holds_with_scan": true,
+     "printed_with_file": 40,
      "computed_with_file": 39,
      "holds_with_file": false
     }
@@ -8543,8 +8669,10 @@
      ],
      "printed": 6,
      "printed_label": "printed total at the right end of the row",
+     "printed_with_scan": 6,
      "computed_with_scan": 6,
      "holds_with_scan": true,
+     "printed_with_file": 6,
      "computed_with_file": 5,
      "holds_with_file": false
     },
@@ -8584,8 +8712,10 @@
      ],
      "printed": 21,
      "printed_label": "small total printed under the column",
+     "printed_with_scan": 21,
      "computed_with_scan": 21,
      "holds_with_scan": true,
+     "printed_with_file": 21,
      "computed_with_file": 20,
      "holds_with_file": false
     }
@@ -8804,8 +8934,10 @@
      ],
      "printed": 129,
      "printed_label": "printed total at the right end of the row",
+     "printed_with_scan": 129,
      "computed_with_scan": 129,
      "holds_with_scan": true,
+     "printed_with_file": 129,
      "computed_with_file": 130,
      "holds_with_file": false
     },
@@ -8845,8 +8977,10 @@
      ],
      "printed": 21,
      "printed_label": "small total printed under the column",
+     "printed_with_scan": 21,
      "computed_with_scan": 21,
      "holds_with_scan": true,
+     "printed_with_file": 21,
      "computed_with_file": 22,
      "holds_with_file": false
     }
@@ -8921,8 +9055,10 @@
      ],
      "printed": 10,
      "printed_label": "small total printed under the column",
+     "printed_with_scan": 10,
      "computed_with_scan": 10,
      "holds_with_scan": true,
+     "printed_with_file": 0,
      "computed_with_file": 10,
      "holds_with_file": false
     },
@@ -9106,8 +9242,10 @@
      ],
      "printed": 364,
      "printed_label": "grand total",
+     "printed_with_scan": 364,
      "computed_with_scan": 364,
      "holds_with_scan": true,
+     "printed_with_file": 364,
      "computed_with_file": 354,
      "holds_with_file": false
     }
@@ -9326,8 +9464,10 @@
      ],
      "printed": 229,
      "printed_label": "printed total at the right end of the row",
+     "printed_with_scan": 229,
      "computed_with_scan": 229,
      "holds_with_scan": true,
+     "printed_with_file": 229,
      "computed_with_file": 228,
      "holds_with_file": false
     },
@@ -9367,8 +9507,10 @@
      ],
      "printed": 10,
      "printed_label": "small total printed under the column",
+     "printed_with_scan": 10,
      "computed_with_scan": 10,
      "holds_with_scan": true,
+     "printed_with_file": 10,
      "computed_with_file": 9,
      "holds_with_file": false
     }
@@ -9587,8 +9729,10 @@
      ],
      "printed": 129,
      "printed_label": "printed total at the right end of the row",
+     "printed_with_scan": 129,
      "computed_with_scan": 129,
      "holds_with_scan": true,
+     "printed_with_file": 129,
      "computed_with_file": 120,
      "holds_with_file": false
     },
@@ -9628,8 +9772,10 @@
      ],
      "printed": 10,
      "printed_label": "small total printed under the column",
+     "printed_with_scan": 10,
      "computed_with_scan": 10,
      "holds_with_scan": true,
+     "printed_with_file": 10,
      "computed_with_file": 1,
      "holds_with_file": false
     }
@@ -9704,8 +9850,10 @@
      ],
      "printed": 4,
      "printed_label": "small total printed under the column",
+     "printed_with_scan": 4,
      "computed_with_scan": 4,
      "holds_with_scan": true,
+     "printed_with_file": 6,
      "computed_with_file": 4,
      "holds_with_file": false
     },
@@ -9889,8 +10037,10 @@
      ],
      "printed": 58,
      "printed_label": "grand total",
+     "printed_with_scan": 58,
      "computed_with_scan": 58,
      "holds_with_scan": true,
+     "printed_with_file": 58,
      "computed_with_file": 60,
      "holds_with_file": false
     }
@@ -10109,8 +10259,10 @@
      ],
      "printed": 28,
      "printed_label": "printed total at the right end of the row",
+     "printed_with_scan": 28,
      "computed_with_scan": 28,
      "holds_with_scan": true,
+     "printed_with_file": 28,
      "computed_with_file": 30,
      "holds_with_file": false
     },
@@ -10150,8 +10302,10 @@
      ],
      "printed": 4,
      "printed_label": "small total printed under the column",
+     "printed_with_scan": 4,
      "computed_with_scan": 4,
      "holds_with_scan": true,
+     "printed_with_file": 4,
      "computed_with_file": 6,
      "holds_with_file": false
     }
@@ -10370,8 +10524,10 @@
      ],
      "printed": 28,
      "printed_label": "printed total at the right end of the row",
+     "printed_with_scan": 28,
      "computed_with_scan": 28,
      "holds_with_scan": true,
+     "printed_with_file": 28,
      "computed_with_file": 26,
      "holds_with_file": false
     },
@@ -10411,8 +10567,10 @@
      ],
      "printed": 3,
      "printed_label": "small total printed under the column",
+     "printed_with_scan": 3,
      "computed_with_scan": 3,
      "holds_with_scan": true,
+     "printed_with_file": 3,
      "computed_with_file": 1,
      "holds_with_file": false
     }
@@ -10631,8 +10789,10 @@
      ],
      "printed": 29,
      "printed_label": "printed total at the right end of the row",
+     "printed_with_scan": 29,
      "computed_with_scan": 29,
      "holds_with_scan": true,
+     "printed_with_file": 29,
      "computed_with_file": 31,
      "holds_with_file": false
     },
@@ -10672,8 +10832,10 @@
      ],
      "printed": 3,
      "printed_label": "small total printed under the column",
+     "printed_with_scan": 3,
      "computed_with_scan": 3,
      "holds_with_scan": true,
+     "printed_with_file": 3,
      "computed_with_file": 5,
      "holds_with_file": false
     }
@@ -10748,8 +10910,10 @@
      ],
      "printed": 6,
      "printed_label": "small total printed under the column",
+     "printed_with_scan": 6,
      "computed_with_scan": 6,
      "holds_with_scan": true,
+     "printed_with_file": 5,
      "computed_with_file": 6,
      "holds_with_file": false
     },
@@ -10933,8 +11097,10 @@
      ],
      "printed": 58,
      "printed_label": "grand total",
+     "printed_with_scan": 58,
      "computed_with_scan": 58,
      "holds_with_scan": true,
+     "printed_with_file": 58,
      "computed_with_file": 57,
      "holds_with_file": false
     }
@@ -11153,8 +11319,10 @@
      ],
      "printed": 28,
      "printed_label": "printed total at the right end of the row",
+     "printed_with_scan": 28,
      "computed_with_scan": 28,
      "holds_with_scan": true,
+     "printed_with_file": 28,
      "computed_with_file": 27,
      "holds_with_file": false
     },
@@ -11194,8 +11362,10 @@
      ],
      "printed": 6,
      "printed_label": "small total printed under the column",
+     "printed_with_scan": 6,
      "computed_with_scan": 6,
      "holds_with_scan": true,
+     "printed_with_file": 6,
      "computed_with_file": 5,
      "holds_with_file": false
     }
@@ -11270,8 +11440,10 @@
      ],
      "printed": 1,
      "printed_label": "small total printed under the column",
+     "printed_with_scan": 1,
      "computed_with_scan": 1,
      "holds_with_scan": true,
+     "printed_with_file": 6,
      "computed_with_file": 1,
      "holds_with_file": false
     },
@@ -11455,8 +11627,10 @@
      ],
      "printed": 58,
      "printed_label": "grand total",
+     "printed_with_scan": 58,
      "computed_with_scan": 58,
      "holds_with_scan": true,
+     "printed_with_file": 58,
      "computed_with_file": 63,
      "holds_with_file": false
     }
@@ -11675,8 +11849,10 @@
      ],
      "printed": 29,
      "printed_label": "printed total at the right end of the row",
+     "printed_with_scan": 29,
      "computed_with_scan": 29,
      "holds_with_scan": true,
+     "printed_with_file": 29,
      "computed_with_file": 34,
      "holds_with_file": false
     },
@@ -11716,8 +11892,10 @@
      ],
      "printed": 1,
      "printed_label": "small total printed under the column",
+     "printed_with_scan": 1,
      "computed_with_scan": 1,
      "holds_with_scan": true,
+     "printed_with_file": 1,
      "computed_with_file": 6,
      "holds_with_file": false
     }
@@ -11792,8 +11970,10 @@
      ],
      "printed": 1,
      "printed_label": "small total printed under the column",
+     "printed_with_scan": 1,
      "computed_with_scan": 1,
      "holds_with_scan": true,
+     "printed_with_file": 3,
      "computed_with_file": 1,
      "holds_with_file": false
     },
@@ -11977,8 +12157,10 @@
      ],
      "printed": 58,
      "printed_label": "grand total",
+     "printed_with_scan": 58,
      "computed_with_scan": 58,
      "holds_with_scan": true,
+     "printed_with_file": 58,
      "computed_with_file": 60,
      "holds_with_file": false
     }
@@ -12197,8 +12379,10 @@
      ],
      "printed": 29,
      "printed_label": "printed total at the right end of the row",
+     "printed_with_scan": 29,
      "computed_with_scan": 29,
      "holds_with_scan": true,
+     "printed_with_file": 29,
      "computed_with_file": 31,
      "holds_with_file": false
     },
@@ -12238,8 +12422,10 @@
      ],
      "printed": 1,
      "printed_label": "small total printed under the column",
+     "printed_with_scan": 1,
      "computed_with_scan": 1,
      "holds_with_scan": true,
+     "printed_with_file": 1,
      "computed_with_file": 3,
      "holds_with_file": false
     }
@@ -12314,8 +12500,10 @@
      ],
      "printed": 2,
      "printed_label": "small total printed under the column",
+     "printed_with_scan": 2,
      "computed_with_scan": 2,
      "holds_with_scan": true,
+     "printed_with_file": 0,
      "computed_with_file": 2,
      "holds_with_file": false
     },
@@ -12499,8 +12687,10 @@
      ],
      "printed": 58,
      "printed_label": "grand total",
+     "printed_with_scan": 58,
      "computed_with_scan": 58,
      "holds_with_scan": true,
+     "printed_with_file": 58,
      "computed_with_file": 56,
      "holds_with_file": false
     }
@@ -12719,8 +12909,10 @@
      ],
      "printed": 28,
      "printed_label": "printed total at the right end of the row",
+     "printed_with_scan": 28,
      "computed_with_scan": 28,
      "holds_with_scan": true,
+     "printed_with_file": 28,
      "computed_with_file": 27,
      "holds_with_file": false
     },
@@ -12760,8 +12952,10 @@
      ],
      "printed": 2,
      "printed_label": "small total printed under the column",
+     "printed_with_scan": 2,
      "computed_with_scan": 2,
      "holds_with_scan": true,
+     "printed_with_file": 2,
      "computed_with_file": 1,
      "holds_with_file": false
     }
@@ -12980,8 +13174,10 @@
      ],
      "printed": 29,
      "printed_label": "printed total at the right end of the row",
+     "printed_with_scan": 29,
      "computed_with_scan": 29,
      "holds_with_scan": true,
+     "printed_with_file": 29,
      "computed_with_file": 28,
      "holds_with_file": false
     },
@@ -13021,8 +13217,10 @@
      ],
      "printed": 2,
      "printed_label": "small total printed under the column",
+     "printed_with_scan": 2,
      "computed_with_scan": 2,
      "holds_with_scan": true,
+     "printed_with_file": 2,
      "computed_with_file": 1,
      "holds_with_file": false
     }
@@ -13097,8 +13295,10 @@
      ],
      "printed": 6,
      "printed_label": "small total printed under the column",
+     "printed_with_scan": 6,
      "computed_with_scan": 6,
      "holds_with_scan": true,
+     "printed_with_file": 9,
      "computed_with_file": 6,
      "holds_with_file": false
     },
@@ -13282,8 +13482,10 @@
      ],
      "printed": 58,
      "printed_label": "grand total",
+     "printed_with_scan": 58,
      "computed_with_scan": 58,
      "holds_with_scan": true,
+     "printed_with_file": 58,
      "computed_with_file": 61,
      "holds_with_file": false
     }
@@ -13502,8 +13704,10 @@
      ],
      "printed": 1,
      "printed_label": "printed total at the right end of the row",
+     "printed_with_scan": 1,
      "computed_with_scan": 1,
      "holds_with_scan": true,
+     "printed_with_file": 1,
      "computed_with_file": 2,
      "holds_with_file": false
     },
@@ -13543,8 +13747,10 @@
      ],
      "printed": 6,
      "printed_label": "small total printed under the column",
+     "printed_with_scan": 6,
      "computed_with_scan": 6,
      "holds_with_scan": true,
+     "printed_with_file": 6,
      "computed_with_file": 7,
      "holds_with_file": false
     }
@@ -13763,8 +13969,10 @@
      ],
      "printed": 29,
      "printed_label": "printed total at the right end of the row",
+     "printed_with_scan": 29,
      "computed_with_scan": 29,
      "holds_with_scan": true,
+     "printed_with_file": 29,
      "computed_with_file": 31,
      "holds_with_file": false
     },
@@ -13804,8 +14012,10 @@
      ],
      "printed": 6,
      "printed_label": "small total printed under the column",
+     "printed_with_scan": 6,
      "computed_with_scan": 6,
      "holds_with_scan": true,
+     "printed_with_file": 6,
      "computed_with_file": 8,
      "holds_with_file": false
     }
@@ -13880,8 +14090,10 @@
      ],
      "printed": 5,
      "printed_label": "small total printed under the column",
+     "printed_with_scan": 5,
      "computed_with_scan": 5,
      "holds_with_scan": true,
+     "printed_with_file": 1,
      "computed_with_file": 5,
      "holds_with_file": false
     },
@@ -14065,8 +14277,10 @@
      ],
      "printed": 58,
      "printed_label": "grand total",
+     "printed_with_scan": 58,
      "computed_with_scan": 58,
      "holds_with_scan": true,
+     "printed_with_file": 58,
      "computed_with_file": 54,
      "holds_with_file": false
     }
@@ -14285,8 +14499,10 @@
      ],
      "printed": 29,
      "printed_label": "printed total at the right end of the row",
+     "printed_with_scan": 29,
      "computed_with_scan": 29,
      "holds_with_scan": true,
+     "printed_with_file": 29,
      "computed_with_file": 25,
      "holds_with_file": false
     },
@@ -14326,8 +14542,10 @@
      ],
      "printed": 5,
      "printed_label": "small total printed under the column",
+     "printed_with_scan": 5,
      "computed_with_scan": 5,
      "holds_with_scan": true,
+     "printed_with_file": 5,
      "computed_with_file": 1,
      "holds_with_file": false
     }
@@ -14402,8 +14620,10 @@
      ],
      "printed": 13,
      "printed_label": "small total printed under the column",
+     "printed_with_scan": 13,
      "computed_with_scan": 13,
      "holds_with_scan": true,
+     "printed_with_file": 9,
      "computed_with_file": 13,
      "holds_with_file": false
     },
@@ -14587,8 +14807,10 @@
      ],
      "printed": 58,
      "printed_label": "grand total",
+     "printed_with_scan": 58,
      "computed_with_scan": 58,
      "holds_with_scan": true,
+     "printed_with_file": 58,
      "computed_with_file": 54,
      "holds_with_file": false
     }
@@ -14807,8 +15029,10 @@
      ],
      "printed": 28,
      "printed_label": "printed total at the right end of the row",
+     "printed_with_scan": 28,
      "computed_with_scan": 28,
      "holds_with_scan": true,
+     "printed_with_file": 28,
      "computed_with_file": 19,
      "holds_with_file": false
     },
@@ -14848,8 +15072,10 @@
      ],
      "printed": 13,
      "printed_label": "small total printed under the column",
+     "printed_with_scan": 13,
      "computed_with_scan": 13,
      "holds_with_scan": true,
+     "printed_with_file": 13,
      "computed_with_file": 4,
      "holds_with_file": false
     }
@@ -15068,8 +15294,10 @@
      ],
      "printed": 29,
      "printed_label": "printed total at the right end of the row",
+     "printed_with_scan": 29,
      "computed_with_scan": 29,
      "holds_with_scan": true,
+     "printed_with_file": 29,
      "computed_with_file": 34,
      "holds_with_file": false
     },
@@ -15109,8 +15337,10 @@
      ],
      "printed": 13,
      "printed_label": "small total printed under the column",
+     "printed_with_scan": 13,
      "computed_with_scan": 13,
      "holds_with_scan": true,
+     "printed_with_file": 13,
      "computed_with_file": 18,
      "holds_with_file": false
     }
@@ -15185,8 +15415,10 @@
      ],
      "printed": 1,
      "printed_label": "small total printed under the column",
+     "printed_with_scan": 1,
      "computed_with_scan": 1,
      "holds_with_scan": true,
+     "printed_with_file": 0,
      "computed_with_file": 1,
      "holds_with_file": false
     },
@@ -15370,8 +15602,10 @@
      ],
      "printed": 58,
      "printed_label": "grand total",
+     "printed_with_scan": 58,
      "computed_with_scan": 58,
      "holds_with_scan": true,
+     "printed_with_file": 58,
      "computed_with_file": 57,
      "holds_with_file": false
     }
@@ -15590,8 +15824,10 @@
      ],
      "printed": 28,
      "printed_label": "printed total at the right end of the row",
+     "printed_with_scan": 28,
      "computed_with_scan": 28,
      "holds_with_scan": true,
+     "printed_with_file": 28,
      "computed_with_file": 27,
      "holds_with_file": false
     },
@@ -15631,8 +15867,10 @@
      ],
      "printed": 1,
      "printed_label": "small total printed under the column",
+     "printed_with_scan": 1,
      "computed_with_scan": 1,
      "holds_with_scan": true,
+     "printed_with_file": 1,
      "computed_with_file": 0,
      "holds_with_file": false
     }
@@ -15851,8 +16089,10 @@
      ],
      "printed": 1019,
      "printed_label": "printed total at the right end of the row",
+     "printed_with_scan": 1019,
      "computed_with_scan": 1019,
      "holds_with_scan": true,
+     "printed_with_file": 1019,
      "computed_with_file": 1020,
      "holds_with_file": false
     },
@@ -15892,8 +16132,10 @@
      ],
      "printed": 4,
      "printed_label": "small total printed under the column",
+     "printed_with_scan": 4,
      "computed_with_scan": 4,
      "holds_with_scan": true,
+     "printed_with_file": 4,
      "computed_with_file": 5,
      "holds_with_file": false
     }
@@ -16112,8 +16354,10 @@
      ],
      "printed": 669,
      "printed_label": "printed total at the right end of the row",
+     "printed_with_scan": 669,
      "computed_with_scan": 669,
      "holds_with_scan": true,
+     "printed_with_file": 669,
      "computed_with_file": 668,
      "holds_with_file": false
     },
@@ -16153,8 +16397,10 @@
      ],
      "printed": 4,
      "printed_label": "small total printed under the column",
+     "printed_with_scan": 4,
      "computed_with_scan": 4,
      "holds_with_scan": true,
+     "printed_with_file": 4,
      "computed_with_file": 3,
      "holds_with_file": false
     }
@@ -16229,8 +16475,10 @@
      ],
      "printed": 3,
      "printed_label": "small total printed under the column",
+     "printed_with_scan": 3,
      "computed_with_scan": 3,
      "holds_with_scan": true,
+     "printed_with_file": 2,
      "computed_with_file": 3,
      "holds_with_file": false
     },
@@ -16414,8 +16662,10 @@
      ],
      "printed": 1806,
      "printed_label": "grand total",
+     "printed_with_scan": 1806,
      "computed_with_scan": 1806,
      "holds_with_scan": true,
+     "printed_with_file": 1806,
      "computed_with_file": 1805,
      "holds_with_file": false
     }
@@ -16634,8 +16884,10 @@
      ],
      "printed": 669,
      "printed_label": "printed total at the right end of the row",
+     "printed_with_scan": 669,
      "computed_with_scan": 669,
      "holds_with_scan": true,
+     "printed_with_file": 669,
      "computed_with_file": 668,
      "holds_with_file": false
     },
@@ -16675,8 +16927,10 @@
      ],
      "printed": 3,
      "printed_label": "small total printed under the column",
+     "printed_with_scan": 3,
      "computed_with_scan": 3,
      "holds_with_scan": true,
+     "printed_with_file": 3,
      "computed_with_file": 2,
      "holds_with_file": false
     }
@@ -16751,8 +17005,10 @@
      ],
      "printed": 4,
      "printed_label": "small total printed under the column",
+     "printed_with_scan": 4,
      "computed_with_scan": 4,
      "holds_with_scan": true,
+     "printed_with_file": 2,
      "computed_with_file": 4,
      "holds_with_file": false
     },
@@ -16936,8 +17192,10 @@
      ],
      "printed": 200,
      "printed_label": "grand total",
+     "printed_with_scan": 200,
      "computed_with_scan": 200,
      "holds_with_scan": true,
+     "printed_with_file": 200,
      "computed_with_file": 198,
      "holds_with_file": false
     }
@@ -17156,8 +17414,10 @@
      ],
      "printed": 117,
      "printed_label": "printed total at the right end of the row",
+     "printed_with_scan": 117,
      "computed_with_scan": 117,
      "holds_with_scan": true,
+     "printed_with_file": 117,
      "computed_with_file": 115,
      "holds_with_file": false
     },
@@ -17197,8 +17457,10 @@
      ],
      "printed": 4,
      "printed_label": "small total printed under the column",
+     "printed_with_scan": 4,
      "computed_with_scan": 4,
      "holds_with_scan": true,
+     "printed_with_file": 4,
      "computed_with_file": 2,
      "holds_with_file": false
     }
@@ -17273,8 +17535,10 @@
      ],
      "printed": 2,
      "printed_label": "small total printed under the column",
+     "printed_with_scan": 2,
      "computed_with_scan": 2,
      "holds_with_scan": true,
+     "printed_with_file": 7,
      "computed_with_file": 2,
      "holds_with_file": false
     },
@@ -17458,8 +17722,10 @@
      ],
      "printed": 200,
      "printed_label": "grand total",
+     "printed_with_scan": 200,
      "computed_with_scan": 200,
      "holds_with_scan": true,
+     "printed_with_file": 200,
      "computed_with_file": 205,
      "holds_with_file": false
     }
@@ -17678,8 +17944,10 @@
      ],
      "printed": 117,
      "printed_label": "printed total at the right end of the row",
+     "printed_with_scan": 117,
      "computed_with_scan": 117,
      "holds_with_scan": true,
+     "printed_with_file": 117,
      "computed_with_file": 120,
      "holds_with_file": false
     },
@@ -17719,8 +17987,10 @@
      ],
      "printed": 2,
      "printed_label": "small total printed under the column",
+     "printed_with_scan": 2,
      "computed_with_scan": 2,
      "holds_with_scan": true,
+     "printed_with_file": 2,
      "computed_with_file": 5,
      "holds_with_file": false
     }
@@ -17939,8 +18209,10 @@
      ],
      "printed": 80,
      "printed_label": "printed total at the right end of the row",
+     "printed_with_scan": 80,
      "computed_with_scan": 80,
      "holds_with_scan": true,
+     "printed_with_file": 80,
      "computed_with_file": 82,
      "holds_with_file": false
     },
@@ -17980,8 +18252,10 @@
      ],
      "printed": 2,
      "printed_label": "small total printed under the column",
+     "printed_with_scan": 2,
      "computed_with_scan": 2,
      "holds_with_scan": true,
+     "printed_with_file": 2,
      "computed_with_file": 4,
      "holds_with_file": false
     }
@@ -18056,8 +18330,10 @@
      ],
      "printed": 7,
      "printed_label": "small total printed under the column",
+     "printed_with_scan": 7,
      "computed_with_scan": 7,
      "holds_with_scan": true,
+     "printed_with_file": 4,
      "computed_with_file": 7,
      "holds_with_file": false
     },
@@ -18241,8 +18517,10 @@
      ],
      "printed": 200,
      "printed_label": "grand total",
+     "printed_with_scan": 200,
      "computed_with_scan": 200,
      "holds_with_scan": true,
+     "printed_with_file": 200,
      "computed_with_file": 197,
      "holds_with_file": false
     }
@@ -18461,8 +18739,10 @@
      ],
      "printed": 117,
      "printed_label": "printed total at the right end of the row",
+     "printed_with_scan": 117,
      "computed_with_scan": 117,
      "holds_with_scan": true,
+     "printed_with_file": 117,
      "computed_with_file": 115,
      "holds_with_file": false
     },
@@ -18502,8 +18782,10 @@
      ],
      "printed": 7,
      "printed_label": "small total printed under the column",
+     "printed_with_scan": 7,
      "computed_with_scan": 7,
      "holds_with_scan": true,
+     "printed_with_file": 7,
      "computed_with_file": 5,
      "holds_with_file": false
     }
@@ -18722,8 +19004,10 @@
      ],
      "printed": 80,
      "printed_label": "printed total at the right end of the row",
+     "printed_with_scan": 80,
      "computed_with_scan": 80,
      "holds_with_scan": true,
+     "printed_with_file": 80,
      "computed_with_file": 79,
      "holds_with_file": false
     },
@@ -18763,8 +19047,10 @@
      ],
      "printed": 7,
      "printed_label": "small total printed under the column",
+     "printed_with_scan": 7,
      "computed_with_scan": 7,
      "holds_with_scan": true,
+     "printed_with_file": 7,
      "computed_with_file": 6,
      "holds_with_file": false
     }
@@ -18839,8 +19125,10 @@
      ],
      "printed": 4,
      "printed_label": "small total printed under the column",
+     "printed_with_scan": 4,
      "computed_with_scan": 4,
      "holds_with_scan": true,
+     "printed_with_file": 1,
      "computed_with_file": 4,
      "holds_with_file": false
     },
@@ -19024,8 +19312,10 @@
      ],
      "printed": 200,
      "printed_label": "grand total",
+     "printed_with_scan": 200,
      "computed_with_scan": 200,
      "holds_with_scan": true,
+     "printed_with_file": 200,
      "computed_with_file": 197,
      "holds_with_file": false
     }
@@ -19244,8 +19534,10 @@
      ],
      "printed": 80,
      "printed_label": "printed total at the right end of the row",
+     "printed_with_scan": 80,
      "computed_with_scan": 80,
      "holds_with_scan": true,
+     "printed_with_file": 80,
      "computed_with_file": 77,
      "holds_with_file": false
     },
@@ -19285,8 +19577,10 @@
      ],
      "printed": 4,
      "printed_label": "small total printed under the column",
+     "printed_with_scan": 4,
      "computed_with_scan": 4,
      "holds_with_scan": true,
+     "printed_with_file": 4,
      "computed_with_file": 1,
      "holds_with_file": false
     }
@@ -19505,8 +19799,10 @@
      ],
      "printed": 105,
      "printed_label": "printed total at the right end of the row",
+     "printed_with_scan": 105,
      "computed_with_scan": 105,
      "holds_with_scan": true,
+     "printed_with_file": 105,
      "computed_with_file": 107,
      "holds_with_file": false
     },
@@ -19546,8 +19842,10 @@
      ],
      "printed": 8,
      "printed_label": "small total printed under the column",
+     "printed_with_scan": 8,
      "computed_with_scan": 8,
      "holds_with_scan": true,
+     "printed_with_file": 8,
      "computed_with_file": 10,
      "holds_with_file": false
     }
@@ -19766,8 +20064,10 @@
      ],
      "printed": 645,
      "printed_label": "printed total at the right end of the row",
+     "printed_with_scan": 645,
      "computed_with_scan": 645,
      "holds_with_scan": true,
+     "printed_with_file": 645,
      "computed_with_file": 643,
      "holds_with_file": false
     },
@@ -19807,8 +20107,10 @@
      ],
      "printed": 8,
      "printed_label": "small total printed under the column",
+     "printed_with_scan": 8,
      "computed_with_scan": 8,
      "holds_with_scan": true,
+     "printed_with_file": 8,
      "computed_with_file": 6,
      "holds_with_file": false
     }
@@ -19883,8 +20185,10 @@
      ],
      "printed": 1347,
      "printed_label": "small total printed under the column",
+     "printed_with_scan": 1347,
      "computed_with_scan": 1347,
      "holds_with_scan": true,
+     "printed_with_file": 0,
      "computed_with_file": 1347,
      "holds_with_file": false
     },
@@ -19924,8 +20228,10 @@
      ],
      "printed": 2642,
      "printed_label": "grand total",
+     "printed_with_scan": 2642,
      "computed_with_scan": 2642,
      "holds_with_scan": true,
+     "printed_with_file": 2642,
      "computed_with_file": 1295,
      "holds_with_file": false
     }
@@ -20008,8 +20314,10 @@
      ],
      "printed": 242,
      "printed_label": "small total printed under the column",
+     "printed_with_scan": 242,
      "computed_with_scan": 242,
      "holds_with_scan": true,
+     "printed_with_file": 0,
      "computed_with_file": 242,
      "holds_with_file": false
     },
@@ -20049,8 +20357,10 @@
      ],
      "printed": 2642,
      "printed_label": "grand total",
+     "printed_with_scan": 2642,
      "computed_with_scan": 2642,
      "holds_with_scan": true,
+     "printed_with_file": 2642,
      "computed_with_file": 2400,
      "holds_with_file": false
     }
@@ -20133,8 +20443,10 @@
      ],
      "printed": 502,
      "printed_label": "small total printed under the column",
+     "printed_with_scan": 502,
      "computed_with_scan": 502,
      "holds_with_scan": true,
+     "printed_with_file": 0,
      "computed_with_file": 502,
      "holds_with_file": false
     },
@@ -20201,8 +20513,10 @@
      ],
      "printed": 2006,
      "printed_label": "grand total",
+     "printed_with_scan": 2006,
      "computed_with_scan": 2006,
      "holds_with_scan": true,
+     "printed_with_file": 2006,
      "computed_with_file": 1504,
      "holds_with_file": false
     }
@@ -20304,8 +20618,10 @@
      ],
      "printed": 2006,
      "printed_label": "grand total",
+     "printed_with_scan": 2006,
      "computed_with_scan": 2006,
      "holds_with_scan": true,
+     "printed_with_file": 2006,
      "computed_with_file": 2508,
      "holds_with_file": false
     }
@@ -20380,8 +20696,10 @@
      ],
      "printed": 179,
      "printed_label": "small total printed under the column",
+     "printed_with_scan": 179,
      "computed_with_scan": 179,
      "holds_with_scan": true,
+     "printed_with_file": 0,
      "computed_with_file": 179,
      "holds_with_file": false
     },
@@ -20448,8 +20766,10 @@
      ],
      "printed": 2006,
      "printed_label": "grand total",
+     "printed_with_scan": 2006,
      "computed_with_scan": 2006,
      "holds_with_scan": true,
+     "printed_with_file": 2006,
      "computed_with_file": 1827,
      "holds_with_file": false
     }
@@ -20551,8 +20871,10 @@
      ],
      "printed": 2006,
      "printed_label": "grand total",
+     "printed_with_scan": 2006,
      "computed_with_scan": 2006,
      "holds_with_scan": true,
+     "printed_with_file": 2006,
      "computed_with_file": 2185,
      "holds_with_file": false
     }
@@ -20627,8 +20949,10 @@
      ],
      "printed": 182,
      "printed_label": "small total printed under the column",
+     "printed_with_scan": 182,
      "computed_with_scan": 182,
      "holds_with_scan": true,
+     "printed_with_file": 0,
      "computed_with_file": 182,
      "holds_with_file": false
     },
@@ -20695,8 +21019,10 @@
      ],
      "printed": 2006,
      "printed_label": "grand total",
+     "printed_with_scan": 2006,
      "computed_with_scan": 2006,
      "holds_with_scan": true,
+     "printed_with_file": 2006,
      "computed_with_file": 1824,
      "holds_with_file": false
     }
@@ -20779,8 +21105,10 @@
      ],
      "printed": 571,
      "printed_label": "small total printed under the column",
+     "printed_with_scan": 571,
      "computed_with_scan": 571,
      "holds_with_scan": true,
+     "printed_with_file": 0,
      "computed_with_file": 571,
      "holds_with_file": false
     },
@@ -20847,8 +21175,10 @@
      ],
      "printed": 2006,
      "printed_label": "grand total",
+     "printed_with_scan": 2006,
      "computed_with_scan": 2006,
      "holds_with_scan": true,
+     "printed_with_file": 2006,
      "computed_with_file": 1435,
      "holds_with_file": false
     }
@@ -20931,8 +21261,10 @@
      ],
      "printed": 320,
      "printed_label": "small total printed under the column",
+     "printed_with_scan": 320,
      "computed_with_scan": 320,
      "holds_with_scan": true,
+     "printed_with_file": 181,
      "computed_with_file": 320,
      "holds_with_file": false
     },
@@ -21035,8 +21367,10 @@
      ],
      "printed": 5320,
      "printed_label": "grand total",
+     "printed_with_scan": 5320,
      "computed_with_scan": 5323,
      "holds_with_scan": false,
+     "printed_with_file": 5320,
      "computed_with_file": 5184,
      "holds_with_file": false
     }
@@ -21054,7 +21388,7 @@
     "model": "claude-sonnet-4.6",
     "dpi": 400,
     "value": 320,
-    "crop": "runs/20261011-135350/crops/audit-reread-0002-p6-b3.png",
+    "crop": "runs/20261011-161207/crops/audit-reread-0002-p6-b3.png",
     "error": null
    },
    "reread_disagrees": false,
@@ -21117,8 +21451,10 @@
      ],
      "printed": 181,
      "printed_label": "small total printed under the column",
+     "printed_with_scan": 181,
      "computed_with_scan": 181,
      "holds_with_scan": true,
+     "printed_with_file": 311,
      "computed_with_file": 181,
      "holds_with_file": false
     },
@@ -21221,8 +21557,10 @@
      ],
      "printed": 5320,
      "printed_label": "grand total",
+     "printed_with_scan": 5320,
      "computed_with_scan": 5323,
      "holds_with_scan": false,
+     "printed_with_file": 5320,
      "computed_with_file": 5453,
      "holds_with_file": false
     }
@@ -21240,7 +21578,7 @@
     "model": "claude-sonnet-4.6",
     "dpi": 400,
     "value": 181,
-    "crop": "runs/20261011-135350/crops/audit-reread-0003-p6-b3.png",
+    "crop": "runs/20261011-161207/crops/audit-reread-0003-p6-b3.png",
     "error": null
    },
    "reread_disagrees": false,
@@ -21303,8 +21641,10 @@
      ],
      "printed": 311,
      "printed_label": "small total printed under the column",
+     "printed_with_scan": 311,
      "computed_with_scan": 311,
      "holds_with_scan": true,
+     "printed_with_file": 1363,
      "computed_with_file": 311,
      "holds_with_file": false
     },
@@ -21407,8 +21747,10 @@
      ],
      "printed": 5320,
      "printed_label": "grand total",
+     "printed_with_scan": 5320,
      "computed_with_scan": 5323,
      "holds_with_scan": false,
+     "printed_with_file": 5320,
      "computed_with_file": 6375,
      "holds_with_file": false
     }
@@ -21426,7 +21768,7 @@
     "model": "claude-sonnet-4.6",
     "dpi": 400,
     "value": 311,
-    "crop": "runs/20261011-135350/crops/audit-reread-0004-p6-b3.png",
+    "crop": "runs/20261011-161207/crops/audit-reread-0004-p6-b3.png",
     "error": null
    },
    "reread_disagrees": false,
@@ -21489,8 +21831,10 @@
      ],
      "printed": 1363,
      "printed_label": "small total printed under the column",
+     "printed_with_scan": 1363,
      "computed_with_scan": 1363,
      "holds_with_scan": true,
+     "printed_with_file": 235,
      "computed_with_file": 1363,
      "holds_with_file": false
     },
@@ -21593,8 +21937,10 @@
      ],
      "printed": 5320,
      "printed_label": "grand total",
+     "printed_with_scan": 5320,
      "computed_with_scan": 5323,
      "holds_with_scan": false,
+     "printed_with_file": 5320,
      "computed_with_file": 4195,
      "holds_with_file": false
     }
@@ -21612,7 +21958,7 @@
     "model": "claude-sonnet-4.6",
     "dpi": 400,
     "value": 1363,
-    "crop": "runs/20261011-135350/crops/audit-reread-0005-p6-b3.png",
+    "crop": "runs/20261011-161207/crops/audit-reread-0005-p6-b3.png",
     "error": null
    },
    "reread_disagrees": false,
@@ -21675,8 +22021,10 @@
      ],
      "printed": 235,
      "printed_label": "small total printed under the column",
+     "printed_with_scan": 235,
      "computed_with_scan": 235,
      "holds_with_scan": true,
+     "printed_with_file": 245,
      "computed_with_file": 235,
      "holds_with_file": false
     },
@@ -21779,8 +22127,10 @@
      ],
      "printed": 5320,
      "printed_label": "grand total",
+     "printed_with_scan": 5320,
      "computed_with_scan": 5323,
      "holds_with_scan": false,
+     "printed_with_file": 5320,
      "computed_with_file": 5333,
      "holds_with_file": false
     }
@@ -21798,7 +22148,7 @@
     "model": "claude-sonnet-4.6",
     "dpi": 400,
     "value": 235,
-    "crop": "runs/20261011-135350/crops/audit-reread-0006-p6-b3.png",
+    "crop": "runs/20261011-161207/crops/audit-reread-0006-p6-b3.png",
     "error": null
    },
    "reread_disagrees": false,
@@ -21861,8 +22211,10 @@
      ],
      "printed": 245,
      "printed_label": "small total printed under the column",
+     "printed_with_scan": 245,
      "computed_with_scan": 245,
      "holds_with_scan": true,
+     "printed_with_file": 108,
      "computed_with_file": 245,
      "holds_with_file": false
     },
@@ -21965,8 +22317,10 @@
      ],
      "printed": 5320,
      "printed_label": "grand total",
+     "printed_with_scan": 5320,
      "computed_with_scan": 5323,
      "holds_with_scan": false,
+     "printed_with_file": 5320,
      "computed_with_file": 5186,
      "holds_with_file": false
     }
@@ -21984,7 +22338,7 @@
     "model": "claude-sonnet-4.6",
     "dpi": 400,
     "value": 245,
-    "crop": "runs/20261011-135350/crops/audit-reread-0007-p6-b3.png",
+    "crop": "runs/20261011-161207/crops/audit-reread-0007-p6-b3.png",
     "error": null
    },
    "reread_disagrees": false,
@@ -22047,8 +22401,10 @@
      ],
      "printed": 108,
      "printed_label": "small total printed under the column",
+     "printed_with_scan": 108,
      "computed_with_scan": 108,
      "holds_with_scan": true,
+     "printed_with_file": 0,
      "computed_with_file": 108,
      "holds_with_file": false
     },
@@ -22151,8 +22507,10 @@
      ],
      "printed": 5320,
      "printed_label": "grand total",
+     "printed_with_scan": 5320,
      "computed_with_scan": 5323,
      "holds_with_scan": false,
+     "printed_with_file": 5320,
      "computed_with_file": 5215,
      "holds_with_file": false
     }
@@ -22290,8 +22648,10 @@
      ],
      "printed": 5320,
      "printed_label": "grand total",
+     "printed_with_scan": 5320,
      "computed_with_scan": 5323,
      "holds_with_scan": false,
+     "printed_with_file": 5320,
      "computed_with_file": 5643,
      "holds_with_file": false
     }
@@ -22429,8 +22789,10 @@
      ],
      "printed": 149,
      "printed_label": "printed total at the right end of the row",
+     "printed_with_scan": 149,
      "computed_with_scan": 149,
      "holds_with_scan": true,
+     "printed_with_file": 149,
      "computed_with_file": 140,
      "holds_with_file": false
     },
@@ -22470,8 +22832,10 @@
      ],
      "printed": 320,
      "printed_label": "small total printed under the column",
+     "printed_with_scan": 320,
      "computed_with_scan": 320,
      "holds_with_scan": true,
+     "printed_with_file": 320,
      "computed_with_file": 311,
      "holds_with_file": false
     }
@@ -22609,8 +22973,10 @@
      ],
      "printed": 149,
      "printed_label": "printed total at the right end of the row",
+     "printed_with_scan": 149,
      "computed_with_scan": 149,
      "holds_with_scan": true,
+     "printed_with_file": 149,
      "computed_with_file": 147,
      "holds_with_file": false
     },
@@ -22650,8 +23016,10 @@
      ],
      "printed": 181,
      "printed_label": "small total printed under the column",
+     "printed_with_scan": 181,
      "computed_with_scan": 181,
      "holds_with_scan": true,
+     "printed_with_file": 181,
      "computed_with_file": 179,
      "holds_with_file": false
     }
@@ -22789,8 +23157,10 @@
      ],
      "printed": 149,
      "printed_label": "printed total at the right end of the row",
+     "printed_with_scan": 149,
      "computed_with_scan": 149,
      "holds_with_scan": true,
+     "printed_with_file": 149,
      "computed_with_file": 181,
      "holds_with_file": false
     },
@@ -22830,8 +23200,10 @@
      ],
      "printed": 311,
      "printed_label": "small total printed under the column",
+     "printed_with_scan": 311,
      "computed_with_scan": 311,
      "holds_with_scan": true,
+     "printed_with_file": 311,
      "computed_with_file": 343,
      "holds_with_file": false
     }
@@ -22969,8 +23341,10 @@
      ],
      "printed": 149,
      "printed_label": "printed total at the right end of the row",
+     "printed_with_scan": 149,
      "computed_with_scan": 149,
      "holds_with_scan": true,
+     "printed_with_file": 149,
      "computed_with_file": 119,
      "holds_with_file": false
     },
@@ -23010,8 +23384,10 @@
      ],
      "printed": 1363,
      "printed_label": "small total printed under the column",
+     "printed_with_scan": 1363,
      "computed_with_scan": 1363,
      "holds_with_scan": true,
+     "printed_with_file": 1363,
      "computed_with_file": 1333,
      "holds_with_file": false
     }
@@ -23149,8 +23525,10 @@
      ],
      "printed": 149,
      "printed_label": "printed total at the right end of the row",
+     "printed_with_scan": 149,
      "computed_with_scan": 149,
      "holds_with_scan": true,
+     "printed_with_file": 149,
      "computed_with_file": 146,
      "holds_with_file": false
     },
@@ -23190,8 +23568,10 @@
      ],
      "printed": 235,
      "printed_label": "small total printed under the column",
+     "printed_with_scan": 235,
      "computed_with_scan": 235,
      "holds_with_scan": true,
+     "printed_with_file": 235,
      "computed_with_file": 232,
      "holds_with_file": false
     }
@@ -23329,8 +23709,10 @@
      ],
      "printed": 3616,
      "printed_label": "printed total at the right end of the row",
+     "printed_with_scan": 3616,
      "computed_with_scan": 3616,
      "holds_with_scan": true,
+     "printed_with_file": 3616,
      "computed_with_file": 3550,
      "holds_with_file": false
     },
@@ -23370,8 +23752,10 @@
      ],
      "printed": 320,
      "printed_label": "small total printed under the column",
+     "printed_with_scan": 320,
      "computed_with_scan": 320,
      "holds_with_scan": true,
+     "printed_with_file": 320,
      "computed_with_file": 254,
      "holds_with_file": false
     }
@@ -23509,8 +23893,10 @@
      ],
      "printed": 3616,
      "printed_label": "printed total at the right end of the row",
+     "printed_with_scan": 3616,
      "computed_with_scan": 3616,
      "holds_with_scan": true,
+     "printed_with_file": 3616,
      "computed_with_file": 3709,
      "holds_with_file": false
     },
@@ -23550,8 +23936,10 @@
      ],
      "printed": 181,
      "printed_label": "small total printed under the column",
+     "printed_with_scan": 181,
      "computed_with_scan": 181,
      "holds_with_scan": true,
+     "printed_with_file": 181,
      "computed_with_file": 274,
      "holds_with_file": false
     }
@@ -23689,8 +24077,10 @@
      ],
      "printed": 3616,
      "printed_label": "printed total at the right end of the row",
+     "printed_with_scan": 3616,
      "computed_with_scan": 3616,
      "holds_with_scan": true,
+     "printed_with_file": 3616,
      "computed_with_file": 4359,
      "holds_with_file": false
     },
@@ -23730,8 +24120,10 @@
      ],
      "printed": 311,
      "printed_label": "small total printed under the column",
+     "printed_with_scan": 311,
      "computed_with_scan": 311,
      "holds_with_scan": true,
+     "printed_with_file": 311,
      "computed_with_file": 1054,
      "holds_with_file": false
     }
@@ -23869,8 +24261,10 @@
      ],
      "printed": 3616,
      "printed_label": "printed total at the right end of the row",
+     "printed_with_scan": 3616,
      "computed_with_scan": 3616,
      "holds_with_scan": true,
+     "printed_with_file": 3616,
      "computed_with_file": 2793,
      "holds_with_file": false
     },
@@ -23910,8 +24304,10 @@
      ],
      "printed": 1363,
      "printed_label": "small total printed under the column",
+     "printed_with_scan": 1363,
      "computed_with_scan": 1363,
      "holds_with_scan": true,
+     "printed_with_file": 1363,
      "computed_with_file": 540,
      "holds_with_file": false
     }
@@ -24049,8 +24445,10 @@
      ],
      "printed": 3616,
      "printed_label": "printed total at the right end of the row",
+     "printed_with_scan": 3616,
      "computed_with_scan": 3616,
      "holds_with_scan": true,
+     "printed_with_file": 3616,
      "computed_with_file": 3661,
      "holds_with_file": false
     },
@@ -24090,8 +24488,10 @@
      ],
      "printed": 235,
      "printed_label": "small total printed under the column",
+     "printed_with_scan": 235,
      "computed_with_scan": 235,
      "holds_with_scan": true,
+     "printed_with_file": 235,
      "computed_with_file": 280,
      "holds_with_file": false
     }
@@ -24229,8 +24629,10 @@
      ],
      "printed": 3616,
      "printed_label": "printed total at the right end of the row",
+     "printed_with_scan": 3616,
      "computed_with_scan": 3616,
      "holds_with_scan": true,
+     "printed_with_file": 3616,
      "computed_with_file": 3508,
      "holds_with_file": false
     },
@@ -24270,8 +24672,10 @@
      ],
      "printed": 245,
      "printed_label": "small total printed under the column",
+     "printed_with_scan": 245,
      "computed_with_scan": 245,
      "holds_with_scan": true,
+     "printed_with_file": 245,
      "computed_with_file": 137,
      "holds_with_file": false
     }
@@ -24409,8 +24813,10 @@
      ],
      "printed": 1555,
      "printed_label": "printed total at the right end of the row",
+     "printed_with_scan": 1555,
      "computed_with_scan": 1555,
      "holds_with_scan": true,
+     "printed_with_file": 1555,
      "computed_with_file": 1491,
      "holds_with_file": false
     },
@@ -24450,8 +24856,10 @@
      ],
      "printed": 320,
      "printed_label": "small total printed under the column",
+     "printed_with_scan": 320,
      "computed_with_scan": 320,
      "holds_with_scan": true,
+     "printed_with_file": 320,
      "computed_with_file": 256,
      "holds_with_file": false
     }
@@ -24589,8 +24997,10 @@
      ],
      "printed": 1555,
      "printed_label": "printed total at the right end of the row",
+     "printed_with_scan": 1555,
      "computed_with_scan": 1555,
      "holds_with_scan": true,
+     "printed_with_file": 1555,
      "computed_with_file": 1594,
      "holds_with_file": false
     },
@@ -24630,8 +25040,10 @@
      ],
      "printed": 181,
      "printed_label": "small total printed under the column",
+     "printed_with_scan": 181,
      "computed_with_scan": 181,
      "holds_with_scan": true,
+     "printed_with_file": 181,
      "computed_with_file": 220,
      "holds_with_file": false
     }
@@ -24769,8 +25181,10 @@
      ],
      "printed": 1555,
      "printed_label": "printed total at the right end of the row",
+     "printed_with_scan": 1555,
      "computed_with_scan": 1555,
      "holds_with_scan": true,
+     "printed_with_file": 1555,
      "computed_with_file": 1832,
      "holds_with_file": false
     },
@@ -24810,8 +25224,10 @@
      ],
      "printed": 311,
      "printed_label": "small total printed under the column",
+     "printed_with_scan": 311,
      "computed_with_scan": 311,
      "holds_with_scan": true,
+     "printed_with_file": 311,
      "computed_with_file": 588,
      "holds_with_file": false
     }
@@ -24949,8 +25365,10 @@
      ],
      "printed": 1555,
      "printed_label": "printed total at the right end of the row",
+     "printed_with_scan": 1555,
      "computed_with_scan": 1555,
      "holds_with_scan": true,
+     "printed_with_file": 1555,
      "computed_with_file": 1280,
      "holds_with_file": false
     },
@@ -24990,8 +25408,10 @@
      ],
      "printed": 1363,
      "printed_label": "small total printed under the column",
+     "printed_with_scan": 1363,
      "computed_with_scan": 1363,
      "holds_with_scan": true,
+     "printed_with_file": 1363,
      "computed_with_file": 1088,
      "holds_with_file": false
     }
@@ -25129,8 +25549,10 @@
      ],
      "printed": 1555,
      "printed_label": "printed total at the right end of the row",
+     "printed_with_scan": 1555,
      "computed_with_scan": 1555,
      "holds_with_scan": true,
+     "printed_with_file": 1555,
      "computed_with_file": 1523,
      "holds_with_file": false
     },
@@ -25170,8 +25592,10 @@
      ],
      "printed": 235,
      "printed_label": "small total printed under the column",
+     "printed_with_scan": 235,
      "computed_with_scan": 235,
      "holds_with_scan": true,
+     "printed_with_file": 235,
      "computed_with_file": 203,
      "holds_with_file": false
     }
@@ -25309,8 +25733,10 @@
      ],
      "printed": 1555,
      "printed_label": "printed total at the right end of the row",
+     "printed_with_scan": 1555,
      "computed_with_scan": 1555,
      "holds_with_scan": true,
+     "printed_with_file": 1555,
      "computed_with_file": 1526,
      "holds_with_file": false
     },
@@ -25350,8 +25776,10 @@
      ],
      "printed": 245,
      "printed_label": "small total printed under the column",
+     "printed_with_scan": 245,
      "computed_with_scan": 245,
      "holds_with_scan": true,
+     "printed_with_file": 245,
      "computed_with_file": 216,
      "holds_with_file": false
     }
@@ -25426,8 +25854,10 @@
      ],
      "printed": 1263,
      "printed_label": "small total printed under the column",
+     "printed_with_scan": 1263,
      "computed_with_scan": 1263,
      "holds_with_scan": true,
+     "printed_with_file": 0,
      "computed_with_file": 1263,
      "holds_with_file": false
     },
@@ -25530,8 +25960,10 @@
      ],
      "printed": 5320,
      "printed_label": "grand total",
+     "printed_with_scan": 5320,
      "computed_with_scan": 5323,
      "holds_with_scan": false,
+     "printed_with_file": 5320,
      "computed_with_file": 4060,
      "holds_with_file": false
     }
@@ -25669,8 +26101,10 @@
      ],
      "printed": 5320,
      "printed_label": "grand total",
+     "printed_with_scan": 5320,
      "computed_with_scan": 5323,
      "holds_with_scan": false,
+     "printed_with_file": 5320,
      "computed_with_file": 6586,
      "holds_with_file": false
     }
@@ -25745,8 +26179,10 @@
      ],
      "printed": 1079,
      "printed_label": "small total printed under the column",
+     "printed_with_scan": 1079,
      "computed_with_scan": 1076,
      "holds_with_scan": false,
+     "printed_with_file": 0,
      "computed_with_file": 1076,
      "holds_with_file": false
     },
@@ -25849,8 +26285,10 @@
      ],
      "printed": 5320,
      "printed_label": "grand total",
+     "printed_with_scan": 5320,
      "computed_with_scan": 5323,
      "holds_with_scan": false,
+     "printed_with_file": 5320,
      "computed_with_file": 4244,
      "holds_with_file": false
     }
@@ -25933,8 +26371,10 @@
      ],
      "printed": 182,
      "printed_label": "small total printed under the column",
+     "printed_with_scan": 182,
      "computed_with_scan": 182,
      "holds_with_scan": true,
+     "printed_with_file": 0,
      "computed_with_file": 182,
      "holds_with_file": false
     },
@@ -26028,8 +26468,10 @@
      ],
      "printed": 4405,
      "printed_label": "grand total",
+     "printed_with_scan": 4405,
      "computed_with_scan": 4405,
      "holds_with_scan": true,
+     "printed_with_file": 4405,
      "computed_with_file": 4223,
      "holds_with_file": false
     }
@@ -26104,8 +26546,10 @@
      ],
      "printed": 187,
      "printed_label": "small total printed under the column",
+     "printed_with_scan": 187,
      "computed_with_scan": 187,
      "holds_with_scan": true,
+     "printed_with_file": 182,
      "computed_with_file": 187,
      "holds_with_file": false
     },
@@ -26199,8 +26643,10 @@
      ],
      "printed": 4405,
      "printed_label": "grand total",
+     "printed_with_scan": 4405,
      "computed_with_scan": 4405,
      "holds_with_scan": true,
+     "printed_with_file": 4405,
      "computed_with_file": 4400,
      "holds_with_file": false
     }
@@ -26329,8 +26775,10 @@
      ],
      "printed": 97,
      "printed_label": "printed total at the right end of the row",
+     "printed_with_scan": 97,
      "computed_with_scan": 97,
      "holds_with_scan": true,
+     "printed_with_file": 97,
      "computed_with_file": 101,
      "holds_with_file": false
     },
@@ -26370,8 +26818,10 @@
      ],
      "printed": 187,
      "printed_label": "small total printed under the column",
+     "printed_with_scan": 187,
      "computed_with_scan": 187,
      "holds_with_scan": true,
+     "printed_with_file": 187,
      "computed_with_file": 191,
      "holds_with_file": false
     }
@@ -26500,8 +26950,10 @@
      ],
      "printed": 2789,
      "printed_label": "printed total at the right end of the row",
+     "printed_with_scan": 2789,
      "computed_with_scan": 2789,
      "holds_with_scan": true,
+     "printed_with_file": 2789,
      "computed_with_file": 2806,
      "holds_with_file": false
     },
@@ -26541,8 +26993,10 @@
      ],
      "printed": 187,
      "printed_label": "small total printed under the column",
+     "printed_with_scan": 187,
      "computed_with_scan": 187,
      "holds_with_scan": true,
+     "printed_with_file": 187,
      "computed_with_file": 204,
      "holds_with_file": false
     }
@@ -26671,8 +27125,10 @@
      ],
      "printed": 1519,
      "printed_label": "printed total at the right end of the row",
+     "printed_with_scan": 1519,
      "computed_with_scan": 1519,
      "holds_with_scan": true,
+     "printed_with_file": 1519,
      "computed_with_file": 1493,
      "holds_with_file": false
     },
@@ -26712,8 +27168,10 @@
      ],
      "printed": 187,
      "printed_label": "small total printed under the column",
+     "printed_with_scan": 187,
      "computed_with_scan": 187,
      "holds_with_scan": true,
+     "printed_with_file": 187,
      "computed_with_file": 161,
      "holds_with_file": false
     }
@@ -26788,8 +27246,10 @@
      ],
      "printed": 575,
      "printed_label": "small total printed under the column",
+     "printed_with_scan": 575,
      "computed_with_scan": 575,
      "holds_with_scan": true,
+     "printed_with_file": 0,
      "computed_with_file": 575,
      "holds_with_file": false
     },
@@ -26883,8 +27343,10 @@
      ],
      "printed": 4405,
      "printed_label": "grand total",
+     "printed_with_scan": 4405,
      "computed_with_scan": 4405,
      "holds_with_scan": true,
+     "printed_with_file": 4405,
      "computed_with_file": 3830,
      "holds_with_file": false
     }
@@ -27021,8 +27483,10 @@
      ],
      "printed": 4405,
      "printed_label": "grand total",
+     "printed_with_scan": 4405,
      "computed_with_scan": 4405,
      "holds_with_scan": true,
+     "printed_with_file": 4405,
      "computed_with_file": 4486,
      "holds_with_file": false
     }
@@ -27159,8 +27623,10 @@
      ],
      "printed": 4405,
      "printed_label": "grand total",
+     "printed_with_scan": 4405,
      "computed_with_scan": 4405,
      "holds_with_scan": true,
+     "printed_with_file": 4405,
      "computed_with_file": 4592,
      "holds_with_file": false
     }
@@ -27243,8 +27709,10 @@
      ],
      "printed": 179,
      "printed_label": "small total printed under the column",
+     "printed_with_scan": 179,
      "computed_with_scan": 179,
      "holds_with_scan": true,
+     "printed_with_file": 178,
      "computed_with_file": 179,
      "holds_with_file": false
     },
@@ -27428,8 +27896,10 @@
      ],
      "printed": 9524,
      "printed_label": "grand total",
+     "printed_with_scan": 9524,
      "computed_with_scan": 9524,
      "holds_with_scan": true,
+     "printed_with_file": 9524,
      "computed_with_file": 9523,
      "holds_with_file": false
     }
@@ -29106,10 +29576,10 @@
   }
  ],
  "sums_check": {
-  "in_all": 984,
-  "holding_with_ledger": 981,
-  "holding_with_published": 949,
-  "holding_with_corrected": 978,
+  "in_all": 985,
+  "holding_with_ledger": 982,
+  "holding_with_published": 950,
+  "holding_with_corrected": 979,
   "still_failing": [
    {
     "name": "the registered-voters row (its cells add to the printed total of the row; this row has no other sum)",
@@ -29307,6 +29777,6 @@
   "rereads_agreed_with_ledger": 7,
   "rereads_agreed_with_file": 0,
   "ledger_corrected": 0,
-  "seconds": 17.6
+  "seconds": 15.2
  }
 }

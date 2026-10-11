@@ -81,3 +81,24 @@ Run 20261011-130414 (`crossfoot audit --all --budget 9`, started 13:04:17), one 
 
 - `search_traces` with `fields` and `get_trace_context` with `span_types`, `span_names`, `fields` or `max_chars_per_field`: `not_enabled` (as the brief said).
 - `search_traces` with the query `audit`: 0 results. Large queries (`read_page`, `reread`) return over 200,000 characters and were read from the saved output.
+
+## The final run, `20261011-161207` (one `audit --all` from nothing on the final code)
+
+Looked up on 11 October 2026 at about 16:40 UTC with `search_traces` (several queries, `date_from` 16:10 and `date_to` 16:40).
+Each county's run is one trace whose root span is the county's name.
+
+| county (root span) | trace id | created | spans | tokens |
+|---|---|---|---|---|
+| panola | `81bf9a637f8f4dcd02c763b1a1ce7592` | 2026-10-11T16:12:19Z | 394 | 149455 |
+| cottle | `bd1891d1fe758139df0ad98bd57615ce` | 2026-10-11T16:22:26Z | 28 | 39130 |
+| lynn | `14b7e792e783d5699783d7690b82232a` | 2026-10-11T16:25:20Z | 100 | 158331 |
+| scurry | `cbca178cafefe029836b68e7a8ca802d` | 2026-10-11T16:28:48Z | 81 | 122622 |
+| foard | `e1f8a232dd82db5e05ba6949c0aba98e` | 2026-10-11T16:31:10Z | 39 | 62610 |
+| limestone | `f161cb8d27c4723bb29ad10e7022bdcd` | 2026-10-11T16:32:38Z | 3 | 1796 |
+
+Not found: the traces of San Saba (started 16:20:34 UTC) and Jones (started 16:23:15 UTC). The run's log shows no
+export error and the SDK reported a clean shutdown, so why these two did not arrive is not known. The same search
+finds San Saba's trace of an earlier single-county run (`cda8fe1f09ffd623d04581feefe10c01`, 12:53 UTC) and Jones's
+trace in the earlier run over all counties (`abac15ed55e1e45223d2aa32af3a47af`, 13:15 UTC). The runs made between
+about 13:58 and 14:50 UTC have no traces at all: the service answered 503 in that time.
+

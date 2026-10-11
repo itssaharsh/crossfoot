@@ -1,0 +1,489 @@
+{
+ "run_id": "20261011-161207",
+ "command": "crossfoot audit --all --budget 3.4",
+ "budget": 3.4,
+ "started": "2026-10-11T16:12:10",
+ "ended": "2026-10-11T16:32:38",
+ "resumed": false,
+ "counties": [
+  {
+   "county": "panola",
+   "status": "audited",
+   "layout": "matrix",
+   "pages": 6,
+   "cells_read": 2324,
+   "rows_published": 783,
+   "rows_compared": 783,
+   "not_compared": [],
+   "sums_first_read": {
+    "passing": 936,
+    "failing": 6
+   },
+   "cells_reread": 20,
+   "cells_accepted": 2302,
+   "cannot_verify": 12,
+   "findings_by_kind": {
+    "file_row_fails_own_total": 1,
+    "wrong_number": 64,
+    "wrong_column": 4,
+    "wrong_precinct": 44,
+    "missing_row": 6,
+    "extra_row": 2
+   },
+   "findings_by_status": {
+    "settled_against_file": 109,
+    "cannot_verify": 12
+   },
+   "second_sum_exists": true,
+   "second_sum": "row and column",
+   "sums_check": {
+    "in_all": 985,
+    "holding_with_published": 950,
+    "holding_with_corrected": 979
+   },
+   "reader": "claude-sonnet-4.6",
+   "model_calls": 172,
+   "model_calls_by_model": {
+    "claude-haiku": {
+     "calls": 19,
+     "prompt_tokens": 13621,
+     "completion_tokens": 4022,
+     "cost": 0.0371
+    },
+    "claude-opus-4.6": {
+     "calls": 4,
+     "prompt_tokens": 1503,
+     "completion_tokens": 91,
+     "cost": 0.0108
+    },
+    "claude-sonnet-4.6": {
+     "calls": 149,
+     "prompt_tokens": 106610,
+     "completion_tokens": 23608,
+     "cost": 0.7413
+    }
+   },
+   "prompt_tokens": 121734,
+   "completion_tokens": 27721,
+   "metered_cost": 0.7892,
+   "seconds": 507.0
+  },
+  {
+   "county": "san_saba",
+   "status": "audited",
+   "layout": "report",
+   "pages": 21,
+   "cells_read": 1100,
+   "rows_published": 275,
+   "rows_compared": 275,
+   "not_compared": [],
+   "sums_first_read": {
+    "passing": 273,
+    "failing": 2
+   },
+   "cells_reread": 8,
+   "cells_accepted": 1100,
+   "cannot_verify": 18,
+   "findings_by_kind": {
+    "file_row_fails_own_total": 1,
+    "wrong_number": 20
+   },
+   "findings_by_status": {
+    "settled_against_file": 3,
+    "cannot_verify": 18
+   },
+   "second_sum_exists": false,
+   "second_sum": "row only",
+   "sums_check": {
+    "in_all": 275,
+    "holding_with_published": 274,
+    "holding_with_corrected": 275
+   },
+   "reader": "claude-haiku",
+   "model_calls": 33,
+   "model_calls_by_model": {
+    "claude-haiku": {
+     "calls": 24,
+     "prompt_tokens": 45611,
+     "completion_tokens": 23222,
+     "cost": 0.1779
+    },
+    "claude-sonnet-4.6": {
+     "calls": 9,
+     "prompt_tokens": 7621,
+     "completion_tokens": 279,
+     "cost": 0.0298
+    }
+   },
+   "prompt_tokens": 53232,
+   "completion_tokens": 23501,
+   "metered_cost": 0.2076,
+   "seconds": 102.8
+  },
+  {
+   "county": "cottle",
+   "status": "audited",
+   "layout": "report",
+   "pages": 12,
+   "cells_read": 664,
+   "rows_published": 166,
+   "rows_compared": 166,
+   "not_compared": [],
+   "sums_first_read": {
+    "passing": 166,
+    "failing": 0
+   },
+   "cells_reread": 0,
+   "cells_accepted": 664,
+   "cannot_verify": 0,
+   "findings_by_kind": {},
+   "findings_by_status": {},
+   "second_sum_exists": false,
+   "second_sum": "row only",
+   "sums_check": {
+    "in_all": 166,
+    "holding_with_published": 166,
+    "holding_with_corrected": 166
+   },
+   "reader": "claude-haiku",
+   "model_calls": 13,
+   "model_calls_by_model": {
+    "claude-haiku": {
+     "calls": 13,
+     "prompt_tokens": 25292,
+     "completion_tokens": 13838,
+     "cost": 0.1039
+    }
+   },
+   "prompt_tokens": 25292,
+   "completion_tokens": 13838,
+   "metered_cost": 0.1039,
+   "seconds": 57.7
+  },
+  {
+   "county": "jones",
+   "status": "audited",
+   "layout": "report",
+   "pages": 20,
+   "cells_read": 1784,
+   "rows_published": 344,
+   "rows_compared": 335,
+   "not_compared": [
+    {
+     "contest": "Registered Voters",
+     "rows": 4,
+     "reason": "the contest was not paired with a contest on the scan"
+    },
+    {
+     "contest": "Ballots Cast Blank",
+     "rows": 4,
+     "reason": "the contest was not paired with a contest on the scan"
+    },
+    {
+     "contest": "Trustee Roby CISD",
+     "rows": 1,
+     "reason": "the contest is paired, but this candidate has no block on the scan"
+    }
+   ],
+   "sums_first_read": {
+    "passing": 1102,
+    "failing": 0
+   },
+   "cells_reread": 0,
+   "cells_accepted": 1784,
+   "cannot_verify": 0,
+   "findings_by_kind": {
+    "wrong_number": 26
+   },
+   "findings_by_status": {
+    "settled_against_file": 26
+   },
+   "second_sum_exists": true,
+   "second_sum": "row and contest",
+   "sums_check": {
+    "in_all": 1102,
+    "holding_with_published": 1083,
+    "holding_with_corrected": 1102
+   },
+   "reader": "claude-haiku",
+   "model_calls": 24,
+   "model_calls_by_model": {
+    "claude-haiku": {
+     "calls": 23,
+     "prompt_tokens": 48815,
+     "completion_tokens": 35139,
+     "cost": 0.247
+    },
+    "claude-sonnet-4.6": {
+     "calls": 1,
+     "prompt_tokens": 321,
+     "completion_tokens": 389,
+     "cost": 0.0075
+    }
+   },
+   "prompt_tokens": 49136,
+   "completion_tokens": 35528,
+   "metered_cost": 0.2544,
+   "seconds": 119.9
+  },
+  {
+   "county": "lynn",
+   "status": "audited",
+   "layout": "report",
+   "pages": 37,
+   "cells_read": 3324,
+   "rows_published": 650,
+   "rows_compared": 634,
+   "not_compared": [
+    {
+     "contest": "Registered Voters",
+     "rows": 8,
+     "reason": "the contest was not paired with a contest on the scan"
+    },
+    {
+     "contest": "School Board New Home ISD",
+     "rows": 8,
+     "reason": "the row repeats a precinct of the same candidate and contest"
+    }
+   ],
+   "sums_first_read": {
+    "passing": 2097,
+    "failing": 18
+   },
+   "cells_reread": 36,
+   "cells_accepted": 3324,
+   "cannot_verify": 0,
+   "findings_by_kind": {
+    "wrong_number": 41,
+    "wrong_column": 6
+   },
+   "findings_by_status": {
+    "settled_against_file": 47
+   },
+   "second_sum_exists": true,
+   "second_sum": "row and contest",
+   "sums_check": {
+    "in_all": 2115,
+    "holding_with_published": 2049,
+    "holding_with_corrected": 2115
+   },
+   "reader": "claude-haiku",
+   "model_calls": 51,
+   "model_calls_by_model": {
+    "claude-haiku": {
+     "calls": 50,
+     "prompt_tokens": 92536,
+     "completion_tokens": 63952,
+     "cost": 0.4535
+    },
+    "claude-sonnet-4.6": {
+     "calls": 1,
+     "prompt_tokens": 1629,
+     "completion_tokens": 214,
+     "cost": 0.0089
+    }
+   },
+   "prompt_tokens": 94165,
+   "completion_tokens": 64166,
+   "metered_cost": 0.4624,
+   "seconds": 207.4
+  },
+  {
+   "county": "scurry",
+   "status": "audited",
+   "layout": "report",
+   "pages": 38,
+   "cells_read": 2180,
+   "rows_published": 545,
+   "rows_compared": 534,
+   "not_compared": [
+    {
+     "contest": "Registered Voters",
+     "rows": 11,
+     "reason": "the contest was not paired with a contest on the scan"
+    }
+   ],
+   "sums_first_read": {
+    "passing": 545,
+    "failing": 0
+   },
+   "cells_reread": 0,
+   "cells_accepted": 2180,
+   "cannot_verify": 0,
+   "findings_by_kind": {},
+   "findings_by_status": {},
+   "second_sum_exists": false,
+   "second_sum": "row only",
+   "sums_check": {
+    "in_all": 545,
+    "holding_with_published": 545,
+    "holding_with_corrected": 545
+   },
+   "reader": "claude-haiku",
+   "model_calls": 40,
+   "model_calls_by_model": {
+    "claude-haiku": {
+     "calls": 39,
+     "prompt_tokens": 77578,
+     "completion_tokens": 44843,
+     "cost": 0.332
+    },
+    "claude-sonnet-4.6": {
+     "calls": 1,
+     "prompt_tokens": 184,
+     "completion_tokens": 17,
+     "cost": 0.0009
+    }
+   },
+   "prompt_tokens": 77762,
+   "completion_tokens": 44860,
+   "metered_cost": 0.3329,
+   "seconds": 139.5
+  },
+  {
+   "county": "foard",
+   "status": "audited",
+   "layout": "report",
+   "pages": 16,
+   "cells_read": 1616,
+   "rows_published": 298,
+   "rows_compared": 294,
+   "not_compared": [
+    {
+     "contest": "Ballots Cast",
+     "rows": 4,
+     "reason": "the contest was not paired with a contest on the scan"
+    }
+   ],
+   "sums_first_read": {
+    "passing": 698,
+    "failing": 2
+   },
+   "cells_reread": 4,
+   "cells_accepted": 1616,
+   "cannot_verify": 0,
+   "findings_by_kind": {},
+   "findings_by_status": {},
+   "second_sum_exists": true,
+   "second_sum": "row and contest",
+   "sums_check": {
+    "in_all": 700,
+    "holding_with_published": 700,
+    "holding_with_corrected": 700
+   },
+   "reader": "claude-haiku",
+   "model_calls": 19,
+   "model_calls_by_model": {
+    "claude-haiku": {
+     "calls": 18,
+     "prompt_tokens": 34219,
+     "completion_tokens": 27991,
+     "cost": 0.1916
+    },
+    "claude-sonnet-4.6": {
+     "calls": 1,
+     "prompt_tokens": 383,
+     "completion_tokens": 17,
+     "cost": 0.0015
+    }
+   },
+   "prompt_tokens": 34602,
+   "completion_tokens": 28008,
+   "metered_cost": 0.1931,
+   "seconds": 91.2
+  },
+  {
+   "county": "limestone",
+   "status": "unchecked",
+   "layout": "no_printed_totals",
+   "note": "nothing on this scan can be cross-checked; left as published",
+   "cells_read": 0,
+   "pages": 0,
+   "sums_first_read": {
+    "passing": 0,
+    "failing": 0
+   },
+   "model_calls": 1,
+   "model_calls_by_model": {
+    "claude-haiku": {
+     "calls": 1,
+     "prompt_tokens": 1772,
+     "completion_tokens": 24,
+     "cost": 0.0021
+    }
+   },
+   "prompt_tokens": 1772,
+   "completion_tokens": 24,
+   "metered_cost": 0.0021,
+   "seconds": 2.3
+  }
+ ],
+ "totals": {
+  "counties": 8,
+  "closed": 8,
+  "model_calls": 353,
+  "prompt_tokens": 457695,
+  "completion_tokens": 237646,
+  "metered_cost": 2.3456,
+  "seconds": 1227.8,
+  "model_calls_by_model": {
+   "claude-haiku": {
+    "calls": 187,
+    "prompt_tokens": 339444,
+    "completion_tokens": 213031,
+    "cost": 1.5451
+   },
+   "claude-opus-4.6": {
+    "calls": 4,
+    "prompt_tokens": 1503,
+    "completion_tokens": 91,
+    "cost": 0.0108
+   },
+   "claude-sonnet-4.6": {
+    "calls": 162,
+    "prompt_tokens": 116748,
+    "completion_tokens": 24524,
+    "cost": 0.7899
+   }
+  },
+  "cells_read": 12992,
+  "cells_reread": 68,
+  "cells_accepted": 12970,
+  "cannot_verify": 30,
+  "rows_published": 3061,
+  "rows_compared": 3021,
+  "sums_first_read": {
+   "passing": 5817,
+   "failing": 28
+  },
+  "sums_check": {
+   "in_all": 5888,
+   "holding_with_published": 5767,
+   "holding_with_corrected": 5882
+  },
+  "findings_by_kind": {
+   "file_row_fails_own_total": 2,
+   "wrong_number": 151,
+   "wrong_column": 10,
+   "wrong_precinct": 44,
+   "missing_row": 6,
+   "extra_row": 2
+  },
+  "findings_by_status": {
+   "settled_against_file": 185,
+   "cannot_verify": 30
+  }
+ },
+ "not_reached": [],
+ "skipped": [
+  {
+   "county": "limestone",
+   "reason": "nothing on this scan can be cross-checked; left as published"
+  }
+ ],
+ "gateway_spend": {
+  "before": 11.456608555,
+  "after": 13.79872525500001,
+  "change": 2.3421
+ }
+}

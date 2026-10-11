@@ -1,6 +1,6 @@
 {
  "county": "san_saba",
- "run_id": "20261011-141051",
+ "run_id": "20261011-161207",
  "layout": "report",
  "file": "20241105__tx__general__san_saba__precinct.csv",
  "policy": {
@@ -78,8 +78,10 @@
      ],
      "printed": 506,
      "printed_label": "total printed at the left end of the row",
+     "printed_with_scan": 506,
      "computed_with_scan": 506,
      "holds_with_scan": true,
+     "printed_with_file": 506,
      "computed_with_file": 507,
      "holds_with_file": false
     }
@@ -155,8 +157,10 @@
      ],
      "printed": 506,
      "printed_label": "total printed at the left end of the row",
+     "printed_with_scan": 506,
      "computed_with_scan": 506,
      "holds_with_scan": true,
+     "printed_with_file": 506,
      "computed_with_file": 507,
      "holds_with_file": false
     }
@@ -232,8 +236,10 @@
      ],
      "printed": 364,
      "printed_label": "total printed at the left end of the row",
+     "printed_with_scan": 364,
      "computed_with_scan": 364,
      "holds_with_scan": true,
+     "printed_with_file": 364,
      "computed_with_file": 364,
      "holds_with_file": true
     }
@@ -252,7 +258,7 @@
     "model": "claude-sonnet-4.6",
     "dpi": 400,
     "value": 186,
-    "crop": "runs/20261011-141051/crops/audit-reread-0001.png",
+    "crop": "runs/20261011-161207/crops/audit-reread-0001.png",
     "error": null,
     "row": {
      "total": 364,
@@ -322,8 +328,10 @@
      ],
      "printed": 364,
      "printed_label": "total printed at the left end of the row",
+     "printed_with_scan": 364,
      "computed_with_scan": 364,
      "holds_with_scan": true,
+     "printed_with_file": 364,
      "computed_with_file": 364,
      "holds_with_file": true
     }
@@ -342,7 +350,7 @@
     "model": "claude-sonnet-4.6",
     "dpi": 400,
     "value": 165,
-    "crop": "runs/20261011-141051/crops/audit-reread-0001.png",
+    "crop": "runs/20261011-161207/crops/audit-reread-0001.png",
     "error": null,
     "row": {
      "total": 364,
@@ -412,8 +420,10 @@
      ],
      "printed": 154,
      "printed_label": "total printed at the left end of the row",
+     "printed_with_scan": 154,
      "computed_with_scan": 154,
      "holds_with_scan": true,
+     "printed_with_file": 154,
      "computed_with_file": 154,
      "holds_with_file": true
     }
@@ -432,7 +442,7 @@
     "model": "claude-sonnet-4.6",
     "dpi": 400,
     "value": 108,
-    "crop": "runs/20261011-141051/crops/audit-reread-0002.png",
+    "crop": "runs/20261011-161207/crops/audit-reread-0002.png",
     "error": null,
     "row": {
      "total": 154,
@@ -502,8 +512,10 @@
      ],
      "printed": 154,
      "printed_label": "total printed at the left end of the row",
+     "printed_with_scan": 154,
      "computed_with_scan": 154,
      "holds_with_scan": true,
+     "printed_with_file": 154,
      "computed_with_file": 154,
      "holds_with_file": true
     }
@@ -522,7 +534,7 @@
     "model": "claude-sonnet-4.6",
     "dpi": 400,
     "value": 41,
-    "crop": "runs/20261011-141051/crops/audit-reread-0002.png",
+    "crop": "runs/20261011-161207/crops/audit-reread-0002.png",
     "error": null,
     "row": {
      "total": 154,
@@ -592,8 +604,10 @@
      ],
      "printed": 15,
      "printed_label": "total printed at the left end of the row",
+     "printed_with_scan": 15,
      "computed_with_scan": 15,
      "holds_with_scan": true,
+     "printed_with_file": 16,
      "computed_with_file": 16,
      "holds_with_file": true
     }
@@ -612,7 +626,7 @@
     "model": "claude-sonnet-4.6",
     "dpi": 400,
     "value": 15,
-    "crop": "runs/20261011-141051/crops/audit-reread-0003.png",
+    "crop": "runs/20261011-161207/crops/audit-reread-0003.png",
     "error": null,
     "row": {
      "total": 15,
@@ -682,8 +696,10 @@
      ],
      "printed": 15,
      "printed_label": "total printed at the left end of the row",
+     "printed_with_scan": 15,
      "computed_with_scan": 15,
      "holds_with_scan": true,
+     "printed_with_file": 16,
      "computed_with_file": 16,
      "holds_with_file": true
     }
@@ -702,7 +718,7 @@
     "model": "claude-sonnet-4.6",
     "dpi": 400,
     "value": 8,
-    "crop": "runs/20261011-141051/crops/audit-reread-0003.png",
+    "crop": "runs/20261011-161207/crops/audit-reread-0003.png",
     "error": null,
     "row": {
      "total": 15,
@@ -772,8 +788,10 @@
      ],
      "printed": 358,
      "printed_label": "total printed at the left end of the row",
+     "printed_with_scan": 358,
      "computed_with_scan": 358,
      "holds_with_scan": true,
+     "printed_with_file": 358,
      "computed_with_file": 358,
      "holds_with_file": true
     }
@@ -792,7 +810,7 @@
     "model": "claude-sonnet-4.6",
     "dpi": 400,
     "value": 13,
-    "crop": "runs/20261011-141051/crops/audit-reread-0004.png",
+    "crop": "runs/20261011-161207/crops/audit-reread-0004.png",
     "error": null,
     "row": {
      "total": 358,
@@ -862,8 +880,10 @@
      ],
      "printed": 358,
      "printed_label": "total printed at the left end of the row",
+     "printed_with_scan": 358,
      "computed_with_scan": 358,
      "holds_with_scan": true,
+     "printed_with_file": 358,
      "computed_with_file": 358,
      "holds_with_file": true
     }
@@ -882,7 +902,7 @@
     "model": "claude-sonnet-4.6",
     "dpi": 400,
     "value": 188,
-    "crop": "runs/20261011-141051/crops/audit-reread-0004.png",
+    "crop": "runs/20261011-161207/crops/audit-reread-0004.png",
     "error": null,
     "row": {
      "total": 358,
@@ -952,8 +972,10 @@
      ],
      "printed": 160,
      "printed_label": "total printed at the left end of the row",
+     "printed_with_scan": 160,
      "computed_with_scan": 160,
      "holds_with_scan": true,
+     "printed_with_file": 160,
      "computed_with_file": 160,
      "holds_with_file": true
     }
@@ -972,7 +994,7 @@
     "model": "claude-sonnet-4.6",
     "dpi": 400,
     "value": 108,
-    "crop": "runs/20261011-141051/crops/audit-reread-0005.png",
+    "crop": "runs/20261011-161207/crops/audit-reread-0005.png",
     "error": null,
     "row": {
      "total": 160,
@@ -1042,8 +1064,10 @@
      ],
      "printed": 160,
      "printed_label": "total printed at the left end of the row",
+     "printed_with_scan": 160,
      "computed_with_scan": 160,
      "holds_with_scan": true,
+     "printed_with_file": 160,
      "computed_with_file": 160,
      "holds_with_file": true
     }
@@ -1062,7 +1086,7 @@
     "model": "claude-sonnet-4.6",
     "dpi": 400,
     "value": 46,
-    "crop": "runs/20261011-141051/crops/audit-reread-0005.png",
+    "crop": "runs/20261011-161207/crops/audit-reread-0005.png",
     "error": null,
     "row": {
      "total": 160,
@@ -1132,8 +1156,10 @@
      ],
      "printed": 577,
      "printed_label": "total printed at the left end of the row",
+     "printed_with_scan": 577,
      "computed_with_scan": 577,
      "holds_with_scan": true,
+     "printed_with_file": 577,
      "computed_with_file": 577,
      "holds_with_file": true
     }
@@ -1152,7 +1178,7 @@
     "model": "claude-sonnet-4.6",
     "dpi": 400,
     "value": 463,
-    "crop": "runs/20261011-141051/crops/audit-reread-0006.png",
+    "crop": "runs/20261011-161207/crops/audit-reread-0006.png",
     "error": null,
     "row": {
      "total": 577,
@@ -1222,8 +1248,10 @@
      ],
      "printed": 577,
      "printed_label": "total printed at the left end of the row",
+     "printed_with_scan": 577,
      "computed_with_scan": 577,
      "holds_with_scan": true,
+     "printed_with_file": 577,
      "computed_with_file": 577,
      "holds_with_file": true
     }
@@ -1242,7 +1270,7 @@
     "model": "claude-sonnet-4.6",
     "dpi": 400,
     "value": 92,
-    "crop": "runs/20261011-141051/crops/audit-reread-0006.png",
+    "crop": "runs/20261011-161207/crops/audit-reread-0006.png",
     "error": null,
     "row": {
      "total": 577,
@@ -1312,8 +1340,10 @@
      ],
      "printed": 38,
      "printed_label": "total printed at the left end of the row",
+     "printed_with_scan": 38,
      "computed_with_scan": 38,
      "holds_with_scan": true,
+     "printed_with_file": 38,
      "computed_with_file": 38,
      "holds_with_file": true
     }
@@ -1332,7 +1362,7 @@
     "model": "claude-sonnet-4.6",
     "dpi": 400,
     "value": 26,
-    "crop": "runs/20261011-141051/crops/audit-reread-0007.png",
+    "crop": "runs/20261011-161207/crops/audit-reread-0007.png",
     "error": null,
     "row": {
      "total": 38,
@@ -1402,8 +1432,10 @@
      ],
      "printed": 38,
      "printed_label": "total printed at the left end of the row",
+     "printed_with_scan": 38,
      "computed_with_scan": 38,
      "holds_with_scan": true,
+     "printed_with_file": 38,
      "computed_with_file": 38,
      "holds_with_file": true
     }
@@ -1422,7 +1454,7 @@
     "model": "claude-sonnet-4.6",
     "dpi": 400,
     "value": 9,
-    "crop": "runs/20261011-141051/crops/audit-reread-0007.png",
+    "crop": "runs/20261011-161207/crops/audit-reread-0007.png",
     "error": null,
     "row": {
      "total": 38,
@@ -1492,8 +1524,10 @@
      ],
      "printed": 51,
      "printed_label": "total printed at the left end of the row",
+     "printed_with_scan": 51,
      "computed_with_scan": 51,
      "holds_with_scan": true,
+     "printed_with_file": 51,
      "computed_with_file": 51,
      "holds_with_file": true
     }
@@ -1512,7 +1546,7 @@
     "model": "claude-sonnet-4.6",
     "dpi": 400,
     "value": 35,
-    "crop": "runs/20261011-141051/crops/audit-reread-0008.png",
+    "crop": "runs/20261011-161207/crops/audit-reread-0008.png",
     "error": null,
     "row": {
      "total": 51,
@@ -1582,8 +1616,10 @@
      ],
      "printed": 51,
      "printed_label": "total printed at the left end of the row",
+     "printed_with_scan": 51,
      "computed_with_scan": 51,
      "holds_with_scan": true,
+     "printed_with_file": 51,
      "computed_with_file": 51,
      "holds_with_file": true
     }
@@ -1602,7 +1638,7 @@
     "model": "claude-sonnet-4.6",
     "dpi": 400,
     "value": 13,
-    "crop": "runs/20261011-141051/crops/audit-reread-0008.png",
+    "crop": "runs/20261011-161207/crops/audit-reread-0008.png",
     "error": null,
     "row": {
      "total": 51,
@@ -1672,8 +1708,10 @@
      ],
      "printed": 490,
      "printed_label": "total printed at the left end of the row",
+     "printed_with_scan": 490,
      "computed_with_scan": 490,
      "holds_with_scan": true,
+     "printed_with_file": 490,
      "computed_with_file": 490,
      "holds_with_file": true
     }
@@ -1692,7 +1730,7 @@
     "model": "claude-sonnet-4.6",
     "dpi": 400,
     "value": 295,
-    "crop": "runs/20261011-141051/crops/audit-reread-0009.png",
+    "crop": "runs/20261011-161207/crops/audit-reread-0009.png",
     "error": null,
     "row": {
      "total": 490,
@@ -1762,8 +1800,10 @@
      ],
      "printed": 490,
      "printed_label": "total printed at the left end of the row",
+     "printed_with_scan": 490,
      "computed_with_scan": 490,
      "holds_with_scan": true,
+     "printed_with_file": 490,
      "computed_with_file": 490,
      "holds_with_file": true
     }
@@ -1782,7 +1822,7 @@
     "model": "claude-sonnet-4.6",
     "dpi": 400,
     "value": 186,
-    "crop": "runs/20261011-141051/crops/audit-reread-0009.png",
+    "crop": "runs/20261011-161207/crops/audit-reread-0009.png",
     "error": null,
     "row": {
      "total": 490,
@@ -1852,8 +1892,10 @@
      ],
      "printed": 506,
      "printed_label": "total printed at the left end of the row",
+     "printed_with_scan": 506,
      "computed_with_scan": 506,
      "holds_with_scan": true,
+     "printed_with_file": 506,
      "computed_with_file": 507,
      "holds_with_file": false
     }

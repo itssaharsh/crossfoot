@@ -4,9 +4,9 @@ Crossfoot is an agent that audits published data against the scanned documents i
 error with the document's own printed totals, and proposes the fix.
 
 <!-- picture:start -->
-![crop of the scan: Chase Oliver, precinct 29, the cell outlined](runs/20261011-135350/panola/crops/g003.png)
+![crop of the scan: Chase Oliver, precinct 29, the cell outlined](runs/20261011-161207/panola/crops/g003.png)
 
-*Panola County, page 1, Chase Oliver, precinct 29, election day. The published file has 0; the scan has 1. The row's printed total is 12: the cells add to 12 with the scan's value and to 11 with the file's, so the printed total decides (finding f005 in [runs/20261011-135350/panola/findings.json](runs/20261011-135350/panola/findings.json); not confirmed by a person).*
+*Panola County, page 1, Chase Oliver, precinct 29, election day. The published file has 0; the scan has 1. The row's printed total is 12: the cells add to 12 with the scan's value and to 11 with the file's, so the printed total decides (finding f005 in [runs/20261011-161207/panola/findings.json](runs/20261011-161207/panola/findings.json); not confirmed by a person).*
 <!-- picture:end -->
 
 Open: **[the live results page](https://crossfoot-zeta.vercel.app/)** ([its source](site/)) · [traces and the detection](docs/evidence/traces.md) ·
@@ -16,13 +16,13 @@ Open: **[the live results page](https://crossfoot-zeta.vercel.app/)** ([its sour
 ## What it found
 
 Eight Texas county files for the 2024 general election, each checked against its county's own scan. Every figure
-below is made from [`runs/20261011-141300/summary.json`](runs/20261011-141300/summary.json) by
+below is made from [`runs/20261011-161207/summary.json`](runs/20261011-161207/summary.json) by
 [`tools/readme_tables.py`](tools/readme_tables.py); each county's own folder holds its report, corrected file and crops.
 
 <!-- table:start -->
 | County | Layout | Published rows compared | Disagreements | Settled by the printed totals | Cannot be verified | Printed sums in all | Holding with the published file | Holding with the corrected file |
 |---|---|---|---|---|---|---|---|---|
-| Panola | matrix | 783 of 783 | 121 | 109 | 12 | 984 | 949 | 978 |
+| Panola | matrix | 783 of 783 | 121 | 109 | 12 | 985 | 950 | 979 |
 | San Saba | report | 275 of 275 | 21 | 3 | 18 | 275 | 274 | 275 |
 | Cottle | report | 166 of 166 | 0 | 0 | 0 | 166 | 166 | 166 |
 | Jones | report | 335 of 344 | 26 | 26 | 0 | 1,102 | 1,083 | 1,102 |
@@ -30,7 +30,7 @@ below is made from [`runs/20261011-141300/summary.json`](runs/20261011-141300/su
 | Scurry | report | 534 of 545 | 0 | 0 | 0 | 545 | 545 | 545 |
 | Foard | report | 294 of 298 | 0 | 0 | 0 | 700 | 700 | 700 |
 | Limestone | no_printed_totals | not checked: nothing printed on the scan can be summed | | | | | | |
-| **All** | | 3,021 of 3,061 | 215 | 185 | 30 | 5,887 | 5,766 | 5,881 |
+| **All** | | 3,021 of 3,061 | 215 | 185 | 30 | 5,888 | 5,767 | 5,882 |
 <!-- table:end -->
 
 Confirmed by a person: 0. Nothing has been sent to the project.
@@ -43,7 +43,7 @@ which are the source of truth. The scans and the published files are public
 this. Nothing here says anything about the results themselves.
 
 How to check one: open the county's `report.md` (for example
-[Panola's](runs/20261011-135350/panola/report.md)). Each group has a crop of the scan, the cells, and each printed sum
+[Panola's](runs/20261011-161207/panola/report.md)). Each group has a crop of the scan, the cells, and each printed sum
 with the value that makes it hold. Add the numbers on the crop yourself.
 
 ## How it works
@@ -93,17 +93,17 @@ Measured cost and time per county, from the same summary:
 <!-- cost:start -->
 | County | Pages | Model calls | Metered cost (estimate) | Seconds | Added by later audits from the ledger |
 |---|---|---|---|---|---|
-| Panola | 6 | 168 | $0.7675 | 474.9 | 8 calls, $0.0118, 41.5 s |
-| San Saba | 21 | 34 | $0.2146 | 97.6 | 18 calls, $0.0596, 70.7 s |
-| Cottle | 12 | 22 | $0.1974 | 103.1 | 0 calls, $0.0000, 29.8 s |
-| Jones | 20 | 144 | $0.3844 | 346.3 | 122 calls, $0.1363, 297.1 s |
-| Lynn | 37 | 106 | $0.5333 | 345.0 | 57 calls, $0.0763, 217.4 s |
-| Scurry | 38 | 58 | $0.5543 | 199.8 | 2 calls, $0.0018, 58.8 s |
-| Foard | 16 | 19 | $0.2156 | 102.8 | 2 calls, $0.0030, 51.7 s |
-| Limestone | 0 | 1 | $0.0021 | 1.8 | none |
-| **All** | 150 | 552 | $2.8692 | 1671.3 | 209 calls, $0.2888, 767.0 s |
+| Panola | 6 | 172 | $0.7892 | 507.0 | none |
+| San Saba | 21 | 33 | $0.2076 | 102.8 | none |
+| Cottle | 12 | 13 | $0.1039 | 57.7 | none |
+| Jones | 20 | 24 | $0.2544 | 119.9 | none |
+| Lynn | 37 | 51 | $0.4624 | 207.4 | none |
+| Scurry | 38 | 40 | $0.3329 | 139.5 | none |
+| Foard | 16 | 19 | $0.1931 | 91.2 | none |
+| Limestone | 0 | 1 | $0.0021 | 2.3 | none |
+| **All** | 150 | 353 | $2.3456 | 1227.8 | none |
 
-Calls, cost and seconds are those of the run that read each county, [`runs/20261011-130414/summary.json`](runs/20261011-130414/summary.json) (one unattended `audit --all` run). The last column is what the audits made again from the same ledgers added (`summary.json` keeps both under `read_run` and `audit_again`). An audit from nothing costs, for the dearest checked county, Panola (168 model calls, $0.7675, 474.9 seconds), and for the cheapest, Cottle (22 model calls, $0.1974, 103.1 seconds); Limestone, which prints nothing to add up, took 1 call to be listed as not checked.
+Calls, cost and seconds are those of the run that read each county, [`runs/20261011-161207/summary.json`](runs/20261011-161207/summary.json) (one unattended `audit --all` run). The last column is what audits made again from the same ledgers added, where there were any. An audit from nothing costs, for the dearest checked county, Panola (172 model calls, $0.7892, 507.0 seconds), and for the cheapest, Cottle (13 model calls, $0.1039, 57.7 seconds); Limestone, which prints nothing to add up, took 1 call to be listed as not checked.
 <!-- cost:end -->
 
 ## The three tools

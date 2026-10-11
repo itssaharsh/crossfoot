@@ -1,0 +1,3920 @@
+{
+ "county": "jones",
+ "run_id": "20261011-161207",
+ "layout": "report",
+ "file": "20241105__tx__general__jones__precinct.csv",
+ "policy": {
+  "question_id": "document_disagrees_with_itself",
+  "answer": "cells",
+  "answered_by": "default, not yet confirmed by a person",
+  "meaning": "follow the cells as printed and list the printed total as inconsistent"
+ },
+ "counts": {
+  "findings": 26,
+  "by_kind": {
+   "wrong_number": 26
+  },
+  "by_status": {
+   "settled_against_file": 26
+  },
+  "groups": 13,
+  "corrections": 26
+ },
+ "rows_published": 344,
+ "rows_compared": 335,
+ "not_compared": [
+  {
+   "contest": "Registered Voters",
+   "rows": 4,
+   "reason": "the contest was not paired with a contest on the scan"
+  },
+  {
+   "contest": "Ballots Cast Blank",
+   "rows": 4,
+   "reason": "the contest was not paired with a contest on the scan"
+  },
+  {
+   "contest": "Trustee Roby CISD",
+   "rows": 1,
+   "reason": "the contest is paired, but this candidate has no block on the scan"
+  }
+ ],
+ "findings": [
+  {
+   "id": "f001",
+   "group": "g001",
+   "county": "jones",
+   "office": "President",
+   "district": "",
+   "party": "REP",
+   "candidate": "Donald J. Trump/JD Vance",
+   "precinct": "Precinct 2",
+   "part": "votes",
+   "file_value": 1263,
+   "scan_value": 1363,
+   "kind": "wrong_number",
+   "status": "settled_against_file",
+   "reason": "the candidates' total figures add to the contest total's total figure hold(s) with the scan's value and fail(s) with the file's, and no printed total holds with the file's value and fails with the scan's",
+   "sums": [
+    {
+     "name": "the row's total printed on the scan equals its absentee + early voting + election day (REP Donald J. Trump/JD Vance)",
+     "kind": "report_row",
+     "page": 6,
+     "block": "2|1",
+     "terms": [
+      {
+       "cell": [
+        6,
+        "2|1",
+        "REP Donald J. Trump/JD Vance",
+        "absentee"
+       ],
+       "value": 42
+      },
+      {
+       "cell": [
+        6,
+        "2|1",
+        "REP Donald J. Trump/JD Vance",
+        "early"
+       ],
+       "value": 727
+      },
+      {
+       "cell": [
+        6,
+        "2|1",
+        "REP Donald J. Trump/JD Vance",
+        "election_day"
+       ],
+       "value": 594
+      }
+     ],
+     "printed": 1363,
+     "printed_label": "total printed at the left end of the row",
+     "printed_with_scan": 1363,
+     "computed_with_scan": 1363,
+     "holds_with_scan": true,
+     "printed_with_file": 1263,
+     "computed_with_file": 1263,
+     "holds_with_file": true
+    },
+    {
+     "name": "the candidates' total figures add to the contest total's total figure",
+     "kind": "report_contest",
+     "page": 6,
+     "block": "2|1",
+     "terms": [
+      {
+       "cell": [
+        6,
+        "2|1",
+        "REP Donald J. Trump/JD Vance",
+        "total"
+       ],
+       "value": 1363
+      },
+      {
+       "cell": [
+        6,
+        "2|1",
+        "DEM Kamala D. Harris/Tim Walz",
+        "total"
+       ],
+       "value": 247
+      },
+      {
+       "cell": [
+        6,
+        "2|1",
+        "LIB Chase Oliver/Mike ter Maat",
+        "total"
+       ],
+       "value": 9
+      },
+      {
+       "cell": [
+        6,
+        "2|1",
+        "GRN Jill Stein/Rudolph Ware",
+        "total"
+       ],
+       "value": 3
+      },
+      {
+       "cell": [
+        6,
+        "2|1",
+        "Write-In Totals",
+        "total"
+       ],
+       "value": 7
+      }
+     ],
+     "printed": 1629,
+     "printed_label": "contest total printed on the scan",
+     "printed_with_scan": 1629,
+     "computed_with_scan": 1629,
+     "holds_with_scan": true,
+     "printed_with_file": 1629,
+     "computed_with_file": 1529,
+     "holds_with_file": false
+    }
+   ],
+   "page": 6,
+   "block": "2|1",
+   "row": "REP Donald J. Trump/JD Vance",
+   "box": [
+    0,
+    580,
+    950,
+    620
+   ],
+   "crop": "crops/row-0001.png",
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": null,
+   "file_row": 86,
+   "file_line": 88,
+   "corrected": true,
+   "confirmed_by_person": false
+  },
+  {
+   "id": "f002",
+   "group": "g001",
+   "county": "jones",
+   "office": "President",
+   "district": "",
+   "party": "REP",
+   "candidate": "Donald J. Trump/JD Vance",
+   "precinct": "Precinct 2",
+   "part": "election_day",
+   "file_value": 494,
+   "scan_value": 594,
+   "kind": "wrong_number",
+   "status": "settled_against_file",
+   "reason": "the candidates' election day figures add to the contest total's election day figure hold(s) with the scan's value and fail(s) with the file's, and no printed total holds with the file's value and fails with the scan's",
+   "sums": [
+    {
+     "name": "the row's total printed on the scan equals its absentee + early voting + election day (REP Donald J. Trump/JD Vance)",
+     "kind": "report_row",
+     "page": 6,
+     "block": "2|1",
+     "terms": [
+      {
+       "cell": [
+        6,
+        "2|1",
+        "REP Donald J. Trump/JD Vance",
+        "absentee"
+       ],
+       "value": 42
+      },
+      {
+       "cell": [
+        6,
+        "2|1",
+        "REP Donald J. Trump/JD Vance",
+        "early"
+       ],
+       "value": 727
+      },
+      {
+       "cell": [
+        6,
+        "2|1",
+        "REP Donald J. Trump/JD Vance",
+        "election_day"
+       ],
+       "value": 594
+      }
+     ],
+     "printed": 1363,
+     "printed_label": "total printed at the left end of the row",
+     "printed_with_scan": 1363,
+     "computed_with_scan": 1363,
+     "holds_with_scan": true,
+     "printed_with_file": 1263,
+     "computed_with_file": 1263,
+     "holds_with_file": true
+    },
+    {
+     "name": "the candidates' election day figures add to the contest total's election day figure",
+     "kind": "report_contest",
+     "page": 6,
+     "block": "2|1",
+     "terms": [
+      {
+       "cell": [
+        6,
+        "2|1",
+        "REP Donald J. Trump/JD Vance",
+        "election_day"
+       ],
+       "value": 594
+      },
+      {
+       "cell": [
+        6,
+        "2|1",
+        "DEM Kamala D. Harris/Tim Walz",
+        "election_day"
+       ],
+       "value": 113
+      },
+      {
+       "cell": [
+        6,
+        "2|1",
+        "LIB Chase Oliver/Mike ter Maat",
+        "election_day"
+       ],
+       "value": 6
+      },
+      {
+       "cell": [
+        6,
+        "2|1",
+        "GRN Jill Stein/Rudolph Ware",
+        "election_day"
+       ],
+       "value": 3
+      },
+      {
+       "cell": [
+        6,
+        "2|1",
+        "Write-In Totals",
+        "election_day"
+       ],
+       "value": 5
+      }
+     ],
+     "printed": 721,
+     "printed_label": "contest total printed on the scan",
+     "printed_with_scan": 721,
+     "computed_with_scan": 721,
+     "holds_with_scan": true,
+     "printed_with_file": 721,
+     "computed_with_file": 621,
+     "holds_with_file": false
+    }
+   ],
+   "page": 6,
+   "block": "2|1",
+   "row": "REP Donald J. Trump/JD Vance",
+   "box": [
+    0,
+    580,
+    950,
+    620
+   ],
+   "crop": "crops/row-0001.png",
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": null,
+   "file_row": 86,
+   "file_line": 88,
+   "corrected": true,
+   "confirmed_by_person": false
+  },
+  {
+   "id": "f003",
+   "group": "g002",
+   "county": "jones",
+   "office": "President",
+   "district": "",
+   "party": "REP",
+   "candidate": "Donald J. Trump/JD Vance",
+   "precinct": "Precinct 3",
+   "part": "votes",
+   "file_value": 1858,
+   "scan_value": 1868,
+   "kind": "wrong_number",
+   "status": "settled_against_file",
+   "reason": "the candidates' total figures add to the contest total's total figure hold(s) with the scan's value and fail(s) with the file's, and no printed total holds with the file's value and fails with the scan's",
+   "sums": [
+    {
+     "name": "the row's total printed on the scan equals its absentee + early voting + election day (REP Donald J. Trump/JD Vance)",
+     "kind": "report_row",
+     "page": 11,
+     "block": "3|1",
+     "terms": [
+      {
+       "cell": [
+        11,
+        "3|1",
+        "REP Donald J. Trump/JD Vance",
+        "absentee"
+       ],
+       "value": 32
+      },
+      {
+       "cell": [
+        11,
+        "3|1",
+        "REP Donald J. Trump/JD Vance",
+        "early"
+       ],
+       "value": 1104
+      },
+      {
+       "cell": [
+        11,
+        "3|1",
+        "REP Donald J. Trump/JD Vance",
+        "election_day"
+       ],
+       "value": 732
+      }
+     ],
+     "printed": 1868,
+     "printed_label": "total printed at the left end of the row",
+     "printed_with_scan": 1868,
+     "computed_with_scan": 1868,
+     "holds_with_scan": true,
+     "printed_with_file": 1858,
+     "computed_with_file": 1858,
+     "holds_with_file": true
+    },
+    {
+     "name": "the candidates' total figures add to the contest total's total figure",
+     "kind": "report_contest",
+     "page": 11,
+     "block": "3|1",
+     "terms": [
+      {
+       "cell": [
+        11,
+        "3|1",
+        "REP Donald J. Trump/JD Vance",
+        "total"
+       ],
+       "value": 1868
+      },
+      {
+       "cell": [
+        11,
+        "3|1",
+        "DEM Kamala D. Harris/Tim Walz",
+        "total"
+       ],
+       "value": 212
+      },
+      {
+       "cell": [
+        11,
+        "3|1",
+        "LIB Chase Oliver/Mike ter Maat",
+        "total"
+       ],
+       "value": 11
+      },
+      {
+       "cell": [
+        11,
+        "3|1",
+        "GRN Jill Stein/Rudolph Ware",
+        "total"
+       ],
+       "value": 9
+      },
+      {
+       "cell": [
+        11,
+        "3|1",
+        "Write-In Totals",
+        "total"
+       ],
+       "value": 2
+      }
+     ],
+     "printed": 2102,
+     "printed_label": "contest total printed on the scan",
+     "printed_with_scan": 2102,
+     "computed_with_scan": 2102,
+     "holds_with_scan": true,
+     "printed_with_file": 2102,
+     "computed_with_file": 2092,
+     "holds_with_file": false
+    }
+   ],
+   "page": 11,
+   "block": "3|1",
+   "row": "REP Donald J. Trump/JD Vance",
+   "box": [
+    0,
+    580,
+    950,
+    620
+   ],
+   "crop": "crops/row-0002.png",
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": null,
+   "file_row": 178,
+   "file_line": 180,
+   "corrected": true,
+   "confirmed_by_person": false
+  },
+  {
+   "id": "f004",
+   "group": "g002",
+   "county": "jones",
+   "office": "President",
+   "district": "",
+   "party": "REP",
+   "candidate": "Donald J. Trump/JD Vance",
+   "precinct": "Precinct 3",
+   "part": "election_day",
+   "file_value": 722,
+   "scan_value": 732,
+   "kind": "wrong_number",
+   "status": "settled_against_file",
+   "reason": "the candidates' election day figures add to the contest total's election day figure hold(s) with the scan's value and fail(s) with the file's, and no printed total holds with the file's value and fails with the scan's",
+   "sums": [
+    {
+     "name": "the row's total printed on the scan equals its absentee + early voting + election day (REP Donald J. Trump/JD Vance)",
+     "kind": "report_row",
+     "page": 11,
+     "block": "3|1",
+     "terms": [
+      {
+       "cell": [
+        11,
+        "3|1",
+        "REP Donald J. Trump/JD Vance",
+        "absentee"
+       ],
+       "value": 32
+      },
+      {
+       "cell": [
+        11,
+        "3|1",
+        "REP Donald J. Trump/JD Vance",
+        "early"
+       ],
+       "value": 1104
+      },
+      {
+       "cell": [
+        11,
+        "3|1",
+        "REP Donald J. Trump/JD Vance",
+        "election_day"
+       ],
+       "value": 732
+      }
+     ],
+     "printed": 1868,
+     "printed_label": "total printed at the left end of the row",
+     "printed_with_scan": 1868,
+     "computed_with_scan": 1868,
+     "holds_with_scan": true,
+     "printed_with_file": 1858,
+     "computed_with_file": 1858,
+     "holds_with_file": true
+    },
+    {
+     "name": "the candidates' election day figures add to the contest total's election day figure",
+     "kind": "report_contest",
+     "page": 11,
+     "block": "3|1",
+     "terms": [
+      {
+       "cell": [
+        11,
+        "3|1",
+        "REP Donald J. Trump/JD Vance",
+        "election_day"
+       ],
+       "value": 732
+      },
+      {
+       "cell": [
+        11,
+        "3|1",
+        "DEM Kamala D. Harris/Tim Walz",
+        "election_day"
+       ],
+       "value": 80
+      },
+      {
+       "cell": [
+        11,
+        "3|1",
+        "LIB Chase Oliver/Mike ter Maat",
+        "election_day"
+       ],
+       "value": 3
+      },
+      {
+       "cell": [
+        11,
+        "3|1",
+        "GRN Jill Stein/Rudolph Ware",
+        "election_day"
+       ],
+       "value": 2
+      },
+      {
+       "cell": [
+        11,
+        "3|1",
+        "Write-In Totals",
+        "election_day"
+       ],
+       "value": 2
+      }
+     ],
+     "printed": 819,
+     "printed_label": "contest total printed on the scan",
+     "printed_with_scan": 819,
+     "computed_with_scan": 819,
+     "holds_with_scan": true,
+     "printed_with_file": 819,
+     "computed_with_file": 809,
+     "holds_with_file": false
+    }
+   ],
+   "page": 11,
+   "block": "3|1",
+   "row": "REP Donald J. Trump/JD Vance",
+   "box": [
+    0,
+    580,
+    950,
+    620
+   ],
+   "crop": "crops/row-0002.png",
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": null,
+   "file_row": 178,
+   "file_line": 180,
+   "corrected": true,
+   "confirmed_by_person": false
+  },
+  {
+   "id": "f005",
+   "group": "g003",
+   "county": "jones",
+   "office": "President",
+   "district": "",
+   "party": "DEM",
+   "candidate": "Kamala D. Harris/Tim Walz",
+   "precinct": "Precinct 2",
+   "part": "early_voting",
+   "file_value": 112,
+   "scan_value": 110,
+   "kind": "wrong_number",
+   "status": "settled_against_file",
+   "reason": "the candidates' early voting figures add to the contest total's early voting figure hold(s) with the scan's value and fail(s) with the file's, and no printed total holds with the file's value and fails with the scan's",
+   "sums": [
+    {
+     "name": "the row's total printed on the scan equals its absentee + early voting + election day (DEM Kamala D. Harris/Tim Walz)",
+     "kind": "report_row",
+     "page": 6,
+     "block": "2|1",
+     "terms": [
+      {
+       "cell": [
+        6,
+        "2|1",
+        "DEM Kamala D. Harris/Tim Walz",
+        "absentee"
+       ],
+       "value": 24
+      },
+      {
+       "cell": [
+        6,
+        "2|1",
+        "DEM Kamala D. Harris/Tim Walz",
+        "early"
+       ],
+       "value": 110
+      },
+      {
+       "cell": [
+        6,
+        "2|1",
+        "DEM Kamala D. Harris/Tim Walz",
+        "election_day"
+       ],
+       "value": 113
+      }
+     ],
+     "printed": 247,
+     "printed_label": "total printed at the left end of the row",
+     "printed_with_scan": 247,
+     "computed_with_scan": 247,
+     "holds_with_scan": true,
+     "printed_with_file": 247,
+     "computed_with_file": 247,
+     "holds_with_file": true
+    },
+    {
+     "name": "the candidates' early voting figures add to the contest total's early voting figure",
+     "kind": "report_contest",
+     "page": 6,
+     "block": "2|1",
+     "terms": [
+      {
+       "cell": [
+        6,
+        "2|1",
+        "REP Donald J. Trump/JD Vance",
+        "early"
+       ],
+       "value": 727
+      },
+      {
+       "cell": [
+        6,
+        "2|1",
+        "DEM Kamala D. Harris/Tim Walz",
+        "early"
+       ],
+       "value": 110
+      },
+      {
+       "cell": [
+        6,
+        "2|1",
+        "LIB Chase Oliver/Mike ter Maat",
+        "early"
+       ],
+       "value": 2
+      },
+      {
+       "cell": [
+        6,
+        "2|1",
+        "GRN Jill Stein/Rudolph Ware",
+        "early"
+       ],
+       "value": 0
+      },
+      {
+       "cell": [
+        6,
+        "2|1",
+        "Write-In Totals",
+        "early"
+       ],
+       "value": 2
+      }
+     ],
+     "printed": 841,
+     "printed_label": "contest total printed on the scan",
+     "printed_with_scan": 841,
+     "computed_with_scan": 841,
+     "holds_with_scan": true,
+     "printed_with_file": 841,
+     "computed_with_file": 843,
+     "holds_with_file": false
+    }
+   ],
+   "page": 6,
+   "block": "2|1",
+   "row": "DEM Kamala D. Harris/Tim Walz",
+   "box": [
+    0,
+    616,
+    950,
+    656
+   ],
+   "crop": "crops/row-0003.png",
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": null,
+   "file_row": 87,
+   "file_line": 89,
+   "corrected": true,
+   "confirmed_by_person": false
+  },
+  {
+   "id": "f006",
+   "group": "g003",
+   "county": "jones",
+   "office": "President",
+   "district": "",
+   "party": "DEM",
+   "candidate": "Kamala D. Harris/Tim Walz",
+   "precinct": "Precinct 2",
+   "part": "election_day",
+   "file_value": 111,
+   "scan_value": 113,
+   "kind": "wrong_number",
+   "status": "settled_against_file",
+   "reason": "the candidates' election day figures add to the contest total's election day figure hold(s) with the scan's value and fail(s) with the file's, and no printed total holds with the file's value and fails with the scan's",
+   "sums": [
+    {
+     "name": "the row's total printed on the scan equals its absentee + early voting + election day (DEM Kamala D. Harris/Tim Walz)",
+     "kind": "report_row",
+     "page": 6,
+     "block": "2|1",
+     "terms": [
+      {
+       "cell": [
+        6,
+        "2|1",
+        "DEM Kamala D. Harris/Tim Walz",
+        "absentee"
+       ],
+       "value": 24
+      },
+      {
+       "cell": [
+        6,
+        "2|1",
+        "DEM Kamala D. Harris/Tim Walz",
+        "early"
+       ],
+       "value": 110
+      },
+      {
+       "cell": [
+        6,
+        "2|1",
+        "DEM Kamala D. Harris/Tim Walz",
+        "election_day"
+       ],
+       "value": 113
+      }
+     ],
+     "printed": 247,
+     "printed_label": "total printed at the left end of the row",
+     "printed_with_scan": 247,
+     "computed_with_scan": 247,
+     "holds_with_scan": true,
+     "printed_with_file": 247,
+     "computed_with_file": 247,
+     "holds_with_file": true
+    },
+    {
+     "name": "the candidates' election day figures add to the contest total's election day figure",
+     "kind": "report_contest",
+     "page": 6,
+     "block": "2|1",
+     "terms": [
+      {
+       "cell": [
+        6,
+        "2|1",
+        "REP Donald J. Trump/JD Vance",
+        "election_day"
+       ],
+       "value": 594
+      },
+      {
+       "cell": [
+        6,
+        "2|1",
+        "DEM Kamala D. Harris/Tim Walz",
+        "election_day"
+       ],
+       "value": 113
+      },
+      {
+       "cell": [
+        6,
+        "2|1",
+        "LIB Chase Oliver/Mike ter Maat",
+        "election_day"
+       ],
+       "value": 6
+      },
+      {
+       "cell": [
+        6,
+        "2|1",
+        "GRN Jill Stein/Rudolph Ware",
+        "election_day"
+       ],
+       "value": 3
+      },
+      {
+       "cell": [
+        6,
+        "2|1",
+        "Write-In Totals",
+        "election_day"
+       ],
+       "value": 5
+      }
+     ],
+     "printed": 721,
+     "printed_label": "contest total printed on the scan",
+     "printed_with_scan": 721,
+     "computed_with_scan": 721,
+     "holds_with_scan": true,
+     "printed_with_file": 721,
+     "computed_with_file": 719,
+     "holds_with_file": false
+    }
+   ],
+   "page": 6,
+   "block": "2|1",
+   "row": "DEM Kamala D. Harris/Tim Walz",
+   "box": [
+    0,
+    616,
+    950,
+    656
+   ],
+   "crop": "crops/row-0003.png",
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": null,
+   "file_row": 87,
+   "file_line": 89,
+   "corrected": true,
+   "confirmed_by_person": false
+  },
+  {
+   "id": "f007",
+   "group": "g004",
+   "county": "jones",
+   "office": "President",
+   "district": "",
+   "party": "DEM",
+   "candidate": "Kamala D. Harris/Tim Walz",
+   "precinct": "Precinct 4",
+   "part": "early_voting",
+   "file_value": 136,
+   "scan_value": 126,
+   "kind": "wrong_number",
+   "status": "settled_against_file",
+   "reason": "the candidates' early voting figures add to the contest total's early voting figure hold(s) with the scan's value and fail(s) with the file's, and no printed total holds with the file's value and fails with the scan's",
+   "sums": [
+    {
+     "name": "the row's total printed on the scan equals its absentee + early voting + election day (DEM Kamala D. Harris/Tim Walz)",
+     "kind": "report_row",
+     "page": 16,
+     "block": "4|1",
+     "terms": [
+      {
+       "cell": [
+        16,
+        "4|1",
+        "DEM Kamala D. Harris/Tim Walz",
+        "absentee"
+       ],
+       "value": 21
+      },
+      {
+       "cell": [
+        16,
+        "4|1",
+        "DEM Kamala D. Harris/Tim Walz",
+        "early"
+       ],
+       "value": 126
+      },
+      {
+       "cell": [
+        16,
+        "4|1",
+        "DEM Kamala D. Harris/Tim Walz",
+        "election_day"
+       ],
+       "value": 82
+      }
+     ],
+     "printed": 229,
+     "printed_label": "total printed at the left end of the row",
+     "printed_with_scan": 229,
+     "computed_with_scan": 229,
+     "holds_with_scan": true,
+     "printed_with_file": 229,
+     "computed_with_file": 229,
+     "holds_with_file": true
+    },
+    {
+     "name": "the candidates' early voting figures add to the contest total's early voting figure",
+     "kind": "report_contest",
+     "page": 16,
+     "block": "4|1",
+     "terms": [
+      {
+       "cell": [
+        16,
+        "4|1",
+        "REP Donald J. Trump/JD Vance",
+        "early"
+       ],
+       "value": 1139
+      },
+      {
+       "cell": [
+        16,
+        "4|1",
+        "DEM Kamala D. Harris/Tim Walz",
+        "early"
+       ],
+       "value": 126
+      },
+      {
+       "cell": [
+        16,
+        "4|1",
+        "LIB Chase Oliver/Mike ter Maat",
+        "early"
+       ],
+       "value": 4
+      },
+      {
+       "cell": [
+        16,
+        "4|1",
+        "GRN Jill Stein/Rudolph Ware",
+        "early"
+       ],
+       "value": 1
+      },
+      {
+       "cell": [
+        16,
+        "4|1",
+        "Write-In Totals",
+        "early"
+       ],
+       "value": 1
+      }
+     ],
+     "printed": 1271,
+     "printed_label": "contest total printed on the scan",
+     "printed_with_scan": 1271,
+     "computed_with_scan": 1271,
+     "holds_with_scan": true,
+     "printed_with_file": 1271,
+     "computed_with_file": 1281,
+     "holds_with_file": false
+    }
+   ],
+   "page": 16,
+   "block": "4|1",
+   "row": "DEM Kamala D. Harris/Tim Walz",
+   "box": [
+    0,
+    614,
+    950,
+    654
+   ],
+   "crop": "crops/row-0004.png",
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": null,
+   "file_row": 262,
+   "file_line": 264,
+   "corrected": true,
+   "confirmed_by_person": false
+  },
+  {
+   "id": "f008",
+   "group": "g004",
+   "county": "jones",
+   "office": "President",
+   "district": "",
+   "party": "DEM",
+   "candidate": "Kamala D. Harris/Tim Walz",
+   "precinct": "Precinct 4",
+   "part": "election_day",
+   "file_value": 72,
+   "scan_value": 82,
+   "kind": "wrong_number",
+   "status": "settled_against_file",
+   "reason": "the candidates' election day figures add to the contest total's election day figure hold(s) with the scan's value and fail(s) with the file's, and no printed total holds with the file's value and fails with the scan's",
+   "sums": [
+    {
+     "name": "the row's total printed on the scan equals its absentee + early voting + election day (DEM Kamala D. Harris/Tim Walz)",
+     "kind": "report_row",
+     "page": 16,
+     "block": "4|1",
+     "terms": [
+      {
+       "cell": [
+        16,
+        "4|1",
+        "DEM Kamala D. Harris/Tim Walz",
+        "absentee"
+       ],
+       "value": 21
+      },
+      {
+       "cell": [
+        16,
+        "4|1",
+        "DEM Kamala D. Harris/Tim Walz",
+        "early"
+       ],
+       "value": 126
+      },
+      {
+       "cell": [
+        16,
+        "4|1",
+        "DEM Kamala D. Harris/Tim Walz",
+        "election_day"
+       ],
+       "value": 82
+      }
+     ],
+     "printed": 229,
+     "printed_label": "total printed at the left end of the row",
+     "printed_with_scan": 229,
+     "computed_with_scan": 229,
+     "holds_with_scan": true,
+     "printed_with_file": 229,
+     "computed_with_file": 229,
+     "holds_with_file": true
+    },
+    {
+     "name": "the candidates' election day figures add to the contest total's election day figure",
+     "kind": "report_contest",
+     "page": 16,
+     "block": "4|1",
+     "terms": [
+      {
+       "cell": [
+        16,
+        "4|1",
+        "REP Donald J. Trump/JD Vance",
+        "election_day"
+       ],
+       "value": 585
+      },
+      {
+       "cell": [
+        16,
+        "4|1",
+        "DEM Kamala D. Harris/Tim Walz",
+        "election_day"
+       ],
+       "value": 82
+      },
+      {
+       "cell": [
+        16,
+        "4|1",
+        "LIB Chase Oliver/Mike ter Maat",
+        "election_day"
+       ],
+       "value": 3
+      },
+      {
+       "cell": [
+        16,
+        "4|1",
+        "GRN Jill Stein/Rudolph Ware",
+        "election_day"
+       ],
+       "value": 1
+      },
+      {
+       "cell": [
+        16,
+        "4|1",
+        "Write-In Totals",
+        "election_day"
+       ],
+       "value": 2
+      }
+     ],
+     "printed": 673,
+     "printed_label": "contest total printed on the scan",
+     "printed_with_scan": 673,
+     "computed_with_scan": 673,
+     "holds_with_scan": true,
+     "printed_with_file": 673,
+     "computed_with_file": 663,
+     "holds_with_file": false
+    }
+   ],
+   "page": 16,
+   "block": "4|1",
+   "row": "DEM Kamala D. Harris/Tim Walz",
+   "box": [
+    0,
+    614,
+    950,
+    654
+   ],
+   "crop": "crops/row-0004.png",
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": null,
+   "file_row": 262,
+   "file_line": 264,
+   "corrected": true,
+   "confirmed_by_person": false
+  },
+  {
+   "id": "f009",
+   "group": "g005",
+   "county": "jones",
+   "office": "U.S. House",
+   "district": "19",
+   "party": "DEM",
+   "candidate": "Bernard Johnson",
+   "precinct": "Precinct 2",
+   "part": "votes",
+   "file_value": 93,
+   "scan_value": 95,
+   "kind": "wrong_number",
+   "status": "settled_against_file",
+   "reason": "the candidates' total figures add to the contest total's total figure hold(s) with the scan's value and fail(s) with the file's, and no printed total holds with the file's value and fails with the scan's",
+   "sums": [
+    {
+     "name": "the row's total printed on the scan equals its absentee + early voting + election day (LIB Bernard Johnson)",
+     "kind": "report_row",
+     "page": 6,
+     "block": "2|3",
+     "terms": [
+      {
+       "cell": [
+        6,
+        "2|3",
+        "LIB Bernard Johnson",
+        "absentee"
+       ],
+       "value": 5
+      },
+      {
+       "cell": [
+        6,
+        "2|3",
+        "LIB Bernard Johnson",
+        "early"
+       ],
+       "value": 45
+      },
+      {
+       "cell": [
+        6,
+        "2|3",
+        "LIB Bernard Johnson",
+        "election_day"
+       ],
+       "value": 45
+      }
+     ],
+     "printed": 95,
+     "printed_label": "total printed at the left end of the row",
+     "printed_with_scan": 95,
+     "computed_with_scan": 95,
+     "holds_with_scan": true,
+     "printed_with_file": 93,
+     "computed_with_file": 93,
+     "holds_with_file": true
+    },
+    {
+     "name": "the candidates' total figures add to the contest total's total figure",
+     "kind": "report_contest",
+     "page": 6,
+     "block": "2|3",
+     "terms": [
+      {
+       "cell": [
+        6,
+        "2|3",
+        "REP Jodey C. Arrington",
+        "total"
+       ],
+       "value": 1355
+      },
+      {
+       "cell": [
+        6,
+        "2|3",
+        "LIB Bernard Johnson",
+        "total"
+       ],
+       "value": 95
+      },
+      {
+       "cell": [
+        6,
+        "2|3",
+        "IND Nathan Lewis",
+        "total"
+       ],
+       "value": 104
+      }
+     ],
+     "printed": 1554,
+     "printed_label": "contest total printed on the scan",
+     "printed_with_scan": 1554,
+     "computed_with_scan": 1554,
+     "holds_with_scan": true,
+     "printed_with_file": 1554,
+     "computed_with_file": 1552,
+     "holds_with_file": false
+    }
+   ],
+   "page": 6,
+   "block": "2|3",
+   "row": "LIB Bernard Johnson",
+   "box": [
+    0,
+    1683,
+    950,
+    1723
+   ],
+   "crop": "crops/row-0005.png",
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": null,
+   "file_row": 100,
+   "file_line": 102,
+   "corrected": true,
+   "confirmed_by_person": false
+  },
+  {
+   "id": "f010",
+   "group": "g005",
+   "county": "jones",
+   "office": "U.S. House",
+   "district": "19",
+   "party": "DEM",
+   "candidate": "Bernard Johnson",
+   "precinct": "Precinct 2",
+   "part": "election_day",
+   "file_value": 43,
+   "scan_value": 45,
+   "kind": "wrong_number",
+   "status": "settled_against_file",
+   "reason": "the candidates' election day figures add to the contest total's election day figure hold(s) with the scan's value and fail(s) with the file's, and no printed total holds with the file's value and fails with the scan's",
+   "sums": [
+    {
+     "name": "the row's total printed on the scan equals its absentee + early voting + election day (LIB Bernard Johnson)",
+     "kind": "report_row",
+     "page": 6,
+     "block": "2|3",
+     "terms": [
+      {
+       "cell": [
+        6,
+        "2|3",
+        "LIB Bernard Johnson",
+        "absentee"
+       ],
+       "value": 5
+      },
+      {
+       "cell": [
+        6,
+        "2|3",
+        "LIB Bernard Johnson",
+        "early"
+       ],
+       "value": 45
+      },
+      {
+       "cell": [
+        6,
+        "2|3",
+        "LIB Bernard Johnson",
+        "election_day"
+       ],
+       "value": 45
+      }
+     ],
+     "printed": 95,
+     "printed_label": "total printed at the left end of the row",
+     "printed_with_scan": 95,
+     "computed_with_scan": 95,
+     "holds_with_scan": true,
+     "printed_with_file": 93,
+     "computed_with_file": 93,
+     "holds_with_file": true
+    },
+    {
+     "name": "the candidates' election day figures add to the contest total's election day figure",
+     "kind": "report_contest",
+     "page": 6,
+     "block": "2|3",
+     "terms": [
+      {
+       "cell": [
+        6,
+        "2|3",
+        "REP Jodey C. Arrington",
+        "election_day"
+       ],
+       "value": 584
+      },
+      {
+       "cell": [
+        6,
+        "2|3",
+        "LIB Bernard Johnson",
+        "election_day"
+       ],
+       "value": 45
+      },
+      {
+       "cell": [
+        6,
+        "2|3",
+        "IND Nathan Lewis",
+        "election_day"
+       ],
+       "value": 48
+      }
+     ],
+     "printed": 677,
+     "printed_label": "contest total printed on the scan",
+     "printed_with_scan": 677,
+     "computed_with_scan": 677,
+     "holds_with_scan": true,
+     "printed_with_file": 677,
+     "computed_with_file": 675,
+     "holds_with_file": false
+    }
+   ],
+   "page": 6,
+   "block": "2|3",
+   "row": "LIB Bernard Johnson",
+   "box": [
+    0,
+    1683,
+    950,
+    1723
+   ],
+   "crop": "crops/row-0005.png",
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": null,
+   "file_row": 100,
+   "file_line": 102,
+   "corrected": true,
+   "confirmed_by_person": false
+  },
+  {
+   "id": "f011",
+   "group": "g006",
+   "county": "jones",
+   "office": "U.S. House",
+   "district": "19",
+   "party": "DEM",
+   "candidate": "Bernard Johnson",
+   "precinct": "Precinct 4",
+   "part": "absentee",
+   "file_value": 8,
+   "scan_value": 5,
+   "kind": "wrong_number",
+   "status": "settled_against_file",
+   "reason": "the candidates' absentee figures add to the contest total's absentee figure hold(s) with the scan's value and fail(s) with the file's, and no printed total holds with the file's value and fails with the scan's",
+   "sums": [
+    {
+     "name": "the row's total printed on the scan equals its absentee + early voting + election day (LIB Bernard Johnson)",
+     "kind": "report_row",
+     "page": 16,
+     "block": "4|3",
+     "terms": [
+      {
+       "cell": [
+        16,
+        "4|3",
+        "LIB Bernard Johnson",
+        "absentee"
+       ],
+       "value": 5
+      },
+      {
+       "cell": [
+        16,
+        "4|3",
+        "LIB Bernard Johnson",
+        "early"
+       ],
+       "value": 46
+      },
+      {
+       "cell": [
+        16,
+        "4|3",
+        "LIB Bernard Johnson",
+        "election_day"
+       ],
+       "value": 45
+      }
+     ],
+     "printed": 96,
+     "printed_label": "total printed at the left end of the row",
+     "printed_with_scan": 96,
+     "computed_with_scan": 96,
+     "holds_with_scan": true,
+     "printed_with_file": 96,
+     "computed_with_file": 96,
+     "holds_with_file": true
+    },
+    {
+     "name": "the candidates' absentee figures add to the contest total's absentee figure",
+     "kind": "report_contest",
+     "page": 16,
+     "block": "4|3",
+     "terms": [
+      {
+       "cell": [
+        16,
+        "4|3",
+        "REP Jodey C. Arrington",
+        "absentee"
+       ],
+       "value": 58
+      },
+      {
+       "cell": [
+        16,
+        "4|3",
+        "LIB Bernard Johnson",
+        "absentee"
+       ],
+       "value": 5
+      },
+      {
+       "cell": [
+        16,
+        "4|3",
+        "IND Nathan Lewis",
+        "absentee"
+       ],
+       "value": 9
+      }
+     ],
+     "printed": 72,
+     "printed_label": "contest total printed on the scan",
+     "printed_with_scan": 72,
+     "computed_with_scan": 72,
+     "holds_with_scan": true,
+     "printed_with_file": 72,
+     "computed_with_file": 75,
+     "holds_with_file": false
+    }
+   ],
+   "page": 16,
+   "block": "4|3",
+   "row": "LIB Bernard Johnson",
+   "box": [
+    0,
+    1681,
+    950,
+    1721
+   ],
+   "crop": "crops/row-0006.png",
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": null,
+   "file_row": 275,
+   "file_line": 277,
+   "corrected": true,
+   "confirmed_by_person": false
+  },
+  {
+   "id": "f012",
+   "group": "g006",
+   "county": "jones",
+   "office": "U.S. House",
+   "district": "19",
+   "party": "DEM",
+   "candidate": "Bernard Johnson",
+   "precinct": "Precinct 4",
+   "part": "election_day",
+   "file_value": 42,
+   "scan_value": 45,
+   "kind": "wrong_number",
+   "status": "settled_against_file",
+   "reason": "the candidates' election day figures add to the contest total's election day figure hold(s) with the scan's value and fail(s) with the file's, and no printed total holds with the file's value and fails with the scan's",
+   "sums": [
+    {
+     "name": "the row's total printed on the scan equals its absentee + early voting + election day (LIB Bernard Johnson)",
+     "kind": "report_row",
+     "page": 16,
+     "block": "4|3",
+     "terms": [
+      {
+       "cell": [
+        16,
+        "4|3",
+        "LIB Bernard Johnson",
+        "absentee"
+       ],
+       "value": 5
+      },
+      {
+       "cell": [
+        16,
+        "4|3",
+        "LIB Bernard Johnson",
+        "early"
+       ],
+       "value": 46
+      },
+      {
+       "cell": [
+        16,
+        "4|3",
+        "LIB Bernard Johnson",
+        "election_day"
+       ],
+       "value": 45
+      }
+     ],
+     "printed": 96,
+     "printed_label": "total printed at the left end of the row",
+     "printed_with_scan": 96,
+     "computed_with_scan": 96,
+     "holds_with_scan": true,
+     "printed_with_file": 96,
+     "computed_with_file": 96,
+     "holds_with_file": true
+    },
+    {
+     "name": "the candidates' election day figures add to the contest total's election day figure",
+     "kind": "report_contest",
+     "page": 16,
+     "block": "4|3",
+     "terms": [
+      {
+       "cell": [
+        16,
+        "4|3",
+        "REP Jodey C. Arrington",
+        "election_day"
+       ],
+       "value": 571
+      },
+      {
+       "cell": [
+        16,
+        "4|3",
+        "LIB Bernard Johnson",
+        "election_day"
+       ],
+       "value": 45
+      },
+      {
+       "cell": [
+        16,
+        "4|3",
+        "IND Nathan Lewis",
+        "election_day"
+       ],
+       "value": 44
+      }
+     ],
+     "printed": 660,
+     "printed_label": "contest total printed on the scan",
+     "printed_with_scan": 660,
+     "computed_with_scan": 660,
+     "holds_with_scan": true,
+     "printed_with_file": 660,
+     "computed_with_file": 657,
+     "holds_with_file": false
+    }
+   ],
+   "page": 16,
+   "block": "4|3",
+   "row": "LIB Bernard Johnson",
+   "box": [
+    0,
+    1681,
+    950,
+    1721
+   ],
+   "crop": "crops/row-0006.png",
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": null,
+   "file_row": 275,
+   "file_line": 277,
+   "corrected": true,
+   "confirmed_by_person": false
+  },
+  {
+   "id": "f013",
+   "group": "g007",
+   "county": "jones",
+   "office": "U.S. House",
+   "district": "19",
+   "party": "IND",
+   "candidate": "Nathan Lewis",
+   "precinct": "Precinct 1",
+   "part": "early_voting",
+   "file_value": 42,
+   "scan_value": 32,
+   "kind": "wrong_number",
+   "status": "settled_against_file",
+   "reason": "the candidates' early voting figures add to the contest total's early voting figure hold(s) with the scan's value and fail(s) with the file's, and no printed total holds with the file's value and fails with the scan's",
+   "sums": [
+    {
+     "name": "the row's total printed on the scan equals its absentee + early voting + election day (IND Nathan Lewis)",
+     "kind": "report_row",
+     "page": 1,
+     "block": "1|3",
+     "terms": [
+      {
+       "cell": [
+        1,
+        "1|3",
+        "IND Nathan Lewis",
+        "absentee"
+       ],
+       "value": 7
+      },
+      {
+       "cell": [
+        1,
+        "1|3",
+        "IND Nathan Lewis",
+        "early"
+       ],
+       "value": 32
+      },
+      {
+       "cell": [
+        1,
+        "1|3",
+        "IND Nathan Lewis",
+        "election_day"
+       ],
+       "value": 37
+      }
+     ],
+     "printed": 76,
+     "printed_label": "total printed at the left end of the row",
+     "printed_with_scan": 76,
+     "computed_with_scan": 76,
+     "holds_with_scan": true,
+     "printed_with_file": 76,
+     "computed_with_file": 76,
+     "holds_with_file": true
+    },
+    {
+     "name": "the candidates' early voting figures add to the contest total's early voting figure",
+     "kind": "report_contest",
+     "page": 1,
+     "block": "1|3",
+     "terms": [
+      {
+       "cell": [
+        1,
+        "1|3",
+        "REP Jodey C. Arrington",
+        "early"
+       ],
+       "value": 568
+      },
+      {
+       "cell": [
+        1,
+        "1|3",
+        "LIB Bernard Johnson",
+        "early"
+       ],
+       "value": 33
+      },
+      {
+       "cell": [
+        1,
+        "1|3",
+        "IND Nathan Lewis",
+        "early"
+       ],
+       "value": 32
+      }
+     ],
+     "printed": 633,
+     "printed_label": "contest total printed on the scan",
+     "printed_with_scan": 633,
+     "computed_with_scan": 633,
+     "holds_with_scan": true,
+     "printed_with_file": 633,
+     "computed_with_file": 643,
+     "holds_with_file": false
+    }
+   ],
+   "page": 1,
+   "block": "1|3",
+   "row": "IND Nathan Lewis",
+   "box": [
+    0,
+    1720,
+    950,
+    1760
+   ],
+   "crop": "crops/row-0007.png",
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": null,
+   "file_row": 18,
+   "file_line": 20,
+   "corrected": true,
+   "confirmed_by_person": false
+  },
+  {
+   "id": "f014",
+   "group": "g007",
+   "county": "jones",
+   "office": "U.S. House",
+   "district": "19",
+   "party": "IND",
+   "candidate": "Nathan Lewis",
+   "precinct": "Precinct 1",
+   "part": "election_day",
+   "file_value": 27,
+   "scan_value": 37,
+   "kind": "wrong_number",
+   "status": "settled_against_file",
+   "reason": "the candidates' election day figures add to the contest total's election day figure hold(s) with the scan's value and fail(s) with the file's, and no printed total holds with the file's value and fails with the scan's",
+   "sums": [
+    {
+     "name": "the row's total printed on the scan equals its absentee + early voting + election day (IND Nathan Lewis)",
+     "kind": "report_row",
+     "page": 1,
+     "block": "1|3",
+     "terms": [
+      {
+       "cell": [
+        1,
+        "1|3",
+        "IND Nathan Lewis",
+        "absentee"
+       ],
+       "value": 7
+      },
+      {
+       "cell": [
+        1,
+        "1|3",
+        "IND Nathan Lewis",
+        "early"
+       ],
+       "value": 32
+      },
+      {
+       "cell": [
+        1,
+        "1|3",
+        "IND Nathan Lewis",
+        "election_day"
+       ],
+       "value": 37
+      }
+     ],
+     "printed": 76,
+     "printed_label": "total printed at the left end of the row",
+     "printed_with_scan": 76,
+     "computed_with_scan": 76,
+     "holds_with_scan": true,
+     "printed_with_file": 76,
+     "computed_with_file": 76,
+     "holds_with_file": true
+    },
+    {
+     "name": "the candidates' election day figures add to the contest total's election day figure",
+     "kind": "report_contest",
+     "page": 1,
+     "block": "1|3",
+     "terms": [
+      {
+       "cell": [
+        1,
+        "1|3",
+        "REP Jodey C. Arrington",
+        "election_day"
+       ],
+       "value": 387
+      },
+      {
+       "cell": [
+        1,
+        "1|3",
+        "LIB Bernard Johnson",
+        "election_day"
+       ],
+       "value": 34
+      },
+      {
+       "cell": [
+        1,
+        "1|3",
+        "IND Nathan Lewis",
+        "election_day"
+       ],
+       "value": 37
+      }
+     ],
+     "printed": 458,
+     "printed_label": "contest total printed on the scan",
+     "printed_with_scan": 458,
+     "computed_with_scan": 458,
+     "holds_with_scan": true,
+     "printed_with_file": 458,
+     "computed_with_file": 448,
+     "holds_with_file": false
+    }
+   ],
+   "page": 1,
+   "block": "1|3",
+   "row": "IND Nathan Lewis",
+   "box": [
+    0,
+    1720,
+    950,
+    1760
+   ],
+   "crop": "crops/row-0007.png",
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": null,
+   "file_row": 18,
+   "file_line": 20,
+   "corrected": true,
+   "confirmed_by_person": false
+  },
+  {
+   "id": "f015",
+   "group": "g008",
+   "county": "jones",
+   "office": "U.S. House",
+   "district": "19",
+   "party": "IND",
+   "candidate": "Nathan Lewis",
+   "precinct": "Precinct 2",
+   "part": "absentee",
+   "file_value": 7,
+   "scan_value": 9,
+   "kind": "wrong_number",
+   "status": "settled_against_file",
+   "reason": "the candidates' absentee figures add to the contest total's absentee figure hold(s) with the scan's value and fail(s) with the file's, and no printed total holds with the file's value and fails with the scan's",
+   "sums": [
+    {
+     "name": "the row's total printed on the scan equals its absentee + early voting + election day (IND Nathan Lewis)",
+     "kind": "report_row",
+     "page": 6,
+     "block": "2|3",
+     "terms": [
+      {
+       "cell": [
+        6,
+        "2|3",
+        "IND Nathan Lewis",
+        "absentee"
+       ],
+       "value": 9
+      },
+      {
+       "cell": [
+        6,
+        "2|3",
+        "IND Nathan Lewis",
+        "early"
+       ],
+       "value": 47
+      },
+      {
+       "cell": [
+        6,
+        "2|3",
+        "IND Nathan Lewis",
+        "election_day"
+       ],
+       "value": 48
+      }
+     ],
+     "printed": 104,
+     "printed_label": "total printed at the left end of the row",
+     "printed_with_scan": 104,
+     "computed_with_scan": 104,
+     "holds_with_scan": true,
+     "printed_with_file": 104,
+     "computed_with_file": 104,
+     "holds_with_file": true
+    },
+    {
+     "name": "the candidates' absentee figures add to the contest total's absentee figure",
+     "kind": "report_contest",
+     "page": 6,
+     "block": "2|3",
+     "terms": [
+      {
+       "cell": [
+        6,
+        "2|3",
+        "REP Jodey C. Arrington",
+        "absentee"
+       ],
+       "value": 50
+      },
+      {
+       "cell": [
+        6,
+        "2|3",
+        "LIB Bernard Johnson",
+        "absentee"
+       ],
+       "value": 5
+      },
+      {
+       "cell": [
+        6,
+        "2|3",
+        "IND Nathan Lewis",
+        "absentee"
+       ],
+       "value": 9
+      }
+     ],
+     "printed": 64,
+     "printed_label": "contest total printed on the scan",
+     "printed_with_scan": 64,
+     "computed_with_scan": 64,
+     "holds_with_scan": true,
+     "printed_with_file": 64,
+     "computed_with_file": 62,
+     "holds_with_file": false
+    }
+   ],
+   "page": 6,
+   "block": "2|3",
+   "row": "IND Nathan Lewis",
+   "box": [
+    0,
+    1722,
+    950,
+    1762
+   ],
+   "crop": "crops/row-0008.png",
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": null,
+   "file_row": 101,
+   "file_line": 103,
+   "corrected": true,
+   "confirmed_by_person": false
+  },
+  {
+   "id": "f016",
+   "group": "g008",
+   "county": "jones",
+   "office": "U.S. House",
+   "district": "19",
+   "party": "IND",
+   "candidate": "Nathan Lewis",
+   "precinct": "Precinct 2",
+   "part": "election_day",
+   "file_value": 50,
+   "scan_value": 48,
+   "kind": "wrong_number",
+   "status": "settled_against_file",
+   "reason": "the candidates' election day figures add to the contest total's election day figure hold(s) with the scan's value and fail(s) with the file's, and no printed total holds with the file's value and fails with the scan's",
+   "sums": [
+    {
+     "name": "the row's total printed on the scan equals its absentee + early voting + election day (IND Nathan Lewis)",
+     "kind": "report_row",
+     "page": 6,
+     "block": "2|3",
+     "terms": [
+      {
+       "cell": [
+        6,
+        "2|3",
+        "IND Nathan Lewis",
+        "absentee"
+       ],
+       "value": 9
+      },
+      {
+       "cell": [
+        6,
+        "2|3",
+        "IND Nathan Lewis",
+        "early"
+       ],
+       "value": 47
+      },
+      {
+       "cell": [
+        6,
+        "2|3",
+        "IND Nathan Lewis",
+        "election_day"
+       ],
+       "value": 48
+      }
+     ],
+     "printed": 104,
+     "printed_label": "total printed at the left end of the row",
+     "printed_with_scan": 104,
+     "computed_with_scan": 104,
+     "holds_with_scan": true,
+     "printed_with_file": 104,
+     "computed_with_file": 104,
+     "holds_with_file": true
+    },
+    {
+     "name": "the candidates' election day figures add to the contest total's election day figure",
+     "kind": "report_contest",
+     "page": 6,
+     "block": "2|3",
+     "terms": [
+      {
+       "cell": [
+        6,
+        "2|3",
+        "REP Jodey C. Arrington",
+        "election_day"
+       ],
+       "value": 584
+      },
+      {
+       "cell": [
+        6,
+        "2|3",
+        "LIB Bernard Johnson",
+        "election_day"
+       ],
+       "value": 45
+      },
+      {
+       "cell": [
+        6,
+        "2|3",
+        "IND Nathan Lewis",
+        "election_day"
+       ],
+       "value": 48
+      }
+     ],
+     "printed": 677,
+     "printed_label": "contest total printed on the scan",
+     "printed_with_scan": 677,
+     "computed_with_scan": 677,
+     "holds_with_scan": true,
+     "printed_with_file": 677,
+     "computed_with_file": 679,
+     "holds_with_file": false
+    }
+   ],
+   "page": 6,
+   "block": "2|3",
+   "row": "IND Nathan Lewis",
+   "box": [
+    0,
+    1722,
+    950,
+    1762
+   ],
+   "crop": "crops/row-0008.png",
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": null,
+   "file_row": 101,
+   "file_line": 103,
+   "corrected": true,
+   "confirmed_by_person": false
+  },
+  {
+   "id": "f017",
+   "group": "g009",
+   "county": "jones",
+   "office": "U.S. House",
+   "district": "19",
+   "party": "IND",
+   "candidate": "Nathan Lewis",
+   "precinct": "Precinct 4",
+   "part": "absentee",
+   "file_value": 6,
+   "scan_value": 9,
+   "kind": "wrong_number",
+   "status": "settled_against_file",
+   "reason": "the candidates' absentee figures add to the contest total's absentee figure hold(s) with the scan's value and fail(s) with the file's, and no printed total holds with the file's value and fails with the scan's",
+   "sums": [
+    {
+     "name": "the row's total printed on the scan equals its absentee + early voting + election day (IND Nathan Lewis)",
+     "kind": "report_row",
+     "page": 16,
+     "block": "4|3",
+     "terms": [
+      {
+       "cell": [
+        16,
+        "4|3",
+        "IND Nathan Lewis",
+        "absentee"
+       ],
+       "value": 9
+      },
+      {
+       "cell": [
+        16,
+        "4|3",
+        "IND Nathan Lewis",
+        "early"
+       ],
+       "value": 60
+      },
+      {
+       "cell": [
+        16,
+        "4|3",
+        "IND Nathan Lewis",
+        "election_day"
+       ],
+       "value": 44
+      }
+     ],
+     "printed": 113,
+     "printed_label": "total printed at the left end of the row",
+     "printed_with_scan": 113,
+     "computed_with_scan": 113,
+     "holds_with_scan": true,
+     "printed_with_file": 113,
+     "computed_with_file": 113,
+     "holds_with_file": true
+    },
+    {
+     "name": "the candidates' absentee figures add to the contest total's absentee figure",
+     "kind": "report_contest",
+     "page": 16,
+     "block": "4|3",
+     "terms": [
+      {
+       "cell": [
+        16,
+        "4|3",
+        "REP Jodey C. Arrington",
+        "absentee"
+       ],
+       "value": 58
+      },
+      {
+       "cell": [
+        16,
+        "4|3",
+        "LIB Bernard Johnson",
+        "absentee"
+       ],
+       "value": 5
+      },
+      {
+       "cell": [
+        16,
+        "4|3",
+        "IND Nathan Lewis",
+        "absentee"
+       ],
+       "value": 9
+      }
+     ],
+     "printed": 72,
+     "printed_label": "contest total printed on the scan",
+     "printed_with_scan": 72,
+     "computed_with_scan": 72,
+     "holds_with_scan": true,
+     "printed_with_file": 72,
+     "computed_with_file": 69,
+     "holds_with_file": false
+    }
+   ],
+   "page": 16,
+   "block": "4|3",
+   "row": "IND Nathan Lewis",
+   "box": [
+    0,
+    1719,
+    950,
+    1759
+   ],
+   "crop": "crops/row-0009.png",
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": null,
+   "file_row": 276,
+   "file_line": 278,
+   "corrected": true,
+   "confirmed_by_person": false
+  },
+  {
+   "id": "f018",
+   "group": "g009",
+   "county": "jones",
+   "office": "U.S. House",
+   "district": "19",
+   "party": "IND",
+   "candidate": "Nathan Lewis",
+   "precinct": "Precinct 4",
+   "part": "election_day",
+   "file_value": 47,
+   "scan_value": 44,
+   "kind": "wrong_number",
+   "status": "settled_against_file",
+   "reason": "the candidates' election day figures add to the contest total's election day figure hold(s) with the scan's value and fail(s) with the file's, and no printed total holds with the file's value and fails with the scan's",
+   "sums": [
+    {
+     "name": "the row's total printed on the scan equals its absentee + early voting + election day (IND Nathan Lewis)",
+     "kind": "report_row",
+     "page": 16,
+     "block": "4|3",
+     "terms": [
+      {
+       "cell": [
+        16,
+        "4|3",
+        "IND Nathan Lewis",
+        "absentee"
+       ],
+       "value": 9
+      },
+      {
+       "cell": [
+        16,
+        "4|3",
+        "IND Nathan Lewis",
+        "early"
+       ],
+       "value": 60
+      },
+      {
+       "cell": [
+        16,
+        "4|3",
+        "IND Nathan Lewis",
+        "election_day"
+       ],
+       "value": 44
+      }
+     ],
+     "printed": 113,
+     "printed_label": "total printed at the left end of the row",
+     "printed_with_scan": 113,
+     "computed_with_scan": 113,
+     "holds_with_scan": true,
+     "printed_with_file": 113,
+     "computed_with_file": 113,
+     "holds_with_file": true
+    },
+    {
+     "name": "the candidates' election day figures add to the contest total's election day figure",
+     "kind": "report_contest",
+     "page": 16,
+     "block": "4|3",
+     "terms": [
+      {
+       "cell": [
+        16,
+        "4|3",
+        "REP Jodey C. Arrington",
+        "election_day"
+       ],
+       "value": 571
+      },
+      {
+       "cell": [
+        16,
+        "4|3",
+        "LIB Bernard Johnson",
+        "election_day"
+       ],
+       "value": 45
+      },
+      {
+       "cell": [
+        16,
+        "4|3",
+        "IND Nathan Lewis",
+        "election_day"
+       ],
+       "value": 44
+      }
+     ],
+     "printed": 660,
+     "printed_label": "contest total printed on the scan",
+     "printed_with_scan": 660,
+     "computed_with_scan": 660,
+     "holds_with_scan": true,
+     "printed_with_file": 660,
+     "computed_with_file": 663,
+     "holds_with_file": false
+    }
+   ],
+   "page": 16,
+   "block": "4|3",
+   "row": "IND Nathan Lewis",
+   "box": [
+    0,
+    1719,
+    950,
+    1759
+   ],
+   "crop": "crops/row-0009.png",
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": null,
+   "file_row": 276,
+   "file_line": 278,
+   "corrected": true,
+   "confirmed_by_person": false
+  },
+  {
+   "id": "f019",
+   "group": "g010",
+   "county": "jones",
+   "office": "Justice, Supreme Court",
+   "district": "Pl 4",
+   "party": "REP",
+   "candidate": "John Devine",
+   "precinct": "Precinct 1",
+   "part": "early_voting",
+   "file_value": 550,
+   "scan_value": 545,
+   "kind": "wrong_number",
+   "status": "settled_against_file",
+   "reason": "the candidates' early voting figures add to the contest total's early voting figure hold(s) with the scan's value and fail(s) with the file's, and no printed total holds with the file's value and fails with the scan's",
+   "sums": [
+    {
+     "name": "the row's total printed on the scan equals its absentee + early voting + election day (REP John Devine)",
+     "kind": "report_row",
+     "page": 2,
+     "block": "1|6",
+     "terms": [
+      {
+       "cell": [
+        2,
+        "1|6",
+        "REP John Devine",
+        "absentee"
+       ],
+       "value": 26
+      },
+      {
+       "cell": [
+        2,
+        "1|6",
+        "REP John Devine",
+        "early"
+       ],
+       "value": 545
+      },
+      {
+       "cell": [
+        2,
+        "1|6",
+        "REP John Devine",
+        "election_day"
+       ],
+       "value": 375
+      }
+     ],
+     "printed": 946,
+     "printed_label": "total printed at the left end of the row",
+     "printed_with_scan": 946,
+     "computed_with_scan": 946,
+     "holds_with_scan": true,
+     "printed_with_file": 946,
+     "computed_with_file": 946,
+     "holds_with_file": true
+    },
+    {
+     "name": "the candidates' early voting figures add to the contest total's early voting figure",
+     "kind": "report_contest",
+     "page": 2,
+     "block": "1|6",
+     "terms": [
+      {
+       "cell": [
+        2,
+        "1|6",
+        "REP John Devine",
+        "early"
+       ],
+       "value": 545
+      },
+      {
+       "cell": [
+        2,
+        "1|6",
+        "DEM Christine Vinh Weems",
+        "early"
+       ],
+       "value": 100
+      }
+     ],
+     "printed": 645,
+     "printed_label": "contest total printed on the scan",
+     "printed_with_scan": 645,
+     "computed_with_scan": 645,
+     "holds_with_scan": true,
+     "printed_with_file": 645,
+     "computed_with_file": 650,
+     "holds_with_file": false
+    }
+   ],
+   "page": 2,
+   "block": "1|6",
+   "row": "REP John Devine",
+   "box": [
+    0,
+    1313,
+    950,
+    1353
+   ],
+   "crop": "crops/row-0010.png",
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": null,
+   "file_row": 32,
+   "file_line": 34,
+   "corrected": true,
+   "confirmed_by_person": false
+  },
+  {
+   "id": "f020",
+   "group": "g010",
+   "county": "jones",
+   "office": "Justice, Supreme Court",
+   "district": "Pl 4",
+   "party": "REP",
+   "candidate": "John Devine",
+   "precinct": "Precinct 1",
+   "part": "election_day",
+   "file_value": 370,
+   "scan_value": 375,
+   "kind": "wrong_number",
+   "status": "settled_against_file",
+   "reason": "the candidates' election day figures add to the contest total's election day figure hold(s) with the scan's value and fail(s) with the file's, and no printed total holds with the file's value and fails with the scan's",
+   "sums": [
+    {
+     "name": "the row's total printed on the scan equals its absentee + early voting + election day (REP John Devine)",
+     "kind": "report_row",
+     "page": 2,
+     "block": "1|6",
+     "terms": [
+      {
+       "cell": [
+        2,
+        "1|6",
+        "REP John Devine",
+        "absentee"
+       ],
+       "value": 26
+      },
+      {
+       "cell": [
+        2,
+        "1|6",
+        "REP John Devine",
+        "early"
+       ],
+       "value": 545
+      },
+      {
+       "cell": [
+        2,
+        "1|6",
+        "REP John Devine",
+        "election_day"
+       ],
+       "value": 375
+      }
+     ],
+     "printed": 946,
+     "printed_label": "total printed at the left end of the row",
+     "printed_with_scan": 946,
+     "computed_with_scan": 946,
+     "holds_with_scan": true,
+     "printed_with_file": 946,
+     "computed_with_file": 946,
+     "holds_with_file": true
+    },
+    {
+     "name": "the candidates' election day figures add to the contest total's election day figure",
+     "kind": "report_contest",
+     "page": 2,
+     "block": "1|6",
+     "terms": [
+      {
+       "cell": [
+        2,
+        "1|6",
+        "REP John Devine",
+        "election_day"
+       ],
+       "value": 375
+      },
+      {
+       "cell": [
+        2,
+        "1|6",
+        "DEM Christine Vinh Weems",
+        "election_day"
+       ],
+       "value": 86
+      }
+     ],
+     "printed": 461,
+     "printed_label": "contest total printed on the scan",
+     "printed_with_scan": 461,
+     "computed_with_scan": 461,
+     "holds_with_scan": true,
+     "printed_with_file": 461,
+     "computed_with_file": 456,
+     "holds_with_file": false
+    }
+   ],
+   "page": 2,
+   "block": "1|6",
+   "row": "REP John Devine",
+   "box": [
+    0,
+    1313,
+    950,
+    1353
+   ],
+   "crop": "crops/row-0010.png",
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": null,
+   "file_row": 32,
+   "file_line": 34,
+   "corrected": true,
+   "confirmed_by_person": false
+  },
+  {
+   "id": "f021",
+   "group": "g011",
+   "county": "jones",
+   "office": "Presiding Judge, Ct of Crim App",
+   "district": "",
+   "party": "DEM",
+   "candidate": "Holly Taylor",
+   "precinct": "Precinct 1",
+   "part": "early_voting",
+   "file_value": 91,
+   "scan_value": 90,
+   "kind": "wrong_number",
+   "status": "settled_against_file",
+   "reason": "the candidates' early voting figures add to the contest total's early voting figure hold(s) with the scan's value and fail(s) with the file's, and no printed total holds with the file's value and fails with the scan's",
+   "sums": [
+    {
+     "name": "the row's total printed on the scan equals its absentee + early voting + election day (DEM Holly Taylor)",
+     "kind": "report_row",
+     "page": 3,
+     "block": "1|8",
+     "terms": [
+      {
+       "cell": [
+        3,
+        "1|8",
+        "DEM Holly Taylor",
+        "absentee"
+       ],
+       "value": 22
+      },
+      {
+       "cell": [
+        3,
+        "1|8",
+        "DEM Holly Taylor",
+        "early"
+       ],
+       "value": 90
+      },
+      {
+       "cell": [
+        3,
+        "1|8",
+        "DEM Holly Taylor",
+        "election_day"
+       ],
+       "value": 89
+      }
+     ],
+     "printed": 201,
+     "printed_label": "total printed at the left end of the row",
+     "printed_with_scan": 201,
+     "computed_with_scan": 201,
+     "holds_with_scan": true,
+     "printed_with_file": 201,
+     "computed_with_file": 201,
+     "holds_with_file": true
+    },
+    {
+     "name": "the candidates' early voting figures add to the contest total's early voting figure",
+     "kind": "report_contest",
+     "page": 3,
+     "block": "1|8",
+     "terms": [
+      {
+       "cell": [
+        3,
+        "1|8",
+        "REP David J. Schenck",
+        "early"
+       ],
+       "value": 552
+      },
+      {
+       "cell": [
+        3,
+        "1|8",
+        "DEM Holly Taylor",
+        "early"
+       ],
+       "value": 90
+      }
+     ],
+     "printed": 642,
+     "printed_label": "contest total printed on the scan",
+     "printed_with_scan": 642,
+     "computed_with_scan": 642,
+     "holds_with_scan": true,
+     "printed_with_file": 642,
+     "computed_with_file": 643,
+     "holds_with_file": false
+    }
+   ],
+   "page": 3,
+   "block": "1|8",
+   "row": "DEM Holly Taylor",
+   "box": [
+    0,
+    438,
+    950,
+    478
+   ],
+   "crop": "crops/row-0011.png",
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": null,
+   "file_row": 42,
+   "file_line": 44,
+   "corrected": true,
+   "confirmed_by_person": false
+  },
+  {
+   "id": "f022",
+   "group": "g011",
+   "county": "jones",
+   "office": "Presiding Judge, Ct of Crim App",
+   "district": "",
+   "party": "DEM",
+   "candidate": "Holly Taylor",
+   "precinct": "Precinct 1",
+   "part": "election_day",
+   "file_value": 88,
+   "scan_value": 89,
+   "kind": "wrong_number",
+   "status": "settled_against_file",
+   "reason": "the candidates' election day figures add to the contest total's election day figure hold(s) with the scan's value and fail(s) with the file's, and no printed total holds with the file's value and fails with the scan's",
+   "sums": [
+    {
+     "name": "the row's total printed on the scan equals its absentee + early voting + election day (DEM Holly Taylor)",
+     "kind": "report_row",
+     "page": 3,
+     "block": "1|8",
+     "terms": [
+      {
+       "cell": [
+        3,
+        "1|8",
+        "DEM Holly Taylor",
+        "absentee"
+       ],
+       "value": 22
+      },
+      {
+       "cell": [
+        3,
+        "1|8",
+        "DEM Holly Taylor",
+        "early"
+       ],
+       "value": 90
+      },
+      {
+       "cell": [
+        3,
+        "1|8",
+        "DEM Holly Taylor",
+        "election_day"
+       ],
+       "value": 89
+      }
+     ],
+     "printed": 201,
+     "printed_label": "total printed at the left end of the row",
+     "printed_with_scan": 201,
+     "computed_with_scan": 201,
+     "holds_with_scan": true,
+     "printed_with_file": 201,
+     "computed_with_file": 201,
+     "holds_with_file": true
+    },
+    {
+     "name": "the candidates' election day figures add to the contest total's election day figure",
+     "kind": "report_contest",
+     "page": 3,
+     "block": "1|8",
+     "terms": [
+      {
+       "cell": [
+        3,
+        "1|8",
+        "REP David J. Schenck",
+        "election_day"
+       ],
+       "value": 372
+      },
+      {
+       "cell": [
+        3,
+        "1|8",
+        "DEM Holly Taylor",
+        "election_day"
+       ],
+       "value": 89
+      }
+     ],
+     "printed": 461,
+     "printed_label": "contest total printed on the scan",
+     "printed_with_scan": 461,
+     "computed_with_scan": 461,
+     "holds_with_scan": true,
+     "printed_with_file": 461,
+     "computed_with_file": 460,
+     "holds_with_file": false
+    }
+   ],
+   "page": 3,
+   "block": "1|8",
+   "row": "DEM Holly Taylor",
+   "box": [
+    0,
+    438,
+    950,
+    478
+   ],
+   "crop": "crops/row-0011.png",
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": null,
+   "file_row": 42,
+   "file_line": 44,
+   "corrected": true,
+   "confirmed_by_person": false
+  },
+  {
+   "id": "f023",
+   "group": "g012",
+   "county": "jones",
+   "office": "Presiding Judge, Ct of Crim App",
+   "district": "",
+   "party": "DEM",
+   "candidate": "Holly Taylor",
+   "precinct": "Precinct 3",
+   "part": "early_voting",
+   "file_value": 115,
+   "scan_value": 120,
+   "kind": "wrong_number",
+   "status": "settled_against_file",
+   "reason": "the candidates' early voting figures add to the contest total's early voting figure hold(s) with the scan's value and fail(s) with the file's, and no printed total holds with the file's value and fails with the scan's",
+   "sums": [
+    {
+     "name": "the row's total printed on the scan equals its absentee + early voting + election day (DEM Holly Taylor)",
+     "kind": "report_row",
+     "page": 13,
+     "block": "3|8",
+     "terms": [
+      {
+       "cell": [
+        13,
+        "3|8",
+        "DEM Holly Taylor",
+        "absentee"
+       ],
+       "value": 11
+      },
+      {
+       "cell": [
+        13,
+        "3|8",
+        "DEM Holly Taylor",
+        "early"
+       ],
+       "value": 120
+      },
+      {
+       "cell": [
+        13,
+        "3|8",
+        "DEM Holly Taylor",
+        "election_day"
+       ],
+       "value": 75
+      }
+     ],
+     "printed": 206,
+     "printed_label": "total printed at the left end of the row",
+     "printed_with_scan": 206,
+     "computed_with_scan": 206,
+     "holds_with_scan": true,
+     "printed_with_file": 206,
+     "computed_with_file": 206,
+     "holds_with_file": true
+    },
+    {
+     "name": "the candidates' early voting figures add to the contest total's early voting figure",
+     "kind": "report_contest",
+     "page": 13,
+     "block": "3|8",
+     "terms": [
+      {
+       "cell": [
+        13,
+        "3|8",
+        "REP David J. Schenck",
+        "early"
+       ],
+       "value": 1081
+      },
+      {
+       "cell": [
+        13,
+        "3|8",
+        "DEM Holly Taylor",
+        "early"
+       ],
+       "value": 120
+      }
+     ],
+     "printed": 1201,
+     "printed_label": "contest total printed on the scan",
+     "printed_with_scan": 1201,
+     "computed_with_scan": 1201,
+     "holds_with_scan": true,
+     "printed_with_file": 1201,
+     "computed_with_file": 1196,
+     "holds_with_file": false
+    }
+   ],
+   "page": 13,
+   "block": "3|8",
+   "row": "DEM Holly Taylor",
+   "box": [
+    0,
+    436,
+    950,
+    476
+   ],
+   "crop": "crops/row-0012.png",
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": null,
+   "file_row": 217,
+   "file_line": 219,
+   "corrected": true,
+   "confirmed_by_person": false
+  },
+  {
+   "id": "f024",
+   "group": "g012",
+   "county": "jones",
+   "office": "Presiding Judge, Ct of Crim App",
+   "district": "",
+   "party": "DEM",
+   "candidate": "Holly Taylor",
+   "precinct": "Precinct 3",
+   "part": "election_day",
+   "file_value": 80,
+   "scan_value": 75,
+   "kind": "wrong_number",
+   "status": "settled_against_file",
+   "reason": "the candidates' election day figures add to the contest total's election day figure hold(s) with the scan's value and fail(s) with the file's, and no printed total holds with the file's value and fails with the scan's",
+   "sums": [
+    {
+     "name": "the row's total printed on the scan equals its absentee + early voting + election day (DEM Holly Taylor)",
+     "kind": "report_row",
+     "page": 13,
+     "block": "3|8",
+     "terms": [
+      {
+       "cell": [
+        13,
+        "3|8",
+        "DEM Holly Taylor",
+        "absentee"
+       ],
+       "value": 11
+      },
+      {
+       "cell": [
+        13,
+        "3|8",
+        "DEM Holly Taylor",
+        "early"
+       ],
+       "value": 120
+      },
+      {
+       "cell": [
+        13,
+        "3|8",
+        "DEM Holly Taylor",
+        "election_day"
+       ],
+       "value": 75
+      }
+     ],
+     "printed": 206,
+     "printed_label": "total printed at the left end of the row",
+     "printed_with_scan": 206,
+     "computed_with_scan": 206,
+     "holds_with_scan": true,
+     "printed_with_file": 206,
+     "computed_with_file": 206,
+     "holds_with_file": true
+    },
+    {
+     "name": "the candidates' election day figures add to the contest total's election day figure",
+     "kind": "report_contest",
+     "page": 13,
+     "block": "3|8",
+     "terms": [
+      {
+       "cell": [
+        13,
+        "3|8",
+        "REP David J. Schenck",
+        "election_day"
+       ],
+       "value": 703
+      },
+      {
+       "cell": [
+        13,
+        "3|8",
+        "DEM Holly Taylor",
+        "election_day"
+       ],
+       "value": 75
+      }
+     ],
+     "printed": 778,
+     "printed_label": "contest total printed on the scan",
+     "printed_with_scan": 778,
+     "computed_with_scan": 778,
+     "holds_with_scan": true,
+     "printed_with_file": 778,
+     "computed_with_file": 783,
+     "holds_with_file": false
+    }
+   ],
+   "page": 13,
+   "block": "3|8",
+   "row": "DEM Holly Taylor",
+   "box": [
+    0,
+    436,
+    950,
+    476
+   ],
+   "crop": "crops/row-0012.png",
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": null,
+   "file_row": 217,
+   "file_line": 219,
+   "corrected": true,
+   "confirmed_by_person": false
+  },
+  {
+   "id": "f025",
+   "group": "g013",
+   "county": "jones",
+   "office": "Member, State BoE",
+   "district": "Dist 15",
+   "party": "LIB",
+   "candidate": "Jack B. Westbrook",
+   "precinct": "Precinct 3",
+   "part": "absentee",
+   "file_value": 4,
+   "scan_value": 3,
+   "kind": "wrong_number",
+   "status": "settled_against_file",
+   "reason": "the candidates' absentee figures add to the contest total's absentee figure hold(s) with the scan's value and fail(s) with the file's, and no printed total holds with the file's value and fails with the scan's",
+   "sums": [
+    {
+     "name": "the row's total printed on the scan equals its absentee + early voting + election day (LIB Jack B. Westbrook)",
+     "kind": "report_row",
+     "page": 13,
+     "block": "3|11",
+     "terms": [
+      {
+       "cell": [
+        13,
+        "3|11",
+        "LIB Jack B. Westbrook",
+        "absentee"
+       ],
+       "value": 3
+      },
+      {
+       "cell": [
+        13,
+        "3|11",
+        "LIB Jack B. Westbrook",
+        "early"
+       ],
+       "value": 28
+      },
+      {
+       "cell": [
+        13,
+        "3|11",
+        "LIB Jack B. Westbrook",
+        "election_day"
+       ],
+       "value": 23
+      }
+     ],
+     "printed": 54,
+     "printed_label": "total printed at the left end of the row",
+     "printed_with_scan": 54,
+     "computed_with_scan": 54,
+     "holds_with_scan": true,
+     "printed_with_file": 54,
+     "computed_with_file": 54,
+     "holds_with_file": true
+    },
+    {
+     "name": "the candidates' absentee figures add to the contest total's absentee figure",
+     "kind": "report_contest",
+     "page": 13,
+     "block": "3|11",
+     "terms": [
+      {
+       "cell": [
+        13,
+        "3|11",
+        "REP Aaron Kinsey",
+        "absentee"
+       ],
+       "value": 31
+      },
+      {
+       "cell": [
+        13,
+        "3|11",
+        "DEM Morgan Kirkpatrick",
+        "absentee"
+       ],
+       "value": 10
+      },
+      {
+       "cell": [
+        13,
+        "3|11",
+        "LIB Jack B. Westbrook",
+        "absentee"
+       ],
+       "value": 3
+      }
+     ],
+     "printed": 44,
+     "printed_label": "contest total printed on the scan",
+     "printed_with_scan": 44,
+     "computed_with_scan": 44,
+     "holds_with_scan": true,
+     "printed_with_file": 44,
+     "computed_with_file": 45,
+     "holds_with_file": false
+    }
+   ],
+   "page": 13,
+   "block": "3|11",
+   "row": "LIB Jack B. Westbrook",
+   "box": [
+    0,
+    1490,
+    950,
+    1530
+   ],
+   "crop": "crops/row-0013.png",
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": null,
+   "file_row": 230,
+   "file_line": 232,
+   "corrected": true,
+   "confirmed_by_person": false
+  },
+  {
+   "id": "f026",
+   "group": "g013",
+   "county": "jones",
+   "office": "Member, State BoE",
+   "district": "Dist 15",
+   "party": "LIB",
+   "candidate": "Jack B. Westbrook",
+   "precinct": "Precinct 3",
+   "part": "election_day",
+   "file_value": 22,
+   "scan_value": 23,
+   "kind": "wrong_number",
+   "status": "settled_against_file",
+   "reason": "the candidates' election day figures add to the contest total's election day figure hold(s) with the scan's value and fail(s) with the file's, and no printed total holds with the file's value and fails with the scan's",
+   "sums": [
+    {
+     "name": "the row's total printed on the scan equals its absentee + early voting + election day (LIB Jack B. Westbrook)",
+     "kind": "report_row",
+     "page": 13,
+     "block": "3|11",
+     "terms": [
+      {
+       "cell": [
+        13,
+        "3|11",
+        "LIB Jack B. Westbrook",
+        "absentee"
+       ],
+       "value": 3
+      },
+      {
+       "cell": [
+        13,
+        "3|11",
+        "LIB Jack B. Westbrook",
+        "early"
+       ],
+       "value": 28
+      },
+      {
+       "cell": [
+        13,
+        "3|11",
+        "LIB Jack B. Westbrook",
+        "election_day"
+       ],
+       "value": 23
+      }
+     ],
+     "printed": 54,
+     "printed_label": "total printed at the left end of the row",
+     "printed_with_scan": 54,
+     "computed_with_scan": 54,
+     "holds_with_scan": true,
+     "printed_with_file": 54,
+     "computed_with_file": 54,
+     "holds_with_file": true
+    },
+    {
+     "name": "the candidates' election day figures add to the contest total's election day figure",
+     "kind": "report_contest",
+     "page": 13,
+     "block": "3|11",
+     "terms": [
+      {
+       "cell": [
+        13,
+        "3|11",
+        "REP Aaron Kinsey",
+        "election_day"
+       ],
+       "value": 674
+      },
+      {
+       "cell": [
+        13,
+        "3|11",
+        "DEM Morgan Kirkpatrick",
+        "election_day"
+       ],
+       "value": 79
+      },
+      {
+       "cell": [
+        13,
+        "3|11",
+        "LIB Jack B. Westbrook",
+        "election_day"
+       ],
+       "value": 23
+      }
+     ],
+     "printed": 776,
+     "printed_label": "contest total printed on the scan",
+     "printed_with_scan": 776,
+     "computed_with_scan": 776,
+     "holds_with_scan": true,
+     "printed_with_file": 776,
+     "computed_with_file": 775,
+     "holds_with_file": false
+    }
+   ],
+   "page": 13,
+   "block": "3|11",
+   "row": "LIB Jack B. Westbrook",
+   "box": [
+    0,
+    1490,
+    950,
+    1530
+   ],
+   "crop": "crops/row-0013.png",
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": null,
+   "file_row": 230,
+   "file_line": 232,
+   "corrected": true,
+   "confirmed_by_person": false
+  }
+ ],
+ "groups": [
+  {
+   "id": "g001",
+   "kind": "wrong_number",
+   "office": "President",
+   "district": "",
+   "candidate": "Donald J. Trump/JD Vance",
+   "precincts": [
+    "Precinct 2"
+   ],
+   "page": 6,
+   "block": "2|1",
+   "findings": [
+    "f001",
+    "f002"
+   ],
+   "statuses": {
+    "settled_against_file": 2
+   },
+   "what_to_do": null,
+   "crop": "crops/row-0001.png"
+  },
+  {
+   "id": "g002",
+   "kind": "wrong_number",
+   "office": "President",
+   "district": "",
+   "candidate": "Donald J. Trump/JD Vance",
+   "precincts": [
+    "Precinct 3"
+   ],
+   "page": 11,
+   "block": "3|1",
+   "findings": [
+    "f003",
+    "f004"
+   ],
+   "statuses": {
+    "settled_against_file": 2
+   },
+   "what_to_do": null,
+   "crop": "crops/row-0002.png"
+  },
+  {
+   "id": "g003",
+   "kind": "wrong_number",
+   "office": "President",
+   "district": "",
+   "candidate": "Kamala D. Harris/Tim Walz",
+   "precincts": [
+    "Precinct 2"
+   ],
+   "page": 6,
+   "block": "2|1",
+   "findings": [
+    "f005",
+    "f006"
+   ],
+   "statuses": {
+    "settled_against_file": 2
+   },
+   "what_to_do": null,
+   "crop": "crops/row-0003.png"
+  },
+  {
+   "id": "g004",
+   "kind": "wrong_number",
+   "office": "President",
+   "district": "",
+   "candidate": "Kamala D. Harris/Tim Walz",
+   "precincts": [
+    "Precinct 4"
+   ],
+   "page": 16,
+   "block": "4|1",
+   "findings": [
+    "f007",
+    "f008"
+   ],
+   "statuses": {
+    "settled_against_file": 2
+   },
+   "what_to_do": null,
+   "crop": "crops/row-0004.png"
+  },
+  {
+   "id": "g005",
+   "kind": "wrong_number",
+   "office": "U.S. House",
+   "district": "19",
+   "candidate": "Bernard Johnson",
+   "precincts": [
+    "Precinct 2"
+   ],
+   "page": 6,
+   "block": "2|3",
+   "findings": [
+    "f009",
+    "f010"
+   ],
+   "statuses": {
+    "settled_against_file": 2
+   },
+   "what_to_do": null,
+   "crop": "crops/row-0005.png"
+  },
+  {
+   "id": "g006",
+   "kind": "wrong_number",
+   "office": "U.S. House",
+   "district": "19",
+   "candidate": "Bernard Johnson",
+   "precincts": [
+    "Precinct 4"
+   ],
+   "page": 16,
+   "block": "4|3",
+   "findings": [
+    "f011",
+    "f012"
+   ],
+   "statuses": {
+    "settled_against_file": 2
+   },
+   "what_to_do": null,
+   "crop": "crops/row-0006.png"
+  },
+  {
+   "id": "g007",
+   "kind": "wrong_number",
+   "office": "U.S. House",
+   "district": "19",
+   "candidate": "Nathan Lewis",
+   "precincts": [
+    "Precinct 1"
+   ],
+   "page": 1,
+   "block": "1|3",
+   "findings": [
+    "f013",
+    "f014"
+   ],
+   "statuses": {
+    "settled_against_file": 2
+   },
+   "what_to_do": null,
+   "crop": "crops/row-0007.png"
+  },
+  {
+   "id": "g008",
+   "kind": "wrong_number",
+   "office": "U.S. House",
+   "district": "19",
+   "candidate": "Nathan Lewis",
+   "precincts": [
+    "Precinct 2"
+   ],
+   "page": 6,
+   "block": "2|3",
+   "findings": [
+    "f015",
+    "f016"
+   ],
+   "statuses": {
+    "settled_against_file": 2
+   },
+   "what_to_do": null,
+   "crop": "crops/row-0008.png"
+  },
+  {
+   "id": "g009",
+   "kind": "wrong_number",
+   "office": "U.S. House",
+   "district": "19",
+   "candidate": "Nathan Lewis",
+   "precincts": [
+    "Precinct 4"
+   ],
+   "page": 16,
+   "block": "4|3",
+   "findings": [
+    "f017",
+    "f018"
+   ],
+   "statuses": {
+    "settled_against_file": 2
+   },
+   "what_to_do": null,
+   "crop": "crops/row-0009.png"
+  },
+  {
+   "id": "g010",
+   "kind": "wrong_number",
+   "office": "Justice, Supreme Court",
+   "district": "Pl 4",
+   "candidate": "John Devine",
+   "precincts": [
+    "Precinct 1"
+   ],
+   "page": 2,
+   "block": "1|6",
+   "findings": [
+    "f019",
+    "f020"
+   ],
+   "statuses": {
+    "settled_against_file": 2
+   },
+   "what_to_do": null,
+   "crop": "crops/row-0010.png"
+  },
+  {
+   "id": "g011",
+   "kind": "wrong_number",
+   "office": "Presiding Judge, Ct of Crim App",
+   "district": "",
+   "candidate": "Holly Taylor",
+   "precincts": [
+    "Precinct 1"
+   ],
+   "page": 3,
+   "block": "1|8",
+   "findings": [
+    "f021",
+    "f022"
+   ],
+   "statuses": {
+    "settled_against_file": 2
+   },
+   "what_to_do": null,
+   "crop": "crops/row-0011.png"
+  },
+  {
+   "id": "g012",
+   "kind": "wrong_number",
+   "office": "Presiding Judge, Ct of Crim App",
+   "district": "",
+   "candidate": "Holly Taylor",
+   "precincts": [
+    "Precinct 3"
+   ],
+   "page": 13,
+   "block": "3|8",
+   "findings": [
+    "f023",
+    "f024"
+   ],
+   "statuses": {
+    "settled_against_file": 2
+   },
+   "what_to_do": null,
+   "crop": "crops/row-0012.png"
+  },
+  {
+   "id": "g013",
+   "kind": "wrong_number",
+   "office": "Member, State BoE",
+   "district": "Dist 15",
+   "candidate": "Jack B. Westbrook",
+   "precincts": [
+    "Precinct 3"
+   ],
+   "page": 13,
+   "block": "3|11",
+   "findings": [
+    "f025",
+    "f026"
+   ],
+   "statuses": {
+    "settled_against_file": 2
+   },
+   "what_to_do": null,
+   "crop": "crops/row-0013.png"
+  }
+ ],
+ "corrections": [
+  {
+   "finding": "f001",
+   "file_row": 86,
+   "part": "votes",
+   "old": 1263,
+   "new": 1363
+  },
+  {
+   "finding": "f002",
+   "file_row": 86,
+   "part": "election_day",
+   "old": 494,
+   "new": 594
+  },
+  {
+   "finding": "f003",
+   "file_row": 178,
+   "part": "votes",
+   "old": 1858,
+   "new": 1868
+  },
+  {
+   "finding": "f004",
+   "file_row": 178,
+   "part": "election_day",
+   "old": 722,
+   "new": 732
+  },
+  {
+   "finding": "f005",
+   "file_row": 87,
+   "part": "early_voting",
+   "old": 112,
+   "new": 110
+  },
+  {
+   "finding": "f006",
+   "file_row": 87,
+   "part": "election_day",
+   "old": 111,
+   "new": 113
+  },
+  {
+   "finding": "f007",
+   "file_row": 262,
+   "part": "early_voting",
+   "old": 136,
+   "new": 126
+  },
+  {
+   "finding": "f008",
+   "file_row": 262,
+   "part": "election_day",
+   "old": 72,
+   "new": 82
+  },
+  {
+   "finding": "f009",
+   "file_row": 100,
+   "part": "votes",
+   "old": 93,
+   "new": 95
+  },
+  {
+   "finding": "f010",
+   "file_row": 100,
+   "part": "election_day",
+   "old": 43,
+   "new": 45
+  },
+  {
+   "finding": "f011",
+   "file_row": 275,
+   "part": "absentee",
+   "old": 8,
+   "new": 5
+  },
+  {
+   "finding": "f012",
+   "file_row": 275,
+   "part": "election_day",
+   "old": 42,
+   "new": 45
+  },
+  {
+   "finding": "f013",
+   "file_row": 18,
+   "part": "early_voting",
+   "old": 42,
+   "new": 32
+  },
+  {
+   "finding": "f014",
+   "file_row": 18,
+   "part": "election_day",
+   "old": 27,
+   "new": 37
+  },
+  {
+   "finding": "f015",
+   "file_row": 101,
+   "part": "absentee",
+   "old": 7,
+   "new": 9
+  },
+  {
+   "finding": "f016",
+   "file_row": 101,
+   "part": "election_day",
+   "old": 50,
+   "new": 48
+  },
+  {
+   "finding": "f017",
+   "file_row": 276,
+   "part": "absentee",
+   "old": 6,
+   "new": 9
+  },
+  {
+   "finding": "f018",
+   "file_row": 276,
+   "part": "election_day",
+   "old": 47,
+   "new": 44
+  },
+  {
+   "finding": "f019",
+   "file_row": 32,
+   "part": "early_voting",
+   "old": 550,
+   "new": 545
+  },
+  {
+   "finding": "f020",
+   "file_row": 32,
+   "part": "election_day",
+   "old": 370,
+   "new": 375
+  },
+  {
+   "finding": "f021",
+   "file_row": 42,
+   "part": "early_voting",
+   "old": 91,
+   "new": 90
+  },
+  {
+   "finding": "f022",
+   "file_row": 42,
+   "part": "election_day",
+   "old": 88,
+   "new": 89
+  },
+  {
+   "finding": "f023",
+   "file_row": 217,
+   "part": "early_voting",
+   "old": 115,
+   "new": 120
+  },
+  {
+   "finding": "f024",
+   "file_row": 217,
+   "part": "election_day",
+   "old": 80,
+   "new": 75
+  },
+  {
+   "finding": "f025",
+   "file_row": 230,
+   "part": "absentee",
+   "old": 4,
+   "new": 3
+  },
+  {
+   "finding": "f026",
+   "file_row": 230,
+   "part": "election_day",
+   "old": 22,
+   "new": 23
+  }
+ ],
+ "could_not_correct": [],
+ "sums_check": {
+  "in_all": 1102,
+  "holding_with_ledger": 1102,
+  "holding_with_published": 1083,
+  "holding_with_corrected": 1102,
+  "still_failing": [],
+  "rows_failing_own_total": {
+   "published": 0,
+   "corrected": 0
+  }
+ },
+ "unmatched": {
+  "scan": [
+   {
+    "block": "c007",
+    "page": 1,
+    "contest": "President/Vice President",
+    "candidate": "Write-In: Uncertified"
+   },
+   {
+    "block": "c008",
+    "page": 1,
+    "contest": "President/Vice President",
+    "candidate": "Write-In: Peter Sonski"
+   },
+   {
+    "block": "c009",
+    "page": 1,
+    "contest": "President/Vice President",
+    "candidate": "Not Assigned"
+   },
+   {
+    "block": "c016",
+    "page": 1,
+    "contest": "US Senator",
+    "candidate": "Write-In: Uncertified"
+   },
+   {
+    "block": "c017",
+    "page": 1,
+    "contest": "US Senator",
+    "candidate": "Not Assigned"
+   },
+   {
+    "block": "c030",
+    "page": 2,
+    "contest": "Railroad Commissioner",
+    "candidate": "Write-In: Richard McKibbin"
+   },
+   {
+    "block": "c031",
+    "page": 2,
+    "contest": "Railroad Commissioner",
+    "candidate": "Write-In: Uncertified"
+   },
+   {
+    "block": "c032",
+    "page": 2,
+    "contest": "Railroad Commissioner",
+    "candidate": "Not Assigned"
+   },
+   {
+    "block": "c105",
+    "page": 20,
+    "contest": "Trustee Roby CISD",
+    "candidate": "Danny Carrion"
+   }
+  ],
+  "file": [
+   {
+    "contest": "Registered Voters",
+    "district": "",
+    "candidate": "",
+    "rows": 4
+   },
+   {
+    "contest": "Ballots Cast Blank",
+    "district": "",
+    "candidate": "",
+    "rows": 4
+   },
+   {
+    "contest": "Trustee Roby CISD",
+    "district": "",
+    "candidate": "Danny Garison",
+    "rows": 1
+   }
+  ],
+  "rejected": [],
+  "model": {
+   "asked": {
+    "scan_contests": [],
+    "file_contests": [
+     "Registered Voters",
+     "Ballots Cast Blank"
+    ],
+    "scan_candidates": [
+     "President/Vice President :: Write-In: Uncertified",
+     "President/Vice President :: Write-In: Peter Sonski",
+     "President/Vice President :: Not Assigned",
+     "US Senator :: Write-In: Uncertified",
+     "US Senator :: Not Assigned",
+     "Railroad Commissioner :: Write-In: Richard McKibbin",
+     "Railroad Commissioner :: Write-In: Uncertified",
+     "Railroad Commissioner :: Not Assigned",
+     "Trustee Roby CISD :: Danny Carrion"
+    ],
+    "file_candidates": [
+     "Registered Voters :: ",
+     "Ballots Cast Blank :: ",
+     "Trustee Roby CISD :: Danny Garison"
+    ]
+   },
+   "answer": {
+    "contests": [],
+    "candidates": []
+   }
+  }
+ },
+ "corrected_events": [],
+ "audit": {
+  "disagreements_found": 26,
+  "rereads": 0,
+  "rereads_skipped_sums_decide": 0,
+  "rereads_agreed_with_ledger": 0,
+  "rereads_agreed_with_file": 0,
+  "ledger_corrected": 0,
+  "contests": 82,
+  "contest_totals_printed": 78,
+  "second_sum_exists": true,
+  "ballot_sums_not_used": [
+   {
+    "block": "2|19",
+    "page": 10,
+    "why": "the contest total, overvotes and undervotes do not add to the precinct's ballots cast in any column (total 9 against 1631, absentee 0 against 67, early 2 against 843, election_day 7 against 721), always on the same side: the contest was not on every ballot of the precinct, so the equation is not a sum for this block"
+   },
+   {
+    "block": "2|20",
+    "page": 10,
+    "why": "the contest total, overvotes and undervotes do not add to the precinct's ballots cast in any column (total 9 against 1631, absentee 0 against 67, early 2 against 843, election_day 7 against 721), always on the same side: the contest was not on every ballot of the precinct, so the equation is not a sum for this block"
+   },
+   {
+    "block": "2|21",
+    "page": 10,
+    "why": "the contest total, overvotes and undervotes do not add to the precinct's ballots cast in any column (total 9 against 1631, absentee 0 against 67, early 2 against 843, election_day 7 against 721), always on the same side: the contest was not on every ballot of the precinct, so the equation is not a sum for this block"
+   },
+   {
+    "block": "4|19",
+    "page": 20,
+    "why": "the contest total, overvotes and undervotes do not add to the precinct's ballots cast in any column (total 33 against 2029, absentee 6 against 78, early 18 against 1276, election_day 9 against 675), always on the same side: the contest was not on every ballot of the precinct, so the equation is not a sum for this block"
+   }
+  ],
+  "seconds": 6.4
+ }
+}

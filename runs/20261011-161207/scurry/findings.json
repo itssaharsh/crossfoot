@@ -1,0 +1,96 @@
+{
+ "county": "scurry",
+ "run_id": "20261011-161207",
+ "layout": "report",
+ "file": "20241105__tx__general__scurry__precinct.csv",
+ "policy": {
+  "question_id": "document_disagrees_with_itself",
+  "answer": "cells",
+  "answered_by": "default, not yet confirmed by a person",
+  "meaning": "follow the cells as printed and list the printed total as inconsistent"
+ },
+ "counts": {
+  "findings": 0,
+  "by_kind": {},
+  "by_status": {},
+  "groups": 0,
+  "corrections": 0
+ },
+ "rows_published": 545,
+ "rows_compared": 534,
+ "not_compared": [
+  {
+   "contest": "Registered Voters",
+   "rows": 11,
+   "reason": "the contest was not paired with a contest on the scan"
+  }
+ ],
+ "findings": [],
+ "groups": [],
+ "corrections": [],
+ "could_not_correct": [],
+ "sums_check": {
+  "in_all": 545,
+  "holding_with_ledger": 545,
+  "holding_with_published": 545,
+  "holding_with_corrected": 545,
+  "still_failing": [],
+  "rows_failing_own_total": {
+   "published": 0,
+   "corrected": 0
+  }
+ },
+ "unmatched": {
+  "scan": [
+   {
+    "block": "c002",
+    "page": 1,
+    "contest": "Ballots Cast Blank",
+    "candidate": ""
+   }
+  ],
+  "file": [
+   {
+    "contest": "Registered Voters",
+    "district": "",
+    "candidate": "",
+    "rows": 11
+   }
+  ],
+  "rejected": [],
+  "model": {
+   "asked": {
+    "scan_contests": [
+     "Ballots Cast Blank"
+    ],
+    "file_contests": [
+     "Registered Voters"
+    ],
+    "scan_candidates": [
+     "Ballots Cast Blank :: "
+    ],
+    "file_candidates": [
+     "Registered Voters :: "
+    ]
+   },
+   "answer": {
+    "contests": [],
+    "candidates": []
+   }
+  }
+ },
+ "corrected_events": [],
+ "audit": {
+  "disagreements_found": 0,
+  "rereads": 0,
+  "rereads_skipped_sums_decide": 0,
+  "rereads_agreed_with_ledger": 0,
+  "rereads_agreed_with_file": 0,
+  "ledger_corrected": 0,
+  "contests": 260,
+  "contest_totals_printed": 0,
+  "second_sum_exists": false,
+  "ballot_sums_not_used": [],
+  "seconds": 1.7
+ }
+}

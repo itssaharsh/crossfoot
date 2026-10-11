@@ -1,6 +1,6 @@
 {
  "county": "lynn",
- "run_id": "20261011-140637",
+ "run_id": "20261011-161207",
  "layout": "report",
  "file": "20241105__tx__general__lynn__precinct.csv",
  "policy": {
@@ -88,8 +88,10 @@
      ],
      "printed": 256,
      "printed_label": "total printed at the left end of the row",
+     "printed_with_scan": 256,
      "computed_with_scan": 256,
      "holds_with_scan": true,
+     "printed_with_file": 255,
      "computed_with_file": 255,
      "holds_with_file": true
     },
@@ -129,8 +131,10 @@
      ],
      "printed": 256,
      "printed_label": "ballots cast printed in the precinct's Statistics block",
+     "printed_with_scan": 256,
      "computed_with_scan": 256,
      "holds_with_scan": true,
+     "printed_with_file": 255,
      "computed_with_file": 256,
      "holds_with_file": false
     },
@@ -170,8 +174,10 @@
      ],
      "printed": 256,
      "printed_label": "ballots cast printed in the precinct's Statistics block",
+     "printed_with_scan": 256,
      "computed_with_scan": 256,
      "holds_with_scan": true,
+     "printed_with_file": 255,
      "computed_with_file": 256,
      "holds_with_file": false
     },
@@ -211,8 +217,10 @@
      ],
      "printed": 256,
      "printed_label": "ballots cast printed in the precinct's Statistics block",
+     "printed_with_scan": 256,
      "computed_with_scan": 256,
      "holds_with_scan": true,
+     "printed_with_file": 255,
      "computed_with_file": 256,
      "holds_with_file": false
     },
@@ -252,8 +260,10 @@
      ],
      "printed": 256,
      "printed_label": "ballots cast printed in the precinct's Statistics block",
+     "printed_with_scan": 256,
      "computed_with_scan": 256,
      "holds_with_scan": true,
+     "printed_with_file": 255,
      "computed_with_file": 256,
      "holds_with_file": false
     },
@@ -293,8 +303,10 @@
      ],
      "printed": 256,
      "printed_label": "ballots cast printed in the precinct's Statistics block",
+     "printed_with_scan": 256,
      "computed_with_scan": 256,
      "holds_with_scan": true,
+     "printed_with_file": 255,
      "computed_with_file": 256,
      "holds_with_file": false
     },
@@ -334,8 +346,10 @@
      ],
      "printed": 256,
      "printed_label": "ballots cast printed in the precinct's Statistics block",
+     "printed_with_scan": 256,
      "computed_with_scan": 256,
      "holds_with_scan": true,
+     "printed_with_file": 255,
      "computed_with_file": 256,
      "holds_with_file": false
     },
@@ -375,8 +389,10 @@
      ],
      "printed": 256,
      "printed_label": "ballots cast printed in the precinct's Statistics block",
+     "printed_with_scan": 256,
      "computed_with_scan": 256,
      "holds_with_scan": true,
+     "printed_with_file": 255,
      "computed_with_file": 256,
      "holds_with_file": false
     },
@@ -416,8 +432,10 @@
      ],
      "printed": 256,
      "printed_label": "ballots cast printed in the precinct's Statistics block",
+     "printed_with_scan": 256,
      "computed_with_scan": 256,
      "holds_with_scan": true,
+     "printed_with_file": 255,
      "computed_with_file": 256,
      "holds_with_file": false
     },
@@ -457,8 +475,10 @@
      ],
      "printed": 256,
      "printed_label": "ballots cast printed in the precinct's Statistics block",
+     "printed_with_scan": 256,
      "computed_with_scan": 256,
      "holds_with_scan": true,
+     "printed_with_file": 255,
      "computed_with_file": 256,
      "holds_with_file": false
     },
@@ -498,8 +518,10 @@
      ],
      "printed": 256,
      "printed_label": "ballots cast printed in the precinct's Statistics block",
+     "printed_with_scan": 256,
      "computed_with_scan": 256,
      "holds_with_scan": true,
+     "printed_with_file": 255,
      "computed_with_file": 256,
      "holds_with_file": false
     },
@@ -539,8 +561,10 @@
      ],
      "printed": 256,
      "printed_label": "ballots cast printed in the precinct's Statistics block",
+     "printed_with_scan": 256,
      "computed_with_scan": 256,
      "holds_with_scan": true,
+     "printed_with_file": 255,
      "computed_with_file": 256,
      "holds_with_file": false
     },
@@ -580,8 +604,10 @@
      ],
      "printed": 256,
      "printed_label": "ballots cast printed in the precinct's Statistics block",
+     "printed_with_scan": 256,
      "computed_with_scan": 256,
      "holds_with_scan": true,
+     "printed_with_file": 255,
      "computed_with_file": 256,
      "holds_with_file": false
     },
@@ -621,8 +647,10 @@
      ],
      "printed": 256,
      "printed_label": "ballots cast printed in the precinct's Statistics block",
+     "printed_with_scan": 256,
      "computed_with_scan": 256,
      "holds_with_scan": true,
+     "printed_with_file": 255,
      "computed_with_file": 256,
      "holds_with_file": false
     },
@@ -662,8 +690,10 @@
      ],
      "printed": 256,
      "printed_label": "ballots cast printed in the precinct's Statistics block",
+     "printed_with_scan": 256,
      "computed_with_scan": 256,
      "holds_with_scan": true,
+     "printed_with_file": 255,
      "computed_with_file": 256,
      "holds_with_file": false
     },
@@ -703,8 +733,10 @@
      ],
      "printed": 256,
      "printed_label": "ballots cast printed in the precinct's Statistics block",
+     "printed_with_scan": 256,
      "computed_with_scan": 256,
      "holds_with_scan": true,
+     "printed_with_file": 255,
      "computed_with_file": 256,
      "holds_with_file": false
     },
@@ -744,8 +776,10 @@
      ],
      "printed": 256,
      "printed_label": "ballots cast printed in the precinct's Statistics block",
+     "printed_with_scan": 256,
      "computed_with_scan": 256,
      "holds_with_scan": true,
+     "printed_with_file": 255,
      "computed_with_file": 256,
      "holds_with_file": false
     },
@@ -785,8 +819,10 @@
      ],
      "printed": 256,
      "printed_label": "ballots cast printed in the precinct's Statistics block",
+     "printed_with_scan": 256,
      "computed_with_scan": 256,
      "holds_with_scan": true,
+     "printed_with_file": 255,
      "computed_with_file": 256,
      "holds_with_file": false
     },
@@ -826,8 +862,10 @@
      ],
      "printed": 256,
      "printed_label": "ballots cast printed in the precinct's Statistics block",
+     "printed_with_scan": 256,
      "computed_with_scan": 256,
      "holds_with_scan": true,
+     "printed_with_file": 255,
      "computed_with_file": 256,
      "holds_with_file": false
     },
@@ -867,8 +905,10 @@
      ],
      "printed": 256,
      "printed_label": "ballots cast printed in the precinct's Statistics block",
+     "printed_with_scan": 256,
      "computed_with_scan": 256,
      "holds_with_scan": true,
+     "printed_with_file": 255,
      "computed_with_file": 256,
      "holds_with_file": false
     }
@@ -944,8 +984,10 @@
      ],
      "printed": 256,
      "printed_label": "total printed at the left end of the row",
+     "printed_with_scan": 256,
      "computed_with_scan": 256,
      "holds_with_scan": true,
+     "printed_with_file": 255,
      "computed_with_file": 255,
      "holds_with_file": true
     },
@@ -985,8 +1027,10 @@
      ],
      "printed": 68,
      "printed_label": "ballots cast printed in the precinct's Statistics block",
+     "printed_with_scan": 68,
      "computed_with_scan": 68,
      "holds_with_scan": true,
+     "printed_with_file": 67,
      "computed_with_file": 68,
      "holds_with_file": false
     },
@@ -1026,8 +1070,10 @@
      ],
      "printed": 68,
      "printed_label": "ballots cast printed in the precinct's Statistics block",
+     "printed_with_scan": 68,
      "computed_with_scan": 68,
      "holds_with_scan": true,
+     "printed_with_file": 67,
      "computed_with_file": 68,
      "holds_with_file": false
     },
@@ -1067,8 +1113,10 @@
      ],
      "printed": 68,
      "printed_label": "ballots cast printed in the precinct's Statistics block",
+     "printed_with_scan": 68,
      "computed_with_scan": 68,
      "holds_with_scan": true,
+     "printed_with_file": 67,
      "computed_with_file": 68,
      "holds_with_file": false
     },
@@ -1108,8 +1156,10 @@
      ],
      "printed": 68,
      "printed_label": "ballots cast printed in the precinct's Statistics block",
+     "printed_with_scan": 68,
      "computed_with_scan": 68,
      "holds_with_scan": true,
+     "printed_with_file": 67,
      "computed_with_file": 68,
      "holds_with_file": false
     },
@@ -1149,8 +1199,10 @@
      ],
      "printed": 68,
      "printed_label": "ballots cast printed in the precinct's Statistics block",
+     "printed_with_scan": 68,
      "computed_with_scan": 68,
      "holds_with_scan": true,
+     "printed_with_file": 67,
      "computed_with_file": 68,
      "holds_with_file": false
     },
@@ -1190,8 +1242,10 @@
      ],
      "printed": 68,
      "printed_label": "ballots cast printed in the precinct's Statistics block",
+     "printed_with_scan": 68,
      "computed_with_scan": 68,
      "holds_with_scan": true,
+     "printed_with_file": 67,
      "computed_with_file": 68,
      "holds_with_file": false
     },
@@ -1231,8 +1285,10 @@
      ],
      "printed": 68,
      "printed_label": "ballots cast printed in the precinct's Statistics block",
+     "printed_with_scan": 68,
      "computed_with_scan": 68,
      "holds_with_scan": true,
+     "printed_with_file": 67,
      "computed_with_file": 68,
      "holds_with_file": false
     },
@@ -1272,8 +1328,10 @@
      ],
      "printed": 68,
      "printed_label": "ballots cast printed in the precinct's Statistics block",
+     "printed_with_scan": 68,
      "computed_with_scan": 68,
      "holds_with_scan": true,
+     "printed_with_file": 67,
      "computed_with_file": 68,
      "holds_with_file": false
     },
@@ -1313,8 +1371,10 @@
      ],
      "printed": 68,
      "printed_label": "ballots cast printed in the precinct's Statistics block",
+     "printed_with_scan": 68,
      "computed_with_scan": 68,
      "holds_with_scan": true,
+     "printed_with_file": 67,
      "computed_with_file": 68,
      "holds_with_file": false
     },
@@ -1354,8 +1414,10 @@
      ],
      "printed": 68,
      "printed_label": "ballots cast printed in the precinct's Statistics block",
+     "printed_with_scan": 68,
      "computed_with_scan": 68,
      "holds_with_scan": true,
+     "printed_with_file": 67,
      "computed_with_file": 68,
      "holds_with_file": false
     },
@@ -1395,8 +1457,10 @@
      ],
      "printed": 68,
      "printed_label": "ballots cast printed in the precinct's Statistics block",
+     "printed_with_scan": 68,
      "computed_with_scan": 68,
      "holds_with_scan": true,
+     "printed_with_file": 67,
      "computed_with_file": 68,
      "holds_with_file": false
     },
@@ -1436,8 +1500,10 @@
      ],
      "printed": 68,
      "printed_label": "ballots cast printed in the precinct's Statistics block",
+     "printed_with_scan": 68,
      "computed_with_scan": 68,
      "holds_with_scan": true,
+     "printed_with_file": 67,
      "computed_with_file": 68,
      "holds_with_file": false
     },
@@ -1477,8 +1543,10 @@
      ],
      "printed": 68,
      "printed_label": "ballots cast printed in the precinct's Statistics block",
+     "printed_with_scan": 68,
      "computed_with_scan": 68,
      "holds_with_scan": true,
+     "printed_with_file": 67,
      "computed_with_file": 68,
      "holds_with_file": false
     },
@@ -1518,8 +1586,10 @@
      ],
      "printed": 68,
      "printed_label": "ballots cast printed in the precinct's Statistics block",
+     "printed_with_scan": 68,
      "computed_with_scan": 68,
      "holds_with_scan": true,
+     "printed_with_file": 67,
      "computed_with_file": 68,
      "holds_with_file": false
     },
@@ -1559,8 +1629,10 @@
      ],
      "printed": 68,
      "printed_label": "ballots cast printed in the precinct's Statistics block",
+     "printed_with_scan": 68,
      "computed_with_scan": 68,
      "holds_with_scan": true,
+     "printed_with_file": 67,
      "computed_with_file": 68,
      "holds_with_file": false
     },
@@ -1600,8 +1672,10 @@
      ],
      "printed": 68,
      "printed_label": "ballots cast printed in the precinct's Statistics block",
+     "printed_with_scan": 68,
      "computed_with_scan": 68,
      "holds_with_scan": true,
+     "printed_with_file": 67,
      "computed_with_file": 68,
      "holds_with_file": false
     },
@@ -1641,8 +1715,10 @@
      ],
      "printed": 68,
      "printed_label": "ballots cast printed in the precinct's Statistics block",
+     "printed_with_scan": 68,
      "computed_with_scan": 68,
      "holds_with_scan": true,
+     "printed_with_file": 67,
      "computed_with_file": 68,
      "holds_with_file": false
     },
@@ -1682,8 +1758,10 @@
      ],
      "printed": 68,
      "printed_label": "ballots cast printed in the precinct's Statistics block",
+     "printed_with_scan": 68,
      "computed_with_scan": 68,
      "holds_with_scan": true,
+     "printed_with_file": 67,
      "computed_with_file": 68,
      "holds_with_file": false
     },
@@ -1723,8 +1801,10 @@
      ],
      "printed": 68,
      "printed_label": "ballots cast printed in the precinct's Statistics block",
+     "printed_with_scan": 68,
      "computed_with_scan": 68,
      "holds_with_scan": true,
+     "printed_with_file": 67,
      "computed_with_file": 68,
      "holds_with_file": false
     }
@@ -1800,8 +1880,10 @@
      ],
      "printed": 255,
      "printed_label": "total printed at the left end of the row",
+     "printed_with_scan": 255,
      "computed_with_scan": 255,
      "holds_with_scan": true,
+     "printed_with_file": 255,
      "computed_with_file": 255,
      "holds_with_file": true
     },
@@ -1859,8 +1941,10 @@
      ],
      "printed": 127,
      "printed_label": "contest total printed on the scan",
+     "printed_with_scan": 127,
      "computed_with_scan": 127,
      "holds_with_scan": true,
+     "printed_with_file": 127,
      "computed_with_file": 159,
      "holds_with_file": false
     }
@@ -1936,8 +2020,10 @@
      ],
      "printed": 255,
      "printed_label": "total printed at the left end of the row",
+     "printed_with_scan": 255,
      "computed_with_scan": 255,
      "holds_with_scan": true,
+     "printed_with_file": 255,
      "computed_with_file": 255,
      "holds_with_file": true
     },
@@ -1995,8 +2081,10 @@
      ],
      "printed": 175,
      "printed_label": "contest total printed on the scan",
+     "printed_with_scan": 175,
      "computed_with_scan": 175,
      "holds_with_scan": true,
+     "printed_with_file": 175,
      "computed_with_file": 143,
      "holds_with_file": false
     }
@@ -2072,8 +2160,10 @@
      ],
      "printed": 895,
      "printed_label": "total printed at the left end of the row",
+     "printed_with_scan": 895,
      "computed_with_scan": 895,
      "holds_with_scan": true,
+     "printed_with_file": 895,
      "computed_with_file": 895,
      "holds_with_file": true
     },
@@ -2131,8 +2221,10 @@
      ],
      "printed": 545,
      "printed_label": "contest total printed on the scan",
+     "printed_with_scan": 545,
      "computed_with_scan": 545,
      "holds_with_scan": true,
+     "printed_with_file": 545,
      "computed_with_file": 540,
      "holds_with_file": false
     }
@@ -2208,8 +2300,10 @@
      ],
      "printed": 895,
      "printed_label": "total printed at the left end of the row",
+     "printed_with_scan": 895,
      "computed_with_scan": 895,
      "holds_with_scan": true,
+     "printed_with_file": 895,
      "computed_with_file": 895,
      "holds_with_file": true
     },
@@ -2267,8 +2361,10 @@
      ],
      "printed": 423,
      "printed_label": "contest total printed on the scan",
+     "printed_with_scan": 423,
      "computed_with_scan": 423,
      "holds_with_scan": true,
+     "printed_with_file": 423,
      "computed_with_file": 428,
      "holds_with_file": false
     }
@@ -2344,8 +2440,10 @@
      ],
      "printed": 1,
      "printed_label": "total printed at the left end of the row",
+     "printed_with_scan": 1,
      "computed_with_scan": 1,
      "holds_with_scan": true,
+     "printed_with_file": 0,
      "computed_with_file": 0,
      "holds_with_file": true
     },
@@ -2385,8 +2483,10 @@
      ],
      "printed": 256,
      "printed_label": "ballots cast printed in the precinct's Statistics block",
+     "printed_with_scan": 256,
      "computed_with_scan": 256,
      "holds_with_scan": true,
+     "printed_with_file": 256,
      "computed_with_file": 255,
      "holds_with_file": false
     }
@@ -2462,8 +2562,10 @@
      ],
      "printed": 1,
      "printed_label": "total printed at the left end of the row",
+     "printed_with_scan": 1,
      "computed_with_scan": 1,
      "holds_with_scan": true,
+     "printed_with_file": 0,
      "computed_with_file": 0,
      "holds_with_file": true
     },
@@ -2503,8 +2605,10 @@
      ],
      "printed": 68,
      "printed_label": "ballots cast printed in the precinct's Statistics block",
+     "printed_with_scan": 68,
      "computed_with_scan": 68,
      "holds_with_scan": true,
+     "printed_with_file": 68,
      "computed_with_file": 67,
      "holds_with_file": false
     }
@@ -2580,8 +2684,10 @@
      ],
      "printed": 14,
      "printed_label": "total printed at the left end of the row",
+     "printed_with_scan": 14,
      "computed_with_scan": 14,
      "holds_with_scan": true,
+     "printed_with_file": 24,
      "computed_with_file": 24,
      "holds_with_file": true
     },
@@ -2621,8 +2727,10 @@
      ],
      "printed": 231,
      "printed_label": "contest total printed on the scan",
+     "printed_with_scan": 231,
      "computed_with_scan": 231,
      "holds_with_scan": true,
+     "printed_with_file": 231,
      "computed_with_file": 241,
      "holds_with_file": false
     }
@@ -2698,8 +2806,10 @@
      ],
      "printed": 14,
      "printed_label": "total printed at the left end of the row",
+     "printed_with_scan": 14,
      "computed_with_scan": 14,
      "holds_with_scan": true,
+     "printed_with_file": 24,
      "computed_with_file": 24,
      "holds_with_file": true
     },
@@ -2739,8 +2849,10 @@
      ],
      "printed": 60,
      "printed_label": "contest total printed on the scan",
+     "printed_with_scan": 60,
      "computed_with_scan": 60,
      "holds_with_scan": true,
+     "printed_with_file": 60,
      "computed_with_file": 70,
      "holds_with_file": false
     }
@@ -2816,8 +2928,10 @@
      ],
      "printed": 24,
      "printed_label": "total printed at the left end of the row",
+     "printed_with_scan": 24,
      "computed_with_scan": 24,
      "holds_with_scan": true,
+     "printed_with_file": 14,
      "computed_with_file": 14,
      "holds_with_file": true
     },
@@ -2857,8 +2971,10 @@
      ],
      "printed": 231,
      "printed_label": "contest total printed on the scan",
+     "printed_with_scan": 231,
      "computed_with_scan": 231,
      "holds_with_scan": true,
+     "printed_with_file": 231,
      "computed_with_file": 221,
      "holds_with_file": false
     }
@@ -2934,8 +3050,10 @@
      ],
      "printed": 24,
      "printed_label": "total printed at the left end of the row",
+     "printed_with_scan": 24,
      "computed_with_scan": 24,
      "holds_with_scan": true,
+     "printed_with_file": 14,
      "computed_with_file": 14,
      "holds_with_file": true
     },
@@ -2975,8 +3093,10 @@
      ],
      "printed": 3,
      "printed_label": "contest total printed on the scan",
+     "printed_with_scan": 3,
      "computed_with_scan": 3,
      "holds_with_scan": true,
+     "printed_with_file": 3,
      "computed_with_file": 4,
      "holds_with_file": false
     }
@@ -3052,8 +3172,10 @@
      ],
      "printed": 24,
      "printed_label": "total printed at the left end of the row",
+     "printed_with_scan": 24,
      "computed_with_scan": 24,
      "holds_with_scan": true,
+     "printed_with_file": 14,
      "computed_with_file": 14,
      "holds_with_file": true
     },
@@ -3093,8 +3215,10 @@
      ],
      "printed": 168,
      "printed_label": "contest total printed on the scan",
+     "printed_with_scan": 168,
      "computed_with_scan": 168,
      "holds_with_scan": true,
+     "printed_with_file": 168,
      "computed_with_file": 165,
      "holds_with_file": false
     }
@@ -3170,8 +3294,10 @@
      ],
      "printed": 24,
      "printed_label": "total printed at the left end of the row",
+     "printed_with_scan": 24,
      "computed_with_scan": 24,
      "holds_with_scan": true,
+     "printed_with_file": 14,
      "computed_with_file": 14,
      "holds_with_file": true
     },
@@ -3211,8 +3337,10 @@
      ],
      "printed": 60,
      "printed_label": "contest total printed on the scan",
+     "printed_with_scan": 60,
      "computed_with_scan": 60,
      "holds_with_scan": true,
+     "printed_with_file": 60,
      "computed_with_file": 52,
      "holds_with_file": false
     }
@@ -3288,8 +3416,10 @@
      ],
      "printed": 229,
      "printed_label": "total printed at the left end of the row",
+     "printed_with_scan": 229,
      "computed_with_scan": 229,
      "holds_with_scan": true,
+     "printed_with_file": 229,
      "computed_with_file": 229,
      "holds_with_file": true
     },
@@ -3347,8 +3477,10 @@
      ],
      "printed": 123,
      "printed_label": "contest total printed on the scan",
+     "printed_with_scan": 123,
      "computed_with_scan": 123,
      "holds_with_scan": true,
+     "printed_with_file": 123,
      "computed_with_file": 124,
      "holds_with_file": false
     }
@@ -3424,8 +3556,10 @@
      ],
      "printed": 229,
      "printed_label": "total printed at the left end of the row",
+     "printed_with_scan": 229,
      "computed_with_scan": 229,
      "holds_with_scan": true,
+     "printed_with_file": 229,
      "computed_with_file": 229,
      "holds_with_file": true
     },
@@ -3483,8 +3617,10 @@
      ],
      "printed": 164,
      "printed_label": "contest total printed on the scan",
+     "printed_with_scan": 164,
      "computed_with_scan": 164,
      "holds_with_scan": true,
+     "printed_with_file": 164,
      "computed_with_file": 163,
      "holds_with_file": false
     }
@@ -3560,8 +3696,10 @@
      ],
      "printed": 31,
      "printed_label": "total printed at the left end of the row",
+     "printed_with_scan": 31,
      "computed_with_scan": 31,
      "holds_with_scan": true,
+     "printed_with_file": 31,
      "computed_with_file": 31,
      "holds_with_file": true
     },
@@ -3619,8 +3757,10 @@
      ],
      "printed": 29,
      "printed_label": "contest total printed on the scan",
+     "printed_with_scan": 29,
      "computed_with_scan": 29,
      "holds_with_scan": true,
+     "printed_with_file": 29,
      "computed_with_file": 28,
      "holds_with_file": false
     }
@@ -3696,8 +3836,10 @@
      ],
      "printed": 31,
      "printed_label": "total printed at the left end of the row",
+     "printed_with_scan": 31,
      "computed_with_scan": 31,
      "holds_with_scan": true,
+     "printed_with_file": 31,
      "computed_with_file": 31,
      "holds_with_file": true
     },
@@ -3755,8 +3897,10 @@
      ],
      "printed": 6,
      "printed_label": "contest total printed on the scan",
+     "printed_with_scan": 6,
      "computed_with_scan": 6,
      "holds_with_scan": true,
+     "printed_with_file": 6,
      "computed_with_file": 7,
      "holds_with_file": false
     }
@@ -3832,8 +3976,10 @@
      ],
      "printed": 1,
      "printed_label": "total printed at the left end of the row",
+     "printed_with_scan": 1,
      "computed_with_scan": 1,
      "holds_with_scan": true,
+     "printed_with_file": 1,
      "computed_with_file": 1,
      "holds_with_file": true
     },
@@ -3891,8 +4037,10 @@
      ],
      "printed": 29,
      "printed_label": "contest total printed on the scan",
+     "printed_with_scan": 29,
      "computed_with_scan": 29,
      "holds_with_scan": true,
+     "printed_with_file": 29,
      "computed_with_file": 30,
      "holds_with_file": false
     }
@@ -3968,8 +4116,10 @@
      ],
      "printed": 1,
      "printed_label": "total printed at the left end of the row",
+     "printed_with_scan": 1,
      "computed_with_scan": 1,
      "holds_with_scan": true,
+     "printed_with_file": 1,
      "computed_with_file": 1,
      "holds_with_file": true
     },
@@ -4027,8 +4177,10 @@
      ],
      "printed": 6,
      "printed_label": "contest total printed on the scan",
+     "printed_with_scan": 6,
      "computed_with_scan": 6,
      "holds_with_scan": true,
+     "printed_with_file": 6,
      "computed_with_file": 5,
      "holds_with_file": false
     }
@@ -4104,8 +4256,10 @@
      ],
      "printed": 224,
      "printed_label": "total printed at the left end of the row",
+     "printed_with_scan": 224,
      "computed_with_scan": 224,
      "holds_with_scan": true,
+     "printed_with_file": 224,
      "computed_with_file": 224,
      "holds_with_file": true
     },
@@ -4136,8 +4290,10 @@
      ],
      "printed": 204,
      "printed_label": "contest total printed on the scan",
+     "printed_with_scan": 204,
      "computed_with_scan": 204,
      "holds_with_scan": true,
+     "printed_with_file": 204,
      "computed_with_file": 199,
      "holds_with_file": false
     }
@@ -4213,8 +4369,10 @@
      ],
      "printed": 224,
      "printed_label": "total printed at the left end of the row",
+     "printed_with_scan": 224,
      "computed_with_scan": 224,
      "holds_with_scan": true,
+     "printed_with_file": 224,
      "computed_with_file": 224,
      "holds_with_file": true
     },
@@ -4245,8 +4403,10 @@
      ],
      "printed": 96,
      "printed_label": "contest total printed on the scan",
+     "printed_with_scan": 96,
      "computed_with_scan": 96,
      "holds_with_scan": true,
+     "printed_with_file": 96,
      "computed_with_file": 101,
      "holds_with_file": false
     }
@@ -4322,8 +4482,10 @@
      ],
      "printed": 222,
      "printed_label": "total printed at the left end of the row",
+     "printed_with_scan": 222,
      "computed_with_scan": 222,
      "holds_with_scan": true,
+     "printed_with_file": 222,
      "computed_with_file": 222,
      "holds_with_file": true
     },
@@ -4363,8 +4525,10 @@
      ],
      "printed": 206,
      "printed_label": "contest total printed on the scan",
+     "printed_with_scan": 206,
      "computed_with_scan": 206,
      "holds_with_scan": true,
+     "printed_with_file": 206,
      "computed_with_file": 204,
      "holds_with_file": false
     }
@@ -4440,8 +4604,10 @@
      ],
      "printed": 222,
      "printed_label": "total printed at the left end of the row",
+     "printed_with_scan": 222,
      "computed_with_scan": 222,
      "holds_with_scan": true,
+     "printed_with_file": 222,
      "computed_with_file": 222,
      "holds_with_file": true
     },
@@ -4481,8 +4647,10 @@
      ],
      "printed": 93,
      "printed_label": "contest total printed on the scan",
+     "printed_with_scan": 93,
      "computed_with_scan": 93,
      "holds_with_scan": true,
+     "printed_with_file": 93,
      "computed_with_file": 95,
      "holds_with_file": false
     }
@@ -4558,8 +4726,10 @@
      ],
      "printed": 245,
      "printed_label": "total printed at the left end of the row",
+     "printed_with_scan": 245,
      "computed_with_scan": 245,
      "holds_with_scan": true,
+     "printed_with_file": 245,
      "computed_with_file": 245,
      "holds_with_file": true
     },
@@ -4590,8 +4760,10 @@
      ],
      "printed": 122,
      "printed_label": "contest total printed on the scan",
+     "printed_with_scan": 122,
      "computed_with_scan": 122,
      "holds_with_scan": true,
+     "printed_with_file": 122,
      "computed_with_file": 121,
      "holds_with_file": false
     }
@@ -4667,8 +4839,10 @@
      ],
      "printed": 245,
      "printed_label": "total printed at the left end of the row",
+     "printed_with_scan": 245,
      "computed_with_scan": 245,
      "holds_with_scan": true,
+     "printed_with_file": 245,
      "computed_with_file": 245,
      "holds_with_file": true
     },
@@ -4699,8 +4873,10 @@
      ],
      "printed": 161,
      "printed_label": "contest total printed on the scan",
+     "printed_with_scan": 161,
      "computed_with_scan": 161,
      "holds_with_scan": true,
+     "printed_with_file": 161,
      "computed_with_file": 162,
      "holds_with_file": false
     }
@@ -4776,8 +4952,10 @@
      ],
      "printed": 889,
      "printed_label": "total printed at the left end of the row",
+     "printed_with_scan": 889,
      "computed_with_scan": 889,
      "holds_with_scan": true,
+     "printed_with_file": 889,
      "computed_with_file": 889,
      "holds_with_file": true
     },
@@ -4808,8 +4986,10 @@
      ],
      "printed": 537,
      "printed_label": "contest total printed on the scan",
+     "printed_with_scan": 537,
      "computed_with_scan": 537,
      "holds_with_scan": true,
+     "printed_with_file": 537,
      "computed_with_file": 538,
      "holds_with_file": false
     }
@@ -4885,8 +5065,10 @@
      ],
      "printed": 889,
      "printed_label": "total printed at the left end of the row",
+     "printed_with_scan": 889,
      "computed_with_scan": 889,
      "holds_with_scan": true,
+     "printed_with_file": 889,
      "computed_with_file": 889,
      "holds_with_file": true
     },
@@ -4917,8 +5099,10 @@
      ],
      "printed": 411,
      "printed_label": "contest total printed on the scan",
+     "printed_with_scan": 411,
      "computed_with_scan": 411,
      "holds_with_scan": true,
+     "printed_with_file": 411,
      "computed_with_file": 410,
      "holds_with_file": false
     }
@@ -4994,8 +5178,10 @@
      ],
      "printed": 43,
      "printed_label": "total printed at the left end of the row",
+     "printed_with_scan": 43,
      "computed_with_scan": 43,
      "holds_with_scan": true,
+     "printed_with_file": 43,
      "computed_with_file": 43,
      "holds_with_file": true
     },
@@ -5026,8 +5212,10 @@
      ],
      "printed": 35,
      "printed_label": "contest total printed on the scan",
+     "printed_with_scan": 35,
      "computed_with_scan": 35,
      "holds_with_scan": true,
+     "printed_with_file": 35,
      "computed_with_file": 34,
      "holds_with_file": false
     }
@@ -5103,8 +5291,10 @@
      ],
      "printed": 43,
      "printed_label": "total printed at the left end of the row",
+     "printed_with_scan": 43,
      "computed_with_scan": 43,
      "holds_with_scan": true,
+     "printed_with_file": 43,
      "computed_with_file": 43,
      "holds_with_file": true
     },
@@ -5135,8 +5325,10 @@
      ],
      "printed": 12,
      "printed_label": "contest total printed on the scan",
+     "printed_with_scan": 12,
      "computed_with_scan": 12,
      "holds_with_scan": true,
+     "printed_with_file": 12,
      "computed_with_file": 13,
      "holds_with_file": false
     }
@@ -5212,8 +5404,10 @@
      ],
      "printed": 235,
      "printed_label": "total printed at the left end of the row",
+     "printed_with_scan": 235,
      "computed_with_scan": 235,
      "holds_with_scan": true,
+     "printed_with_file": 235,
      "computed_with_file": 235,
      "holds_with_file": true
     },
@@ -5244,8 +5438,10 @@
      ],
      "printed": 211,
      "printed_label": "contest total printed on the scan",
+     "printed_with_scan": 211,
      "computed_with_scan": 211,
      "holds_with_scan": true,
+     "printed_with_file": 211,
      "computed_with_file": 209,
      "holds_with_file": false
     }
@@ -5321,8 +5517,10 @@
      ],
      "printed": 235,
      "printed_label": "total printed at the left end of the row",
+     "printed_with_scan": 235,
      "computed_with_scan": 235,
      "holds_with_scan": true,
+     "printed_with_file": 235,
      "computed_with_file": 235,
      "holds_with_file": true
     },
@@ -5353,8 +5551,10 @@
      ],
      "printed": 48,
      "printed_label": "contest total printed on the scan",
+     "printed_with_scan": 48,
      "computed_with_scan": 48,
      "holds_with_scan": true,
+     "printed_with_file": 48,
      "computed_with_file": 50,
      "holds_with_file": false
     }
@@ -5430,8 +5630,10 @@
      ],
      "printed": 5,
      "printed_label": "total printed at the left end of the row",
+     "printed_with_scan": 5,
      "computed_with_scan": 5,
      "holds_with_scan": true,
+     "printed_with_file": 5,
      "computed_with_file": 5,
      "holds_with_file": true
     },
@@ -5462,8 +5664,10 @@
      ],
      "printed": 35,
      "printed_label": "contest total printed on the scan",
+     "printed_with_scan": 35,
      "computed_with_scan": 35,
      "holds_with_scan": true,
+     "printed_with_file": 35,
      "computed_with_file": 36,
      "holds_with_file": false
     }
@@ -5539,8 +5743,10 @@
      ],
      "printed": 5,
      "printed_label": "total printed at the left end of the row",
+     "printed_with_scan": 5,
      "computed_with_scan": 5,
      "holds_with_scan": true,
+     "printed_with_file": 5,
      "computed_with_file": 5,
      "holds_with_file": true
     },
@@ -5571,8 +5777,10 @@
      ],
      "printed": 12,
      "printed_label": "contest total printed on the scan",
+     "printed_with_scan": 12,
      "computed_with_scan": 12,
      "holds_with_scan": true,
+     "printed_with_file": 12,
      "computed_with_file": 11,
      "holds_with_file": false
     }
@@ -5648,8 +5856,10 @@
      ],
      "printed": 889,
      "printed_label": "total printed at the left end of the row",
+     "printed_with_scan": 889,
      "computed_with_scan": 889,
      "holds_with_scan": true,
+     "printed_with_file": 885,
      "computed_with_file": 885,
      "holds_with_file": true
     },
@@ -5680,8 +5890,10 @@
      ],
      "printed": 956,
      "printed_label": "contest total printed on the scan",
+     "printed_with_scan": 956,
      "computed_with_scan": 956,
      "holds_with_scan": true,
+     "printed_with_file": 956,
      "computed_with_file": 952,
      "holds_with_file": false
     }
@@ -5757,8 +5969,10 @@
      ],
      "printed": 889,
      "printed_label": "total printed at the left end of the row",
+     "printed_with_scan": 889,
      "computed_with_scan": 889,
      "holds_with_scan": true,
+     "printed_with_file": 885,
      "computed_with_file": 885,
      "holds_with_file": true
     },
@@ -5789,8 +6003,10 @@
      ],
      "printed": 410,
      "printed_label": "contest total printed on the scan",
+     "printed_with_scan": 410,
      "computed_with_scan": 410,
      "holds_with_scan": true,
+     "printed_with_file": 410,
      "computed_with_file": 406,
      "holds_with_file": false
     }
@@ -5866,8 +6082,10 @@
      ],
      "printed": 67,
      "printed_label": "total printed at the left end of the row",
+     "printed_with_scan": 67,
      "computed_with_scan": 67,
      "holds_with_scan": true,
+     "printed_with_file": 71,
      "computed_with_file": 71,
      "holds_with_file": true
     },
@@ -5898,8 +6116,10 @@
      ],
      "printed": 956,
      "printed_label": "contest total printed on the scan",
+     "printed_with_scan": 956,
      "computed_with_scan": 956,
      "holds_with_scan": true,
+     "printed_with_file": 956,
      "computed_with_file": 960,
      "holds_with_file": false
     }
@@ -5975,8 +6195,10 @@
      ],
      "printed": 67,
      "printed_label": "total printed at the left end of the row",
+     "printed_with_scan": 67,
      "computed_with_scan": 67,
      "holds_with_scan": true,
+     "printed_with_file": 71,
      "computed_with_file": 71,
      "holds_with_file": true
     },
@@ -6007,8 +6229,10 @@
      ],
      "printed": 10,
      "printed_label": "contest total printed on the scan",
+     "printed_with_scan": 10,
      "computed_with_scan": 10,
      "holds_with_scan": true,
+     "printed_with_file": 10,
      "computed_with_file": 11,
      "holds_with_file": false
     }
@@ -6084,8 +6308,10 @@
      ],
      "printed": 67,
      "printed_label": "total printed at the left end of the row",
+     "printed_with_scan": 67,
      "computed_with_scan": 67,
      "holds_with_scan": true,
+     "printed_with_file": 71,
      "computed_with_file": 71,
      "holds_with_file": true
     },
@@ -6116,8 +6342,10 @@
      ],
      "printed": 536,
      "printed_label": "contest total printed on the scan",
+     "printed_with_scan": 536,
      "computed_with_scan": 536,
      "holds_with_scan": true,
+     "printed_with_file": 536,
      "computed_with_file": 539,
      "holds_with_file": false
     }
@@ -6193,8 +6421,10 @@
      ],
      "printed": 26,
      "printed_label": "total printed at the left end of the row",
+     "printed_with_scan": 26,
      "computed_with_scan": 26,
      "holds_with_scan": true,
+     "printed_with_file": 26,
      "computed_with_file": 26,
      "holds_with_file": true
     },
@@ -6234,8 +6464,10 @@
      ],
      "printed": 11,
      "printed_label": "ballots cast printed in the precinct's Statistics block",
+     "printed_with_scan": 11,
      "computed_with_scan": 11,
      "holds_with_scan": true,
+     "printed_with_file": 11,
      "computed_with_file": 10,
      "holds_with_file": false
     }
@@ -6311,8 +6543,10 @@
      ],
      "printed": 26,
      "printed_label": "total printed at the left end of the row",
+     "printed_with_scan": 26,
      "computed_with_scan": 26,
      "holds_with_scan": true,
+     "printed_with_file": 26,
      "computed_with_file": 26,
      "holds_with_file": true
     },
@@ -6352,8 +6586,10 @@
      ],
      "printed": 425,
      "printed_label": "ballots cast printed in the precinct's Statistics block",
+     "printed_with_scan": 425,
      "computed_with_scan": 425,
      "holds_with_scan": true,
+     "printed_with_file": 425,
      "computed_with_file": 426,
      "holds_with_file": false
     }
@@ -6429,8 +6665,10 @@
      ],
      "printed": 228,
      "printed_label": "total printed at the left end of the row",
+     "printed_with_scan": 228,
      "computed_with_scan": 228,
      "holds_with_scan": true,
+     "printed_with_file": 228,
      "computed_with_file": 228,
      "holds_with_file": true
     },
@@ -6461,8 +6699,10 @@
      ],
      "printed": 205,
      "printed_label": "contest total printed on the scan",
+     "printed_with_scan": 205,
      "computed_with_scan": 205,
      "holds_with_scan": true,
+     "printed_with_file": 205,
      "computed_with_file": 206,
      "holds_with_file": false
     }
@@ -6538,8 +6778,10 @@
      ],
      "printed": 228,
      "printed_label": "total printed at the left end of the row",
+     "printed_with_scan": 228,
      "computed_with_scan": 228,
      "holds_with_scan": true,
+     "printed_with_file": 228,
      "computed_with_file": 228,
      "holds_with_file": true
     },
@@ -6570,8 +6812,10 @@
      ],
      "printed": 93,
      "printed_label": "contest total printed on the scan",
+     "printed_with_scan": 93,
      "computed_with_scan": 93,
      "holds_with_scan": true,
+     "printed_with_file": 93,
      "computed_with_file": 92,
      "holds_with_file": false
     }
@@ -6647,8 +6891,10 @@
      ],
      "printed": 235,
      "printed_label": "total printed at the left end of the row",
+     "printed_with_scan": 235,
      "computed_with_scan": 235,
      "holds_with_scan": true,
+     "printed_with_file": 235,
      "computed_with_file": 235,
      "holds_with_file": true
     },
@@ -6688,8 +6934,10 @@
      ],
      "printed": 123,
      "printed_label": "contest total printed on the scan",
+     "printed_with_scan": 123,
      "computed_with_scan": 123,
      "holds_with_scan": true,
+     "printed_with_file": 123,
      "computed_with_file": 117,
      "holds_with_file": false
     }
@@ -6765,8 +7013,10 @@
      ],
      "printed": 235,
      "printed_label": "total printed at the left end of the row",
+     "printed_with_scan": 235,
      "computed_with_scan": 235,
      "holds_with_scan": true,
+     "printed_with_file": 235,
      "computed_with_file": 235,
      "holds_with_file": true
     },
@@ -6806,8 +7056,10 @@
      ],
      "printed": 161,
      "printed_label": "contest total printed on the scan",
+     "printed_with_scan": 161,
      "computed_with_scan": 161,
      "holds_with_scan": true,
+     "printed_with_file": 161,
      "computed_with_file": 167,
      "holds_with_file": false
     }
@@ -6883,8 +7135,10 @@
      ],
      "printed": 852,
      "printed_label": "total printed at the left end of the row",
+     "printed_with_scan": 852,
      "computed_with_scan": 852,
      "holds_with_scan": true,
+     "printed_with_file": 852,
      "computed_with_file": 852,
      "holds_with_file": true
     },
@@ -6924,8 +7178,10 @@
      ],
      "printed": 537,
      "printed_label": "contest total printed on the scan",
+     "printed_with_scan": 537,
      "computed_with_scan": 537,
      "holds_with_scan": true,
+     "printed_with_file": 537,
      "computed_with_file": 541,
      "holds_with_file": false
     }
@@ -7001,8 +7257,10 @@
      ],
      "printed": 852,
      "printed_label": "total printed at the left end of the row",
+     "printed_with_scan": 852,
      "computed_with_scan": 852,
      "holds_with_scan": true,
+     "printed_with_file": 852,
      "computed_with_file": 852,
      "holds_with_file": true
     },
@@ -7042,8 +7300,10 @@
      ],
      "printed": 408,
      "printed_label": "contest total printed on the scan",
+     "printed_with_scan": 408,
      "computed_with_scan": 408,
      "holds_with_scan": true,
+     "printed_with_file": 408,
      "computed_with_file": 404,
      "holds_with_file": false
     }
@@ -8224,6 +8484,6 @@
     "why": "the contest total, overvotes and undervotes do not add to the precinct's ballots cast in any column (total 273 against 982, absentee 0 against 11, early 273 against 546, election_day 0 against 425), always on the same side: the contest was not on every ballot of the precinct, so the equation is not a sum for this block"
    }
   ],
-  "seconds": 7.6
+  "seconds": 7.3
  }
 }

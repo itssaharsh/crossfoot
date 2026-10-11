@@ -1,6 +1,6 @@
 {
  "county": "scurry",
- "run_id": "20261011-141015",
+ "run_id": "20261011-161207",
  "layout": "report",
  "file": "20241105__tx__general__scurry__precinct.csv",
  "policy": {
@@ -91,6 +91,6 @@
   "contest_totals_printed": 0,
   "second_sum_exists": false,
   "ballot_sums_not_used": [],
-  "seconds": 1.6
+  "seconds": 1.7
  }
 }

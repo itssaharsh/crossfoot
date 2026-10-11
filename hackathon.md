@@ -320,13 +320,28 @@ the history (last present in commit `247425f`), and each session's task and repo
   date with what was built and now lists the requirements it answers; `AGENTS.md` keeps the project's rules.
 - Checked after it: `uv run pytest -q`, `tools/readme_tables.py --check` and `tools/named_paths.py --check`.
 
+### 2026-10-11 - one final run of everything, from nothing, on the final code
+- `uv run crossfoot audit --all --budget 3.4`, run `20261011-161207`: 8 of 8 counties closed (7 read, Limestone left as
+  published), 353 model calls, $2.3456 metered, 1,227.8 s. The gateway's own figure went from $11.4566 to $13.8024.
+- Same findings as the summary made from earlier audits: 215 disagreements (Panola 121, San Saba 21, Jones 26, Lynn 47;
+  Cottle, Scurry and Foard none), 185 settled by the printed totals, 30 cannot be verified. Printed sums: 5,888 in all,
+  5,767 hold with the published files, 5,882 with the corrected. 3,021 of 3,061 published rows compared.
+  `uv run crossfoot verify-known --county panola`: 8 of 8.
+- The README's tables, the picture and the results page are now made from this one run (`tools/readme_tables.py` reads a
+  summary written by `audit --all` itself; `uv run crossfoot site build --run latest`). The earlier run folders stay
+  because the evidence pages quote from them.
+- Traces: six of the eight counties' traces are in neatlogs; San Saba's and Jones's were not found, with no export
+  error on this side (`docs/evidence/traces.md`).
+- Published the same day: the repository (https://github.com/itssaharsh/crossfoot) and the page
+  (https://crossfoot-zeta.vercel.app/).
+
 ## Demo
 - Live: https://crossfoot-zeta.vercel.app/ (deployed from `site/` on 11 October 2026; no sign-in).
 - The results page is static. From a clone: `python3 -m http.server -d site 8000`, then open http://localhost:8000/.
   It opens on a finished run with one finding drawn on the scan; `Replay the audit` plays the run's recorded events;
   the tabs switch county. Add `?record=1` for recording.
 - To make the results again: the commands under "Run it" in [README.md](README.md). One county from nothing takes
-  2 to 8 minutes and between $0.20 and $0.77 of model calls (the README's cost table).
+  1 to 8.5 minutes and between $0.10 and $0.79 of model calls (the README's cost table).
 
 ## Known limitations and next steps
 Limits: see the Limits section of [README.md](README.md).
