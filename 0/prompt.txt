@@ -179,3 +179,36 @@ rm -f /tmp/qa.done; echo bg" completed (exit code 0)</summary>
 <summary>Monitor event: "axe process ends (retry)"</summary>
 <event>[Monitor expired after 10m with no events delivered. Re-arm it if you still need the watch — and widen the filter if silence was unexpected.]</event>
 </task-notification>
+
+---
+
+<task-notification>
+<task-id>bigzm4etu</task-id>
+<tool-use-id>toolu_01P52gXf4wxYF7H8g3GhPJtc</tool-use-id>
+<output-file>/tmp/claude-1000/-home-saharsh-contri-crossfoot/36989449-f530-4cfe-9ded-ae39ce17fcd5/tasks/bigzm4etu.output</output-file>
+<status>completed</status>
+<summary>Monitor "qa finish" stream ended</summary>
+<event>qa-done</event>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>bxttnhn0u</task-id>
+<tool-use-id>toolu_01CaNd6Wsk1TVBxuu27Yxgz8</tool-use-id>
+<output-file>/tmp/claude-1000/-home-saharsh-contri-crossfoot/36989449-f530-4cfe-9ded-ae39ce17fcd5/tasks/bxttnhn0u.output</output-file>
+<status>completed</status>
+<summary>Monitor "qa finish again" stream ended</summary>
+<event>qa-done</event>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>br60yd2cp</task-id>
+<tool-use-id>toolu_016XyMtZ6A4N9H5YwPx7AP7a</tool-use-id>
+<output-file>/tmp/claude-1000/-home-saharsh-contri-crossfoot/36989449-f530-4cfe-9ded-ae39ce17fcd5/tasks/br60yd2cp.output</output-file>
+<status>completed</status>
+<summary>Monitor "screenshots and checks finish" stream ended</summary>
+<event>qa-done</event>
+</task-notification>
