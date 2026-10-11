@@ -25,6 +25,7 @@
         "T04a",
         "T04b",
         "T04c",
+        "T04d",
         "T05"
       ]
     },
@@ -431,10 +432,45 @@
         "uv run pytest -q"
       ],
       "rollback": "git revert the task's commits; committed runs are never changed",
-      "status": "doing",
-      "notes": "Added 2026-10-11 after reading the full run's summary: two counties were marked audited without their rows being compared.",
+      "status": "done",
+      "notes": "Added 2026-10-11 after reading the full run's summary: two counties were marked audited without their rows being compared.\n[2026-10-11 done] Verify passed inside the task's session on commit 78ea016 (184 tests); the orchestrator re-ran pytest (184 passed) and read the combined summary and recovery.md. Left for T04d: Scurry page 18 was never read; the contest sums of Jones and Lynn count the write-in breakdown rows twice (seen by eye on Jones page 1), which leaves 20 and 26 sums failing and findings unsettled.",
       "base": "eba2561",
-      "started_after": 56
+      "started_after": 56,
+      "evidence": [
+        "E0073"
+      ]
+    },
+    {
+      "id": "T04d",
+      "title": "Contest sums with a write-in breakdown; Scurry's missing page; the final summary",
+      "objective": "The contest sums of the report layout use the right rows, Jones and Lynn are audited again from the ledger, Scurry page 18 is read, and one final summary covers all eight counties",
+      "role": "product-engineer",
+      "size": "M",
+      "deps": [
+        "T04c"
+      ],
+      "writes": [
+        "crossfoot/layouts/report.py",
+        "crossfoot/checks.py",
+        "crossfoot/audit.py",
+        "crossfoot/allrun.py",
+        "crossfoot/outputs.py",
+        "crossfoot/cli.py",
+        "tests/**",
+        "runs/**",
+        "hackathon.md",
+        ".prod-build/reports/T04d.md",
+        ".prod-build/evidence.jsonl"
+      ],
+      "acceptance": [
+        "WHEN a contest block prints a write-in breakdown THE SYSTEM SHALL not count the breakdown rows as terms of the contest total"
+      ],
+      "verify": [
+        "uv run pytest -q"
+      ],
+      "rollback": "git revert the task's commits; committed runs are never changed",
+      "status": "todo",
+      "notes": "Added 2026-10-11 after looking at Jones page 1 by eye."
     },
     {
       "id": "T05",
@@ -443,7 +479,7 @@
       "role": "product-engineer",
       "size": "M",
       "deps": [
-        "T04c"
+        "T04d"
       ],
       "writes": [
         "crossfoot/score.py",
