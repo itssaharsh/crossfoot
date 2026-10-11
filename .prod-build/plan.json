@@ -504,8 +504,14 @@
         "uv run crossfoot score --findings docs/evidence/baseline/findings.json --county panola --resume latest"
       ],
       "rollback": "git revert the task's commit; no data migration",
-      "status": "todo",
-      "notes": "Changed 2026-10-11: both before-and-after sections are written by T02a and T03b, so this task scores the baseline (S3) and writes the recovery evidence."
+      "status": "done",
+      "notes": "Changed 2026-10-11: both before-and-after sections are written by T02a and T03b, so this task scores the baseline (S3) and writes the recovery evidence.\n[2026-10-11 done] Verify passed inside the task's session on commit 6bbcf42 (200 tests; the scoring command). The orchestrator re-ran pytest (200 passed) and read baseline.md against score.json. Not done and recorded as such: the neatlogs detection and trace ids, because the tracing tool's MCP server answered 503 during the session (it still does at 14:20 UTC).",
+      "base": "af48864",
+      "started_after": 85,
+      "evidence": [
+        "E0091",
+        "E0092"
+      ]
     },
     {
       "id": "T06",
