@@ -37,3 +37,6 @@ runs/*/cache/
 *.sqlite-journal
 # first-read crops are large and can be re-made; finding crops live under runs/<run>/<county>/crops/
 runs/*/crops/
+
+# the results page ships its data bundle (JSON and page images)
+!site/data/
