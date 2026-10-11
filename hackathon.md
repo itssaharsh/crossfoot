@@ -57,6 +57,16 @@ Planned, and updated as each part is actually used:
 - Evidence: the RED run of `tests/test_budget.py`, then `uv run pytest -q` (23 tests), `uv run crossfoot budget` and
   `uv run crossfoot read --county panola`, all in `.prod-build/evidence.jsonl`.
 
+### 2026-10-11 - T02a first read fixed from its trace: column groups at 300 dpi
+- Cause: one 2,600 px crop per block was shrunk by the provider (about 600 prompt tokens a call), and a value lost
+  its column (block p2-b2). The neatlogs MCP server listed the trace but could not open spans (`not_enabled`), so the
+  evidence is the run files. Detail and both runs: `docs/evidence/before-after.md`.
+- Change: blocks are cut into column groups (at most 1,500 px at 300 dpi), joined after reading; a column-edge off-by-one
+  was found and fixed on the way (first attempt `runs/20261011-092655` lost one precinct).
+- Result, `runs/20261011-094115/first-read.json`: row sums 98 pass / 32 fail (before 39 / 91), column sums 735 / 35
+  (565 / 203), grand totals 25 / 18 (8 / 35); 127 calls (43), estimated cost $0.2199 ($0.1031). The goal of under 20
+  failing row sums was not met.
+
 ## Demo
 Not available yet.
 

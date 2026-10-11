@@ -9,7 +9,7 @@
   "grand_sums_fail": 18,
   "printed_totals": 943,
   "county": "panola",
-  "run_id": "20261011-093435",
+  "run_id": "20261011-094115",
   "blocks_found": 43,
   "blocks_failed": 0,
   "precincts": [
@@ -37,7 +37,7 @@
   "prompt_tokens": 94551,
   "completion_tokens": 25070,
   "metered_cost_estimate": 0.2199,
-  "seconds": 345.7,
+  "seconds": 334.6,
   "stopped": null,
   "blocks": [
     {
@@ -600,8 +600,8 @@
       ]
     }
   ],
-  "gateway_spend_before": 0.4953043550000001,
-  "gateway_spend_after": 0.731454555,
-  "gateway_spend_change": 0.2362,
-  "ledger": "runs/20261011-093435/ledger.sqlite"
+  "gateway_spend_before": 0.737195455,
+  "gateway_spend_after": 0.9752189550000002,
+  "gateway_spend_change": 0.238,
+  "ledger": "runs/20261011-094115/ledger.sqlite"
 }
