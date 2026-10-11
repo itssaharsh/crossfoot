@@ -469,10 +469,13 @@
         "uv run pytest -q"
       ],
       "rollback": "git revert the task's commits; committed runs are never changed",
-      "status": "doing",
-      "notes": "Added 2026-10-11 after looking at Jones page 1 by eye.",
+      "status": "done",
+      "notes": "Added 2026-10-11 after looking at Jones page 1 by eye.\n[2026-10-11 done] Verify passed inside the task's session on commit 020911b (197 tests); the orchestrator re-ran pytest (197 passed) and read the final summary run 20261011-141300: 8 of 8 counties closed, 215 findings, 5,887 printed sums of which 5,766 hold with the published files and 5,881 with the corrected, 3,021 of 3,061 published rows compared. The write-in breakdown on Jones page 1 was checked by eye before the task.",
       "base": "38c6fb1",
-      "started_after": 73
+      "started_after": 73,
+      "evidence": [
+        "E0085"
+      ]
     },
     {
       "id": "T05",
