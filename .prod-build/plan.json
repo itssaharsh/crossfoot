@@ -1,0 +1,389 @@
+{
+  "project": "crossfoot",
+  "mode": "hackathon",
+  "channel": "relay",
+  "base": null,
+  "created": "2026-10-11",
+  "milestones": [
+    {
+      "id": "M1",
+      "goal": "One county (Panola) audited end to end from the command line: scan read, sums checked, failing cells re-read, public file audited, findings and corrected file written",
+      "tasks": [
+        "T01",
+        "T02",
+        "T03"
+      ]
+    },
+    {
+      "id": "M2",
+      "goal": "The second layout, all eight counties unattended, and a measured before and after from one real failure found in the traces",
+      "tasks": [
+        "T04",
+        "T05"
+      ]
+    },
+    {
+      "id": "M3",
+      "goal": "The results page shows a finished run with a finding drawn on the scan",
+      "tasks": [
+        "T06",
+        "T07"
+      ]
+    },
+    {
+      "id": "M4",
+      "goal": "Evidence, security, cleanup, deploy, recording and submission",
+      "tasks": [
+        "T08",
+        "T09",
+        "T10",
+        "T11"
+      ]
+    }
+  ],
+  "tasks": [
+    {
+      "id": "T01",
+      "title": "Scaffold, sources, rendering, ledger and checks",
+      "objective": "A uv project whose deterministic core (downloads, page rendering, the SQLite ledger, the row, column and grid checks) works and is tested, with no model call",
+      "role": "product-engineer",
+      "size": "M",
+      "deps": [],
+      "writes": [
+        "pyproject.toml",
+        "uv.lock",
+        ".python-version",
+        ".gitignore",
+        "crossfoot/__init__.py",
+        "crossfoot/cli.py",
+        "crossfoot/sources.py",
+        "crossfoot/render.py",
+        "crossfoot/ledger.py",
+        "crossfoot/checks.py",
+        "tests/**",
+        "hackathon.md",
+        ".prod-build/reports/T01.md",
+        ".prod-build/evidence.jsonl"
+      ],
+      "acceptance": [
+        "AC-1 (checks part)",
+        "WHEN `crossfoot filecheck --all` runs THE SYSTEM SHALL list every row of each published file whose votes differ from the sum of its parts",
+        "WHEN `crossfoot render --county panola --page 1` runs THE SYSTEM SHALL write a PNG of that page at 200 dpi"
+      ],
+      "verify": [
+        "uv run pytest -q",
+        "uv run crossfoot --help",
+        "uv run crossfoot filecheck --all",
+        "uv run crossfoot render --county panola --page 1"
+      ],
+      "rollback": "git revert the task's commit; no data migration",
+      "status": "todo",
+      "notes": ""
+    },
+    {
+      "id": "T02",
+      "title": "Model client, tracing, block finding and the first read of Panola",
+      "objective": "Panola's six pages are read block by block into the ledger with a traced, budget-guarded model client, and the checks report which sums hold",
+      "role": "product-engineer",
+      "size": "L",
+      "deps": [
+        "T01"
+      ],
+      "writes": [
+        "pyproject.toml",
+        "uv.lock",
+        "crossfoot/model.py",
+        "crossfoot/tracing.py",
+        "crossfoot/segment.py",
+        "crossfoot/layouts/__init__.py",
+        "crossfoot/layouts/matrix.py",
+        "crossfoot/cli.py",
+        "crossfoot/ledger.py",
+        "tests/**",
+        "hackathon.md",
+        ".prod-build/reports/T02.md",
+        ".prod-build/evidence.jsonl"
+      ],
+      "acceptance": [
+        "AC-5",
+        "WHEN `crossfoot read --county panola` finishes THE SYSTEM SHALL print cells read, sums passing and sums failing, and write them to the run folder",
+        "IF the model's answer is not valid JSON or has the wrong number of columns THEN THE SYSTEM SHALL ask once for a repair and otherwise mark the block failed"
+      ],
+      "verify": [
+        "uv run pytest -q",
+        "uv run crossfoot budget",
+        "uv run crossfoot read --county panola"
+      ],
+      "rollback": "git revert the task's commit; no data migration",
+      "status": "todo",
+      "notes": ""
+    },
+    {
+      "id": "T03",
+      "title": "Investigation loop, audit against the published file, and outputs",
+      "objective": "`crossfoot audit --county panola` closes the county, audits the published file and writes findings, crops, a corrected file and a report",
+      "role": "product-engineer",
+      "size": "L",
+      "deps": [
+        "T02"
+      ],
+      "writes": [
+        "crossfoot/agent.py",
+        "crossfoot/audit.py",
+        "crossfoot/outputs.py",
+        "crossfoot/policy.py",
+        "crossfoot/cli.py",
+        "crossfoot/ledger.py",
+        "crossfoot/checks.py",
+        "crossfoot/layouts/matrix.py",
+        "tests/**",
+        "runs/**",
+        "hackathon.md",
+        ".prod-build/reports/T03.md",
+        ".prod-build/evidence.jsonl"
+      ],
+      "acceptance": [
+        "AC-1",
+        "AC-2",
+        "AC-3",
+        "AC-4",
+        "AC-7"
+      ],
+      "verify": [
+        "uv run pytest -q",
+        "uv run crossfoot audit --county panola",
+        "uv run crossfoot verify-known --county panola"
+      ],
+      "rollback": "git revert the task's commit; no data migration",
+      "status": "todo",
+      "notes": ""
+    },
+    {
+      "id": "T04",
+      "title": "The report layout, the layout decision and the unattended run over all counties",
+      "objective": "Counties in the one-precinct-per-page layout are read and audited, the layout is decided per county, and `crossfoot audit --all` runs unattended and resumes",
+      "role": "product-engineer",
+      "size": "L",
+      "deps": [
+        "T03"
+      ],
+      "writes": [
+        "crossfoot/layouts/report.py",
+        "crossfoot/layouts/profile.py",
+        "crossfoot/layouts/__init__.py",
+        "crossfoot/cli.py",
+        "crossfoot/agent.py",
+        "crossfoot/audit.py",
+        "crossfoot/outputs.py",
+        "tests/**",
+        "runs/**",
+        "hackathon.md",
+        ".prod-build/reports/T04.md",
+        ".prod-build/evidence.jsonl"
+      ],
+      "acceptance": [
+        "WHEN `crossfoot audit --county san_saba` finishes THE SYSTEM SHALL list the published file's row that fails its own total",
+        "AC-4",
+        "IF a county's layout cannot be decided THEN THE SYSTEM SHALL report it as not supported and leave it alone"
+      ],
+      "verify": [
+        "uv run pytest -q",
+        "uv run crossfoot audit --county san_saba"
+      ],
+      "rollback": "git revert the task's commit; no data migration",
+      "status": "todo",
+      "notes": ""
+    },
+    {
+      "id": "T05",
+      "title": "One real failure taken from its trace to a fix, with a run before and a run after",
+      "objective": "The worst failure of the recorded run is found in the traces, fixed, and the same run repeated, with the numbers of both runs written down",
+      "role": "product-engineer",
+      "size": "M",
+      "deps": [
+        "T04"
+      ],
+      "writes": [
+        "crossfoot/**",
+        "tests/**",
+        "runs/**",
+        "docs/evidence/**",
+        "hackathon.md",
+        ".mcp.json",
+        ".prod-build/reports/T05.md",
+        ".prod-build/evidence.jsonl"
+      ],
+      "acceptance": [
+        "WHEN the fix is in THE SYSTEM SHALL have two run folders for the same counties, before and after, and a table of their numbers in docs/evidence/before-after.md"
+      ],
+      "verify": [
+        "uv run pytest -q"
+      ],
+      "rollback": "git revert the task's commit; no data migration",
+      "status": "todo",
+      "notes": ""
+    },
+    {
+      "id": "T06",
+      "title": "Site data and the audit view, golden path",
+      "objective": "`crossfoot site build` writes the page's data from a real run and the page shows a finished run with a finding drawn on the scan",
+      "role": "product-engineer",
+      "size": "L",
+      "deps": [
+        "T03"
+      ],
+      "writes": [
+        "crossfoot/outputs.py",
+        "crossfoot/cli.py",
+        "site/**",
+        "tests/**",
+        "hackathon.md",
+        ".prod-build/reports/T06.md",
+        ".prod-build/evidence.jsonl"
+      ],
+      "acceptance": [
+        "AC-6 (local)"
+      ],
+      "verify": [
+        "uv run pytest -q",
+        "uv run crossfoot site build --latest"
+      ],
+      "rollback": "git revert the task's commit; no data migration",
+      "status": "todo",
+      "notes": ""
+    },
+    {
+      "id": "T07",
+      "title": "The audit view's states, replay, small screens, motion and accessibility",
+      "objective": "Every state in UI-SPEC.md is reachable with ?state=, the replay works with a Pause, the page reflows at 320 and passes the checks",
+      "role": "product-engineer",
+      "size": "M",
+      "deps": [
+        "T06"
+      ],
+      "writes": [
+        "site/**",
+        "hackathon.md",
+        ".prod-build/reports/T07.md",
+        ".prod-build/evidence.jsonl"
+      ],
+      "acceptance": [
+        "AC-6"
+      ],
+      "verify": [
+        "uv run pytest -q",
+        "observe: the first screen measured at 1440x900 and 390x844 with the action and a finding visible"
+      ],
+      "rollback": "git revert the task's commit; no data migration",
+      "status": "todo",
+      "notes": ""
+    },
+    {
+      "id": "T08",
+      "title": "Evidence page, security pass and cleanup",
+      "objective": "The README's first screen says what this is and links every piece of evidence; no secret, placeholder or unused file is left",
+      "role": "product-engineer",
+      "size": "S",
+      "deps": [
+        "T05",
+        "T07"
+      ],
+      "writes": [
+        "README.md",
+        "hackathon.md",
+        "docs/**",
+        ".gitignore",
+        ".prod-build/reports/T08.md",
+        ".prod-build/evidence.jsonl"
+      ],
+      "acceptance": [
+        "WHEN a stranger opens the repository THE SYSTEM SHALL show what it does, the findings, and links to the traces, checkpoints, plan and results page in the README's first screen"
+      ],
+      "verify": [
+        "uv run pytest -q"
+      ],
+      "rollback": "git revert the task's commit; no data migration",
+      "status": "todo",
+      "notes": "",
+      "kind": "docs"
+    },
+    {
+      "id": "T09",
+      "title": "Deploy the results page and check what is live",
+      "objective": "The results page is public at a stable URL and opens signed out on a finished run",
+      "role": "product-engineer",
+      "size": "S",
+      "deps": [
+        "T07"
+      ],
+      "writes": [
+        ".prod-build/reports/T09.md",
+        ".prod-build/evidence.jsonl",
+        "vercel.json"
+      ],
+      "acceptance": [
+        "AC-6 (deployed)"
+      ],
+      "verify": [
+        "observe: the deployed URL opens signed out on a finished run at both sizes"
+      ],
+      "rollback": "git revert the task's commit; no data migration",
+      "status": "todo",
+      "notes": "",
+      "kind": "deploy"
+    },
+    {
+      "id": "T10",
+      "title": "Record the demo",
+      "objective": "A demo video of three minutes or less exists that covers the run and, for each of the three tools, architecture, implementation, runtime, reasoning and result",
+      "role": "product-engineer",
+      "size": "S",
+      "deps": [
+        "T08",
+        "T09"
+      ],
+      "writes": [
+        ".prod-build/reports/T10.md"
+      ],
+      "acceptance": [
+        "the video is 180 seconds or less"
+      ],
+      "verify": [
+        "observe: the video plays signed out and is 180 seconds or less"
+      ],
+      "rollback": "git revert the task's commit; no data migration",
+      "status": "todo",
+      "notes": "",
+      "kind": "record"
+    },
+    {
+      "id": "T11",
+      "title": "Submission check",
+      "objective": "The repository, the description and the links pass the submission check",
+      "role": "product-engineer",
+      "size": "S",
+      "deps": [
+        "T10"
+      ],
+      "writes": [
+        "README.md",
+        ".prod-build/reports/T11.md",
+        ".prod-build/evidence.jsonl"
+      ],
+      "acceptance": [
+        "no placeholder is left in what a judge opens"
+      ],
+      "verify": [
+        "observe: pb.py submit check passes"
+      ],
+      "rollback": "git revert the task's commit; no data migration",
+      "status": "todo",
+      "notes": "",
+      "kind": "submit"
+    }
+  ],
+  "suite": [
+    "uv run pytest -q"
+  ],
+  "parallel": false
+}
