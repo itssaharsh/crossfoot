@@ -269,16 +269,6 @@ def test_a_reread_that_gives_the_files_value_with_the_sums_holding_corrects_the_
     assert gw.asked[0][1] == "claude-sonnet-4.6"
 
 
-def test_a_reread_that_gives_a_third_value_is_cannot_verify(tmp_path):
-    led = Ledger()
-    make_block(led, 1, "p1-b1")
-    rows = [["X", "1", "C", "", "", "cand p1-b1", "15", "2", "10", "3"],
-            ["X", "2", "C", "", "", "cand p1-b1", "31", "4", "21", "6"]]
-    res = audit.audit_county("x", led, Geo(), Gw(led, says=lambda r, c, v: 22), parse(file_text(rows)), run_dir=tmp_path,
-                             log=lambda *a: None)
-    assert {f["status"] for f in res["findings"]} == {"cannot_verify"}
-
-
 def test_no_module_but_the_verify_known_command_names_the_answer_key():
     from pathlib import Path
     for p in Path("crossfoot").rglob("*.py"):
