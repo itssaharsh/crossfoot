@@ -573,8 +573,8 @@
         "uv run crossfoot site build --latest"
       ],
       "rollback": "git revert the task's commit; no data migration",
-      "status": "todo",
-      "notes": ""
+      "status": "done",
+      "notes": " Built on the branch `site` as T06a, T06b, T06c, T07a, T07b and T07c (briefs and reports under .prod-build/), merged into main in 8249851."
     },
     {
       "id": "T07",
@@ -599,24 +599,30 @@
         "observe: the first screen measured at 1440x900 and 390x844 with the action and a finding visible"
       ],
       "rollback": "git revert the task's commit; no data migration",
-      "status": "todo",
-      "notes": ""
+      "status": "done",
+      "notes": " Built on the branch `site` as T06a, T06b, T06c, T07a, T07b and T07c (briefs and reports under .prod-build/), merged into main in 8249851."
     },
     {
       "id": "T08",
-      "title": "Evidence page, security pass and cleanup",
-      "objective": "The README's first screen says what this is and links every piece of evidence; no secret, placeholder or unused file is left",
+      "title": "The evidence page, the page built from the final run, the security pass and cleanup",
+      "objective": "The README shows what was found with figures from the files; `crossfoot site build` builds the page from the final summary run; the tree is clean and under 50 MB",
       "role": "product-engineer",
       "size": "S",
       "deps": [
-        "T05b",
-        "T07"
+        "T05b"
       ],
       "writes": [
         "README.md",
         "hackathon.md",
-        "docs/**",
         ".gitignore",
+        "crossfoot/cli.py",
+        "crossfoot/sitebuild.py",
+        "tests/**",
+        "tools/**",
+        "docs/evidence/checkpoints.txt",
+        "qa/**",
+        "site/data/**",
+        "runs/**",
         ".prod-build/reports/T08.md",
         ".prod-build/evidence.jsonl"
       ],
@@ -624,7 +630,8 @@
         "WHEN a stranger opens the repository THE SYSTEM SHALL show what it does, the findings, and links to the traces, checkpoints, plan and results page in the README's first screen"
       ],
       "verify": [
-        "uv run pytest -q"
+        "uv run pytest -q",
+        "uv run crossfoot site build --run 20261011-141300"
       ],
       "rollback": "git revert the task's commit; no data migration",
       "status": "todo",
@@ -638,7 +645,7 @@
       "role": "product-engineer",
       "size": "S",
       "deps": [
-        "T07"
+        "T08"
       ],
       "writes": [
         ".prod-build/reports/T09.md",
