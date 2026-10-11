@@ -1,0 +1,2 @@
+Read AGENTS.md, then .prod-build/briefs/T06a.md and do exactly that task.
+Finish by writing .prod-build/reports/T06a.md in the format at the end of the brief, commit on this branch (do not push), and reply with the report.

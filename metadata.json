@@ -1,0 +1,27 @@
+{
+  "cli_version": "0.11.4",
+  "checkpoint_id": "01M4NB4Z7344SN0DGSD1X7TCK2",
+  "strategy": "manual-commit",
+  "branch": "site",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "crossfoot/sitebuild.py",
+    "tests/test_sitebuild.py"
+  ],
+  "sessions": [
+    {
+      "metadata": "/0/metadata.json",
+      "transcript": "/0/full.jsonl",
+      "compact_transcript": "/0/transcript.jsonl",
+      "content_hash": "/0/content_hash.txt",
+      "prompt": "/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 46,
+    "cache_creation_tokens": 121655,
+    "cache_read_tokens": 1953195,
+    "output_tokens": 55313,
+    "api_call_count": 23
+  }
+}
