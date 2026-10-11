@@ -635,7 +635,7 @@
       ],
       "rollback": "git revert the task's commit; no data migration",
       "status": "done",
-      "notes": "[2026-10-11 done] Verify passed inside the task's session on commit 2610bb2 (226 tests; site build from the final summary run). The orchestrator re-ran pytest (226), the README figure check, served the committed page from a fresh clone and screenshotted four counties at two sizes (no console errors; headline equals summary.json). Two defects found in that fresh clone and passed to T08b:  fails with a traceback when the scans are not downloaded and deletes the built blocks first; the cost and time table and the page's run numbers show the figures of the last re-audit, not of the run that read each county.",
+      "notes": "[2026-10-11 done] Verify passed inside the task's session on commit 2610bb2 (226 tests; site build from the final summary run). The orchestrator re-ran pytest (226), the README figure check, served the committed page from a fresh clone and screenshotted four counties at two sizes (no console errors; headline equals summary.json). Two defects found in that fresh clone and passed to T08b: the page build command fails with a traceback when the scans are not downloaded and deletes the built blocks first; the cost and time table and the page's run numbers show the figures of the last re-audit, not of the run that read each county.",
       "kind": "docs",
       "base": "20cb3b3",
       "started_after": 93,
