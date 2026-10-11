@@ -67,6 +67,20 @@ Planned, and updated as each part is actually used:
   (565 / 203), grand totals 25 / 18 (8 / 35); 127 calls (43), estimated cost $0.2199 ($0.1031). The goal of under 20
   failing row sums was not met.
 
+### 2026-10-11 - T03a the investigation loop closes Panola's ledger
+- Added `crossfoot close --county panola --resume <run>` (`crossfoot/agent.py`, `outputs.py`, boxes and crops in
+  `layouts/matrix.py`). `claude-haiku` chooses re-reads from a text description of each failing sum; code enforces six
+  actions per item, the stronger model only after two failed re-reads, and statuses from the checks. Images in neatlogs
+  spans are masked.
+- Found on the way: the first block of page 1 has its small totals inside the ruled box and one more row than other
+  blocks; cell and total boxes were checked by eye on crops before the runs.
+- Result, `runs/20261011-102700/panola/county.json` (summary field): failing sums before 32 row / 35 column / 18 grand,
+  after 16 / 16 / 12. 79 cells re-read, 31 changed, 335 left cannot_verify, 1,993 of 2,328 accepted. 565 model calls,
+  565,521 tokens in and 50,446 out, estimated cost $0.8601, gateway change $0.9447, 1,177.5 s. Not all sums close.
+- Failed: in 19 items (cells counted, not items) the decision was rejected because it named a model other than the two allowed, and the item was stopped; some answers wrapped
+  JSON in prose and needed a repair call (the parser only strips a code fence), which adds calls. Not fixed here.
+- Two full runs plus a 5-item trial; task gateway spend about $2.00.
+
 ## Demo
 Not available yet.
 

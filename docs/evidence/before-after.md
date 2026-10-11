@@ -56,3 +56,11 @@ column sums and 35 of 43 grand totals did not add up to the totals printed on th
 - Three full reads were made in this task (the limit): `20261011-092655` (column bug, not committed),
   `20261011-093435` (same code as the run after; identical counts, 127 calls, $0.2199; trace
   `31f18982da0029240fdbd65bbf3ff3b6`; not committed) and `20261011-094115`, the run after, made by `pb.py verify`.
+
+## Later
+- The plain `get_trace_context` call (trace id, `limit` 5, `include_evaluations` false) works; the options for
+  filtering spans and fields still answer `not_enabled` (11 October 2026).
+- Images are masked from commit `84c88a8` (`tracing.mask_images`): a span shows `image 888x173 sha256:036ec329aade`
+  instead of the picture. Trace `b5b7e9fe34c976be76a1ec32f2acf2a0` (run `20261011-100540`, not committed) has 1,057
+  spans (565 model calls, 491 tool calls); the first 5 spans are about 25,000 characters because each decision prompt
+  appears in both the model span and its `work_item` span.
