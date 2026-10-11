@@ -26,7 +26,8 @@
         "T04b",
         "T04c",
         "T04d",
-        "T05"
+        "T05",
+        "T05b"
       ]
     },
     {
@@ -514,6 +515,34 @@
       ]
     },
     {
+      "id": "T05b",
+      "title": "The traces page: trace ids of the runs and one detection in neatlogs",
+      "objective": "docs/evidence/traces.md lists the runs' trace ids and records one detection made through the MCP server",
+      "role": "product-engineer",
+      "size": "S",
+      "deps": [
+        "T05"
+      ],
+      "writes": [
+        "docs/evidence/traces.md",
+        "docs/evidence/recovery.md",
+        "crossfoot/tracing.py",
+        "tests/**",
+        "hackathon.md",
+        ".prod-build/reports/T05b.md",
+        ".prod-build/evidence.jsonl"
+      ],
+      "acceptance": [
+        "WHEN the task ends THE SYSTEM's traces page SHALL name a trace id for each run the evidence names, or say why none was found"
+      ],
+      "verify": [
+        "uv run pytest -q"
+      ],
+      "rollback": "git revert the task's commit",
+      "status": "todo",
+      "notes": "Added 2026-10-11: the tracing server answered 503 during T05."
+    },
+    {
       "id": "T06",
       "title": "Site data and the audit view, golden path",
       "objective": "`crossfoot site build` writes the page's data from a real run and the page shows a finished run with a finding drawn on the scan",
@@ -575,7 +604,7 @@
       "role": "product-engineer",
       "size": "S",
       "deps": [
-        "T05",
+        "T05b",
         "T07"
       ],
       "writes": [
