@@ -81,6 +81,34 @@ Planned, and updated as each part is actually used:
   JSON in prose and needed a repair call (the parser only strips a code fence), which adds calls. Not fixed here.
 - Two full runs plus a 5-item trial; task gateway spend about $2.00.
 
+### 2026-10-11 - T03b the reader chosen by measurement; failing sums paired where they cross
+- Changed: `read` samples page 1 with `claude-haiku` and reads the county with `claude-sonnet-4.6` if over a tenth of the
+  sample's row sums fail; `checks.suspects` pairs failing sums that share one value and agree on its error; the loop re-reads
+  those values at 400 dpi up a ladder (reader, `claude-sonnet-4.6`, `claude-opus-4.6`), names `document_inconsistent`, gives
+  every failing sum a verdict, and takes a `row_strip` target; `parse_json` finds JSON inside prose or a fence; price table
+  from the gateway's list.
+- Measured (run `20261011-111955`, `20261011-112935`): the sample had 6 of 22 row sums failing, so the read used sonnet and
+  left 3 row, 2 column, 1 + 1 grand sums failing; the close left 1, 1, 1, 0 with 19 calls in 80.0 s. Figures and the comparison
+  with T03a's close are in `docs/evidence/before-after.md`.
+- Failed / not solved: the registered row (+2) is one sum and cannot be paired; four re-reads agreed; one small total on page 6
+  reads the same every time (`document_inconsistent`).
+- Fixed: a model that wrote prose around its JSON no longer costs a repair call.
+- Gateway spend for the task: $3.6806 to $4.5142.
+
+### 2026-10-11 - T03c the audit against the published file, and the outputs
+- Changed: `crossfoot audit --county panola [--resume RUN|latest]` reads (reader chosen by a sample), closes, matches the
+  scan's contests and candidates to the file's (normalised labels first; the model once, as two lists, checked in code), looks
+  at every disagreeing value on the scan again (400 dpi, `claude-sonnet-4.6`, three at a time, starts 1.1 s apart), and writes
+  `findings.json`, one crop per group, `corrected/<file>`, `changes.diff`, `report.md`, `policy.json`, `run.json`.
+  `verify-known` and `policy set|show` added. The 22 registered-voters cells now take their sum's verdict; the 76 cells of
+  page 1's first block now have boxes (two checked by eye on a crop).
+- Measured, one full run from nothing (`runs/20261011-120008/run.json`): 638.7 s, 269 model calls (haiku 19, sonnet-4.6 243,
+  opus-4.6 7), metered $0.8845, gateway $4.7283 to $5.6127. 121 findings in 46 groups; 104 re-reads, none changed the ledger.
+  `verify-known`: 8 of 8 expected found. Runs on the same ledger (`--resume`) cost $0.1073 and 177.7 s.
+- Failed / not solved: the number of `cannot_verify` findings moved between runs (11, 14, 18) because the re-read model
+  sometimes gives a third value; the corrected file changes cell values only, so missing and extra rows stay listed.
+- Fixed: call-start spacing is applied at the request, not before an import; the report no longer fails on ledger verdict keys.
+
 ## Demo
 Not available yet.
 

@@ -64,3 +64,63 @@ column sums and 35 of 43 grand totals did not add up to the totals printed on th
   instead of the picture. Trace `b5b7e9fe34c976be76a1ec32f2acf2a0` (run `20261011-100540`, not committed) has 1,057
   spans (565 model calls, 491 tool calls); the first 5 spans are about 25,000 characters because each decision prompt
   appears in both the model span and its `work_item` span.
+
+# The loop: before and after (T03b)
+
+## What failed
+T03a's close of Panola (run `20261011-102700`) took 565 model calls and 1,177.5 s and still left 16 row, 16 column and
+12 grand sums failing, with 335 cells `cannot_verify`. The first read it started from used `claude-haiku`.
+
+## What shows the cause
+- Trace `b5b7e9fe34c976be76a1ec32f2acf2a0` (run `20261011-100540`, same code as T03a's close; 1,057 spans). `search_traces`
+  for that id returns no rows (11 October 2026); `get_trace_context` with the trace id, `limit` 5 and `offset` 400 works
+  and returns the spans. `span_types`, `span_names`, `fields` and `max_chars_per_field` were not tried again here.
+- One item from that page (page 3, block `p3-b4`, row EARLY, which fails by -2 while column 3 fails by -2): the decision
+  prompt even names the crossing, `EARLY/3`, but `claude-haiku` answered with the JSON inside a code fence followed by prose
+  ("The analysis clearly points to cell EARLY/3 ..."). The parser accepted only a fence around the whole answer, so the
+  gateway was called again to "repair" it, which cost one more call for an answer that had already been usable.
+- The same-target repeats are in the committed ledger of T03a's close (`runs/20261011-102700/ledger.sqlite`, events of
+  kind `reread`, counted by page, block, target, model and dpi): 219 re-reads, 172 distinct, so 47 re-reads asked again for
+  something already read the same way. The most repeated, three times each, are `row_total EARLY`, `row_total PRECINCT`
+  and `grand` of `p2-b5` with `claude-haiku` at 400 dpi. This count is from the committed run, not from the traced one
+  (a different run of the same code); I did not open more pages of the trace to quote a repeat from it.
+- The loop was working from failing sums one at a time and never used that a wrong value fails two sums at once.
+
+## The change (commits of T03b; the code is in the commit named in the report)
+- The reader is chosen by a sample of page 1 (`layouts/profile.py`, `matrix.read_county`): more than a tenth of the sample's
+  row sums failing means `claude-sonnet-4.6` reads the county.
+- Every value sits on two sums, with grand totals by columns and by rows as kinds of their own (`checks.suspects`). A value on
+  two failing sums with the same difference is re-read at 400 dpi: the county's reader, then `claude-sonnet-4.6`, then
+  `claude-opus-4.6`. The same reading twice while both sums fail is `document_inconsistent`. Arithmetic never writes a value.
+- What pairing cannot place goes to `claude-sonnet-4.6` with a `row_strip` target; the same target is never re-read twice
+  with the same model and dpi; JSON in prose or a fence parses without a repair call.
+
+## Both closes (numbers from each run's `county.json` summary, `first-read.json` and `run.json`)
+| measure | T03a close `20261011-102700` | T03b read `20261011-111955` + close `20261011-112935` |
+|---|---|---|
+| model | `claude-haiku` read; loop decisions `claude-haiku` | `claude-sonnet-4.6` (chosen by the sample) |
+| sums failing after the first read (row / col / grand by columns / grand by rows) | 32 / 35 / 18 / not counted | 3 / 2 / 1 / 1 |
+| sums failing after the loop | 16 / 16 / 12 / not counted | 1 / 1 / 1 / 0 |
+| values re-read | 79 cells | 23 (20 cells, 3 totals) |
+| values changed | 31 cells | 2 (1 cell, 1 printed total) |
+| cannot_verify | 335 cells | 0 cells; 1 sum (registered voters row) |
+| document_inconsistent | not a status then | 2 sums (one value: the small total of precinct 1, page 6, block `p6-b3`) |
+| model calls | 565 (the first read had 127 more) | read 146 + close 19 = 165 |
+| tokens in / out | 565,521 / 50,446 (read: 94,551 / 25,070) | read 108,172 / 25,979 + close 8,004 / 1,496 |
+| metered cost estimate | $0.8601 (read $0.2199) | read $0.7114 + close $0.0601 |
+| gateway spend change | $0.9447 (read $0.2380) | read $0.6935 + close $0.0601 |
+| seconds | 1,177.5 (read 334.6) | read 410.4 + close 80.0 |
+
+The T03a column's first-read figures are those of the haiku read `20261011-094115`; the sample in the T03b read had
+6 of 22 row sums failing (27.3%), over the line, so the sample was discarded. The prices behind the "metered" rows differ
+between the columns (the price table changed in this task), so compare the gateway rows.
+
+## Plainly
+- Better: 3 sums fail after the close against 44, in 80 s of loop time against 1,177 s and 19 calls against 565.
+- Worse: the read costs about three times as much per call, and the whole read about three times as much (gateway change
+  $0.6935 against $0.2380 for the haiku read). One close of a read this good is cheap, but the read is not.
+- Not solved: the registered-voters row sits on one sum only and fails by +2; pairing cannot place it, four re-reads
+  (`row_total`, `row_strip`, two models) all confirmed the same values, and 22 of its cells stay `first_read` (not accepted,
+  not marked). The small total of precinct 1 on page 6 reads 1,079 each time and the cells add to 1,076; the loop does not
+  say which is wrong, only that the page disagrees with itself.
+- One full read and two full closes were run in this task (the limit was one and two; the close was run twice, with the same outcome both times, and the second is kept).

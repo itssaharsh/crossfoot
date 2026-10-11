@@ -1,0 +1,65 @@
+{
+ "run_id": "20261011-120008",
+ "started": "2026-10-11T12:00:08",
+ "ended": "2026-10-11T12:10:46",
+ "seconds": 638.7,
+ "commit": "16b6b2bfcd4180ddf14fb99df5b3ed0dcf974d6e",
+ "command": "crossfoot audit --county panola",
+ "counties": [
+  "panola"
+ ],
+ "resumed_from": null,
+ "reader": "claude-sonnet-4.6",
+ "sample": {
+  "row_sums": 22,
+  "failing": 6,
+  "rate": 0.2727,
+  "line": 0.1,
+  "sampled_with": "claude-haiku",
+  "reader": "claude-sonnet-4.6",
+  "kept_sample": false,
+  "blocks": [
+   "p1-b0",
+   "p1-b1",
+   "p1-b2",
+   "p1-b3",
+   "p1-b4",
+   "p1-b5",
+   "p1-b6"
+  ]
+ },
+ "phases_seconds": {
+  "read": 380.4,
+  "close": 80.8,
+  "audit": 158.2
+ },
+ "model_calls": 269,
+ "model_calls_by_model": {
+  "claude-haiku": {
+   "calls": 19,
+   "prompt_tokens": 13621,
+   "completion_tokens": 4022,
+   "cost": 0.0371
+  },
+  "claude-opus-4.6": {
+   "calls": 7,
+   "prompt_tokens": 2615,
+   "completion_tokens": 172,
+   "cost": 0.0191
+  },
+  "claude-sonnet-4.6": {
+   "calls": 243,
+   "prompt_tokens": 127562,
+   "completion_tokens": 24686,
+   "cost": 0.8283
+  }
+ },
+ "prompt_tokens": 143798,
+ "completion_tokens": 28880,
+ "metered_cost_estimate": 0.8845,
+ "gateway_spend": {
+  "before": 4.728255055000002,
+  "after": 5.612745254999997,
+  "change": 0.8845
+ }
+}

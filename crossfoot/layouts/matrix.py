@@ -244,68 +244,113 @@ def _read_block(gw, county, page, bid, b, edges, cols, png, crop_path, run_id, r
     return merge_groups(answers)
 
 
-def read_county(county, gw, led, *, run_id="", pages=None, dpi=200, log=print, data_root=None) -> dict:
-    """Read every page of a matrix-layout county block by block into the ledger. Returns the summary dict."""
+def _rows_in(led, county):
+    cells, totals = led.cells(county), led.totals(county)
+    chs = checks.row_checks(cells, totals)
+    return len(chs), sum(1 for c in chs if not c.ok)
+
+
+def read_county(county, gw, led, *, run_id="", pages=None, dpi=200, log=print, data_root=None, model="auto") -> dict:
+    """Read every page of a matrix-layout county block by block into the ledger. Returns the summary dict.
+
+    model="auto": a sample of page 1 is read with claude-haiku first and the reader is chosen by the share of its row
+    sums that fail (layouts/profile.py); the sample always comes from page 1, whatever `pages` says. Any other name
+    reads the county with that model and skips the sample."""
     from ..sources import DATA
+    from . import profile
     root = data_root or DATA
     t0 = time.time()
     pages = list(pages or range(1, 7))
-    blocks_found = failed_blocks = 0
-    block_log, cols, contest, stopped = [], None, None, None
+    st = {"cols": None, "contest": None, "failed": 0, "log": [], "done": set()}
+    stopped, sample = None, None
+    blocks_of: dict = {}
+
+    def blocks_for(page):
+        if page not in blocks_of:
+            blocks_of[page] = find_blocks(page_png(county, page, dpi, root))
+        return blocks_of[page]
+
+    def read_blocks(page, stop_when=None):
+        """Read the blocks of one page not read yet. Stops early when `stop_when()` is true after a block."""
+        png = page_png(county, page, dpi, root)
+        blocks = blocks_for(page)
+        for i, b in enumerate(blocks):
+            bid = f"p{page}-b{i}"
+            is_header = page == 1 and i == 0
+            if bid in st["done"] or (page not in pages and not is_header and not stop_when):
+                continue
+            crop_path = Path("runs") / run_id / "crops" / f"{bid}.png" if run_id else Path(f"/tmp/{bid}.png")
+            crop(png, b.box, crop_path)
+            st["done"].add(bid)
+            try:
+                with tracing.trace("read_block", kind="TOOL", run=run_id, county=county, page=page, block=bid):
+                    if is_header:
+                        d = gw.ask_json(HEADER_PROMPT, crop_path, validate=header_validator)
+                        st["cols"] = d["precincts"]
+                        n = _store_header(led, county, page, d, st["cols"], gw.model)
+                        what = "header"
+                    else:
+                        edges = _edges(blocks, len(st["cols"]))
+                        d = _read_block(gw, county, page, bid, b, edges, st["cols"], png, crop_path, run_id, root, dpi)
+                        st["contest"] = d.get("contest") or st["contest"]
+                        n = _store(led, county, page, bid, d, st["cols"], st["contest"], d.get("candidate"), gw.model,
+                                   edges, b)
+                        what = d.get("candidate")
+                led.event(county, "block_read", {"page": page, "block": bid, "cells": n, "candidate": what,
+                                                 "model": gw.model})
+                st["log"].append({"block": bid, "page": page, "status": "read", "cells": n, "candidate": what,
+                                  "box": list(b.box)})
+            except BudgetExceeded:
+                raise
+            except Exception as e:  # bad JSON twice, wrong shape, or a model error: mark the block failed, go on
+                st["failed"] += 1
+                if st["cols"]:
+                    for r in ROWS:
+                        for col in st["cols"]:
+                            led.put_cell(county, page, bid, r, col, None, model=gw.model)
+                            led.set_status(county, page, bid, r, col, "failed")
+                led.event(county, "block_failed", {"page": page, "block": bid, "error": str(e)[:300]})
+                st["log"].append({"block": bid, "page": page, "status": "failed", "error": str(e)[:300]})
+                log(f"  {bid}: failed ({str(e)[:100]})")
+                if is_header:
+                    raise RuntimeError("the page-1 header could not be read; later pages need its precinct order")
+            if stop_when and stop_when():
+                return
+
     try:
-      with tracing.trace("read_county", kind="WORKFLOW", run=run_id, county=county):
-          # the header row is printed on page 1 only (checked by eye); later pages reuse its precinct order
-          first = page_png(county, 1, dpi, root)
-          for page in sorted(set(pages) | {1}):
-              png = page_png(county, page, dpi, root)
-              blocks = find_blocks(png)
-              blocks_found += len(blocks) if page in pages else 0
-              for i, b in enumerate(blocks):
-                  is_header = page == 1 and i == 0
-                  if page not in pages and not is_header:
-                      continue
-                  bid = f"p{page}-b{i}"
-                  crop_path = Path("runs") / run_id / "crops" / f"{bid}.png" if run_id else Path(f"/tmp/{bid}.png")
-                  crop(png, b.box, crop_path)
-                  try:
-                      with tracing.trace("read_block", kind="TOOL", run=run_id, county=county, page=page, block=bid):
-                          if is_header:
-                              d = gw.ask_json(HEADER_PROMPT, crop_path, validate=header_validator)
-                              cols = d["precincts"]
-                              n = _store_header(led, county, page, d, cols, gw.model)
-                              what = "header"
-                          else:
-                              edges = _edges(blocks, len(cols))
-                              d = _read_block(gw, county, page, bid, b, edges, cols, png, crop_path, run_id, root, dpi)
-                              contest = (d.get("contest") or contest)
-                              n = _store(led, county, page, bid, d, cols, contest, d.get("candidate"), gw.model,
-                                         edges, b)
-                              what = d.get("candidate")
-                      led.event(county, "block_read", {"page": page, "block": bid, "cells": n, "candidate": what})
-                      block_log.append({"block": bid, "page": page, "status": "read", "cells": n, "candidate": what,
-                                        "box": list(b.box)})
-                  except BudgetExceeded:
-                      raise
-                  except Exception as e:  # bad JSON twice, wrong shape, or a model error: mark the block failed, go on
-                      failed_blocks += 1
-                      if cols:
-                          for r in ROWS:
-                              for col in cols:
-                                  led.put_cell(county, page, bid, r, col, None, model=gw.model)
-                                  led.set_status(county, page, bid, r, col, "failed")
-                      led.event(county, "block_failed", {"page": page, "block": bid, "error": str(e)[:300]})
-                      block_log.append({"block": bid, "page": page, "status": "failed", "error": str(e)[:300]})
-                      log(f"  {bid}: failed ({str(e)[:100]})")
-                      if is_header:
-                          raise RuntimeError("the page-1 header could not be read; later pages need its precinct order")
+        with tracing.trace("read_county", kind="WORKFLOW", run=run_id, county=county):
+            # the header row is printed on page 1 only (checked by eye); later pages reuse its precinct order
+            if model == "auto":
+                gw.model = profile.SAMPLE_MODEL
+                read_blocks(1, stop_when=lambda: _rows_in(led, county)[0] >= profile.SAMPLE_ROW_SUMS)
+                with tracing.trace("choose_reader", kind="TOOL", run=run_id, county=county) as sp:
+                    total, failing = _rows_in(led, county)
+                    sample = profile.decide(failing, total)
+                    sample["blocks"] = sorted(st["done"])
+                    for k in ("row_sums", "failing", "rate", "reader", "kept_sample"):
+                        sp.set_attribute(f"sample_{k}" if k != "reader" else "choice", sample[k])
+                led.event(county, "choose_reader", sample)
+                log(profile.sentence(sample))
+                gw.model = sample["reader"]
+                if not sample["kept_sample"]:
+                    led.clear_values(county)
+                    st.update(cols=None, contest=None, failed=0, log=[], done=set())
+            else:
+                gw.model = model
+                sample = {"reader": model, "skipped": True, "kept_sample": False}
+                led.event(county, "choose_reader", sample)
+                log(f"reader: {model} (set with --model; no sample was read)")
+            for page in sorted(set(pages) | {1}):
+                read_blocks(page)
     except BudgetExceeded as e:
         stopped = str(e)
         log(f"stopped: {e}")
     s = summarize(led, county)
-    s.update(county=county, run_id=run_id, blocks_found=blocks_found, blocks_failed=failed_blocks,
-             precincts=cols, model_calls=gw.calls, prompt_tokens=gw.prompt_tokens,
+    found = sum(len(blocks_for(p)) for p in pages)
+    s.update(county=county, run_id=run_id, blocks_found=found, blocks_failed=st["failed"], reader=gw.model,
+             sample=sample, precincts=st["cols"], model_calls=gw.calls, prompt_tokens=gw.prompt_tokens,
              completion_tokens=gw.completion_tokens, metered_cost_estimate=round(gw.cost, 4),
-             seconds=round(time.time() - t0, 1), stopped=stopped, blocks=block_log)
+             seconds=round(time.time() - t0, 1), stopped=stopped, blocks=st["log"])
     return s
 
 
@@ -449,18 +494,38 @@ class Geometry:
             box = None
         if box is None:
             raise GeometryError(f"cannot place {t} in {bid} on page {page}")
+        return self._cut(page, box, t["kind"], dpi, dest), box
+
+    def _cut(self, page, box, kind, dpi, dest: Path) -> Path:
         k = dpi / GEO_DPI
         x0, y0, x1, y1 = box
         with Image.open(page_png(self.county, page, dpi, self.root)) as im:
             win = (max(0, round((x0 - PAD) * k)), max(0, round((y0 - PAD) * k)),
                    min(im.width, round((x1 + PAD) * k)), min(im.height, round((y1 + PAD) * k)))
             c = im.crop(win)
-        s = scale_for(dpi, t["kind"])
+        s = scale_for(dpi, kind)
         if s > 1:
             c = c.resize((round(c.width * s), round(c.height * s)), Image.LANCZOS)
         dest.parent.mkdir(parents=True, exist_ok=True)
         c.save(dest)
-        return dest, box
+        return dest
+
+    def strip_crops(self, page, bid, row, dpi, dest: Path, per: int = 7):
+        """One row of one block cut into pieces of at most `per` cells. Returns [(path, [precincts], box at 200 dpi)]."""
+        try:
+            b, edges, rows = self._block(page, bid)
+            if row not in rows:
+                raise GeometryError(f"no row {row} in {bid}")
+            y0, y1 = self._row(b, rows, row)
+            out = []
+            for i in range(0, len(self.cols), per):
+                cols = self.cols[i:i + per]
+                box = (edges[i], y0, edges[i + len(cols)], y1)
+                out.append((self._cut(page, box, "cell", dpi, dest.with_name(f"{dest.stem}-s{i // per}{dest.suffix}")),
+                            cols, box))
+            return out
+        except (ValueError, IndexError):
+            raise GeometryError(f"cannot place row {row} in {bid} on page {page}") from None
 
 
 def precinct_order(led, county) -> list[str]:

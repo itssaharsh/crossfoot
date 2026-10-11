@@ -99,8 +99,9 @@ is present in one place and absent in another.
 Every value on a matrix sheet sits on two printed sums. A cell sits on its row and its column. The small total under
 a column sits on that column and on the grand total (the small totals add to it). A row's printed total sits on its
 row and on the grand total (the three row totals add to it). So one wrong value makes exactly two sums fail, and they
-cross at it. `checks.locate()` pairs failing sums that share one value and whose differences agree: that value is the
-suspect, and the difference says what it would have to be.
+cross at it. `checks.suspects()` pairs failing sums that share one value and whose differences agree: that value is
+the suspect, and the difference says what it would have to be. (The grand total is checked two ways, kinds `grand_col`
+and `grand_row`. The registered-voters row of Panola sits on one sum only and cannot be located this way.)
 
 The loop works the sums that still fail after the first read, and later every disagreement with the published file.
 For a located suspect it looks at the scan again: a re-read of that one value, cut at 400 dpi or more and enlarged.

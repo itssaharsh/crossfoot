@@ -15,10 +15,14 @@ CREATE TABLE IF NOT EXISTS cells(
 CREATE TABLE IF NOT EXISTS totals(
   county TEXT, page INTEGER, block_id TEXT, direction TEXT, key TEXT, value INTEGER,
   UNIQUE(county, page, block_id, direction, key));
+CREATE TABLE IF NOT EXISTS verdicts(
+  county TEXT, sum_id TEXT, page INTEGER, block_id TEXT, verdict TEXT, reason TEXT, entity TEXT,
+  UNIQUE(county, sum_id));
 CREATE TABLE IF NOT EXISTS events(
   id INTEGER PRIMARY KEY, ts REAL, county TEXT, kind TEXT, payload_json TEXT);
 """
-STATUSES = ("first_read", "accepted", "failed", "cannot_verify")
+STATUSES = ("first_read", "accepted", "failed", "cannot_verify", "document_inconsistent")
+VERDICTS = ("document_inconsistent", "cannot_verify")
 
 
 class Ledger:
@@ -59,9 +63,41 @@ class Ledger:
                         (value, model, county, page, block_id, row_kind, column))
         self.db.commit()
 
+    def set_box(self, county, page, block_id, row_kind, column, box):
+        self.db.execute("UPDATE cells SET x0=?, y0=?, x1=?, y1=? WHERE county=? AND page=? AND block_id=? AND row_kind=? "
+                        "AND column=?", (*box, county, page, block_id, row_kind, column))
+        self.db.commit()
+
+    def set_value(self, county, page, block_id, row_kind, column, value, model=None):
+        """Write a value the audit's re-read showed (an accepted cell included); the caller sets the status after."""
+        self.db.execute("UPDATE cells SET value=?, tries=tries+1, model=COALESCE(?, model) WHERE county=? AND page=? "
+                        "AND block_id=? AND row_kind=? AND column=?",
+                        (value, model, county, page, block_id, row_kind, column))
+        self.db.commit()
+
     def put_total(self, county, page, block_id, direction, key, value):
         self.db.execute("INSERT OR REPLACE INTO totals VALUES(?,?,?,?,?,?)",
                         (county, page, block_id, direction, key, value))
+        self.db.commit()
+
+    def set_verdict(self, county, sum_id, page, block_id, verdict, reason, entity=None):
+        """A failing sum that was worked and could not be made to hold: its verdict and why. One per sum."""
+        if verdict not in VERDICTS:
+            raise ValueError(f"unknown verdict {verdict!r}")
+        self.db.execute("INSERT OR REPLACE INTO verdicts VALUES(?,?,?,?,?,?,?)",
+                        (county, sum_id, page, block_id, verdict, reason, json.dumps(entity) if entity else None))
+        self.db.commit()
+
+    def verdicts(self, county=None) -> list[dict]:
+        q, a = "SELECT * FROM verdicts", []
+        if county:
+            q += " WHERE county=?"; a.append(county)
+        return [dict(r) for r in self.db.execute(q, a)]
+
+    def clear_values(self, county):
+        """Forget every cell and printed total of a county (the sample of a read that chose another reader). Events stay."""
+        self.db.execute("DELETE FROM cells WHERE county=?", (county,))
+        self.db.execute("DELETE FROM totals WHERE county=?", (county,))
         self.db.commit()
 
     def event(self, county, kind, payload=None):
