@@ -247,10 +247,14 @@
         "uv run crossfoot close --county panola --resume latest"
       ],
       "rollback": "git revert the task's commits; committed runs are never changed",
-      "status": "doing",
-      "notes": "Added 2026-10-11 after T03a and a scout read: the cheap model plus a blind loop cost more and closed less than one read with the stronger model.",
+      "status": "done",
+      "notes": "Added 2026-10-11 after T03a and a scout read: the cheap model plus a blind loop cost more and closed less than one read with the stronger model.\n[2026-10-11 done] The verify runs (82 tests; close run 20261011-112935) passed inside the task's session on commit 4fb474a; the orchestrator re-ran pytest (82 passed), checked the report's figures against first-read.json and county.json, and read the document_inconsistent small total on the scan at 600 dpi (it reads 1079; the cells read 818, 44, 214).",
       "base": "cff34cb",
-      "started_after": 22
+      "started_after": 22,
+      "evidence": [
+        "E0028",
+        "E0029"
+      ]
     },
     {
       "id": "T03c",
