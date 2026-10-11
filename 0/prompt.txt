@@ -1,0 +1,13 @@
+Read AGENTS.md, then .prod-build/briefs/T04c.md and do exactly that task.
+Run checks through `python3 .prod-build/pb.py` as the brief says.
+Finish by writing .prod-build/reports/T04c.md in the format at the end of the brief, commit (do not push), and reply with the report.
+
+---
+
+<task-notification>
+<task-id>b9ib29amj</task-id>
+<tool-use-id>toolu_01T1MpzCTmzXSHJx6aNcfFhC</tool-use-id>
+<output-file>/tmp/claude-1000/-home-saharsh-contri-crossfoot/e2b4bc64-f8c4-4d81-b6b1-a1a5f2f92900/tasks/b9ib29amj.output</output-file>
+<status>completed</status>
+<summary>Background command "cat /tmp/claude-1000/-home-saharsh-contri-crossfoot/e2b4bc64-f8c4-4d81-b6b1-a1a5f2f92900/tasks/b1qelfitc.output | tail -12 | cut -c1-250" completed (exit code 0)</summary>
+</task-notification>
