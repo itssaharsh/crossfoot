@@ -1,7 +1,7 @@
-// The stage: the scanned sheet in depth, its marks, and the two sums drawn across it.
+// The stage: the scanned sheet in depth, its marks, the two sums drawn across it, and the leader to the loupe.
 const SVGNS = 'http://www.w3.org/2000/svg';
-const TILT_X = 34, TILT_Z = -3, ZOOM = 1.2, LEAN_MAX = 3;
-const TURN_MS = 600, LINE_MS = 350, RING_MS = 180, PAGE_MS = 400;
+const TILT_X = 46, TILT_Z = -3, LEAN_MAX = 3, CLEAR = 24, SLACK_X = 18, SLACK_Y = 10, TURN_Z = 2, STACK_PX = 3;
+const TURN_MS = 600, LINE_MS = 350, RING_MS = 180, PAGE_MS = 400, FLAT_MS = 400;
 
 const svg = (tag, attrs = {}) => {
   const e = document.createElementNS(SVGNS, tag);
@@ -9,54 +9,135 @@ const svg = (tag, attrs = {}) => {
   return e;
 };
 const wait = ms => new Promise(r => setTimeout(r, ms));
+const ease = t => (t < 0.5 ? 8 * t ** 4 : 1 - ((-2 * t + 2) ** 4) / 2);
+const mix = (a, b, t) => a + (b - a) * t;
 
 export class Stage {
   constructor(els, { reduced, coarse, onPick, onError }) {
     Object.assign(this, els);
     this.reduced = reduced; this.coarse = coarse; this.onPick = onPick; this.onError = onError;
     this.flat = false; this.token = 0; this.sel = null; this.page = null;
+    this.P = { f: 1, tx: 0, ty: 0, rx: 0, rz: 0 }; this.base = this.P; this.anchor = null; this.loupe = null;
     this.lean = { x: 0, y: 0, tx: 0, ty: 0, raf: 0 };
-    new ResizeObserver(() => this.layout(true)).observe(this.viewport);
+    this.until = 0; this.pumping = false;
+    new ResizeObserver(() => { this.layout(true); }).observe(this.viewport);
     if (!reduced && !coarse) this.watchPointer();
   }
 
   setStore(store) { this.store = store; this.page = null; this.sel = null; }
+  setLoupe(loupe) { this.loupe = loupe; }
   get pg() { return this.store && this.store.pages.find(p => p.n === this.page); }
   setLabel(text) { this.paper.setAttribute('aria-label', text); }
 
   // ---- geometry
-  layout(instant = false) {
-    const pg = this.pg;
-    if (!pg) return;
+  // the part of the stage the sheet may use: below the loupe, above the controls, 24 px clear inside it
+  area() {
     const W = this.viewport.clientWidth, H = this.viewport.clientHeight;
-    const sw = Math.min(W * 0.84, (H * 0.8 * pg.w) / pg.h * 1.2);
-    this.k = sw / pg.w; this.sw = sw; this.sh = sw * pg.h / pg.w;
+    const top = this.loupeEl ? this.loupeEl.offsetTop + this.loupeEl.offsetHeight + 12 : 0;
+    const bottom = H - (this.controls ? this.controls.offsetHeight + 24 + 10 : 0);
+    const a = { l: CLEAR, r: W - CLEAR, t: top + CLEAR, b: bottom - CLEAR };
+    if (a.b - a.t < 60) a.b = a.t + 60;
+    return a;
+  }
+  stackPx() { return this.store ? this.stackCount() * STACK_PX : 0; }
+  layout(instant = true) {
+    const pg = this.pg;
+    if (!pg || !this.viewport.clientWidth) return;
+    const A = this.area();
+    this.sw = A.r - A.l; this.sh = this.sw * pg.h / pg.w; this.k = this.sw / pg.w;
     const st = this.pose.style;
     st.setProperty('--w', `${this.sw}px`); st.setProperty('--h', `${this.sh}px`);
-    const n = this.stackCount();
-    st.setProperty('--depth', `${n * 2}px`);
-    this.apply(instant);
+    st.setProperty('--depth', `${this.stackCount() * 2}px`);
+    this.viewport.style.perspectiveOrigin = `${this.viewport.clientWidth / 2}px ${(A.t + A.b) / 2}px`;
+    this.base = this.fit();
+    this.setP(this.target());
+    if (this.loupe) this.loupe.relayout();
+    this.updateLeader();
   }
   stackCount() { return Math.min(5, this.store.pages.length - 1); }
-  zoom() { return this.coarse && this.viewport.clientWidth < 900 ? 1.25 : ZOOM; }
-  center(i) {
-    const v = this.store.values[i];
-    return v && v.x ? [(v.x[0] + v.x[2]) / 2 * this.k, (v.x[1] + v.x[3]) / 2 * this.k] : [this.sw / 2, this.sh / 2];
+
+  // the sheet's projected box, relative to the stage, with the pointer lean taken out
+  measure(P) {
+    this.setP(P);
+    const lean = this.leanEl.style.transform;
+    this.leanEl.style.transform = 'none';
+    const r = this.sheet.getBoundingClientRect(), v = this.viewport.getBoundingClientRect();
+    this.leanEl.style.transform = lean;
+    return { l: r.left - v.left, t: r.top - v.top, w: r.width, h: r.height, r: r.right - v.left, b: r.bottom - v.top };
   }
-  pose_(i) {
-    const [cx, cy] = this.center(i);
-    const s = this.zoom();
-    const rx = this.flat ? 0 : TILT_X, rz = this.flat ? 0 : TILT_Z;
-    return { s, text: `rotateX(${rx}deg) rotateZ(${rz}deg) scale(${s}) translate(${-cx}px, ${-cy}px)` };
+  fit() {
+    const A = this.area(), sa = this.stackPx();
+    const box = { l: A.l + SLACK_X, r: A.r - SLACK_X - sa, t: A.t + SLACK_Y, b: A.b - SLACK_Y - sa };
+    const P = { f: 0.5, tx: (box.l + box.r) / 2, ty: (box.t + box.b) / 2, rx: this.flat ? 0 : TILT_X, rz: this.flat ? 0 : TILT_Z };
+    for (let n = 0; n < 5; n++) {
+      let m = this.measure(P);
+      P.f *= Math.min((box.r - box.l) / m.w, (box.b - box.t) / m.h);
+      m = this.measure(P);
+      P.tx += (box.l + box.r) / 2 - (m.l + m.r) / 2;
+      P.ty += (box.t + box.b) / 2 - (m.t + m.b) / 2;
+    }
+    return P;
   }
-  apply(instant = false, fast = false) {
-    const { s, text } = this.pose_(this.sel);
-    this.u = 1 / (this.k * s);
-    for (const e of [this.bands, this.marks]) e.style.setProperty('--u', this.u);
-    this.pose.classList.toggle('flat-fast', fast);
-    if (instant) this.pose.style.transition = 'none';
-    this.pose.style.transform = text;
-    if (instant) { void this.pose.offsetWidth; this.pose.style.transition = ''; }
+  // the pose for the current selection: a small turn toward the value, never out of the sheet zone
+  target() {
+    const keep = { ...this.P };
+    const v = this.store && this.sel !== null ? this.store.values[this.sel] : null;
+    if (!v || !v.x || v.p !== this.page || this.flat) return { ...this.base };
+    const pg = this.pg;
+    const nx = ((v.x[0] + v.x[2]) / 2 / pg.w - 0.5) * 2, ny = ((v.x[1] + v.x[3]) / 2 / pg.h - 0.5) * 2;
+    const P = { ...this.base, rz: this.base.rz - TURN_Z * nx, tx: this.base.tx - nx * SLACK_X, ty: this.base.ty - ny * SLACK_Y };
+    const A = this.area(), sa = this.stackPx();
+    for (let n = 0; n < 2; n++) {
+      const m = this.measure(P);
+      P.tx += Math.max(0, A.l - m.l) - Math.max(0, m.r + sa - A.r);
+      P.ty += Math.max(0, A.t - m.t) - Math.max(0, m.b + sa - A.b);
+    }
+    this.setP(keep);
+    return P;
+  }
+  setP(P) {
+    this.P = P;
+    this.pose.style.transform = `translate(${P.tx}px, ${P.ty}px) rotateX(${P.rx}deg) rotateZ(${P.rz}deg) scale(${P.f})`;
+    const st = this.pose.style;
+    st.setProperty('--u', 1 / (this.k * P.f)); st.setProperty('--inv', 1 / P.f);
+  }
+  go(P, ms) {
+    cancelAnimationFrame(this.tw);
+    const A = { ...this.P };
+    if (!ms || this.reduced) { this.setP(P); this.updateLeader(); return; }
+    const t0 = performance.now();
+    const step = now => {
+      const t = Math.min(1, (now - t0) / ms), e = ease(t);
+      this.setP({ f: mix(A.f, P.f, e), tx: mix(A.tx, P.tx, e), ty: mix(A.ty, P.ty, e), rx: mix(A.rx, P.rx, e), rz: mix(A.rz, P.rz, e) });
+      this.updateLeader();
+      if (t < 1) this.tw = requestAnimationFrame(step);
+    };
+    this.tw = requestAnimationFrame(step);
+  }
+
+  // ---- the leader: loupe's bottom edge to the ring on the sheet, followed on every frame while anything moves
+  pump(ms) {
+    this.until = Math.max(this.until, performance.now() + ms);
+    if (this.pumping) return;
+    this.pumping = true;
+    const step = () => {
+      this.updateLeader();
+      if (performance.now() < this.until) requestAnimationFrame(step); else this.pumping = false;
+    };
+    requestAnimationFrame(step);
+  }
+  updateLeader() {
+    const line = this.leaderLine, ringEl = this.loupe && this.loupe.ringEl, a = this.anchor;
+    if (!ringEl || !ringEl.isConnected || !a || !a.isConnected) { line.setAttribute('hidden', ''); return; }
+    const o = this.leader.getBoundingClientRect(), lb = this.loupeEl.getBoundingClientRect();
+    const rb = ringEl.getBoundingClientRect(), ab = a.getBoundingClientRect();
+    if (!ab.width || !rb.width) { line.setAttribute('hidden', ''); return; }
+    const sx = Math.min(Math.max(rb.left + rb.width / 2, lb.left + 12), lb.right - 12), sy = lb.bottom;
+    const cx = ab.left + ab.width / 2, cy = ab.top + ab.height / 2, rx = ab.width / 2, ry = ab.height / 2;
+    const dx = sx - cx, dy = sy - cy, t = 1 / Math.hypot(dx / rx, dy / ry);
+    line.setAttribute('x1', sx - o.left); line.setAttribute('y1', sy - o.top);
+    line.setAttribute('x2', cx + dx * t - o.left); line.setAttribute('y2', cy + dy * t - o.top);
+    line.removeAttribute('hidden');
   }
 
   // ---- pages
@@ -68,11 +149,18 @@ export class Stage {
     const pg = this.pg;
     this.stack.replaceChildren(...Array.from({ length: this.stackCount() }, (_, i) => {
       const e = document.createElement('i');
-      e.style.transform = `translate3d(${(i + 1) * 2}px, ${(i + 1) * 2}px, ${-(i + 1) * 2}px)`;
+      const d = `calc(var(--inv, 1) * ${(i + 1) * STACK_PX}px)`;
+      e.style.transform = `translate3d(${d}, ${d}, calc(var(--inv, 1) * ${-(i + 1) * 2}px))`;
       e.style.background = ['#c9c6b8', '#bfbcae', '#b5b2a4', '#abaa9b', '#a1a092'][i];
       return e;
     }));
+    const depth = this.stackCount(), d = `calc(var(--inv, 1) * ${(depth + 1) * STACK_PX}px)`;
+    const under = document.createElement('i');   // the contact shadow, lowest in the pile
+    under.className = 'under';
+    under.style.transform = `translate3d(${d}, ${d}, calc(var(--inv, 1) * ${-(depth + 1) * 2}px))`;
+    this.stack.prepend(under);
     this.clearBands();
+    this.anchor = null;
     this.layout(true);
     this.buildMarks();
     this.notice.hidden = true;
@@ -82,6 +170,7 @@ export class Stage {
       this.scan.src = pg.img;
     });
     if (leaving) {
+      this.pump(PAGE_MS + 100);
       leaving.removeAttribute('id'); leaving.removeAttribute('role');
       leaving.querySelectorAll('[id]').forEach(e => e.removeAttribute('id'));
       leaving.style.pointerEvents = 'none';
@@ -150,15 +239,22 @@ export class Stage {
     const first = sums.slice().sort((a, b) => (a.axis === 'row' ? -1 : 1) - (b.axis === 'row' ? -1 : 1));
     const draws = first.map(s => ({ ...s, line: this.store.band(s.check) })).filter(s => s.line);
     const v = this.store.values[i];
-    const ring = this.ringFor(v, draws);
+    const ring = v.x ? this.ringFor(v, draws) : null;
+    this.anchor = null;
+    if (ring) {
+      this.anchor = svg('circle', { cx: ring.x, cy: ring.y, r: ring.r, fill: 'none', stroke: 'none' });
+      this.bands.append(this.anchor);
+    }
+    if (this.loupe) this.loupe.show(this.store, i, draws.map(d => ({ line: d.line, ok: d.check.ok, axis: d.axis })), !instant);
+    if (v.x) this.go(this.target(), instant ? 0 : TURN_MS);
+    this.updateLeader();
     if (instant) {
-      this.apply(true);
       draws.forEach(s => this.band(s, true));
       if (ring) this.svgRing(ring, true);
       return true;
     }
-    this.apply(false);
-    await wait(TURN_MS);
+    this.pump(TURN_MS + 150);
+    if (v.x) await wait(TURN_MS);
     for (const s of draws) {
       if (tk !== this.token) return false;
       await this.band(s, false);
@@ -194,7 +290,13 @@ export class Stage {
   // ---- flat and tilted
   setFlat(f, animate = true) {
     this.flat = f;
-    if (this.sel !== null) this.apply(!animate || this.reduced, true);
+    if (!this.pg) return;
+    const keep = { ...this.P };
+    this.base = this.fit();
+    const P = this.target();
+    this.setP(keep);
+    this.go(P, animate && !this.reduced ? FLAT_MS : 0);
+    this.pump(FLAT_MS + 100);
   }
 
   // ---- the sheet leans toward the pointer, by at most 3 degrees
@@ -217,6 +319,7 @@ export class Stage {
       const done = Math.abs(t.tx - t.x) < 0.01 && Math.abs(t.ty - t.y) < 0.01;
       if (done) { t.x = t.tx; t.y = t.ty; }
       this.leanEl.style.transform = `rotateX(${t.y}deg) rotateY(${t.x}deg)`;
+      this.updateLeader();
       t.raf = done ? 0 : requestAnimationFrame(step);
     };
     t.raf = requestAnimationFrame(step);

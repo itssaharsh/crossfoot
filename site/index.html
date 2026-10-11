@@ -25,7 +25,6 @@
     <div class="viewport" id="viewport">
       <div class="lean" id="lean">
         <div class="pose" id="pose">
-          <div class="shadow" id="shadow"></div>
           <div class="paper" id="paper" role="img" aria-label="Loading the scan">
             <div class="stack" id="stack"></div>
             <div class="sheet" id="sheet"><img id="scan" alt="" decoding="async"><div class="far"></div><svg id="bands" class="bands" aria-hidden="true"></svg></div>
@@ -34,20 +33,23 @@
         </div>
       </div>
     </div>
+    <div class="loupe" id="loupe" role="group" aria-label="The scan around the selected value, enlarged">
+      <div class="lp-view" id="lp-view"></div>
+      <p class="lp-note" id="lp-note" role="status" hidden>This value has no position in this run's data</p>
+    </div>
+    <svg class="leader" id="leader" aria-hidden="true"><line id="leader-line" x1="0" y1="0" x2="0" y2="0" hidden=""/></svg>
     <div class="notice" id="notice" role="alert" hidden></div>
     <div class="controls" id="controls">
-      <button class="primary" id="replay" type="button" disabled>Replay the audit</button>
+      <button class="primary" id="replay" type="button" disabled title="Replay comes with the run's events" aria-describedby="replay-hint">Replay the audit</button>
+      <button type="button" id="flat">Lay flat</button>
+      <button type="button" id="prev">Previous page</button>
+      <button type="button" id="next">Next page</button>
+      <span class="pageno" id="pageno" aria-live="polite"></span>
       <p class="hint" id="replay-hint">Replay comes with the run's events</p>
-      <div class="quiet">
-        <button type="button" id="flat">Lay flat</button>
-        <button type="button" id="prev">Previous page</button>
-        <button type="button" id="next">Next page</button>
-        <span class="pageno" id="pageno" aria-live="polite"></span>
-      </div>
     </div>
   </section>
   <aside class="panel" id="panel" aria-label="The sums">
-    <section class="tape" id="tape" aria-label="The arithmetic"></section>
+    <div class="tapewrap"><section class="tape" id="tape" aria-label="The arithmetic"></section></div>
     <section class="card" id="card" aria-label="Selected value"></section>
     <section class="fails" aria-labelledby="fails-h">
       <h2 id="fails-h">Sums that do not hold</h2>

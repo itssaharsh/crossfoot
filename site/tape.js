@@ -7,9 +7,17 @@ const heading = c => c.k === 'col' ? `Down the column · precinct ${c.y}` : c.k 
 
 export function termLines(store, c) {
   const terms = store.termsOf(c);
-  const row = t => ({ label: termLabel(c, t), fig: fmt(t.v) });
+  const row = t => ({ label: termLabel(c, t), fig: fmt(t.v), i: t.i });
   if (terms.length <= 5) return terms.map(row);
   return [...terms.slice(0, 3).map(row), { label: `… ${terms.length - 4} more`, fig: '', more: true }, row(terms[terms.length - 1])];
+}
+
+// a fine zigzag along the lower edge, 6 px deep
+function tornEdge() {
+  const pts = ['0 0', '100% 0', '100% calc(100% - 6px)'];
+  const n = 50;
+  for (let i = n - 1; i >= 0; i--) pts.push(`${(i * 100 / n).toFixed(2)}% ${i % 2 ? 'calc(100% - 6px)' : '100%'}`);
+  return `polygon(${pts.join(', ')})`;
 }
 
 function el(tag, cls, text) {
@@ -18,36 +26,46 @@ function el(tag, cls, text) {
   if (text !== undefined) e.textContent = text;
   return e;
 }
-function line(label, fig, cls) {
+function line(label, fig, cls, pick) {
   const d = el('div', 'ln' + (cls ? ' ' + cls : ''));
   d.append(el('span', '', label), el('span', '', fig));
+  if (pick) {   // a term line selects its value
+    d.classList.add('pick'); d.tabIndex = 0; d.setAttribute('role', 'button');
+    d.addEventListener('click', pick);
+    d.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); pick(); } });
+  }
   return d;
 }
 
 export class Tape {
-  constructor(root, reduced) { this.root = root; this.reduced = reduced; this.timers = []; this.clear(); }
+  constructor(root, reduced, onPick = () => {}) {
+    this.onPick = onPick; this.root = root; this.reduced = reduced; this.timers = [];
+    root.style.clipPath = tornEdge();
+    this.clear();
+  }
   stop() { this.timers.forEach(clearTimeout); this.timers = []; }
-  clear() { this.stop(); this.root.replaceChildren(); }
+  // keeps its height while empty, so the panel under it does not jump
+  clear() { this.stop(); this.root.style.minHeight = `${this.root.offsetHeight}px`; this.root.replaceChildren(); }
   // sums: [{check, axis}]; the lines are built first, then shown one by one
   print(store, sums, animate = true) {
     this.stop();
     this.root.replaceChildren();
+    this.root.style.minHeight = '';
     const steps = [];
     if (!sums.length) { this.root.append(el('p', 'empty', 'No printed sum was recorded through this value.')); return; }
     for (const { check: c } of sums) {
       const box = el('div', 'sum');
       const h = el('h3', '', heading(c));
       box.append(h);
-      const mk = (node) => { node.hidden = true; box.append(node); steps.push(node); };
-      for (const l of termLines(store, c)) mk(line(l.label, l.fig, l.more ? 'more' : ''));
+      const mk = (node) => { node.style.visibility = 'hidden'; box.append(node); steps.push(node); };
+      for (const l of termLines(store, c)) mk(line(l.label, l.fig, l.more ? 'more' : '', l.i === undefined ? null : () => this.onPick(l.i)));
       mk(line('adds to', fmt(c.co), 'rule'));
       mk(line('printed total', fmt(c.pr)));
-      const res = el('div', 'res ' + (c.ok ? 'holds' : 'fails'), c.ok ? '✓ matches' : '✗ does not match');
-      mk(res);
+      mk(el('div', 'res ' + (c.ok ? 'holds' : 'fails'), c.ok ? '✓ matches' : '✗ does not match'));
       this.root.append(box);
     }
-    if (!animate || this.reduced) { steps.forEach(s => (s.hidden = false)); return; }
+    if (!animate || this.reduced) { steps.forEach(s => (s.style.visibility = '')); return; }
     const step = Math.min(STEP_MS, MAX_TOTAL_MS / steps.length);
-    steps.forEach((s, i) => this.timers.push(setTimeout(() => { s.hidden = false; }, i * step)));
+    steps.forEach((s, i) => this.timers.push(setTimeout(() => { s.style.visibility = ''; }, i * step)));
   }
 }

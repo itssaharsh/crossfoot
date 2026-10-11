@@ -70,7 +70,9 @@ export class Store {
     const t = this.termsOf(c).find(x => x.x);
     if (t) return t.i;
     const tot = this.totalOf(c);
-    return tot && tot.x ? tot.i : null;
+    if (tot && tot.x) return tot.i;
+    const any = this.termsOf(c)[0] || tot;   // nothing has a box: the loupe says so
+    return any ? any.i : null;
   }
   // the opening value: page 1, both sums hold, read as accepted
   defaultOn(page) {

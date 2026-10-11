@@ -1,5 +1,6 @@
 import { getJSON, LoadError, loadMessage, Store, idOf } from './data.js';
 import { Stage } from './stage.js';
+import { Loupe } from './loupe.js';
 import { Tape } from './tape.js';
 import { renderCard, stageLabel, FailList } from './panel.js';
 
@@ -9,10 +10,12 @@ const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const coarse = matchMedia('(pointer: coarse)').matches;
 
 const stage = new Stage({
-  viewport: $('viewport'), leanEl: $('lean'), pose: $('pose'), paper: $('paper'), stack: $('stack'),
+  viewport: $('viewport'), leanEl: $('lean'), pose: $('pose'), paper: $('paper'), sheet: $('sheet'), stack: $('stack'), root: $('stage'),
+  loupeEl: $('loupe'), leader: $('leader'), leaderLine: $('leader-line'), controls: $('controls'),
   scan: $('scan'), bands: $('bands'), marks: $('marks'), notice: $('notice'),
 }, { reduced, coarse, onPick: i => select(i), onError: loadMessage });
-const tape = new Tape($('tape'), reduced);
+stage.setLoupe(new Loupe({ root: $('loupe'), view: $('lp-view'), note: $('lp-note') }, { onPick: i => select(i) }));
+const tape = new Tape($('tape'), reduced, i => select(i));
 const state = { store: null, list: null, sel: null, index: null, counties: {} };
 
 function fail(file) {
@@ -24,7 +27,7 @@ function fail(file) {
 async function select(i, { animate = true } = {}) {
   const { store } = state;
   const v = store.values[i];
-  if (!v || !v.x) return;
+  if (!v) return;
   state.sel = i;
   const sums = store.sumsFor(v);
   renderCard($('card'), store, v);
@@ -69,7 +72,7 @@ async function openCounty(key) {
   let start = null;
   const want = q.get('cell');
   if (want && store.byId.has(want)) start = store.byId.get(want);
-  if (start === null || !store.values[start].x) start = store.defaultOn(1);
+  if (start === null) start = store.defaultOn(1);
   if (start === null) { fail(entry.file); return; }
   const v = store.values[start];
   await stage.setPage(v.p, false);

@@ -53,3 +53,23 @@ def test_unresolved_term_is_an_error():
     r["checks"][0]["terms"][0][0] = [1, "b1", "Z", "9"]
     with pytest.raises(ValueError):
         build_county(r, {1: (2000, 1000, 1000, 500)})
+
+
+def test_every_block_has_a_300_dpi_image_the_size_of_its_box():
+    from crossfoot.sitebuild import block_geometry, cut_block
+    from PIL import Image
+    d = build_county(raw(), {1: (2000, 1000, 1000, 500)})
+    b = d["blocks"][0]
+    # the box is 1800 x 400 px at 200 dpi, so 2700 x 600 at 300 dpi
+    assert abs(b["bi"]["w"] - 2700) <= 1 and abs(b["bi"]["h"] - 600) <= 1
+    assert b["bi"]["img"].endswith("tiny-b1.webp")
+    # the cut has exactly that size, also when the box touches the page edge
+    page = Image.new("L", (3000, 1500), 255)
+    assert cut_block(page, block_geometry([100, 100, 1900, 500], 2000, 2000)).size == (b["bi"]["w"], b["bi"]["h"])
+    assert cut_block(page, block_geometry([200, 100, 2000, 500], 2000, 2000)).size == (2700, 600)
+
+
+def test_block_without_a_box_has_no_image():
+    r = raw()
+    r["blocks"][0]["box"] = None
+    assert build_county(r, {1: (2000, 1000, 1000, 500)})["blocks"][0]["bi"] is None

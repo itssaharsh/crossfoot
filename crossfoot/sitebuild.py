@@ -5,11 +5,13 @@ Reads runs/<run_id>/<county>/county.json (fields: see outputs.py) and writes, un
                        recorded}, run {model_calls, prompt_tokens, completion_tokens, metered_cost_estimate}
   <county>.json        the county, with short keys (below), no indentation
   pages/<county>-pN.webp   each scan page at most 1600 px wide
+  blocks/<county>-<block id>.webp   each block cut from its page at 300 dpi, grey (for the loupe)
 
 Short keys in <county>.json
   pages   [{n, img, w, h, sc}]   n page number, img path relative to site/, w and h image pixels,
                                  sc = image pixels per pixel of the run's 200 dpi boxes
-  blocks  [{id, p, contest, cand, x}]            x = box in image pixels, or null
+  blocks  [{id, p, contest, cand, x, bi}]        x = box in page-image pixels, or null;
+            bi = {img, w, h} the block's own 300 dpi image (the pixels of the box x), or null with x
   values  [{p, b, r, c, v, s, x, m, n}]          cells and printed totals alike, in this order
             p page, b block, r row kind (cell) or 'col' / 'row' / 'grand' (printed total), c column (cell) or key
             (printed total), v value, s status (cells only), x box in image pixels or null (never a zero box),
@@ -27,6 +29,22 @@ from pathlib import Path
 
 MAX_WIDTH = 1600
 RENDER_DPI = 200
+BLOCK_DPI = 300
+
+
+def block_geometry(box, frame_w, rw):
+    """The cut of one block from the 300 dpi render: (left, top, width, height) in 300 dpi pixels.
+    `box` is in the frame of width `frame_w`; `rw` is the width of the 200 dpi render of the same page."""
+    k = rw * BLOCK_DPI / RENDER_DPI / frame_w
+    return round(box[0] * k), round(box[1] * k), max(1, round((box[2] - box[0]) * k)), max(1, round((box[3] - box[1]) * k))
+
+
+def cut_block(im, geom):
+    """Cuts `geom` out of a page image; a cut that would run past the edge is moved back inside it."""
+    left, top, w, h = geom
+    left = max(0, min(left, im.width - w))
+    top = max(0, min(top, im.height - h))
+    return im.crop((left, top, left + w, top + h))
 
 
 def _scale_box(box, sc):
@@ -36,10 +54,11 @@ def _scale_box(box, sc):
     return [round(v * sc, 1) for v in box]
 
 
-def build_county(raw: dict, sizes: dict, img_path=lambda county, n: f"data/pages/{county}-p{n}.webp") -> dict:
+def build_county(raw: dict, sizes: dict, img_path=lambda county, n: f"data/pages/{county}-p{n}.webp",
+                 block_path=lambda county, bid: f"data/blocks/{county}-{bid}.webp") -> dict:
     """The county's JSON for the page. `sizes` maps page number -> (render_w, render_h, img_w, img_h)."""
     county = raw["county"]
-    pages, sc_of = [], {}
+    pages, sc_of, frame_of = [], {}, {}
     for pg in raw["pages"]:
         n = pg["number"]
         if n not in sizes:
@@ -49,6 +68,7 @@ def build_county(raw: dict, sizes: dict, img_path=lambda county, n: f"data/pages
         frame_w = pg.get("width") or rw
         sc = iw / frame_w
         sc_of[n] = sc
+        frame_of[n] = (frame_w, rw)
         pages.append({"n": n, "img": img_path(county, n), "w": iw, "h": ih, "sc": round(sc, 6)})
 
     values, index = [], {}
@@ -80,8 +100,16 @@ def build_county(raw: dict, sizes: dict, img_path=lambda county, n: f"data/pages
         checks.append({"k": ch["kind"], "p": ch["page"], "b": ch["block"], "y": str(ch["key"]), "ok": bool(ch["ok"]),
                        "pr": ch["printed"], "co": ch["computed"], "t": refs})
 
-    blocks = [{"id": b["id"], "p": b["page"], "contest": b["contest"], "cand": b.get("candidate"),
-               "x": _scale_box(b.get("box"), sc_of.get(b["page"], 1.0))} for b in raw["blocks"]]
+    blocks = []
+    for b in raw["blocks"]:
+        box = b.get("box")
+        ok = _scale_box(box, 1.0) is not None and b["page"] in frame_of
+        bi = None
+        if ok:
+            _, _, w, h = block_geometry(box, *frame_of[b["page"]])
+            bi = {"img": block_path(county, b["id"]), "w": w, "h": h}
+        blocks.append({"id": b["id"], "p": b["page"], "contest": b["contest"], "cand": b.get("candidate"),
+                       "x": _scale_box(box, sc_of.get(b["page"], 1.0)), "bi": bi})
     return {"county": county, "run": raw["run_id"], "layout": raw["layout"], "pages": pages, "blocks": blocks,
             "values": values, "checks": checks,
             "events": [{"t": e["ts"], "k": e["kind"], "p": e["payload"]} for e in raw["events"]]}
@@ -104,6 +132,26 @@ def render_pages(county: str, page_numbers, out_dir: Path, data_root=None, max_w
     return sizes
 
 
+def render_blocks(raw: dict, sizes: dict, out_dir: Path, data_root=None) -> int:
+    """Cuts every block that has a box out of its page at 300 dpi and saves it as a grey WebP."""
+    from PIL import Image
+    from .render import page_png
+    from .sources import DATA
+    out_dir.mkdir(parents=True, exist_ok=True)
+    county, n_out = raw["county"], 0
+    frames = {pg["number"]: (pg.get("width") or sizes[pg["number"]][0], sizes[pg["number"]][0]) for pg in raw["pages"]}
+    for n in sorted({b["page"] for b in raw["blocks"] if b.get("box")}):
+        with Image.open(page_png(county, n, BLOCK_DPI, data_root or DATA)) as im:
+            im = im.convert("L")
+            for b in raw["blocks"]:
+                if b["page"] != n or not _scale_box(b.get("box"), 1.0):
+                    continue
+                cut_block(im, block_geometry(b["box"], *frames[n])).save(
+                    out_dir / f"{county}-{b['id']}.webp", quality=82, method=6)
+                n_out += 1
+    return n_out
+
+
 def build(run_id: str, runs_dir="runs", out="site/data", counties=None, data_root=None) -> list[str]:
     run_dir = Path(runs_dir) / run_id
     out = Path(out)
@@ -119,6 +167,7 @@ def build(run_id: str, runs_dir="runs", out="site/data", counties=None, data_roo
         raw = json.loads((run_dir / key / "county.json").read_text())
         sizes = render_pages(key, [p["number"] for p in raw["pages"]], out / "pages", data_root)
         d = build_county(raw, sizes)
+        render_blocks(raw, sizes, out / "blocks", data_root)
         (out / f"{key}.json").write_text(json.dumps(d, separators=(",", ":")))
         index["counties"].append({"key": key, "name": key.replace("_", " ").title(), "file": f"data/{key}.json",
                                   "pages": len(d["pages"])})
