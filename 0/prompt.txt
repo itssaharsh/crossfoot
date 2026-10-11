@@ -42,3 +42,65 @@ Finish by writing .prod-build/reports/T04a.md in the format at the end of the br
 <status>completed</status>
 <summary>Background command "python3 .prod-build/pb.py run --task T04a --timeout 900 --tail 40 -- uv run crossfoot audit --county san_saba &gt; /tmp/claude-1000/-home-saharsh-contri-crossfoot/6d63dcdd-1b8f-4ca8-b2ad-68f3acc15064/scratchpad/run3.txt 2&gt;&amp;1; cut -c1-600 /tmp/claude-1000/-home-saharsh-contri-crossfoot/6d63dcdd-1b8f-4ca8-b2ad-68f3acc15064/scratchpad/run3.txt | tail -14" completed (exit code 0)</summary>
 </task-notification>
+
+---
+
+<task-notification>
+<task-id>bwythijo2</task-id>
+<tool-use-id>toolu_012ZsKxV8bAG5GkT1TUE5LUF</tool-use-id>
+<output-file>/tmp/claude-1000/-home-saharsh-contri-crossfoot/6d63dcdd-1b8f-4ca8-b2ad-68f3acc15064/tasks/bwythijo2.output</output-file>
+<status>completed</status>
+<summary>Background command "python3 - &lt;&lt;'E'
+s=open('hackathon.md').read()
+entry='''### 2026-10-11 - T04a the one-precinct-per-page report layout; San Saba audited end to end
+- Changed: `layouts/profile.py` decides a county's layout from its first page (`matrix`, `report` with the column order found,
+  or `no_printed_totals`) and rejects the decision when more than a third of the first page's row sums fail.
+  `layouts/report.py` reads one page per call (200 dpi, strict JSON, one repair), stores every number as a ledger cell
+  (block = the contest on that precinct, row kind = the row label, column = total, absentee, early, election_day; a contest or
+  section over a page break keeps its block and precinct), checks every row (total = absentee + early voting + election day)
+  and, where a page prints one, every contest total, and works each failing sum through the ladder (reader at 300 and 400 dpi,
+  `claude-sonnet-4.6` at 400 and 500, `claude-opus-4.6` at 500 and 600; at most six actions; verdict `document_inconsistent` or
+  `cannot_verify` with a reason). `audit.py` compares with the file's whole row; where a published row differs from the scan in
+  two or more values, adds up to its own total and no contest total covers it, no printed total can tell the rows apart: the
+  finding is `cannot_verify`, nothing is corrected, and the scan's row is read once more one step up the ladder. Outputs are
+  those of Panola's audit; `report.md` says what the sums cannot see. `crossfoot audit --county limestone` reads nothing.
+- Measured (`runs/20261011-125159/san_saba/findings.json`; a resume of the ledger of the third full San Saba read, after the
+  re-read crop fix): 275 file rows compared against 21 pages; sample 0 of 19 row sums failing, reader `claude-haiku`; 1,100
+  cells, all accepted after the loop (2 rows failed their own sum on the first read; 2 re-reads fixed them); 275 printed row
+  sums, 274 hold with the published file's values, 275 with the corrected file's; 21 findings in 11 groups: 3 settled against
+  the file (a row failing its own total, and two values of the same row), 18 cannot_verify (nine rows with two values off
+  that still add up; their second reading of the scan agreed with the first in every case). San Saba prints no contest total,
+  so the second sum does not exist there (0 of 49 contests). Limestone: the layout call alone, `nothing on this scan can be
+  cross-checked; left as published` (`runs/20261011-123542/limestone/report.md`).
+- Failed / fixed: the first full read took the county name at the page's top right for the precinct name on 7 pages (the
+  prompt now says where the name is); a misspelt candidate name in one precinct split a block (names within 0.85 alike in one
+  contest are joined, values untouched); the first re-read crop used a missing data root; the model's vertical positions are
+  compressed and uneven (about 0.75 of the true scale, gaps between contests collapse), so row positions are snapped to the
+  page's own lines of figures; an all-null re-read is not a reading (it had been counted as the same reading twice).
+- Gateway spend for the task: $5.7436 to $6.4683 (three full San Saba reads, two resumes, one Limestone layout call).
+
+'''
+s=s.replace("## Demo\n",entry+"## Demo\n",1)
+open('hackathon.md','w').write(s)
+E
+python3 .prod-build/pb.py verify T04a 2&gt;&amp;1 | tail -8" completed (exit code 0)</summary>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>bhq0iit4a</task-id>
+<tool-use-id>toolu_01XHUBokkjEzWfpHjiZ3gQsk</tool-use-id>
+<output-file>/tmp/claude-1000/-home-saharsh-contri-crossfoot/6d63dcdd-1b8f-4ca8-b2ad-68f3acc15064/tasks/bhq0iit4a.output</output-file>
+<status>completed</status>
+<summary>Monitor "Wait for pb verify" stream ended</summary>
+<event>2026-10-11 12:56:28 - neatlogs - INFO - Neatlogs SDK shutdown complete
+reader: claude-haiku; findings: 21 in 11 groups; by kind {'file_row_fails_own_total': 1, 'wrong_number': 20}; by status {'settled_against_file': 3, 'cannot_verify': 18}; values changed in the corrected file: 3
+ledger values corrected by a re-read: 0; re-reads made: 9 (skipped because the printed sums decide: 0)
+printed sums in all: 275; holding with the published file's values: 274; holding with the corrected file's values: 275; still failing: 0; rows failing their own total, published 1, corrected 0; rows not corrected as a whole: 0
+model calls: 34 {'claude-haiku': {'calls': 24, 'prompt_tokens': 45611, 'completion_tokens': 23222, 'cost': 0.1779}, 'claude-sonnet-4.6': {'calls': 10, 'prompt_tokens': 8074, 'completion_tokens': 613, 'cost': 0.0368}}; tokens: 53685 in, 23835 out; metered cost (estimate): $0.2147; seconds: 198.6
+gateway spend: $6.4683 -&gt; $6.6731 (change $0.2047)
+written: runs/20261011-125310/san_saba/ (findings.json, report.md, changes.diff, corrected/, crops/), runs/20261011-125310/run.json
+[E0053] PASS exit=0 200.51s  uv run crossfoot audit --county san_saba  -&gt; .prod-build/logs/E0053.log
+[exited with code 0]</event>
+</task-notification>
