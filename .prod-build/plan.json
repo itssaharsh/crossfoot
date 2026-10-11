@@ -11,6 +11,7 @@
       "tasks": [
         "T01",
         "T02",
+        "T02a",
         "T03"
       ]
     },
@@ -123,10 +124,47 @@
         "uv run crossfoot read --county panola"
       ],
       "rollback": "git revert the task's commit; no data migration",
-      "status": "doing",
-      "notes": "",
+      "status": "done",
+      "notes": "[2026-10-11 done] E0012 to E0014 passed inside the task's session on the code of e21153c; the only changes after that run are the report and the ledger file, so the read was not paid for twice",
       "base": "ea25f64",
-      "started_after": 10
+      "started_after": 10,
+      "evidence": [
+        "E0012",
+        "E0013",
+        "E0014"
+      ]
+    },
+    {
+      "id": "T02a",
+      "title": "The first read's failure taken from its trace to a fix, with a run before and a run after",
+      "objective": "The cause of the first read's failing sums is found in the traces, fixed, and the read repeated, with both runs' numbers written down",
+      "role": "product-engineer",
+      "size": "M",
+      "deps": [
+        "T02"
+      ],
+      "writes": [
+        "crossfoot/layouts/matrix.py",
+        "crossfoot/model.py",
+        "crossfoot/segment.py",
+        "crossfoot/tracing.py",
+        "tests/**",
+        "docs/evidence/before-after.md",
+        "runs/**",
+        "hackathon.md",
+        ".prod-build/reports/T02a.md",
+        ".prod-build/evidence.jsonl"
+      ],
+      "acceptance": [
+        "WHEN the read after the fix finishes THE SYSTEM SHALL have fewer than 20 of its row sums failing, or the report says what the figure is and why"
+      ],
+      "verify": [
+        "uv run pytest -q",
+        "uv run crossfoot read --county panola"
+      ],
+      "rollback": "git revert the task's commit; the run before stays in runs/",
+      "status": "todo",
+      "notes": "Added 2026-10-11 after T02: the first read fails most sums, so the trace-driven fix comes before the loop instead of after the full run."
     },
     {
       "id": "T03",
@@ -135,7 +173,7 @@
       "role": "product-engineer",
       "size": "L",
       "deps": [
-        "T02"
+        "T02a"
       ],
       "writes": [
         "crossfoot/agent.py",
@@ -206,8 +244,8 @@
     },
     {
       "id": "T05",
-      "title": "One real failure taken from its trace to a fix, with a run before and a run after",
-      "objective": "The worst failure of the recorded run is found in the traces, fixed, and the same run repeated, with the numbers of both runs written down",
+      "title": "The recovery run and the evidence of the full run",
+      "objective": "One place in the full run where an action failed and what the agent did next is written down from the run's events, and the worst remaining failure of the full run is either fixed with a second before and after or listed as a known limit",
       "role": "product-engineer",
       "size": "M",
       "deps": [
@@ -231,7 +269,7 @@
       ],
       "rollback": "git revert the task's commit; no data migration",
       "status": "todo",
-      "notes": ""
+      "notes": "Changed 2026-10-11: the first before-and-after moved to T02a."
     },
     {
       "id": "T06",

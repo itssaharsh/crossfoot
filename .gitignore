@@ -35,3 +35,5 @@ storage_state*.json
 data/
 runs/*/cache/
 *.sqlite-journal
+# first-read crops are large and can be re-made; finding crops live under runs/<run>/<county>/crops/
+runs/*/crops/

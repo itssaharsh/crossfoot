@@ -9,7 +9,7 @@ manual checking. The first target is the eight Texas county files the OpenElecti
 verified answer key for grading document-reading models.
 
 ## Team
-To be filled in by the team (only names and handles the team chooses to publish).
+Team Saharsh.
 
 ## Stack
 Planned, and updated as each part is actually used:
