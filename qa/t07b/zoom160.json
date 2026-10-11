@@ -1,0 +1,83 @@
+{
+ "open": {
+  "vw": 900,
+  "vh": 562,
+  "sideways": false,
+  "headline": {
+   "l": 516,
+   "t": 76,
+   "r": 874,
+   "b": 121
+  },
+  "headlineClipped": false,
+  "headlineLines": 3,
+  "headlineFont": "13px",
+  "panel": {
+   "l": 516,
+   "t": 76,
+   "r": 876,
+   "b": 489
+  },
+  "stage": {
+   "l": 24,
+   "t": 76,
+   "r": 492,
+   "b": 489
+  },
+  "caption": {
+   "l": 0,
+   "t": 0,
+   "r": 0,
+   "b": 0
+  },
+  "captionFont": "13px",
+  "loupe": {
+   "l": 49,
+   "t": 109,
+   "r": 467,
+   "b": 259
+  },
+  "judge": "none"
+ },
+ "errors": [],
+ "replay": {
+  "vw": 900,
+  "vh": 562,
+  "sideways": false,
+  "headline": {
+   "l": 516,
+   "t": 76,
+   "r": 874,
+   "b": 121
+  },
+  "headlineClipped": false,
+  "headlineLines": 3,
+  "headlineFont": "13px",
+  "panel": {
+   "l": 516,
+   "t": 76,
+   "r": 876,
+   "b": 489
+  },
+  "stage": {
+   "l": 24,
+   "t": 76,
+   "r": 492,
+   "b": 489
+  },
+  "caption": {
+   "l": 49,
+   "t": 89,
+   "r": 467,
+   "b": 125
+  },
+  "captionFont": "13px",
+  "loupe": {
+   "l": 49,
+   "t": 129,
+   "r": 467,
+   "b": 279
+  },
+  "judge": "none"
+ }
+}

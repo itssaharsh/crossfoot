@@ -1,0 +1,1449 @@
+{
+ "county": "foard",
+ "run_id": "20261011-130414",
+ "layout": "report",
+ "file": "20241105__tx__general__foard__precinct.csv",
+ "policy": {
+  "question_id": "document_disagrees_with_itself",
+  "answer": "cells",
+  "answered_by": "default, not yet confirmed by a person",
+  "meaning": "follow the cells as printed and list the printed total as inconsistent"
+ },
+ "counts": {
+  "findings": 2,
+  "by_kind": {
+   "extra_row": 2
+  },
+  "by_status": {
+   "cannot_verify": 2
+  },
+  "groups": 2,
+  "corrections": 0
+ },
+ "findings": [
+  {
+   "id": "f001",
+   "group": "g001",
+   "county": "foard",
+   "office": "President",
+   "district": "",
+   "party": "GRN",
+   "candidate": "Jill Stein",
+   "precinct": "Precinct 301",
+   "part": "votes",
+   "file_value": 0,
+   "scan_value": null,
+   "kind": "extra_row",
+   "status": "cannot_verify",
+   "reason": "this file row has no matching row on the scan, so no printed total covers it",
+   "sums": [],
+   "page": null,
+   "block": null,
+   "row": null,
+   "box": null,
+   "crop": null,
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": {
+    "file": {
+     "votes": 0,
+     "absentee": 0,
+     "early_voting": 0,
+     "election_day": 0
+    },
+    "scan": null
+   },
+   "file_row": 153,
+   "file_line": 155,
+   "corrected": false,
+   "confirmed_by_person": false
+  },
+  {
+   "id": "f002",
+   "group": "g002",
+   "county": "foard",
+   "office": "President",
+   "district": "",
+   "party": "GRN",
+   "candidate": "Jill Stein",
+   "precinct": "Precinct 401",
+   "part": "votes",
+   "file_value": 0,
+   "scan_value": null,
+   "kind": "extra_row",
+   "status": "cannot_verify",
+   "reason": "this file row has no matching row on the scan, so no printed total covers it",
+   "sums": [],
+   "page": null,
+   "block": null,
+   "row": null,
+   "box": null,
+   "crop": null,
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": {
+    "file": {
+     "votes": 0,
+     "absentee": 0,
+     "early_voting": 0,
+     "election_day": 0
+    },
+    "scan": null
+   },
+   "file_row": 229,
+   "file_line": 231,
+   "corrected": false,
+   "confirmed_by_person": false
+  }
+ ],
+ "groups": [
+  {
+   "id": "g001",
+   "kind": "extra_row",
+   "office": "President",
+   "district": "",
+   "candidate": "Jill Stein",
+   "precincts": [
+    "Precinct 301"
+   ],
+   "page": null,
+   "block": null,
+   "findings": [
+    "f001"
+   ],
+   "statuses": {
+    "cannot_verify": 1
+   },
+   "what_to_do": null,
+   "crop": null
+  },
+  {
+   "id": "g002",
+   "kind": "extra_row",
+   "office": "President",
+   "district": "",
+   "candidate": "Jill Stein",
+   "precincts": [
+    "Precinct 401"
+   ],
+   "page": null,
+   "block": null,
+   "findings": [
+    "f002"
+   ],
+   "statuses": {
+    "cannot_verify": 1
+   },
+   "what_to_do": null,
+   "crop": null
+  }
+ ],
+ "corrections": [],
+ "could_not_correct": [],
+ "sums_check": {
+  "in_all": 700,
+  "holding_with_ledger": 700,
+  "holding_with_published": 700,
+  "holding_with_corrected": 700,
+  "still_failing": [],
+  "rows_failing_own_total": {
+   "published": 0,
+   "corrected": 0
+  }
+ },
+ "unmatched": {
+  "scan": [
+   {
+    "block": "c005",
+    "page": 1,
+    "contest": "President and Vice President, Vote For 1",
+    "candidate": "Shiva Ayyadurai Crystal Ellis (W)"
+   },
+   {
+    "block": "c006",
+    "page": 1,
+    "contest": "President and Vice President, Vote For 1",
+    "candidate": "Jessie Cuellar Wesley Lasley (W)"
+   },
+   {
+    "block": "c007",
+    "page": 1,
+    "contest": "President and Vice President, Vote For 1",
+    "candidate": "Claudia De la Cruz Karina Garcia (W)"
+   },
+   {
+    "block": "c008",
+    "page": 1,
+    "contest": "President and Vice President, Vote For 1",
+    "candidate": "Cherunda Fox Harlan McVay (W)"
+   },
+   {
+    "block": "c009",
+    "page": 1,
+    "contest": "President and Vice President, Vote For 1",
+    "candidate": "Peter Sonski Lauren Onak (W)"
+   },
+   {
+    "block": "c010",
+    "page": 1,
+    "contest": "President and Vice President, Vote For 1",
+    "candidate": "Cornel West Melinda Abdullah (W)"
+   },
+   {
+    "block": "c014",
+    "page": 1,
+    "contest": "United States Senator, Vote For 1",
+    "candidate": "Tracy Andrus (W)"
+   },
+   {
+    "block": "c015",
+    "page": 1,
+    "contest": "United States Senator, Vote For 1",
+    "candidate": "Analisa Roche (W)"
+   },
+   {
+    "block": "c016",
+    "page": 1,
+    "contest": "United States Representative, District 13, Vote For 1",
+    "candidate": "Ronny Jackson"
+   },
+   {
+    "block": "c017",
+    "page": 1,
+    "contest": "Railroad Commissioner, Vote For 1",
+    "candidate": "Christi Craddick"
+   },
+   {
+    "block": "c018",
+    "page": 1,
+    "contest": "Railroad Commissioner, Vote For 1",
+    "candidate": "Katherine Culbert"
+   },
+   {
+    "block": "c019",
+    "page": 1,
+    "contest": "Railroad Commissioner, Vote For 1",
+    "candidate": "Hawk Dunlap"
+   },
+   {
+    "block": "c020",
+    "page": 1,
+    "contest": "Railroad Commissioner, Vote For 1",
+    "candidate": "Eddie Espinoza"
+   },
+   {
+    "block": "c021",
+    "page": 1,
+    "contest": "Railroad Commissioner, Vote For 1",
+    "candidate": "Richard McKibbin (W)"
+   },
+   {
+    "block": "c022",
+    "page": 2,
+    "contest": "Justice, Supreme Court, Place 2, Vote For 1",
+    "candidate": "Jimm Blacklock"
+   },
+   {
+    "block": "c023",
+    "page": 2,
+    "contest": "Justice, Supreme Court, Place 2, Vote For 1",
+    "candidate": "DaSean Jones"
+   },
+   {
+    "block": "c024",
+    "page": 2,
+    "contest": "Justice, Supreme Court, Place 4, Vote For 1",
+    "candidate": "John Devine"
+   },
+   {
+    "block": "c025",
+    "page": 2,
+    "contest": "Justice, Supreme Court, Place 4, Vote For 1",
+    "candidate": "Christine Vinh Weems"
+   },
+   {
+    "block": "c026",
+    "page": 2,
+    "contest": "Justice, Supreme Court, Place 6, Vote For 1",
+    "candidate": "Jane Bland"
+   },
+   {
+    "block": "c027",
+    "page": 2,
+    "contest": "Justice, Supreme Court, Place 6, Vote For 1",
+    "candidate": "Bonnie Lee Goldstein"
+   },
+   {
+    "block": "c028",
+    "page": 2,
+    "contest": "Justice, Supreme Court, Place 6, Vote For 1",
+    "candidate": "J. David Roberson"
+   },
+   {
+    "block": "c029",
+    "page": 2,
+    "contest": "Presiding Judge, Court of Criminal Appeals, Vote For 1",
+    "candidate": "David J. Schenck"
+   },
+   {
+    "block": "c030",
+    "page": 2,
+    "contest": "Presiding Judge, Court of Criminal Appeals, Vote For 1",
+    "candidate": "Holly Taylor"
+   },
+   {
+    "block": "c031",
+    "page": 2,
+    "contest": "Judge, Court of Criminal Appeals, Place 7, Vote For 1",
+    "candidate": "Gina Parker"
+   },
+   {
+    "block": "c032",
+    "page": 2,
+    "contest": "Judge, Court of Criminal Appeals, Place 7, Vote For 1",
+    "candidate": "Nancy Mulder"
+   },
+   {
+    "block": "c033",
+    "page": 2,
+    "contest": "Judge, Court of Criminal Appeals, Place 8, Vote For 1",
+    "candidate": "Lee Finley"
+   },
+   {
+    "block": "c034",
+    "page": 2,
+    "contest": "Judge, Court of Criminal Appeals, Place 8, Vote For 1",
+    "candidate": "Chika Anyiam"
+   },
+   {
+    "block": "c035",
+    "page": 3,
+    "contest": "Member, State Board of Education, District 15, Vote For 1",
+    "candidate": "Aaron Kinsey"
+   },
+   {
+    "block": "c036",
+    "page": 3,
+    "contest": "Member, State Board of Education, District 15, Vote For 1",
+    "candidate": "Morgan Kirkpatrick"
+   },
+   {
+    "block": "c037",
+    "page": 3,
+    "contest": "Member, State Board of Education, District 15, Vote For 1",
+    "candidate": "Jack B. Westbrook"
+   },
+   {
+    "block": "c038",
+    "page": 3,
+    "contest": "State Representative, District 69, Vote For 1",
+    "candidate": "James B Frank"
+   },
+   {
+    "block": "c039",
+    "page": 3,
+    "contest": "State Representative, District 69, Vote For 1",
+    "candidate": "Walter Coppage"
+   },
+   {
+    "block": "c040",
+    "page": 3,
+    "contest": "Justice, 7th Court of Appeals District, Place 2, Vote For 1",
+    "candidate": "Judy Parker"
+   },
+   {
+    "block": "c041",
+    "page": 3,
+    "contest": "Justice, 7th Court of Appeals District, Place 3, Vote For 1",
+    "candidate": "Alex Yarbrough"
+   },
+   {
+    "block": "c042",
+    "page": 3,
+    "contest": "District Attorney, 46th Judicial District, Vote For 1",
+    "candidate": "Jon Whitsitt"
+   },
+   {
+    "block": "c043",
+    "page": 3,
+    "contest": "County Attorney, Vote For 1",
+    "candidate": "Karen L. Baylor"
+   },
+   {
+    "block": "c045",
+    "page": 4,
+    "contest": "County Commissioner, Precinct No. 1, Vote For 1",
+    "candidate": "Matthew Tamplen"
+   },
+   {
+    "block": "c046",
+    "page": 4,
+    "contest": "Constable, Vote For 1",
+    "candidate": "Anthony Hinsley"
+   },
+   {
+    "block": "c047",
+    "page": 9,
+    "contest": "President and Vice President, Vote For 1",
+    "candidate": "Jill Stein Rudolph Ware"
+   },
+   {
+    "block": "c048",
+    "page": 12,
+    "contest": "County Commissioner, Precinct No. 3, Vote For 1",
+    "candidate": "Doug Johnson"
+   }
+  ],
+  "file": [
+   {
+    "contest": "Ballots Cast",
+    "district": "",
+    "candidate": "",
+    "rows": 4
+   },
+   {
+    "contest": "President",
+    "district": "",
+    "candidate": "Over Votes",
+    "rows": 4
+   },
+   {
+    "contest": "President",
+    "district": "",
+    "candidate": "Under Votes",
+    "rows": 4
+   },
+   {
+    "contest": "U.S. Senate",
+    "district": "",
+    "candidate": "Over Votes",
+    "rows": 4
+   },
+   {
+    "contest": "U.S. Senate",
+    "district": "",
+    "candidate": "Under Votes",
+    "rows": 4
+   },
+   {
+    "contest": "U.S. House",
+    "district": "13",
+    "candidate": "Ronny Jackson",
+    "rows": 4
+   },
+   {
+    "contest": "U.S. House",
+    "district": "13",
+    "candidate": "Over Votes",
+    "rows": 4
+   },
+   {
+    "contest": "U.S. House",
+    "district": "13",
+    "candidate": "Under Votes",
+    "rows": 4
+   },
+   {
+    "contest": "Railroad Commissioner",
+    "district": "",
+    "candidate": "Christi Craddick",
+    "rows": 4
+   },
+   {
+    "contest": "Railroad Commissioner",
+    "district": "",
+    "candidate": "Katherine Culbert",
+    "rows": 4
+   },
+   {
+    "contest": "Railroad Commissioner",
+    "district": "",
+    "candidate": "Hawk Dunlap",
+    "rows": 4
+   },
+   {
+    "contest": "Railroad Commissioner",
+    "district": "",
+    "candidate": "Eddie Espinoza",
+    "rows": 4
+   },
+   {
+    "contest": "Railroad Commissioner",
+    "district": "",
+    "candidate": "Over Votes",
+    "rows": 4
+   },
+   {
+    "contest": "Railroad Commissioner",
+    "district": "",
+    "candidate": "Under Votes",
+    "rows": 4
+   },
+   {
+    "contest": "Justice, Supreme Court, Place 2",
+    "district": "",
+    "candidate": "Jimm Blacklock",
+    "rows": 4
+   },
+   {
+    "contest": "Justice, Supreme Court, Place 2",
+    "district": "",
+    "candidate": "DaSean Jones",
+    "rows": 4
+   },
+   {
+    "contest": "Justice, Supreme Court, Place 2",
+    "district": "",
+    "candidate": "Over Votes",
+    "rows": 4
+   },
+   {
+    "contest": "Justice, Supreme Court, Place 2",
+    "district": "",
+    "candidate": "Under Votes",
+    "rows": 4
+   },
+   {
+    "contest": "Justice, Supreme Court, Place 4",
+    "district": "",
+    "candidate": "John Devine",
+    "rows": 4
+   },
+   {
+    "contest": "Justice, Supreme Court, Place 4",
+    "district": "",
+    "candidate": "Christine Vinh Weems",
+    "rows": 4
+   },
+   {
+    "contest": "Justice, Supreme Court, Place 4",
+    "district": "",
+    "candidate": "Over Votes",
+    "rows": 4
+   },
+   {
+    "contest": "Justice, Supreme Court, Place 4",
+    "district": "",
+    "candidate": "Under Votes",
+    "rows": 4
+   },
+   {
+    "contest": "Justice, Supreme Court, Place 6",
+    "district": "",
+    "candidate": "Jane Bland",
+    "rows": 4
+   },
+   {
+    "contest": "Justice, Supreme Court, Place 6",
+    "district": "",
+    "candidate": "Bonnie Lee Goldstein",
+    "rows": 4
+   },
+   {
+    "contest": "Justice, Supreme Court, Place 6",
+    "district": "",
+    "candidate": "J. David Roberson",
+    "rows": 4
+   },
+   {
+    "contest": "Justice, Supreme Court, Place 6",
+    "district": "",
+    "candidate": "Over Votes",
+    "rows": 4
+   },
+   {
+    "contest": "Justice, Supreme Court, Place 6",
+    "district": "",
+    "candidate": "Under Votes",
+    "rows": 4
+   },
+   {
+    "contest": "Presiding Judge, Court of Criminal Appeals",
+    "district": "",
+    "candidate": "David J. Schenck",
+    "rows": 4
+   },
+   {
+    "contest": "Presiding Judge, Court of Criminal Appeals",
+    "district": "",
+    "candidate": "Holly Taylor",
+    "rows": 4
+   },
+   {
+    "contest": "Presiding Judge, Court of Criminal Appeals",
+    "district": "",
+    "candidate": "Over Votes",
+    "rows": 4
+   },
+   {
+    "contest": "Presiding Judge, Court of Criminal Appeals",
+    "district": "",
+    "candidate": "Under Votes",
+    "rows": 4
+   },
+   {
+    "contest": "Judge, Court of Criminal Appeals, Place 7",
+    "district": "",
+    "candidate": "Gina Parker",
+    "rows": 4
+   },
+   {
+    "contest": "Judge, Court of Criminal Appeals, Place 7",
+    "district": "",
+    "candidate": "Nancy Mulder",
+    "rows": 4
+   },
+   {
+    "contest": "Judge, Court of Criminal Appeals, Place 7",
+    "district": "",
+    "candidate": "Over Votes",
+    "rows": 4
+   },
+   {
+    "contest": "Judge, Court of Criminal Appeals, Place 7",
+    "district": "",
+    "candidate": "Under Votes",
+    "rows": 4
+   },
+   {
+    "contest": "Judge, Court of Criminal Appeals, Place 8",
+    "district": "",
+    "candidate": "Lee Finley",
+    "rows": 4
+   },
+   {
+    "contest": "Judge, Court of Criminal Appeals, Place 8",
+    "district": "",
+    "candidate": "Chika Anyiam",
+    "rows": 4
+   },
+   {
+    "contest": "Judge, Court of Criminal Appeals, Place 8",
+    "district": "",
+    "candidate": "Over Votes",
+    "rows": 4
+   },
+   {
+    "contest": "Judge, Court of Criminal Appeals, Place 8",
+    "district": "",
+    "candidate": "Under Votes",
+    "rows": 4
+   },
+   {
+    "contest": "Member, State Board of Education",
+    "district": "15",
+    "candidate": "Aaron Kinsey",
+    "rows": 4
+   },
+   {
+    "contest": "Member, State Board of Education",
+    "district": "15",
+    "candidate": "Morgan Kirkpatrick",
+    "rows": 4
+   },
+   {
+    "contest": "Member, State Board of Education",
+    "district": "15",
+    "candidate": "Jack B. Westbrook",
+    "rows": 4
+   },
+   {
+    "contest": "Member, State Board of Education",
+    "district": "15",
+    "candidate": "Over Votes",
+    "rows": 4
+   },
+   {
+    "contest": "Member, State Board of Education",
+    "district": "15",
+    "candidate": "Under Votes",
+    "rows": 4
+   },
+   {
+    "contest": "State Representative",
+    "district": "69",
+    "candidate": "James B Frank",
+    "rows": 4
+   },
+   {
+    "contest": "State Representative",
+    "district": "69",
+    "candidate": "Walter Coppage",
+    "rows": 4
+   },
+   {
+    "contest": "State Representative",
+    "district": "69",
+    "candidate": "Over Votes",
+    "rows": 4
+   },
+   {
+    "contest": "State Representative",
+    "district": "69",
+    "candidate": "Under Votes",
+    "rows": 4
+   },
+   {
+    "contest": "Justice, 7th Court of Appeals District, Place 2",
+    "district": "",
+    "candidate": "Judy Parker",
+    "rows": 4
+   },
+   {
+    "contest": "Justice, 7th Court of Appeals District, Place 2",
+    "district": "",
+    "candidate": "Over Votes",
+    "rows": 4
+   },
+   {
+    "contest": "Justice, 7th Court of Appeals District, Place 2",
+    "district": "",
+    "candidate": "Under Votes",
+    "rows": 4
+   },
+   {
+    "contest": "Justice, 7th Court of Appeals District, Place 3",
+    "district": "",
+    "candidate": "Alex Yarbrough",
+    "rows": 4
+   },
+   {
+    "contest": "Justice, 7th Court of Appeals District, Place 3",
+    "district": "",
+    "candidate": "Over Votes",
+    "rows": 4
+   },
+   {
+    "contest": "Justice, 7th Court of Appeals District, Place 3",
+    "district": "",
+    "candidate": "Under Votes",
+    "rows": 4
+   },
+   {
+    "contest": "District Attorney",
+    "district": "46",
+    "candidate": "Jon Whitsitt",
+    "rows": 4
+   },
+   {
+    "contest": "District Attorney",
+    "district": "46",
+    "candidate": "Over Votes",
+    "rows": 4
+   },
+   {
+    "contest": "District Attorney",
+    "district": "46",
+    "candidate": "Under Votes",
+    "rows": 4
+   },
+   {
+    "contest": "County Attorney",
+    "district": "",
+    "candidate": "Karen L. Baylor",
+    "rows": 4
+   },
+   {
+    "contest": "County Attorney",
+    "district": "",
+    "candidate": "Over Votes",
+    "rows": 4
+   },
+   {
+    "contest": "County Attorney",
+    "district": "",
+    "candidate": "Under Votes",
+    "rows": 4
+   },
+   {
+    "contest": "Sheriff / County Tax Assessor-Collector",
+    "district": "",
+    "candidate": "Over Votes",
+    "rows": 4
+   },
+   {
+    "contest": "Sheriff / County Tax Assessor-Collector",
+    "district": "",
+    "candidate": "Under Votes",
+    "rows": 4
+   },
+   {
+    "contest": "County Commissioner",
+    "district": "1",
+    "candidate": "Matthew Tamplen",
+    "rows": 1
+   },
+   {
+    "contest": "County Commissioner",
+    "district": "1",
+    "candidate": "Over Votes",
+    "rows": 1
+   },
+   {
+    "contest": "County Commissioner",
+    "district": "1",
+    "candidate": "Under Votes",
+    "rows": 1
+   },
+   {
+    "contest": "Constable",
+    "district": "",
+    "candidate": "Anthony Hinsley",
+    "rows": 4
+   },
+   {
+    "contest": "Constable",
+    "district": "",
+    "candidate": "Over Votes",
+    "rows": 4
+   },
+   {
+    "contest": "Constable",
+    "district": "",
+    "candidate": "Under Votes",
+    "rows": 4
+   },
+   {
+    "contest": "County Commissioner",
+    "district": "3",
+    "candidate": "Doug Johnson",
+    "rows": 1
+   },
+   {
+    "contest": "County Commissioner",
+    "district": "3",
+    "candidate": "Over Votes",
+    "rows": 1
+   },
+   {
+    "contest": "County Commissioner",
+    "district": "3",
+    "candidate": "Under Votes",
+    "rows": 1
+   }
+  ],
+  "rejected": [
+   {
+    "what": "United States Representative, District 13, Vote For 1 = U.S. House",
+    "why": "county totals are not close (scan 438, file 549)"
+   },
+   {
+    "what": "Railroad Commissioner, Vote For 1 = Railroad Commissioner",
+    "why": "county totals are not close (scan 473, file 549)"
+   },
+   {
+    "what": "Justice, Supreme Court, Place 2, Vote For 1 = Justice, Supreme Court, Place 2",
+    "why": "county totals are not close (scan 475, file 549)"
+   },
+   {
+    "what": "Justice, Supreme Court, Place 4, Vote For 1 = Justice, Supreme Court, Place 4",
+    "why": "county totals are not close (scan 478, file 549)"
+   },
+   {
+    "what": "Justice, Supreme Court, Place 6, Vote For 1 = Justice, Supreme Court, Place 6",
+    "why": "county totals are not close (scan 481, file 549)"
+   },
+   {
+    "what": "Presiding Judge, Court of Criminal Appeals, Vote For 1 = Presiding Judge, Court of Criminal Appeals",
+    "why": "county totals are not close (scan 480, file 549)"
+   },
+   {
+    "what": "Judge, Court of Criminal Appeals, Place 7, Vote For 1 = Judge, Court of Criminal Appeals, Place 7",
+    "why": "county totals are not close (scan 477, file 549)"
+   },
+   {
+    "what": "Judge, Court of Criminal Appeals, Place 8, Vote For 1 = Judge, Court of Criminal Appeals, Place 8",
+    "why": "county totals are not close (scan 475, file 549)"
+   },
+   {
+    "what": "Member, State Board of Education, District 15, Vote For 1 = Member, State Board of Education",
+    "why": "county totals are not close (scan 480, file 549)"
+   },
+   {
+    "what": "State Representative, District 69, Vote For 1 = State Representative",
+    "why": "county totals are not close (scan 489, file 549)"
+   },
+   {
+    "what": "Justice, 7th Court of Appeals District, Place 2, Vote For 1 = Justice, 7th Court of Appeals District, Place 2",
+    "why": "county totals are not close (scan 426, file 549)"
+   },
+   {
+    "what": "Justice, 7th Court of Appeals District, Place 3, Vote For 1 = Justice, 7th Court of Appeals District, Place 3",
+    "why": "county totals are not close (scan 420, file 549)"
+   },
+   {
+    "what": "District Attorney, 46th Judicial District, Vote For 1 = District Attorney",
+    "why": "county totals are not close (scan 427, file 549)"
+   },
+   {
+    "what": "County Attorney, Vote For 1 = County Attorney",
+    "why": "county totals are not close (scan 447, file 549)"
+   },
+   {
+    "what": "County Commissioner, Precinct No. 1, Vote For 1 = County Commissioner",
+    "why": "county totals are not close (scan 102, file 121)"
+   },
+   {
+    "what": "Constable, Vote For 1 = Constable",
+    "why": "county totals are not close (scan 476, file 549)"
+   },
+   {
+    "what": "County Commissioner, Precinct No. 3, Vote For 1 = County Commissioner",
+    "why": "county totals are not close (scan 104, file 119)"
+   },
+   {
+    "what": "Ronny Jackson = Ronny Jackson",
+    "why": "their contests are not paired"
+   },
+   {
+    "what": "Christi Craddick = Christi Craddick",
+    "why": "their contests are not paired"
+   },
+   {
+    "what": "Katherine Culbert = Katherine Culbert",
+    "why": "their contests are not paired"
+   },
+   {
+    "what": "Hawk Dunlap = Hawk Dunlap",
+    "why": "their contests are not paired"
+   },
+   {
+    "what": "Eddie Espinoza = Eddie Espinoza",
+    "why": "their contests are not paired"
+   },
+   {
+    "what": "Jimm Blacklock = Jimm Blacklock",
+    "why": "their contests are not paired"
+   },
+   {
+    "what": "DaSean Jones = DaSean Jones",
+    "why": "their contests are not paired"
+   },
+   {
+    "what": "John Devine = John Devine",
+    "why": "their contests are not paired"
+   },
+   {
+    "what": "Christine Vinh Weems = Christine Vinh Weems",
+    "why": "their contests are not paired"
+   },
+   {
+    "what": "Jane Bland = Jane Bland",
+    "why": "their contests are not paired"
+   },
+   {
+    "what": "Bonnie Lee Goldstein = Bonnie Lee Goldstein",
+    "why": "their contests are not paired"
+   },
+   {
+    "what": "J. David Roberson = J. David Roberson",
+    "why": "their contests are not paired"
+   },
+   {
+    "what": "David J. Schenck = David J. Schenck",
+    "why": "their contests are not paired"
+   },
+   {
+    "what": "Holly Taylor = Holly Taylor",
+    "why": "their contests are not paired"
+   },
+   {
+    "what": "Gina Parker = Gina Parker",
+    "why": "their contests are not paired"
+   },
+   {
+    "what": "Nancy Mulder = Nancy Mulder",
+    "why": "their contests are not paired"
+   },
+   {
+    "what": "Lee Finley = Lee Finley",
+    "why": "their contests are not paired"
+   },
+   {
+    "what": "Chika Anyiam = Chika Anyiam",
+    "why": "their contests are not paired"
+   },
+   {
+    "what": "Aaron Kinsey = Aaron Kinsey",
+    "why": "their contests are not paired"
+   },
+   {
+    "what": "Morgan Kirkpatrick = Morgan Kirkpatrick",
+    "why": "their contests are not paired"
+   },
+   {
+    "what": "Jack B. Westbrook = Jack B. Westbrook",
+    "why": "their contests are not paired"
+   },
+   {
+    "what": "James B Frank = James B Frank",
+    "why": "their contests are not paired"
+   },
+   {
+    "what": "Walter Coppage = Walter Coppage",
+    "why": "their contests are not paired"
+   },
+   {
+    "what": "Judy Parker = Judy Parker",
+    "why": "their contests are not paired"
+   },
+   {
+    "what": "Alex Yarbrough = Alex Yarbrough",
+    "why": "their contests are not paired"
+   },
+   {
+    "what": "Jon Whitsitt = Jon Whitsitt",
+    "why": "their contests are not paired"
+   },
+   {
+    "what": "Karen L. Baylor = Karen L. Baylor",
+    "why": "their contests are not paired"
+   },
+   {
+    "what": "Matthew Tamplen = Matthew Tamplen",
+    "why": "their contests are not paired"
+   },
+   {
+    "what": "Anthony Hinsley = Anthony Hinsley",
+    "why": "their contests are not paired"
+   },
+   {
+    "what": "Doug Johnson = Doug Johnson",
+    "why": "their contests are not paired"
+   }
+  ],
+  "model": {
+   "asked": {
+    "scan_contests": [
+     "President and Vice President, Vote For 1",
+     "United States Senator, Vote For 1",
+     "United States Representative, District 13, Vote For 1",
+     "Railroad Commissioner, Vote For 1",
+     "Justice, Supreme Court, Place 2, Vote For 1",
+     "Justice, Supreme Court, Place 4, Vote For 1",
+     "Justice, Supreme Court, Place 6, Vote For 1",
+     "Presiding Judge, Court of Criminal Appeals, Vote For 1",
+     "Judge, Court of Criminal Appeals, Place 7, Vote For 1",
+     "Judge, Court of Criminal Appeals, Place 8, Vote For 1",
+     "Member, State Board of Education, District 15, Vote For 1",
+     "State Representative, District 69, Vote For 1",
+     "Justice, 7th Court of Appeals District, Place 2, Vote For 1",
+     "Justice, 7th Court of Appeals District, Place 3, Vote For 1",
+     "District Attorney, 46th Judicial District, Vote For 1",
+     "County Attorney, Vote For 1",
+     "Sheriff / County Tax Assessor-Collector, Vote For 1",
+     "County Commissioner, Precinct No. 1, Vote For 1",
+     "Constable, Vote For 1",
+     "County Commissioner, Precinct No. 3, Vote For 1"
+    ],
+    "file_contests": [
+     "Ballots Cast",
+     "President",
+     "U.S. Senate",
+     "U.S. House",
+     "Railroad Commissioner",
+     "Justice, Supreme Court, Place 2",
+     "Justice, Supreme Court, Place 4",
+     "Justice, Supreme Court, Place 6",
+     "Presiding Judge, Court of Criminal Appeals",
+     "Judge, Court of Criminal Appeals, Place 7",
+     "Judge, Court of Criminal Appeals, Place 8",
+     "Member, State Board of Education",
+     "State Representative",
+     "Justice, 7th Court of Appeals District, Place 2",
+     "Justice, 7th Court of Appeals District, Place 3",
+     "District Attorney",
+     "County Attorney",
+     "Sheriff / County Tax Assessor-Collector",
+     "County Commissioner",
+     "Constable",
+     "County Commissioner"
+    ],
+    "scan_candidates": [
+     "President and Vice President, Vote For 1 :: Donald J. Trump JD Vance",
+     "President and Vice President, Vote For 1 :: Kamala D. Harris Tim Walz",
+     "President and Vice President, Vote For 1 :: Chase Oliver Mike ter Maat",
+     "President and Vice President, Vote For 1 :: Jill Stein",
+     "President and Vice President, Vote For 1 :: Shiva Ayyadurai Crystal Ellis (W)",
+     "President and Vice President, Vote For 1 :: Jessie Cuellar Wesley Lasley (W)",
+     "President and Vice President, Vote For 1 :: Claudia De la Cruz Karina Garcia (W)",
+     "President and Vice President, Vote For 1 :: Cherunda Fox Harlan McVay (W)",
+     "President and Vice President, Vote For 1 :: Peter Sonski Lauren Onak (W)",
+     "President and Vice President, Vote For 1 :: Cornel West Melinda Abdullah (W)",
+     "United States Senator, Vote For 1 :: Ted Cruz",
+     "United States Senator, Vote For 1 :: Colin Allred",
+     "United States Senator, Vote For 1 :: Ted Brown",
+     "United States Senator, Vote For 1 :: Tracy Andrus (W)",
+     "United States Senator, Vote For 1 :: Analisa Roche (W)",
+     "United States Representative, District 13, Vote For 1 :: Ronny Jackson",
+     "Railroad Commissioner, Vote For 1 :: Christi Craddick",
+     "Railroad Commissioner, Vote For 1 :: Katherine Culbert",
+     "Railroad Commissioner, Vote For 1 :: Hawk Dunlap",
+     "Railroad Commissioner, Vote For 1 :: Eddie Espinoza",
+     "Railroad Commissioner, Vote For 1 :: Richard McKibbin (W)",
+     "Justice, Supreme Court, Place 2, Vote For 1 :: Jimm Blacklock",
+     "Justice, Supreme Court, Place 2, Vote For 1 :: DaSean Jones",
+     "Justice, Supreme Court, Place 4, Vote For 1 :: John Devine",
+     "Justice, Supreme Court, Place 4, Vote For 1 :: Christine Vinh Weems",
+     "Justice, Supreme Court, Place 6, Vote For 1 :: Jane Bland",
+     "Justice, Supreme Court, Place 6, Vote For 1 :: Bonnie Lee Goldstein",
+     "Justice, Supreme Court, Place 6, Vote For 1 :: J. David Roberson",
+     "Presiding Judge, Court of Criminal Appeals, Vote For 1 :: David J. Schenck",
+     "Presiding Judge, Court of Criminal Appeals, Vote For 1 :: Holly Taylor",
+     "Judge, Court of Criminal Appeals, Place 7, Vote For 1 :: Gina Parker",
+     "Judge, Court of Criminal Appeals, Place 7, Vote For 1 :: Nancy Mulder",
+     "Judge, Court of Criminal Appeals, Place 8, Vote For 1 :: Lee Finley",
+     "Judge, Court of Criminal Appeals, Place 8, Vote For 1 :: Chika Anyiam",
+     "Member, State Board of Education, District 15, Vote For 1 :: Aaron Kinsey",
+     "Member, State Board of Education, District 15, Vote For 1 :: Morgan Kirkpatrick",
+     "Member, State Board of Education, District 15, Vote For 1 :: Jack B. Westbrook",
+     "State Representative, District 69, Vote For 1 :: James B Frank",
+     "State Representative, District 69, Vote For 1 :: Walter Coppage",
+     "Justice, 7th Court of Appeals District, Place 2, Vote For 1 :: Judy Parker",
+     "Justice, 7th Court of Appeals District, Place 3, Vote For 1 :: Alex Yarbrough",
+     "District Attorney, 46th Judicial District, Vote For 1 :: Jon Whitsitt",
+     "County Attorney, Vote For 1 :: Karen L. Baylor",
+     "Sheriff / County Tax Assessor-Collector, Vote For 1 :: Perry Shaw",
+     "County Commissioner, Precinct No. 1, Vote For 1 :: Matthew Tamplen",
+     "Constable, Vote For 1 :: Anthony Hinsley",
+     "President and Vice President, Vote For 1 :: Jill Stein Rudolph Ware",
+     "County Commissioner, Precinct No. 3, Vote For 1 :: Doug Johnson"
+    ],
+    "file_candidates": [
+     "Ballots Cast :: ",
+     "President :: Donald J. Trump",
+     "President :: Kamala D. Harris",
+     "President :: Chase Oliver",
+     "President :: Jill Stein",
+     "President :: Over Votes",
+     "President :: Under Votes",
+     "U.S. Senate :: Ted Cruz",
+     "U.S. Senate :: Colin Allred",
+     "U.S. Senate :: Ted Brown",
+     "U.S. Senate :: Over Votes",
+     "U.S. Senate :: Under Votes",
+     "U.S. House :: Ronny Jackson",
+     "U.S. House :: Over Votes",
+     "U.S. House :: Under Votes",
+     "Railroad Commissioner :: Christi Craddick",
+     "Railroad Commissioner :: Katherine Culbert",
+     "Railroad Commissioner :: Hawk Dunlap",
+     "Railroad Commissioner :: Eddie Espinoza",
+     "Railroad Commissioner :: Over Votes",
+     "Railroad Commissioner :: Under Votes",
+     "Justice, Supreme Court, Place 2 :: Jimm Blacklock",
+     "Justice, Supreme Court, Place 2 :: DaSean Jones",
+     "Justice, Supreme Court, Place 2 :: Over Votes",
+     "Justice, Supreme Court, Place 2 :: Under Votes",
+     "Justice, Supreme Court, Place 4 :: John Devine",
+     "Justice, Supreme Court, Place 4 :: Christine Vinh Weems",
+     "Justice, Supreme Court, Place 4 :: Over Votes",
+     "Justice, Supreme Court, Place 4 :: Under Votes",
+     "Justice, Supreme Court, Place 6 :: Jane Bland",
+     "Justice, Supreme Court, Place 6 :: Bonnie Lee Goldstein",
+     "Justice, Supreme Court, Place 6 :: J. David Roberson",
+     "Justice, Supreme Court, Place 6 :: Over Votes",
+     "Justice, Supreme Court, Place 6 :: Under Votes",
+     "Presiding Judge, Court of Criminal Appeals :: David J. Schenck",
+     "Presiding Judge, Court of Criminal Appeals :: Holly Taylor",
+     "Presiding Judge, Court of Criminal Appeals :: Over Votes",
+     "Presiding Judge, Court of Criminal Appeals :: Under Votes",
+     "Judge, Court of Criminal Appeals, Place 7 :: Gina Parker",
+     "Judge, Court of Criminal Appeals, Place 7 :: Nancy Mulder",
+     "Judge, Court of Criminal Appeals, Place 7 :: Over Votes",
+     "Judge, Court of Criminal Appeals, Place 7 :: Under Votes",
+     "Judge, Court of Criminal Appeals, Place 8 :: Lee Finley",
+     "Judge, Court of Criminal Appeals, Place 8 :: Chika Anyiam",
+     "Judge, Court of Criminal Appeals, Place 8 :: Over Votes",
+     "Judge, Court of Criminal Appeals, Place 8 :: Under Votes",
+     "Member, State Board of Education :: Aaron Kinsey",
+     "Member, State Board of Education :: Morgan Kirkpatrick",
+     "Member, State Board of Education :: Jack B. Westbrook",
+     "Member, State Board of Education :: Over Votes",
+     "Member, State Board of Education :: Under Votes",
+     "State Representative :: James B Frank",
+     "State Representative :: Walter Coppage",
+     "State Representative :: Over Votes",
+     "State Representative :: Under Votes",
+     "Justice, 7th Court of Appeals District, Place 2 :: Judy Parker",
+     "Justice, 7th Court of Appeals District, Place 2 :: Over Votes",
+     "Justice, 7th Court of Appeals District, Place 2 :: Under Votes",
+     "Justice, 7th Court of Appeals District, Place 3 :: Alex Yarbrough",
+     "Justice, 7th Court of Appeals District, Place 3 :: Over Votes",
+     "Justice, 7th Court of Appeals District, Place 3 :: Under Votes",
+     "District Attorney :: Jon Whitsitt",
+     "District Attorney :: Over Votes",
+     "District Attorney :: Under Votes",
+     "County Attorney :: Karen L. Baylor",
+     "County Attorney :: Over Votes",
+     "County Attorney :: Under Votes",
+     "Sheriff / County Tax Assessor-Collector :: Perry Shaw",
+     "Sheriff / County Tax Assessor-Collector :: Over Votes",
+     "Sheriff / County Tax Assessor-Collector :: Under Votes",
+     "County Commissioner :: Matthew Tamplen",
+     "County Commissioner :: Over Votes",
+     "County Commissioner :: Under Votes",
+     "Constable :: Anthony Hinsley",
+     "Constable :: Over Votes",
+     "Constable :: Under Votes",
+     "County Commissioner :: Doug Johnson",
+     "County Commissioner :: Over Votes",
+     "County Commissioner :: Under Votes"
+    ]
+   },
+   "answer": {
+    "contests": [
+     [
+      0,
+      1
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      3,
+      4
+     ],
+     [
+      4,
+      5
+     ],
+     [
+      5,
+      6
+     ],
+     [
+      6,
+      7
+     ],
+     [
+      7,
+      8
+     ],
+     [
+      8,
+      9
+     ],
+     [
+      9,
+      10
+     ],
+     [
+      10,
+      11
+     ],
+     [
+      11,
+      12
+     ],
+     [
+      12,
+      13
+     ],
+     [
+      13,
+      14
+     ],
+     [
+      14,
+      15
+     ],
+     [
+      15,
+      16
+     ],
+     [
+      16,
+      17
+     ],
+     [
+      17,
+      18
+     ],
+     [
+      18,
+      19
+     ],
+     [
+      19,
+      20
+     ]
+    ],
+    "candidates": [
+     [
+      0,
+      1
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      3,
+      4
+     ],
+     [
+      10,
+      7
+     ],
+     [
+      11,
+      8
+     ],
+     [
+      12,
+      9
+     ],
+     [
+      15,
+      12
+     ],
+     [
+      16,
+      15
+     ],
+     [
+      17,
+      16
+     ],
+     [
+      18,
+      17
+     ],
+     [
+      19,
+      18
+     ],
+     [
+      21,
+      21
+     ],
+     [
+      22,
+      22
+     ],
+     [
+      23,
+      25
+     ],
+     [
+      24,
+      26
+     ],
+     [
+      25,
+      29
+     ],
+     [
+      26,
+      30
+     ],
+     [
+      27,
+      31
+     ],
+     [
+      28,
+      34
+     ],
+     [
+      29,
+      35
+     ],
+     [
+      30,
+      38
+     ],
+     [
+      31,
+      39
+     ],
+     [
+      32,
+      42
+     ],
+     [
+      33,
+      43
+     ],
+     [
+      34,
+      46
+     ],
+     [
+      35,
+      47
+     ],
+     [
+      36,
+      48
+     ],
+     [
+      37,
+      51
+     ],
+     [
+      38,
+      52
+     ],
+     [
+      39,
+      55
+     ],
+     [
+      40,
+      58
+     ],
+     [
+      41,
+      61
+     ],
+     [
+      42,
+      64
+     ],
+     [
+      43,
+      67
+     ],
+     [
+      44,
+      70
+     ],
+     [
+      45,
+      73
+     ],
+     [
+      47,
+      76
+     ]
+    ]
+   }
+  }
+ },
+ "corrected_events": [],
+ "audit": {
+  "disagreements_found": 2,
+  "rereads": 0,
+  "rereads_skipped_sums_decide": 0,
+  "rereads_agreed_with_ledger": 0,
+  "rereads_agreed_with_file": 0,
+  "ledger_corrected": 0,
+  "contests": 74,
+  "contest_totals_printed": 74,
+  "second_sum_exists": true,
+  "seconds": 5.4
+ }
+}

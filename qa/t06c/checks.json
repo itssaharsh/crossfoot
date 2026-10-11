@@ -1,0 +1,155 @@
+{
+ "open-1440": {
+  "card": "President \u00b7 page 1\n\nChase Oliver/Mike ter Maat (LIB) \u00b7 precinct 18 \u00b7 early voting\nPublic file\n0\nScan\n1\n\nKind of slip\n\u2194\nwrong column\n\nOn the scan this vote is un",
+  "fileFig": "0",
+  "scanFig": "1",
+  "tag": "public file: 0",
+  "tagOn": true,
+  "ring": true,
+  "ring2": true,
+  "ctx": "Page 1 \u00b7 President \u00b7 Chase Oliver/Mike ter Maat (LIB) \u00b7 precinct 18",
+  "pairs": 2,
+  "heads": [
+   "With the public file's value",
+   "With the scan's value"
+  ],
+  "valuesTop": [
+   157,
+   223
+  ],
+  "dockTop": 0,
+  "vh": 900,
+  "ticks": 17,
+  "count": "121 disagreements \u00b7 110 settled by the printed totals \u00b7 11 cannot be verified \u00b7 0 confirmed by a person",
+  "selected": 1,
+  "scrollX": false,
+  "judge": "block",
+  "replayDisabled": true,
+  "errors": []
+ },
+ "open-390": {
+  "card": "President \u00b7 page 1\n\nChase Oliver/Mike ter Maat (LIB) \u00b7 precinct 18 \u00b7 early voting\nPublic file\n0\nScan\n1\n\nKind of slip\n\u2194\nwrong column\n\nOn the scan this vote is un",
+  "fileFig": "0",
+  "scanFig": "1",
+  "tag": "public file: 0",
+  "tagOn": true,
+  "ring": true,
+  "ring2": true,
+  "ctx": "Page 1 \u00b7 President \u00b7 Chase Oliver/Mike ter Maat (LIB) \u00b7 precinct 18",
+  "pairs": 2,
+  "heads": [
+   "With the public file's value",
+   "With the scan's value"
+  ],
+  "valuesTop": [
+   587,
+   653
+  ],
+  "dockTop": 756,
+  "vh": 844,
+  "ticks": 17,
+  "count": "121 disagreements \u00b7 110 settled by the printed totals \u00b7 11 cannot be verified \u00b7 0 confirmed by a person",
+  "selected": 1,
+  "scrollX": false,
+  "judge": "block",
+  "replayDisabled": true,
+  "errors": []
+ },
+ "record": {
+  "judge": "none",
+  "errors": []
+ },
+ "keyboard": {
+  "before": "f002",
+  "cur_after_3_down": "f005",
+  "selected_after_enter": "f005",
+  "card_h2": "Chase Oliver/Mike ter Maat (LIB) \u00b7 precinct 29 \u00b7 election day",
+  "listbox_tabindex": 0,
+  "options_tabbable": 0,
+  "errors": []
+ },
+ "dialog": {
+  "opened": true,
+  "closed": true,
+  "focus_back_on": "Open crop"
+ },
+ "filter": {
+  "rows": 11,
+  "showing": "Showing 11 of 121",
+  "pressed": "cannot verify",
+  "status_and_kind": 7
+ },
+ "virtual": {
+  "virtual": true,
+  "rendered": 28,
+  "count": "484 disagreements \u00b7 440 settled by the printed totals \u00b7 44 cannot be verified \u00b7 0 confirmed by a person",
+  "rendered_after_scroll": 44,
+  "first_after_scroll": "f084",
+  "errors": []
+ },
+ "tabs": {
+  "buttons": [
+   "Panola:true",
+   "Second:false"
+  ],
+  "after_click": [
+   "Panola:false",
+   "Second:true"
+  ],
+  "card": "Chase Oliver/Mike ter Maat (LIB) \u00b7 precinct 18 \u00b7 early voting",
+  "errors": [],
+  "one_county_hidden": true
+ },
+ "cell_param": {
+  "card": "EARLY \u00b7 precinct 1",
+  "errors": []
+ },
+ "no_place": {
+  "crop": true,
+  "ring": false,
+  "tag": false,
+  "errors": []
+ },
+ "widths": {
+  "320x640": {
+   "sideways": false,
+   "small": []
+  },
+  "360x740": {
+   "sideways": false,
+   "small": []
+  },
+  "390x844": {
+   "sideways": false,
+   "small": []
+  },
+  "600x800": {
+   "sideways": false,
+   "small": []
+  },
+  "899x900": {
+   "sideways": false,
+   "small": []
+  },
+  "900x800": {
+   "sideways": false,
+   "small": []
+  },
+  "1024x768": {
+   "sideways": false,
+   "small": []
+  },
+  "1100x800": {
+   "sideways": false,
+   "small": []
+  },
+  "1440x900": {
+   "sideways": false,
+   "small": []
+  }
+ },
+ "reduced": {
+  "anims": 0,
+  "tape": 0
+ }
+}

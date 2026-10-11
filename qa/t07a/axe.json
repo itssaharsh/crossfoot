@@ -1,0 +1,163 @@
+{
+ "axe": "4.12.1",
+ "tags": [
+  "wcag2a",
+  "wcag2aa",
+  "wcag21a",
+  "wcag21aa",
+  "wcag22aa"
+ ],
+ "violations_total": 0,
+ "runs": [
+  {
+   "url": "/",
+   "viewport": "1440x900",
+   "violations": [],
+   "passes": 31,
+   "incomplete": [
+    "color-contrast"
+   ]
+  },
+  {
+   "url": "/?state=loading",
+   "viewport": "1440x900",
+   "violations": [],
+   "passes": 22,
+   "incomplete": []
+  },
+  {
+   "url": "/?state=error",
+   "viewport": "1440x900",
+   "violations": [],
+   "passes": 22,
+   "incomplete": []
+  },
+  {
+   "url": "/?state=empty",
+   "viewport": "1440x900",
+   "violations": [],
+   "passes": 26,
+   "incomplete": [
+    "color-contrast"
+   ]
+  },
+  {
+   "url": "/?state=partial",
+   "viewport": "1440x900",
+   "violations": [],
+   "passes": 29,
+   "incomplete": [
+    "color-contrast"
+   ]
+  },
+  {
+   "url": "/?state=first-run",
+   "viewport": "1440x900",
+   "violations": [],
+   "passes": 20,
+   "incomplete": []
+  },
+  {
+   "url": "/?record=1",
+   "viewport": "1440x900",
+   "violations": [],
+   "passes": 31,
+   "incomplete": [
+    "color-contrast"
+   ]
+  },
+  {
+   "url": "/?flat=1",
+   "viewport": "1440x900",
+   "violations": [],
+   "passes": 31,
+   "incomplete": [
+    "color-contrast"
+   ]
+  },
+  {
+   "url": "/?cell=2:p2-b5:EARLY:1",
+   "viewport": "1440x900",
+   "violations": [],
+   "passes": 31,
+   "incomplete": [
+    "color-contrast"
+   ]
+  },
+  {
+   "url": "/",
+   "viewport": "390x844",
+   "violations": [],
+   "passes": 30,
+   "incomplete": [
+    "color-contrast"
+   ]
+  },
+  {
+   "url": "/?state=loading",
+   "viewport": "390x844",
+   "violations": [],
+   "passes": 22,
+   "incomplete": []
+  },
+  {
+   "url": "/?state=error",
+   "viewport": "390x844",
+   "violations": [],
+   "passes": 22,
+   "incomplete": []
+  },
+  {
+   "url": "/?state=empty",
+   "viewport": "390x844",
+   "violations": [],
+   "passes": 26,
+   "incomplete": [
+    "color-contrast"
+   ]
+  },
+  {
+   "url": "/?state=partial",
+   "viewport": "390x844",
+   "violations": [],
+   "passes": 28,
+   "incomplete": [
+    "color-contrast"
+   ]
+  },
+  {
+   "url": "/?state=first-run",
+   "viewport": "390x844",
+   "violations": [],
+   "passes": 20,
+   "incomplete": []
+  },
+  {
+   "url": "/?record=1",
+   "viewport": "390x844",
+   "violations": [],
+   "passes": 30,
+   "incomplete": [
+    "color-contrast"
+   ]
+  },
+  {
+   "url": "/?flat=1",
+   "viewport": "390x844",
+   "violations": [],
+   "passes": 30,
+   "incomplete": [
+    "color-contrast"
+   ]
+  },
+  {
+   "url": "/?cell=2:p2-b5:EARLY:1",
+   "viewport": "390x844",
+   "violations": [],
+   "passes": 30,
+   "incomplete": [
+    "color-contrast"
+   ]
+  }
+ ]
+}

@@ -1,0 +1,164 @@
+{
+ "county": "cottle",
+ "run_id": "20261011-130414",
+ "layout": "report",
+ "file": "20241105__tx__general__cottle__precinct.csv",
+ "policy": {
+  "question_id": "document_disagrees_with_itself",
+  "answer": "cells",
+  "answered_by": "default, not yet confirmed by a person",
+  "meaning": "follow the cells as printed and list the printed total as inconsistent"
+ },
+ "counts": {
+  "findings": 0,
+  "by_kind": {},
+  "by_status": {},
+  "groups": 0,
+  "corrections": 0
+ },
+ "findings": [],
+ "groups": [],
+ "corrections": [],
+ "could_not_correct": [],
+ "sums_check": {
+  "in_all": 166,
+  "holding_with_ledger": 166,
+  "holding_with_published": 166,
+  "holding_with_corrected": 166,
+  "still_failing": [],
+  "rows_failing_own_total": {
+   "published": 0,
+   "corrected": 0
+  }
+ },
+ "unmatched": {
+  "scan": [
+   {
+    "block": "c021",
+    "page": 2,
+    "contest": "Justice, Supreme Court, Pl 4",
+    "candidate": "Christine Vinh Weerns"
+   }
+  ],
+  "file": [
+   {
+    "contest": "Justice, Supreme Court",
+    "district": "Pl 4",
+    "candidate": "Christine Vinh Weems",
+    "rows": 4
+   }
+  ],
+  "rejected": [],
+  "model": {
+   "asked": {
+    "scan_contests": [
+     "President/Vice President",
+     "US Senator",
+     "US Representative, Dist 13"
+    ],
+    "file_contests": [
+     "President",
+     "U.S. Senate",
+     "U.S. House"
+    ],
+    "scan_candidates": [
+     "President/Vice President :: Donald J. Trump",
+     "President/Vice President :: Kamala D. Harris",
+     "President/Vice President :: Chase Oliver",
+     "President/Vice President :: Jill Stein",
+     "President/Vice President :: Write-ins",
+     "US Senator :: Ted Cruz",
+     "US Senator :: Colin Allred",
+     "US Senator :: Ted Brown",
+     "US Senator :: Write-ins",
+     "US Representative, Dist 13 :: Ronny Jackson",
+     "Justice, Supreme Court, Pl 4 :: Christine Vinh Weerns"
+    ],
+    "file_candidates": [
+     "President :: Donald J. Trump",
+     "President :: Kamala D. Harris",
+     "President :: Chase Oliver",
+     "President :: Jill Stein",
+     "President :: Write-ins",
+     "U.S. Senate :: Ted Cruz",
+     "U.S. Senate :: Colin Allred",
+     "U.S. Senate :: Ted Brown",
+     "U.S. Senate :: Write-ins",
+     "U.S. House :: Ronny Jackson",
+     "Justice, Supreme Court :: Christine Vinh Weems"
+    ]
+   },
+   "answer": {
+    "contests": [
+     [
+      0,
+      0
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      2,
+      2
+     ]
+    ],
+    "candidates": [
+     [
+      0,
+      0
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      2,
+      2
+     ],
+     [
+      3,
+      3
+     ],
+     [
+      4,
+      4
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      6,
+      6
+     ],
+     [
+      7,
+      7
+     ],
+     [
+      8,
+      8
+     ],
+     [
+      9,
+      9
+     ]
+    ]
+   }
+  }
+ },
+ "corrected_events": [],
+ "audit": {
+  "disagreements_found": 0,
+  "rereads": 0,
+  "rereads_skipped_sums_decide": 0,
+  "rereads_agreed_with_ledger": 0,
+  "rereads_agreed_with_file": 0,
+  "ledger_corrected": 0,
+  "contests": 82,
+  "contest_totals_printed": 0,
+  "second_sum_exists": false,
+  "seconds": 1.7
+ }
+}
