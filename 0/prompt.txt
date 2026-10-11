@@ -1,0 +1,77 @@
+Read AGENTS.md, then .prod-build/briefs/T07a.md and do exactly that task.
+Finish by writing .prod-build/reports/T07a.md in the format at the end of the brief, commit on this branch (do not push), and reply with the report.
+
+---
+
+<task-notification>
+<task-id>bvpdqqbv2</task-id>
+<tool-use-id>toolu_01GkHniX2RTSaBr5TaMHpe3a</tool-use-id>
+<output-file>/tmp/claude-1000/-home-saharsh-contri-crossfoot-site/42c93d04-0442-4ab0-9f00-f97646bd4562/tasks/bvpdqqbv2.output</output-file>
+<status>completed</status>
+<summary>Monitor "wait for remaining verify steps" stream ended</summary>
+<event>.......................................................                  [100%]
+55 passed in 2.40s
+wrote site/data/index.json and 1 county file(s): panola
+total violations 0</event>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>bv6e52274</task-id>
+<tool-use-id>toolu_01LnJxvre9HyodXnnunT3FaB</tool-use-id>
+<output-file>/tmp/claude-1000/-home-saharsh-contri-crossfoot-site/42c93d04-0442-4ab0-9f00-f97646bd4562/tasks/bv6e52274.output</output-file>
+<status>completed</status>
+<summary>Background command "python3 - &lt;&lt;'EOF'
+c=open('site/styles.css').read()
+c=c.replace(".list{list-style:none",".fails.none h2{text-transform:none;letter-spacing:0;font-size:15px;color:var(--ink)}\n.list{list-style:none",1)
+open('site/styles.css','w').write(c)
+a=open('site/app.js').read()
+a=a.replace("  $('fails').hidden = none;","  $('fails').hidden = none;\n  $('fails-sec').classList.toggle('none', none);")
+open('site/app.js','w').write(a)
+EOF
+uv run pytest -q 2&gt;&amp;1 | tail -2; uv run python -m crossfoot.sitebuild --run 20261011-102700 | tail -1; uv run --with playwright python qa/t07a/axe.py 2&gt;&amp;1 | tail -1; uv run --with playwright python qa/t07a/shoot.py empty 2&gt;&amp;1 | tail -2; uv run --with playwright python qa/t07a/check.py 2&gt;&amp;1 | grep -c Traceback; git status --short | head -20" completed (exit code 0)</summary>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>b0ym2zft7</task-id>
+<tool-use-id>toolu_0138jtSMwQ5qW8E6b2ggcKxH</tool-use-id>
+<output-file>/tmp/claude-1000/-home-saharsh-contri-crossfoot-site/42c93d04-0442-4ab0-9f00-f97646bd4562/tasks/b0ym2zft7.output</output-file>
+<status>completed</status>
+<summary>Monitor "wait for verify chain to finish" stream ended</summary>
+<event>.......................................................                  [100%]
+55 passed in 2.40s
+wrote site/data/index.json and 1 county file(s): panola
+total violations 0
+empty 390 []
+empty 1440 []
+0
+M crossfoot/sitebuild.py
+M site/app.js
+M site/data.js
+M site/data/panola.json
+M site/index.html
+M site/loupe.js
+M site/panel.js
+M site/stage.js
+M site/styles.css
+M site/tape.js
+M tests/test_sitebuild.py
+?? qa/axe.min.js
+?? qa/t07a/
+?? site/ring.js
+[exited with code 0]</event>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>b2i85z5mj</task-id>
+<tool-use-id>toolu_01EzhbJ4eWiafZfRYTpwxShY</tool-use-id>
+<output-file>/tmp/claude-1000/-home-saharsh-contri-crossfoot-site/42c93d04-0442-4ab0-9f00-f97646bd4562/tasks/b2i85z5mj.output</output-file>
+<status>completed</status>
+<summary>Background command "sed -i 's/await wait(100);/await wait(60);/; s/this.band(s, false, 300)/this.band(s, false, 260)/; s/svgRing(ring, false, 150)/svgRing(ring, false, 120)/; s/this.loupe.reveal(true, 150)/this.loupe.reveal(true, 120)/' site/stage.js &amp;&amp; sed -i 's/entrance ? 300 : undefined/entrance ? 260 : undefined/' site/app.js &amp;&amp; grep -c "260" site/stage.js site/app.js &amp;&amp; for i in 1 2 3; do uv run --with playwright python qa/t07a/check.py &gt;/dev/null 2&gt;&amp;1; python3 -c "
+import json;d=json.load(open('qa/t07a/checks.json'));print(d['entrance_ms_from_ready_to_tape_complete'])"; done" completed (exit code 0)</summary>
+</task-notification>
