@@ -73,3 +73,41 @@ def test_block_without_a_box_has_no_image():
     r = raw()
     r["blocks"][0]["box"] = None
     assert build_county(r, {1: (2000, 1000, 1000, 500)})["blocks"][0]["bi"] is None
+
+
+def test_ink_box_finds_a_figure_printed_low_and_right_in_a_ruled_cell():
+    from PIL import Image, ImageDraw
+    from crossfoot.sitebuild import ink_box
+    im = Image.new("L", (200, 100), 255)
+    dr = ImageDraw.Draw(im)
+    dr.rectangle([10, 10, 109, 59], outline=0, width=2)        # the ruled cell
+    dr.rectangle([70, 38, 100, 52], fill=0)                    # the figure: low and right
+    assert ink_box(im, [10, 10, 110, 60]) == [70, 38, 101, 53]
+    # a zero is ink
+    dr.rectangle([70, 38, 100, 52], fill=255)
+    dr.ellipse([80, 40, 98, 52], outline=0, width=2)
+    assert ink_box(im, [10, 10, 110, 60]) is not None
+
+
+def test_ink_box_of_an_empty_ruled_cell_is_none():
+    from PIL import Image, ImageDraw
+    from crossfoot.sitebuild import ink_box
+    im = Image.new("L", (200, 100), 255)
+    ImageDraw.Draw(im).rectangle([10, 10, 109, 59], outline=0, width=2)
+    assert ink_box(im, [10, 10, 110, 60]) is None
+    assert ink_box(im, [10, 10, 12, 12]) is None
+
+
+def test_values_carry_their_ink_box():
+    d = build_county(raw(), {1: (2000, 1000, 1000, 500)}, ink={(1, "b1", "A", "1"): [5, 6, 20, 30]})
+    v = {(x["r"], x["c"]): x for x in d["values"]}
+    assert v[("A", "1")]["ix"] == [5, 6, 20, 30] and v[("B", "1")]["ix"] is None
+
+
+def test_rule_top_finds_the_ruled_line_above_a_row():
+    from PIL import Image, ImageDraw
+    from crossfoot.sitebuild import rule_top
+    im = Image.new("L", (300, 120), 255)
+    ImageDraw.Draw(im).rectangle([0, 40, 299, 43], fill=0)
+    assert rule_top(im, [20, 44, 120, 90]) == 40
+    assert rule_top(im, [20, 100, 120, 119]) is None

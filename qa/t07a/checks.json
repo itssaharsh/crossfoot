@@ -1,0 +1,462 @@
+{
+ "320x640": {
+  "scrollWidth": 320,
+  "innerWidth": 320,
+  "textUnder12": [],
+  "targetsUnder44": [
+   [
+    "OpenElections source",
+    264,
+    34
+   ],
+   [
+    "data repositories",
+    101,
+    15
+   ]
+  ],
+  "errors": []
+ },
+ "360x740": {
+  "scrollWidth": 360,
+  "innerWidth": 360,
+  "textUnder12": [],
+  "targetsUnder44": [
+   [
+    "OpenElections source",
+    140,
+    15
+   ],
+   [
+    "data repositories",
+    275,
+    34
+   ]
+  ],
+  "errors": []
+ },
+ "390x844": {
+  "scrollWidth": 390,
+  "innerWidth": 390,
+  "textUnder12": [],
+  "targetsUnder44": [
+   [
+    "OpenElections source",
+    140,
+    15
+   ],
+   [
+    "data repositories",
+    101,
+    15
+   ]
+  ],
+  "errors": []
+ },
+ "600x800": {
+  "scrollWidth": 600,
+  "innerWidth": 600,
+  "textUnder12": [],
+  "targetsUnder44": [
+   [
+    "OpenElections source",
+    140,
+    15
+   ],
+   [
+    "data repositories",
+    101,
+    15
+   ]
+  ],
+  "errors": []
+ },
+ "899x700": {
+  "scrollWidth": 899,
+  "innerWidth": 899,
+  "textUnder12": [],
+  "targetsUnder44": [
+   [
+    "OpenElections source",
+    140,
+    15
+   ],
+   [
+    "data repositories",
+    101,
+    15
+   ]
+  ],
+  "errors": []
+ },
+ "900x700": {
+  "scrollWidth": 900,
+  "innerWidth": 900,
+  "textUnder12": [],
+  "targetsUnder44": [
+   [
+    "brand",
+    131,
+    28
+   ],
+   [
+    "replay",
+    149,
+    36
+   ],
+   [
+    "flat",
+    53,
+    30
+   ],
+   [
+    "prev",
+    101,
+    30
+   ],
+   [
+    "next",
+    72,
+    30
+   ],
+   [
+    "ln pick",
+    156,
+    24
+   ],
+   [
+    "ln pick",
+    156,
+    24
+   ],
+   [
+    "ln pick",
+    156,
+    24
+   ],
+   [
+    "ln pick",
+    156,
+    24
+   ],
+   [
+    "ln pick",
+    156,
+    24
+   ],
+   [
+    "ln pick",
+    156,
+    24
+   ],
+   [
+    "ln pick",
+    156,
+    24
+   ],
+   [
+    "OpenElections source",
+    140,
+    15
+   ],
+   [
+    "data repositories",
+    101,
+    15
+   ]
+  ],
+  "errors": []
+ },
+ "1024x768": {
+  "scrollWidth": 1024,
+  "innerWidth": 1024,
+  "textUnder12": [],
+  "targetsUnder44": [
+   [
+    "brand",
+    131,
+    28
+   ],
+   [
+    "replay",
+    149,
+    36
+   ],
+   [
+    "flat",
+    53,
+    30
+   ],
+   [
+    "prev",
+    101,
+    30
+   ],
+   [
+    "next",
+    72,
+    30
+   ],
+   [
+    "ln pick",
+    156,
+    24
+   ],
+   [
+    "ln pick",
+    156,
+    24
+   ],
+   [
+    "ln pick",
+    156,
+    24
+   ],
+   [
+    "ln pick",
+    156,
+    24
+   ],
+   [
+    "ln pick",
+    156,
+    24
+   ],
+   [
+    "ln pick",
+    156,
+    24
+   ],
+   [
+    "ln pick",
+    156,
+    24
+   ],
+   [
+    "OpenElections source",
+    140,
+    15
+   ],
+   [
+    "data repositories",
+    101,
+    15
+   ]
+  ],
+  "errors": []
+ },
+ "1100x800": {
+  "scrollWidth": 1100,
+  "innerWidth": 1100,
+  "textUnder12": [],
+  "targetsUnder44": [
+   [
+    "brand",
+    131,
+    28
+   ],
+   [
+    "replay",
+    149,
+    36
+   ],
+   [
+    "flat",
+    53,
+    30
+   ],
+   [
+    "prev",
+    101,
+    30
+   ],
+   [
+    "next",
+    72,
+    30
+   ],
+   [
+    "ln pick",
+    156,
+    24
+   ],
+   [
+    "ln pick",
+    156,
+    24
+   ],
+   [
+    "ln pick",
+    156,
+    24
+   ],
+   [
+    "ln pick",
+    156,
+    24
+   ],
+   [
+    "ln pick",
+    156,
+    24
+   ],
+   [
+    "ln pick",
+    156,
+    24
+   ],
+   [
+    "ln pick",
+    156,
+    24
+   ],
+   [
+    "OpenElections source",
+    140,
+    15
+   ],
+   [
+    "data repositories",
+    101,
+    15
+   ]
+  ],
+  "errors": []
+ },
+ "1440x900": {
+  "scrollWidth": 1440,
+  "innerWidth": 1440,
+  "textUnder12": [],
+  "targetsUnder44": [
+   [
+    "brand",
+    131,
+    28
+   ],
+   [
+    "replay",
+    149,
+    36
+   ],
+   [
+    "flat",
+    53,
+    30
+   ],
+   [
+    "prev",
+    101,
+    30
+   ],
+   [
+    "next",
+    72,
+    30
+   ],
+   [
+    "ln pick",
+    186,
+    24
+   ],
+   [
+    "ln pick",
+    186,
+    24
+   ],
+   [
+    "ln pick",
+    186,
+    24
+   ],
+   [
+    "ln pick",
+    186,
+    24
+   ],
+   [
+    "ln pick",
+    186,
+    24
+   ],
+   [
+    "ln pick",
+    186,
+    24
+   ],
+   [
+    "ln pick",
+    186,
+    24
+   ],
+   [
+    "OpenElections source",
+    140,
+    15
+   ],
+   [
+    "data repositories",
+    101,
+    15
+   ]
+  ],
+  "errors": []
+ },
+ "tab_order": [
+  "brand | Crossfoot",
+  "flat | Lay flat",
+  "next | Next page",
+  "[object SVGAnimatedString] | 787, EARLY precinct 1",
+  "ln pick | EARLY787",
+  "ln pick | ABSENTEE39",
+  "ln pick | PRECINCT195",
+  "ln pick | Precinct 1787",
+  "ln pick | Precinct 2937",
+  "ln pick | Precinct 3545",
+  "ln pick | Precinct 2998",
+  "fails | Row REGISTEREDprinted 17,921",
+  "A | OpenElections sources",
+  "A | data repositories"
+ ],
+ "focus_style_after_4_tabs": [
+  "rect",
+  "button",
+  "3px",
+  "rgb(238, 242, 236)",
+  "none"
+ ],
+ "arrows": {
+  "before": "787, EARLY precinct 1",
+  "after_ArrowDown": "39, ABSENTEE precinct 1",
+  "loupe_peek_shown": true,
+  "focus_ring_display_attr": null,
+  "card_after_enter": "ABSENTEE \u00b7 precinct 1"
+ },
+ "alt_shift_p_errors": [],
+ "alt_shift_r": {
+  "url": "/",
+  "state": "ready"
+ },
+ "reset_param": {
+  "url": "/",
+  "state": "ready"
+ },
+ "entrance_ms_from_ready_to_tape_complete": 669,
+ "reduced": {
+  "flatLabel": "Tilt sheet",
+  "anims": 0,
+  "loupeAnim": "none",
+  "tapeHidden": 0
+ },
+ "zoom160": {
+  "sw": 900,
+  "iw": 900,
+  "bar": 52,
+  "descr": "14px"
+ },
+ "zoom160?record=1": {
+  "sw": 900,
+  "iw": 900,
+  "bar": 60,
+  "descr": "17px"
+ }
+}

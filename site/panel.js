@@ -36,11 +36,10 @@ export function stageLabel(store, v, sums) {
 }
 
 export class FailList {
-  constructor(root, store, onPick) {
+  constructor(root, store, onPick, { none = false } = {}) {
     this.root = root; this.store = store; this.onPick = onPick; this.cur = 0; this.sel = null;
-    this.items = store.checks.filter(c => !c.ok);
+    this.items = none ? [] : store.checks.filter(c => !c.ok);
     root.replaceChildren(...this.items.map((c, n) => this.row(c, n)));
-    if (!this.items.length) root.append(el('li', '', 'No disagreements in this county.'));
     root.onkeydown = e => this.keys(e);
     root.onfocus = () => this.mark();
   }

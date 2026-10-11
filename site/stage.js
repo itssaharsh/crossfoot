@@ -1,7 +1,9 @@
 // The stage: the scanned sheet in depth, its marks, the two sums drawn across it, and the leader to the loupe.
+import { loopPath, boxPath } from './ring.js';
+import { loaded } from './data.js';
 const SVGNS = 'http://www.w3.org/2000/svg';
-const TILT_X = 46, TILT_Z = -3, LEAN_MAX = 3, CLEAR = 24, SLACK_X = 18, SLACK_Y = 10, TURN_Z = 2, STACK_PX = 3;
-const TURN_MS = 600, LINE_MS = 350, RING_MS = 180, PAGE_MS = 400, FLAT_MS = 400;
+const TILT_X = 46, TILT_Z = -3, LEAN_MAX = 3, CLEAR = 24, CLEAR_NARROW = 8, NARROW = 899, SLACK_X = 18, SLACK_Y = 10, TURN_Z = 2, STACK_PX = 3;
+const ENTER_MS = 400, TURN_MS = 600, LINE_MS = 350, RING_MS = 180, PAGE_MS = 400, FLAT_MS = 400;
 
 const svg = (tag, attrs = {}) => {
   const e = document.createElementNS(SVGNS, tag);
@@ -13,9 +15,10 @@ const ease = t => (t < 0.5 ? 8 * t ** 4 : 1 - ((-2 * t + 2) ** 4) / 2);
 const mix = (a, b, t) => a + (b - a) * t;
 
 export class Stage {
-  constructor(els, { reduced, coarse, onPick, onError }) {
+  constructor(els, { reduced, coarse, onPick, onError, onFocusValue = () => {} }) {
     Object.assign(this, els);
-    this.reduced = reduced; this.coarse = coarse; this.onPick = onPick; this.onError = onError;
+    this.reduced = reduced; this.coarse = coarse; this.onPick = onPick; this.onError = onError; this.onFocusValue = onFocusValue;
+    this.partial = false; this.forcePartial = false; this.focusRing = null;
     this.flat = false; this.token = 0; this.sel = null; this.page = null;
     this.P = { f: 1, tx: 0, ty: 0, rx: 0, rz: 0 }; this.base = this.P; this.anchor = null; this.loupe = null;
     this.lean = { x: 0, y: 0, tx: 0, ty: 0, raf: 0 };
@@ -34,8 +37,9 @@ export class Stage {
   area() {
     const W = this.viewport.clientWidth, H = this.viewport.clientHeight;
     const top = this.loupeEl ? this.loupeEl.offsetTop + this.loupeEl.offsetHeight + 12 : 0;
-    const bottom = H - (this.controls ? this.controls.offsetHeight + 24 + 10 : 0);
-    const a = { l: CLEAR, r: W - CLEAR, t: top + CLEAR, b: bottom - CLEAR };
+    const bottom = this.controls && this.controls.offsetHeight ? this.controls.offsetTop - 10 : H;
+    const c = innerWidth <= NARROW || innerHeight <= 720 ? CLEAR_NARROW : CLEAR;
+    const a = { l: c, r: W - c, t: top + c, b: bottom - c };
     if (a.b - a.t < 60) a.b = a.t + 60;
     return a;
   }
@@ -52,6 +56,7 @@ export class Stage {
     this.base = this.fit();
     this.setP(this.target());
     if (this.loupe) this.loupe.relayout();
+    if (this.partial) this.updateFlat();
     this.updateLeader();
   }
   stackCount() { return Math.min(5, this.store.pages.length - 1); }
@@ -67,7 +72,8 @@ export class Stage {
   }
   fit() {
     const A = this.area(), sa = this.stackPx();
-    const box = { l: A.l + SLACK_X, r: A.r - SLACK_X - sa, t: A.t + SLACK_Y, b: A.b - SLACK_Y - sa };
+    const sx = this.flat ? 0 : SLACK_X, sy = this.flat ? 0 : SLACK_Y;   // room for the turn toward a value, tilted only
+    const box = { l: A.l + sx, r: A.r - sx - sa, t: A.t + sy, b: A.b - sy - sa };
     const P = { f: 0.5, tx: (box.l + box.r) / 2, ty: (box.t + box.b) / 2, rx: this.flat ? 0 : TILT_X, rz: this.flat ? 0 : TILT_Z };
     for (let n = 0; n < 5; n++) {
       let m = this.measure(P);
@@ -128,7 +134,7 @@ export class Stage {
   }
   updateLeader() {
     const line = this.leaderLine, ringEl = this.loupe && this.loupe.ringEl, a = this.anchor;
-    if (!ringEl || !ringEl.isConnected || !a || !a.isConnected) { line.setAttribute('hidden', ''); return; }
+    if (this.partial || !ringEl || !ringEl.isConnected || !a || !a.isConnected) { line.setAttribute('hidden', ''); return; }
     const o = this.leader.getBoundingClientRect(), lb = this.loupeEl.getBoundingClientRect();
     const rb = ringEl.getBoundingClientRect(), ab = a.getBoundingClientRect();
     if (!ab.width || !rb.width) { line.setAttribute('hidden', ''); return; }
@@ -164,9 +170,15 @@ export class Stage {
     this.layout(true);
     this.buildMarks();
     this.notice.hidden = true;
-    await new Promise(res => {
-      this.scan.onload = () => res();
-      this.scan.onerror = () => { this.notice.textContent = this.onError(pg.img); this.notice.hidden = false; res(); };
+    this.setPartial(this.forcePartial);
+    if (!this.forcePartial) await new Promise(res => {
+      this.scan.onload = () => { loaded(); res(); };
+      this.scan.onerror = () => {
+        // no page image: the block's own image is shown flat instead, and only when there is none is it an error
+        if (this.hasBlockImage()) this.setPartial(true);
+        else { this.notice.textContent = this.onError(pg.img); this.notice.hidden = false; }
+        res();
+      };
       this.scan.src = pg.img;
     });
     if (leaving) {
@@ -195,7 +207,9 @@ export class Stage {
       const v = this.store.values[i];
       if (!v.x) continue;
       const r = svg('rect', { x: v.x[0], y: v.x[1], width: v.x[2] - v.x[0], height: v.x[3] - v.x[1], tabindex: -1, role: 'button' });
-      r.dataset.i = i;
+      r.dataset.i = i; r.dataset.b = v.b;
+      r.addEventListener('focus', () => { this.showFocus(v.x); this.onFocusValue(i); });
+      r.addEventListener('blur', () => { this.showFocus(null); setTimeout(() => { if (!this.marks.contains(document.activeElement)) this.onFocusValue(null); }); });
       if (this.store.isTotal(v)) r.classList.add('total');
       r.setAttribute('aria-label', `${v.v}, ${this.store.rowLabel(v)} ${this.store.colLabel(v)}`.trim());
       r.addEventListener('click', () => this.onPick(i));
@@ -203,7 +217,22 @@ export class Stage {
       m.append(r);
       this.rects.push({ r, i, cx: (v.x[0] + v.x[2]) / 2, cy: (v.x[1] + v.x[3]) / 2 });
     }
+    this.focusRing = svg('g', { class: 'focus-ring', 'aria-hidden': 'true' });
+    for (const cls of ['dark', 'light']) this.focusRing.append(svg('rect', { class: cls }));
+    this.focusRing.setAttribute('display', 'none');
+    m.append(this.focusRing);
     this.markSelected();
+  }
+  // two strokes round the focused value, so it shows on white paper: ink outside, --focus inside, 2 px
+  showFocus(b) {
+    const g = this.focusRing;
+    if (!g) return;
+    if (!b) { g.setAttribute('display', 'none'); return; }
+    for (const r of g.children) {
+      r.setAttribute('x', b[0] - 1); r.setAttribute('y', b[1] - 1);
+      r.setAttribute('width', b[2] - b[0] + 2); r.setAttribute('height', b[3] - b[1] + 2);
+    }
+    g.removeAttribute('display');
   }
   markSelected() {
     for (const o of this.rects || []) o.r.setAttribute('tabindex', o.i === this.sel ? 0 : -1);
@@ -218,7 +247,8 @@ export class Stage {
     e.preventDefault();
     const cur = this.rects.find(o => o.i === i);
     let best = null, bs = Infinity;
-    for (const o of this.rects) {
+    const inBlock = this.rects.filter(o => o.r.dataset.b === r.dataset.b);
+    for (const o of this.rects.length && inBlock.some(o => o !== cur && (o.cx - cur.cx) * d[0] + (o.cy - cur.cy) * d[1] >= 4) ? inBlock : this.rects) {
       const dx = o.cx - cur.cx, dy = o.cy - cur.cy;
       const along = dx * d[0] + dy * d[1], across = Math.abs(dx * d[1] - dy * d[0]);
       if (along < 4) continue;
@@ -230,7 +260,7 @@ export class Stage {
 
   // ---- the bands
   clearBands() { this.bands.replaceChildren(); }
-  async select(i, sums, animate = true) {
+  async select(i, sums, animate = true, opts = {}) {
     const tk = ++this.token;
     this.sel = i;
     this.clearBands();
@@ -245,13 +275,30 @@ export class Stage {
       this.anchor = svg('circle', { cx: ring.x, cy: ring.y, r: ring.r, fill: 'none', stroke: 'none' });
       this.bands.append(this.anchor);
     }
-    if (this.loupe) this.loupe.show(this.store, i, draws.map(d => ({ line: d.line, ok: d.check.ok, axis: d.axis })), !instant);
-    if (v.x) this.go(this.target(), instant ? 0 : TURN_MS);
+    const loupeDraws = draws.map(d => ({ line: d.line, ok: d.check.ok, axis: d.axis }));
+    if (this.loupe) this.loupe.show(this.store, i, loupeDraws, !instant);
+    this.flatArgs = { v, draws: loupeDraws };
+    if (this.partial) this.updateFlat();
+    if (opts.settle) {   // the first load: the sheet settles from flat into its tilt
+      const keep = { ...this.P };
+      this.flat = false; this.base = this.fit();
+      this.setP(keep);
+    }
+    if (v.x) this.go(this.target(), instant ? 0 : opts.settle ? ENTER_MS : TURN_MS);
     this.updateLeader();
     if (instant) {
       draws.forEach(s => this.band(s, true));
       if (ring) this.svgRing(ring, true);
+      if (this.loupe) this.loupe.reveal(false);
       return true;
+    }
+    if (opts.settle) {   // the entrance: the sheet settles while the bands draw together, then the ring closes
+      this.pump(ENTER_MS + 150);
+      await wait(60);
+      await Promise.all(draws.map(s => this.band(s, false, 260)));
+      if (tk !== this.token) return false;
+      await Promise.all([ring ? this.svgRing(ring, false, 120) : null, this.loupe ? this.loupe.reveal(true, 120) : null]);
+      return tk === this.token;
     }
     this.pump(TURN_MS + 150);
     if (v.x) await wait(TURN_MS);
@@ -260,23 +307,23 @@ export class Stage {
       await this.band(s, false);
     }
     if (tk !== this.token) return false;
-    if (ring) await this.svgRing(ring, false);
+    await Promise.all([ring ? this.svgRing(ring, false) : null, this.loupe ? this.loupe.reveal(true) : null]);
     return tk === this.token;
   }
   ringFor(v, draws) {
-    const w = v.x[2] - v.x[0], h = v.x[3] - v.x[1];
-    return { x: (v.x[0] + v.x[2]) / 2, y: (v.x[1] + v.x[3]) / 2, r: Math.max(h * 0.9, 20), ok: draws.every(d => d.check.ok) };
+    const h = v.x[3] - v.x[1], ink = this.store.inkPage(v) || v.x;
+    return { x: (ink[0] + ink[2]) / 2, y: (ink[1] + ink[3]) / 2, r: Math.max(h * 0.9, 20), ok: draws.every(d => d.check.ok) };
   }
-  band(s, instant) {
+  band(s, instant, ms = LINE_MS) {
     const { x1, y1, x2, y2 } = s.line;
     const l = svg('line', { x1, y1, x2, y2, class: s.check.ok ? 'holds' : 'fails' });
     this.bands.append(l);
     const len = Math.hypot(x2 - x1, y2 - y1);
     l.setAttribute('stroke-dasharray', `${len} ${len}`);
     if (instant) return Promise.resolve();
-    return l.animate([{ strokeDashoffset: len }, { strokeDashoffset: 0 }], { duration: LINE_MS, easing: 'cubic-bezier(.23,1,.32,1)', fill: 'backwards' }).finished.catch(() => {});
+    return l.animate([{ strokeDashoffset: len }, { strokeDashoffset: 0 }], { duration: ms, easing: 'cubic-bezier(.23,1,.32,1)', fill: 'backwards' }).finished.catch(() => {});
   }
-  svgRing(r, instant) {
+  svgRing(r, instant, ms = RING_MS) {
     const c = svg('circle', { cx: r.x, cy: r.y, r: r.r, class: r.ok ? 'holds' : 'fails' });
     c.style.opacity = 1;
     this.bands.append(c);
@@ -284,7 +331,60 @@ export class Stage {
     c.setAttribute('stroke-dasharray', `${len} ${len}`);
     c.setAttribute('transform', `rotate(-90 ${r.x} ${r.y})`);
     if (instant) return Promise.resolve();
-    return c.animate([{ strokeDashoffset: len }, { strokeDashoffset: 0 }], { duration: RING_MS, easing: 'ease-out', fill: 'backwards' }).finished.catch(() => {});
+    return c.animate([{ strokeDashoffset: len }, { strokeDashoffset: 0 }], { duration: ms, easing: 'ease-out', fill: 'backwards' }).finished.catch(() => {});
+  }
+
+  // ---- partial: no page image, so the block's own image is shown flat where the sheet would be
+  hasBlockImage() { return this.store.blocks.size && [...this.store.blocks.values()].some(b => b.p === this.page && b.bi); }
+  setPartial(on) {
+    this.partial = on;
+    this.root.classList.toggle('partial', on);
+    const bs = document.body.dataset;
+    if (on) bs.state = 'partial'; else if (bs.state === 'partial' && !this.forcePartial) bs.state = 'ready';
+    this.flatEl.hidden = !on;
+    if (on) { this.setLabel('The page image is not available. The block of the scan is shown flat.'); this.updateFlat(); }
+    else this.flatEl.replaceChildren();
+  }
+  updateFlat() {
+    const el = this.flatEl, a = this.flatArgs;
+    el.replaceChildren();
+    if (!a || !el.clientWidth) return;
+    const { v, draws } = a, blk = this.store.block(v);
+    if (!blk || !blk.bi || !blk.x) { const p = document.createElement('p'); p.textContent = 'No image of this block is available.'; el.append(p); return; }
+    const { bi } = blk, W = el.clientWidth, H = el.clientHeight;
+    const k = Math.min(0.75, H / bi.h);
+    const mx = bi.w / (blk.x[2] - blk.x[0]), my = bi.h / (blk.x[3] - blk.x[1]);
+    const X = x => (x - blk.x[0]) * mx, Y = y => (y - blk.x[1]) * my;
+    const cx = v.ix ? (v.ix[0] + v.ix[2]) / 2 : v.x ? X((v.x[0] + v.x[2]) / 2) : 0;
+    const tx = bi.w * k <= W ? (W - bi.w * k) / 2 : Math.min(0, Math.max(W - bi.w * k, W / 2 - cx * k));
+    const pan = document.createElement('div');
+    pan.className = 'fb-pan';
+    pan.style.cssText = `width:${bi.w}px;height:${bi.h}px;transform:translate(${tx}px,${(H - bi.h * k) / 2}px) scale(${k})`;
+    const img = document.createElement('img');
+    img.alt = ''; img.src = bi.img; img.width = bi.w; img.height = bi.h;
+    const o = svg('svg', { viewBox: `0 0 ${bi.w} ${bi.h}`, width: bi.w, height: bi.h, class: 'fb-svg', 'aria-hidden': 'true' });
+    for (const d of draws) {
+      if (!d.line) continue;
+      const thick = d.axis === 'row' ? (v.x ? (v.x[3] - v.x[1]) * my : 48) : (v.x ? (v.x[2] - v.x[0]) * mx : 150);
+      const l = svg('line', { x1: X(d.line.x1), y1: Y(d.line.y1), x2: X(d.line.x2), y2: Y(d.line.y2), class: d.ok ? 'holds' : 'fails' });
+      l.style.strokeWidth = thick;
+      o.append(l);
+    }
+    for (const j of this.store.byPage.get(blk.p) || []) {
+      const q = this.store.values[j];
+      if (q.b !== blk.id || !q.x) continue;
+      const r = svg('rect', { x: X(q.x[0]), y: Y(q.x[1]), width: (q.x[2] - q.x[0]) * mx, height: (q.x[3] - q.x[1]) * my, class: 'fb-hit' });
+      r.addEventListener('click', () => this.onPick(j));
+      o.append(r);
+    }
+    if (v.x) {
+      const box = v.ix || [X(v.x[0]), Y(v.x[1]), X(v.x[2]), Y(v.x[3])];
+      const ring = svg('path', { d: v.ix ? loopPath(box, 8 / k) : boxPath(box, 4 / k), class: 'fb-ring ' + (draws.every(d => d.ok) ? 'holds' : 'fails') });
+      ring.style.strokeWidth = 2.5 / k;
+      o.append(ring);
+    }
+    pan.append(img, o);
+    el.append(pan);
   }
 
   // ---- flat and tilted

@@ -37,7 +37,7 @@ a{color:var(--ink);text-underline-offset:2px}
 .pose{position:absolute;left:0;top:0;width:0;height:0;transform-origin:0 0;transform-style:preserve-3d;will-change:transform}
 .paper,.stack,.sheet,.marks{position:absolute;left:calc(var(--w) / -2);top:calc(var(--h) / -2);width:var(--w);height:var(--h)}
 .paper{transform-style:preserve-3d}
-.stack i.under{background:#000;border:0;box-shadow:0 0 calc(var(--inv,1) * 14px) calc(var(--inv,1) * 3px) rgba(0,0,0,.9)}
+.stack i.under{background:#000;border:0;box-shadow:calc(var(--inv,1) * 4px) calc(var(--inv,1) * 8px) calc(var(--inv,1) * 18px) calc(var(--inv,1) * 2px) rgba(0,0,0,.85)}
 .stack{transform-style:preserve-3d}
 .stack i{position:absolute;inset:0;background:#c9c6b8;border-bottom:1px solid #8d8a7d;border-right:1px solid #8d8a7d}
 .sheet{background:var(--sheet);color:var(--sheet-ink)}
@@ -46,13 +46,20 @@ a{color:var(--ink);text-underline-offset:2px}
 .bands{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible}
 .marks{overflow:visible;transform:translateZ(calc(var(--inv,1) * .6px))}
 .marks rect{fill:transparent;cursor:pointer;stroke:none}
-.marks rect:hover,.marks rect:focus{stroke:var(--sheet-ink);stroke-width:calc(2 * var(--u,1));outline:none}
+.marks rect:hover{stroke:var(--sheet-ink);stroke-width:calc(2 * var(--u,1))}
+.marks rect:focus{outline:none}
+.focus-ring{pointer-events:none}
+.focus-ring rect{fill:none}
+.focus-ring .dark{stroke:var(--sheet-ink);stroke-width:calc(4 * var(--u,1))}
+.focus-ring .light{stroke:var(--focus);stroke-width:calc(2 * var(--u,1))}
 .bands line{stroke-width:calc(7 * var(--u,1));opacity:.35;fill:none}
 .bands line.holds{stroke:var(--data-holds)} .bands line.fails{stroke:var(--data-fails)}
 .bands circle{fill:none;stroke-width:calc(3 * var(--u,1))}
 .bands circle.holds{stroke:var(--data-holds)} .bands circle.fails{stroke:var(--data-fails)}
 
 .loupe{position:absolute;z-index:2;top:24px;left:50%;transform:translateX(-50%);width:min(576px,calc(100% - 48px));height:240px;background:var(--sheet);color:var(--sheet-ink);border:1px solid var(--sheet-ink);box-shadow:0 1px 1px rgba(0,0,0,.5),0 10px 18px -6px rgba(0,0,0,.55);overflow:hidden}
+.loupe.rise{animation:rise 300ms var(--ease-out) both}
+@keyframes rise{from{transform:translate(-50%,12px);opacity:0}to{transform:translateX(-50%);opacity:1}}
 .lp-view{position:absolute;inset:0;overflow:hidden}
 .lp-layer{position:absolute;inset:0;opacity:0;transition:opacity 150ms linear}
 .lp-layer.in{opacity:1}
@@ -63,9 +70,11 @@ a{color:var(--ink);text-underline-offset:2px}
 .lp-svg{position:absolute;left:0;top:0;overflow:visible}
 .lp-svg line{opacity:.26;fill:none}
 .lp-svg line.holds{stroke:var(--data-holds)} .lp-svg line.fails{stroke:var(--data-fails)}
+.lp-peek rect{fill:none}
+.lp-peek .dark{stroke:var(--sheet-ink)} .lp-peek .light{stroke:var(--focus)}
 .lp-hit{fill:transparent;cursor:pointer}
 .lp-hit:hover{stroke:var(--sheet-ink);stroke-width:1.5}
-.lp-ring{fill:none;stroke-width:calc(3 / 1.25);pointer-events:none}
+.lp-ring{fill:none;stroke-linecap:round;stroke-linejoin:round;pointer-events:none}
 .lp-ring.holds{stroke:var(--data-holds)} .lp-ring.fails{stroke:var(--data-fails)}
 .lp-note{position:absolute;left:0;right:0;bottom:0;margin:0;padding:4px 10px;background:var(--sheet);border-top:1px solid #9a9c9e;font-size:12px;line-height:16px;color:#4a4d50}
 .leader{position:absolute;inset:0;width:100%;height:100%;z-index:3;pointer-events:none;overflow:visible}
@@ -86,7 +95,7 @@ a{color:var(--ink);text-underline-offset:2px}
 .panel{display:flex;flex-direction:column;gap:12px;min-height:0;overflow-y:auto;padding:0 2px 2px 0}
 .tapewrap{filter:drop-shadow(0 1px 0 rgba(0,0,0,.6))}
 .tape{background:var(--sheet);color:var(--sheet-ink);padding:12px 14px 20px;font:400 14px/18px var(--ff-mono);min-height:64px;display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:0 18px}
-.tape h3{margin:0 0 4px;font:600 13px/16px var(--ff-body);color:#4a4d50;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tape h3{margin:0 0 4px;font:600 13px/16px var(--ff-body);color:#4a4d50}
 .tape .sum{min-width:0}
 .tape .ln{display:flex;justify-content:space-between;gap:12px;white-space:pre}
 .tape .ln span:last-child{text-align:right;font-variant-numeric:tabular-nums}
@@ -106,6 +115,7 @@ a{color:var(--ink);text-underline-offset:2px}
 .card .status{margin:2px 0 0;font-size:14px}
 .card .how{margin:0;color:var(--ink-muted);font-size:12px}
 .fails h2{margin:0 0 4px;font:600 13px var(--ff-body);color:var(--ink-muted);letter-spacing:.03em;text-transform:uppercase}
+.fails.none h2{text-transform:none;letter-spacing:0;font-size:15px;color:var(--ink)}
 .list{list-style:none;margin:0;padding:0;border-top:1px solid var(--line);border-radius:var(--r-sm)}
 .list li{display:grid;grid-template-columns:1fr auto;gap:0 12px;padding:6px 10px 6px 12px;border-bottom:1px solid var(--line);border-left:2px solid transparent;cursor:pointer;font-size:14px;line-height:1.35}
 .list li .a{font-weight:600} .list li .b{font:400 13px var(--ff-mono);text-align:right;font-variant-numeric:tabular-nums}
@@ -116,15 +126,107 @@ a{color:var(--ink);text-underline-offset:2px}
 .foot{padding:10px var(--pad) 14px;color:var(--ink-muted);font-size:13px;border-top:1px solid var(--line)}
 .foot a{color:var(--ink)}
 
+/* ---- the dock: the primary action and the reason it is blocked (a fixed bar under 900 px) */
+.dock{display:contents}
+.hint{order:10}
+.controls button{min-height:28px}
+
+/* ---- tape lines and the list: buttons and rows that take focus */
+.tape button.ln{min-height:24px;align-items:center;width:100%;background:none;border:0;padding:0;margin:0;text-align:left;color:inherit;font:inherit;cursor:pointer}
+.tape button.ln:focus-visible{background:var(--sheet-ink);color:var(--sheet);outline:2px solid var(--focus);outline-offset:0}
+.list:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+
+/* ---- states: body[data-state] = loading | error | empty | partial | first-run | ready */
+.ghost,.statebox,.flatblock,.skeleton{display:none}
+.ghost{position:absolute;inset:0;z-index:1;pointer-events:none;perspective:1800px;overflow:hidden}
+.ghost-sheet{position:absolute;left:50%;top:54%;width:min(62%,560px);aspect-ratio:1600/971;background:var(--sheet);opacity:.92;transform:translate(-50%,-50%) rotateX(34deg) rotateZ(-3deg);overflow:hidden}
+.scanline{position:absolute;left:0;right:0;top:0;height:3px;background:var(--data-holds);animation:scan 1.6s linear infinite}
+@keyframes scan{from{top:-3px}to{top:100%}}
+.statebox{position:absolute;left:24px;right:24px;top:24px;z-index:3;margin:0;font:600 15px/1.4 var(--ff-body);text-align:center}
+body[data-state="loading"] .ghost{display:block}
+body[data-state="loading"] .statebox,body[data-state="first-run"] .statebox{display:block}
+body[data-state="loading"] .statebox{top:auto;bottom:80px;font-variant-numeric:tabular-nums}
+body[data-state="first-run"] .statebox{top:50%;transform:translateY(-50%);max-width:480px;margin:0 auto}
+body[data-state="loading"] .viewport,body[data-state="loading"] .loupe,body[data-state="loading"] .leader,
+body[data-state="error"] .viewport,body[data-state="error"] .loupe,body[data-state="error"] .leader,
+body[data-state="first-run"] .viewport,body[data-state="first-run"] .loupe,body[data-state="first-run"] .leader,
+body[data-state="first-run"] .controls,body[data-state="first-run"] .panel{display:none}
+body[data-state="first-run"] .main{grid-template-columns:minmax(0,1fr)}
+body[data-state="loading"] .skeleton,body[data-state="error"] .skeleton{display:grid;gap:12px}
+body[data-state="loading"] .tapewrap,body[data-state="loading"] .card,body[data-state="loading"] .fails,
+body[data-state="error"] .tapewrap,body[data-state="error"] .card,body[data-state="error"] .fails{display:none}
+.sk-tape,.sk-card{display:grid;gap:10px;padding:16px 14px;border-radius:var(--r-md)}
+.sk-tape{background:var(--surface-2);min-height:150px}
+.sk-card{background:var(--surface-1);border:1px solid var(--line);min-height:100px}
+.skeleton i{display:block;height:12px;border-radius:var(--r-sm);background:var(--line);animation:pulse 1.6s ease-in-out infinite}
+.skeleton i:nth-child(2){width:70%} .skeleton i:nth-child(3){width:85%} .skeleton i:nth-child(4){width:55%}
+@keyframes pulse{50%{opacity:.45}}
+/* partial: no page image, so the block's own image is shown flat in the sheet zone */
+.stage.partial .viewport{display:none}
+.stage.partial .flatblock{display:block;position:absolute;z-index:1;left:24px;right:24px;top:calc(24px + 240px + 12px);bottom:84px;overflow:hidden;background:var(--sheet);color:var(--sheet-ink)}
+.stage.partial .flatblock p{margin:0;padding:12px;font-size:14px}
+.fb-pan{position:absolute;left:0;top:0;transform-origin:0 0}
+.fb-pan img{display:block}
+.fb-svg{position:absolute;left:0;top:0;overflow:visible}
+.fb-svg line{opacity:.26;fill:none} .fb-svg line.holds{stroke:var(--data-holds)} .fb-svg line.fails{stroke:var(--data-fails)}
+.fb-hit{fill:transparent;cursor:pointer}
+.fb-ring{fill:none;stroke-linecap:round;stroke-linejoin:round;pointer-events:none}
+.fb-ring.holds{stroke:var(--data-holds)} .fb-ring.fails{stroke:var(--data-fails)}
+
+/* ---- recording mode: ?record=1. Anything meant only for a judge carries .judge-only and is hidden. */
+.record .judge-only{display:none}
+.record .bar{height:60px;gap:24px}
+.record .word{font-size:26px}
+.record .descriptor{font-size:17px;white-space:normal;line-height:1.25}
+.record .tabs button{font-size:16px}
+.record .fails h2,.record .tape h3{font-size:16px}
+body.record{grid-template-rows:60px minmax(0,1fr) auto}
+
+/* a short window (also a page zoomed to 160 percent): the loupe gets shorter so the sheet keeps room */
+@media (min-width:900px) and (max-height:720px){
+  .loupe{top:12px;height:150px}
+  .controls{left:16px;right:16px;bottom:14px}
+  .stage.partial .flatblock{top:calc(12px + 150px + 12px);bottom:70px}
+}
 @media (max-width:1100px){:root{--panel:360px}.main{grid-template-columns:minmax(0,1fr) var(--panel)}}
 @media (max-width:899px){
-  body{display:block;height:auto;overflow:auto}
-  .bar{height:52px}.descriptor{display:none}
-  .main{display:flex;flex-direction:column;padding:16px}
-  .stage{height:56vh;flex:none}
+  html,body{height:auto}
+  body{display:block;min-height:100vh;overflow:auto;overflow-x:hidden;padding-bottom:calc(92px + env(safe-area-inset-bottom))}
+  .bar{height:52px;gap:12px;padding:0 16px}.descriptor{display:none}
+  .record .bar{height:60px}
+  .brand{min-height:44px}
+  .tabs{margin-left:auto}.tabs button{min-height:44px;padding:0 12px}
+  .main{display:flex;flex-direction:column;padding:16px;gap:16px}
+  body[data-state="first-run"] .main{display:block}
+  .stage{height:56vh;min-height:300px;flex:none}
+  .stage::before{inset:6px}
+  .loupe{top:12px;width:calc(100% - 24px);height:clamp(104px,18vh,150px)}
+  .controls{left:12px;right:12px;bottom:8px;gap:0 8px}
+  .controls button:not(.primary){min-height:44px;min-width:44px;padding:0 4px;font-size:14px}
+  .pageno{font-size:13px;margin-left:auto}
+  .dock{display:flex;flex-direction:column;align-items:stretch;gap:2px;position:fixed;z-index:30;left:0;right:0;bottom:0;padding:10px 16px calc(10px + env(safe-area-inset-bottom));background:var(--canvas);border-top:1px solid var(--line)}
+  .dock .primary{min-height:48px;width:100%;order:0}
+  .dock .hint{order:1;text-align:center}
   .panel{overflow:visible}
+  .tape button.ln{min-height:44px;align-items:center}
+  .list li{min-height:44px}
+  .tape{grid-template-columns:minmax(0,1fr)}
+  .card .big{font-size:30px}
+  .stage.partial .flatblock{left:12px;right:12px;top:calc(12px + clamp(104px,18vh,150px) + 10px);bottom:62px}
   .foot{padding:10px 16px 20px}
+  body[data-state="loading"] .statebox{bottom:64px}
+}
+@media (max-width:379px){
+  .pw{display:none}
+  .controls button:not(.primary){font-size:13px}
+  .bar{gap:8px}
 }
 @media (prefers-reduced-motion:reduce){
-  .primary,.lp-layer,.lp-pan.slide{transition:none}
+  .primary,.lp-pan.slide{transition:none}
+  .lp-layer{transition:opacity 150ms linear}
+  .loupe.rise{animation:none}
+  .scanline{animation:none;top:50%}
+  .skeleton i{animation:none}
+  .card>*,.tape>*,.statebox,.list li,.notice{animation:fade 150ms linear}
 }
+@keyframes fade{from{opacity:0}to{opacity:1}}

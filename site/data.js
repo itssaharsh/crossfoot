@@ -1,13 +1,20 @@
 // Loading site/data/ and the questions the page asks of it. Short keys are documented in crossfoot/sitebuild.py.
 export const fmt = n => (n === null || n === undefined ? '' : Number(n).toLocaleString('en-US'));
 
+// the files fetched so far, for the "Loading run…" line
+export const progress = { n: 0, on: () => {} };
+export const loaded = () => { progress.n++; progress.on(progress.n); };
+
 export async function getJSON(file) {
   let r;
   try { r = await fetch(file); } catch (e) { throw new LoadError(file); }
-  if (!r.ok) throw new LoadError(file);
-  try { return await r.json(); } catch (e) { throw new LoadError(file); }
+  if (!r.ok) throw new LoadError(file, r.status === 404);
+  let d;
+  try { d = await r.json(); } catch (e) { throw new LoadError(file); }
+  loaded();
+  return d;
 }
-export class LoadError extends Error { constructor(file) { super(file); this.file = file; } }
+export class LoadError extends Error { constructor(file, missing = false) { super(file); this.file = file; this.missing = missing; } }
 export const loadMessage = file => `Couldn't load ${file}. Reload, or open the repository's runs folder.`;
 
 export const idOf = v => `${v.p}:${v.b}:${v.r}:${v.c}`;
@@ -64,6 +71,13 @@ export class Store {
     const y = ys.reduce((a, b) => a + b, 0) / ys.length;
     const x2 = tb ? tb[2] : Math.max(...terms.map(t => t.x[2]));
     return { x1: labelX, y1: y, x2, y2: y };
+  }
+  // the printed figure's own box in page-image pixels, from the ink box of the block image; null without one
+  inkPage(v) {
+    const b = this.block(v);
+    if (!v.ix || !b || !b.bi || !b.x) return null;
+    const mx = b.bi.w / (b.x[2] - b.x[0]), my = b.bi.h / (b.x[3] - b.x[1]);
+    return [b.x[0] + v.ix[0] / mx, b.x[1] + v.ix[1] / my, b.x[0] + v.ix[2] / mx, b.x[1] + v.ix[3] / my];
   }
   // the value to turn the sheet to for a sum: its first term with a box, else its printed total
   firstValue(c) {

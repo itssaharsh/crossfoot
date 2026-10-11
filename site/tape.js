@@ -29,12 +29,13 @@ function el(tag, cls, text) {
 function line(label, fig, cls, pick) {
   const d = el('div', 'ln' + (cls ? ' ' + cls : ''));
   d.append(el('span', '', label), el('span', '', fig));
-  if (pick) {   // a term line selects its value
-    d.classList.add('pick'); d.tabIndex = 0; d.setAttribute('role', 'button');
-    d.addEventListener('click', pick);
-    d.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); pick(); } });
-  }
-  return d;
+  if (!pick) return d;
+  // a term line is a button: it selects its value
+  const b = el('button', 'ln pick' + (cls ? ' ' + cls : ''));
+  b.type = 'button';
+  b.append(...d.children);
+  b.addEventListener('click', pick);
+  return b;
 }
 
 export class Tape {
@@ -47,7 +48,7 @@ export class Tape {
   // keeps its height while empty, so the panel under it does not jump
   clear() { this.stop(); this.root.style.minHeight = `${this.root.offsetHeight}px`; this.root.replaceChildren(); }
   // sums: [{check, axis}]; the lines are built first, then shown one by one
-  print(store, sums, animate = true) {
+  print(store, sums, animate = true, totalMs = MAX_TOTAL_MS) {
     this.stop();
     this.root.replaceChildren();
     this.root.style.minHeight = '';
@@ -65,7 +66,7 @@ export class Tape {
       this.root.append(box);
     }
     if (!animate || this.reduced) { steps.forEach(s => (s.style.visibility = '')); return; }
-    const step = Math.min(STEP_MS, MAX_TOTAL_MS / steps.length);
+    const step = Math.min(STEP_MS, totalMs / steps.length);
     steps.forEach((s, i) => this.timers.push(setTimeout(() => { s.style.visibility = ''; }, i * step)));
   }
 }

@@ -11,7 +11,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=Public+Sans:wght@400;600;800&display=swap">
 <link rel="stylesheet" href="styles.css">
 </head>
-<body>
+<body data-state="loading">
 <header class="bar">
   <a class="brand" href="./" aria-label="Crossfoot">
     <svg class="mark" viewBox="0 0 48 48" width="28" height="28" aria-hidden="true"><path d="M3 24H45" stroke="var(--data-holds)" stroke-width="5"/><path d="M24 3V45" stroke="var(--data-fails)" stroke-width="5"/><circle cx="24" cy="24" r="9" fill="none" stroke="var(--ink)" stroke-width="3"/></svg>
@@ -20,8 +20,18 @@
   <p class="descriptor">audits public election data against the certified scans</p>
   <nav id="tabs" class="tabs" aria-label="County" hidden></nav>
 </header>
-<main class="main">
-  <section class="stage" id="stage" aria-label="The scanned sheet">
+<main class="main" id="main">
+  <section class="stage" id="stage" aria-label="Scanned sheet">
+    <div class="controls" id="controls" role="group" aria-label="Stage controls">
+      <div class="dock">
+        <button class="primary" id="replay" type="button" disabled aria-describedby="replay-hint">Replay the audit</button>
+        <p class="hint" id="replay-hint">Replay comes with the run's events</p>
+      </div>
+      <button type="button" id="flat">Lay flat</button>
+      <button type="button" id="prev">Previous page</button>
+      <button type="button" id="next">Next page</button>
+      <span class="pageno" id="pageno" role="status"></span>
+    </div>
     <div class="viewport" id="viewport">
       <div class="lean" id="lean">
         <div class="pose" id="pose">
@@ -29,29 +39,25 @@
             <div class="stack" id="stack"></div>
             <div class="sheet" id="sheet"><img id="scan" alt="" decoding="async"><div class="far"></div><svg id="bands" class="bands" aria-hidden="true"></svg></div>
           </div>
-          <svg id="marks" class="marks" aria-label="Values on this page"></svg>
+          <svg id="marks" class="marks" role="group" aria-label="Values on this page"></svg>
         </div>
       </div>
     </div>
+    <div class="flatblock" id="flatblock" hidden></div>
     <div class="loupe" id="loupe" role="group" aria-label="The scan around the selected value, enlarged">
       <div class="lp-view" id="lp-view"></div>
       <p class="lp-note" id="lp-note" role="status" hidden>This value has no position in this run's data</p>
     </div>
     <svg class="leader" id="leader" aria-hidden="true"><line id="leader-line" x1="0" y1="0" x2="0" y2="0" hidden=""/></svg>
+    <div class="ghost" id="ghost" aria-hidden="true"><div class="ghost-sheet"><i class="scanline"></i></div></div>
+    <p class="statebox" id="statebox" role="status"></p>
     <div class="notice" id="notice" role="alert" hidden></div>
-    <div class="controls" id="controls">
-      <button class="primary" id="replay" type="button" disabled title="Replay comes with the run's events" aria-describedby="replay-hint">Replay the audit</button>
-      <button type="button" id="flat">Lay flat</button>
-      <button type="button" id="prev">Previous page</button>
-      <button type="button" id="next">Next page</button>
-      <span class="pageno" id="pageno" aria-live="polite"></span>
-      <p class="hint" id="replay-hint">Replay comes with the run's events</p>
-    </div>
   </section>
   <aside class="panel" id="panel" aria-label="The sums">
+    <div class="skeleton" aria-hidden="true"><div class="sk-tape"><i></i><i></i><i></i><i></i></div><div class="sk-card"><i></i><i></i><i></i></div></div>
     <div class="tapewrap"><section class="tape" id="tape" aria-label="The arithmetic"></section></div>
     <section class="card" id="card" aria-label="Selected value"></section>
-    <section class="fails" aria-labelledby="fails-h">
+    <section class="fails" id="fails-sec" aria-labelledby="fails-h">
       <h2 id="fails-h">Sums that do not hold</h2>
       <ul id="fails" class="list" role="listbox" tabindex="0" aria-labelledby="fails-h"></ul>
     </section>
