@@ -1,0 +1,80 @@
+{
+  "cli_version": "0.11.4",
+  "checkpoint_id": "01M4N3PMN2VJYZ54B3WAT1NZHT",
+  "session_id": "42d22ff0-f967-4399-a141-9876624dbad4",
+  "strategy": "manual-commit",
+  "created_at": "2026-10-11T09:11:37.132402087Z",
+  "branch": "main",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "crossfoot/cli.py",
+    "crossfoot/layouts/__init__.py",
+    "crossfoot/layouts/matrix.py",
+    "crossfoot/model.py",
+    "crossfoot/segment.py",
+    "crossfoot/tracing.py",
+    "hackathon.md",
+    "pyproject.toml",
+    "runs/20261011-090307/first-read.json",
+    "runs/20261011-090307/ledger.sqlite",
+    "tests/__init__.py",
+    "tests/test_budget.py",
+    "tests/test_matrix_read.py",
+    "tests/test_segment.py",
+    "uv.lock"
+  ],
+  "agent": "Claude Code",
+  "model": "claude-sonnet-5-5",
+  "turn_id": "26456e8b6dac",
+  "compact_transcript_start": 0,
+  "token_usage": {
+    "input_tokens": 64,
+    "cache_creation_tokens": 84451,
+    "cache_read_tokens": 2634557,
+    "output_tokens": 29783,
+    "api_call_count": 32
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-10-11T09:11:36.846440788Z",
+    "agent_lines": 15,
+    "agent_removed": 0,
+    "human_added": 0,
+    "human_modified": 0,
+    "human_removed": 2,
+    "total_committed": 15,
+    "total_lines_changed": 17,
+    "agent_percentage": 88.23529411764706,
+    "metric_version": 2
+  },
+  "prompt_attributions": [
+    {
+      "checkpoint_number": 1,
+      "user_lines_added": 4215,
+      "user_lines_removed": 4,
+      "agent_lines_added": 0,
+      "agent_lines_removed": 0,
+      "user_added_per_file": {
+        ".prod-build/evidence.jsonl": 4,
+        ".prod-build/plan.json": 4,
+        "crossfoot/cli.py": 78,
+        "crossfoot/layouts/matrix.py": 209,
+        "crossfoot/model.py": 127,
+        "crossfoot/segment.py": 90,
+        "crossfoot/tracing.py": 62,
+        "pyproject.toml": 6,
+        "runs/20261011-085854/first-read.json": 165,
+        "runs/20261011-085948/first-read.json": 607,
+        "runs/20261011-090307/first-read.json": 607,
+        "tests/test_budget.py": 73,
+        "tests/test_matrix_read.py": 58,
+        "tests/test_segment.py": 45,
+        "uv.lock": 2080
+      },
+      "user_removed_per_file": {
+        ".prod-build/plan.json": 2,
+        "pyproject.toml": 1,
+        "uv.lock": 1
+      }
+    }
+  ]
+}

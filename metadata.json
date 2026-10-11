@@ -1,0 +1,40 @@
+{
+  "cli_version": "0.11.4",
+  "checkpoint_id": "01M4N3PMN2VJYZ54B3WAT1NZHT",
+  "strategy": "manual-commit",
+  "branch": "main",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "crossfoot/cli.py",
+    "crossfoot/layouts/__init__.py",
+    "crossfoot/layouts/matrix.py",
+    "crossfoot/model.py",
+    "crossfoot/segment.py",
+    "crossfoot/tracing.py",
+    "hackathon.md",
+    "pyproject.toml",
+    "runs/20261011-090307/first-read.json",
+    "runs/20261011-090307/ledger.sqlite",
+    "tests/__init__.py",
+    "tests/test_budget.py",
+    "tests/test_matrix_read.py",
+    "tests/test_segment.py",
+    "uv.lock"
+  ],
+  "sessions": [
+    {
+      "metadata": "/0/metadata.json",
+      "transcript": "/0/full.jsonl",
+      "compact_transcript": "/0/transcript.jsonl",
+      "content_hash": "/0/content_hash.txt",
+      "prompt": "/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 64,
+    "cache_creation_tokens": 84451,
+    "cache_read_tokens": 2634557,
+    "output_tokens": 29783,
+    "api_call_count": 32
+  }
+}

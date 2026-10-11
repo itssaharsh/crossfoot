@@ -1,0 +1,13 @@
+Read AGENTS.md, then .prod-build/briefs/T02.md and do exactly that task.
+Run checks through `python3 .prod-build/pb.py` as the brief says.
+Finish by writing .prod-build/reports/T02.md in the format at the end of the brief, commit (do not push), and reply with the report.
+
+---
+
+<task-notification>
+<task-id>buk3mn9i6</task-id>
+<tool-use-id>toolu_019gVXA8kw9Nw7WrAQFfdC8m</tool-use-id>
+<output-file>/tmp/claude-1000/-home-saharsh-contri-crossfoot/42d22ff0-f967-4399-a141-9876624dbad4/tasks/buk3mn9i6.output</output-file>
+<status>completed</status>
+<summary>Background command "python3 .prod-build/pb.py verify T02 2&gt;&amp;1 | tail -15; git status --short; cat .gitignore | head; tail -25 hackathon.md" completed (exit code 0)</summary>
+</task-notification>
