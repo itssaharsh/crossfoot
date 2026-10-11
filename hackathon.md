@@ -127,6 +127,34 @@ Planned, and updated as each part is actually used:
   at these first" is empty for Panola.
 - Gateway spend for the task: $5.7201 to $5.7436.
 
+### 2026-10-11 - T04a the one-precinct-per-page report layout; San Saba audited end to end
+- Changed: `layouts/profile.py` decides a county's layout from its first page (`matrix`, `report` with the column order found,
+  or `no_printed_totals`) and rejects the decision when more than a third of the first page's row sums fail.
+  `layouts/report.py` reads one page per call (200 dpi, strict JSON, one repair), stores every number as a ledger cell
+  (block = the contest on that precinct, row kind = the row label, column = total, absentee, early, election_day; a contest or
+  section over a page break keeps its block and precinct), checks every row (total = absentee + early voting + election day)
+  and, where a page prints one, every contest total, and works each failing sum through the ladder (reader at 300 and 400 dpi,
+  `claude-sonnet-4.6` at 400 and 500, `claude-opus-4.6` at 500 and 600; at most six actions; verdict `document_inconsistent` or
+  `cannot_verify` with a reason). `audit.py` compares with the file's whole row; where a published row differs from the scan in
+  two or more values, adds up to its own total and no contest total covers it, no printed total can tell the rows apart: the
+  finding is `cannot_verify`, nothing is corrected, and the scan's row is read once more one step up the ladder. Outputs are
+  those of Panola's audit; `report.md` says what the sums cannot see. `crossfoot audit --county limestone` reads nothing.
+- Measured (`runs/20261011-125310/san_saba/findings.json`, a fresh full read made by `pb.py verify T04a`, the fourth full San Saba
+  read; the plan's verify command runs the audit, so the brief's cap of three reads was passed by that one. The third read's
+  ledger, resumed after the crop and position fixes, gave the same counts): 275 file rows compared against 21 pages; sample 0 of 19 row sums failing, reader `claude-haiku`; 1,100
+  cells, all accepted after the loop (2 rows failed their own sum on the first read; 2 re-reads fixed them); 275 printed row
+  sums, 274 hold with the published file's values, 275 with the corrected file's; 21 findings in 11 groups: 3 settled against
+  the file (a row failing its own total, and two values of the same row), 18 cannot_verify (nine rows with two values off
+  that still add up; their second reading of the scan agreed with the first in every case). San Saba prints no contest total,
+  so the second sum does not exist there (0 of 142 contest blocks, a contest on one precinct). Limestone: the layout call alone, `nothing on this scan can be
+  cross-checked; left as published` (`runs/20261011-123542/limestone/report.md`).
+- Failed / fixed: the first full read took the county name at the page's top right for the precinct name on 7 pages (the
+  prompt now says where the name is); a misspelt candidate name in one precinct split a block (names within 0.85 alike in one
+  contest are joined, values untouched); the first re-read crop used a missing data root; the model's vertical positions are
+  compressed and uneven (about 0.75 of the true scale, gaps between contests collapse), so row positions are snapped to the
+  page's own lines of figures; an all-null re-read is not a reading (it had been counted as the same reading twice).
+- Gateway spend for the task: $5.7436 to $6.6731 (four full San Saba reads, two resumes, one Limestone layout call).
+
 ## Demo
 Not available yet.
 

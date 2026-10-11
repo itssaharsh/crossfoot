@@ -1,0 +1,25 @@
+{
+ "county": "limestone",
+ "run_id": "20261011-123542",
+ "layout": "no_printed_totals",
+ "layout_decision": {
+  "layout": "no_printed_totals",
+  "columns": [],
+  "accepted": null
+ },
+ "note": "nothing on this scan can be cross-checked; left as published",
+ "pages": [],
+ "blocks": [],
+ "cells": [],
+ "totals": [],
+ "checks": [],
+ "verdicts": [],
+ "events": [],
+ "summary": {
+  "model_calls": 1,
+  "prompt_tokens": 1772,
+  "completion_tokens": 24,
+  "metered_cost_estimate": 0.0021,
+  "seconds": 3.8
+ }
+}

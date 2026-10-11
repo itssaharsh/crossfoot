@@ -358,8 +358,10 @@
         "uv run crossfoot audit --county san_saba"
       ],
       "rollback": "git revert the task's commits; committed runs are never changed",
-      "status": "todo",
-      "notes": "Split from T04 on 2026-10-11."
+      "status": "doing",
+      "notes": "Split from T04 on 2026-10-11.",
+      "base": "c4a0f79",
+      "started_after": 44
     },
     {
       "id": "T04b",

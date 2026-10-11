@@ -65,7 +65,7 @@ def fill_boxes(led, county, geo) -> int:
     return n
 
 
-def write_county(run_dir, county, run_id, led, geo, summary, *, pages=None, data_root=None) -> Path:
+def write_county(run_dir, county, run_id, led, geo, summary, *, pages=None, data_root=None, layout=LAYOUT) -> Path:
     cells, totals = led.cells(county), led.totals(county)
     if pages is None:
         pages = sorted({c["page"] for c in cells})
@@ -80,12 +80,12 @@ def write_county(run_dir, county, run_id, led, geo, summary, *, pages=None, data
                            "candidate": c["candidate"], "box": list(bb) if bb else None})
     chs = [{"kind": ch.kind, "page": ch.page, "block": ch.block_id, "key": ch.key,
             "terms": [list(k) for k, _ in ch.terms], "printed": ch.printed, "computed": ch.computed, "ok": ch.ok,
-            "note": ch.note} for ch in checks.all_checks(cells, totals)]
+            "note": ch.note} for ch in (checks.report_checks(cells) if layout == "report" else checks.all_checks(cells, totals))]
     evs = led.events(county)
     chosen = next((json.loads(e["payload_json"]) for e in reversed(evs) if e["kind"] == "choose_reader"), None)
     tbox = lambda t: (lambda b: list(b) if b else None)(
         geo.total_box(t["page"], t["block_id"], t["direction"], t["key"]) if geo else None)
-    d = {"county": county, "run_id": run_id, "layout": LAYOUT,
+    d = {"county": county, "run_id": run_id, "layout": layout,
          "pages": _page_sizes(county, pages, data_root) if pages else [],
          "blocks": blocks,
          "cells": [{"page": c["page"], "block": c["block_id"], "contest": c["contest"], "candidate": c["candidate"],
@@ -186,6 +186,67 @@ def make_group_crops(county, res, geo, data_root=None) -> int:
     return n
 
 
+def make_row_crops(county, res, geo, data_root=None) -> int:
+    """Report layout: crops/<page>-<row>.png, the scan's row with its strip outlined and a caption; one per row that carries
+    a finding. Puts the path on the findings and their groups."""
+    from PIL import ImageDraw, ImageFont
+    from .render import page_png
+    from .sources import DATA
+    done: dict = {}
+    for f in res["findings"]:
+        if f.get("page") is None or not f.get("box"):
+            continue
+        key = (f["page"], f["block"], f["row"])
+        if key not in done:
+            name = f"crops/row-{len(done) + 1:04d}.png"
+            try:
+                x0, y0, x1, y1 = f["box"]
+                with Image.open(page_png(county, f["page"], CROP_DPI, data_root or DATA)) as im:
+                    k = CROP_DPI / GEO_DPI
+                    im = im.convert("RGB")
+                    ImageDraw.Draw(im).rectangle([x0 * k, y0 * k, x1 * k, y1 * k], outline=(220, 0, 0), width=3)
+                    c = im.crop((0, max(0, round((y0 - 90) * k)), min(im.width, round(x1 * k)),
+                                 min(im.height, round((y1 + 90) * k))))
+                cap = f"page {f['page']}, precinct {f['precinct']}, {f['row']} ({f['office']}); scan, row outlined"
+                out = Image.new("RGB", (c.width, c.height + 34), (255, 255, 255))
+                out.paste(c, (0, 34))
+                try:
+                    font = ImageFont.load_default(size=20)
+                except TypeError:
+                    font = ImageFont.load_default()
+                ImageDraw.Draw(out).text((8, 6), cap, fill=(0, 0, 0), font=font)
+                dest = res["crop_dir"].parent / name
+                dest.parent.mkdir(parents=True, exist_ok=True)
+                out.save(dest)
+                done[key] = name
+            except Exception:                              # a picture is evidence, not the finding: go on without it
+                done[key] = None
+        f["crop"] = done[key]
+    for g in res["groups"]:
+        g["crop"] = next((f["crop"] for f in res["findings"] if f["group"] == g["id"] and f.get("crop")), None)
+    return sum(1 for v in done.values() if v)
+
+
+def write_unchecked(run_dir, county, run_id, read, urls) -> Path:
+    """A county whose layout lets nothing be cross-checked, or that is not supported: county.json (no cells) and report.md
+    say so. The published file is left as it is; no findings file is written."""
+    out = Path(run_dir) / county
+    out.mkdir(parents=True, exist_ok=True)
+    d = {"county": county, "run_id": run_id, "layout": read["layout"], "layout_decision": read.get("layout_decision"),
+         "note": read.get("note"), "pages": [], "blocks": [], "cells": [], "totals": [], "checks": [], "verdicts": [],
+         "events": [], "summary": {k: read.get(k) for k in ("model_calls", "prompt_tokens", "completion_tokens",
+                                                              "metered_cost_estimate", "seconds")}}
+    (out / "county.json").write_text(json.dumps(d, indent=1))
+    name = county.replace("_", " ").title()
+    (out / "report.md").write_text("\n".join([
+        f"# Crossfoot audit: {name} County, run {run_id}", "",
+        f"- Scan: {urls['scan']}", f"- Published file: {urls['file']}", "",
+        f"Layout decided from the first page: {read['layout']}.", "",
+        f"{read.get('note')}", "",
+        "Nothing was read beyond the first page, no finding was made, and the published file is left as published.", ""]))
+    return out / "county.json"
+
+
 def _count(items, key, order):
     return {k: sum(1 for i in items if i[key] == k) for k in order if any(i[key] == k for i in items)}
 
@@ -208,8 +269,10 @@ def write_findings(run_dir, county, run_id, res, *, policy, raw_file, file_name,
     diff = diff.replace("a/published file", f"a/{file_name}").replace("b/published file", f"b/corrected/{file_name}")
     (out / "changes.diff").write_text(diff)
     m = res["matching"]
-    check = audit.sums_check(res["cells"], res["totals"], res["row_objs"], fs, applied, m)
-    d = {"county": county, "run_id": run_id, "file": file_name, "policy": policy,
+    report_layout = res.get("layout") == "report"
+    check = (audit.sums_check_report(res["cells"], res["row_objs"], fs, applied, m) if report_layout else
+             audit.sums_check(res["cells"], res["totals"], res["row_objs"], fs, applied, m))
+    d = {"county": county, "run_id": run_id, "layout": res.get("layout", LAYOUT), "file": file_name, "policy": policy,
          "counts": {"findings": len(fs), "by_kind": _count(fs, "kind", audit.KINDS),
                     "by_status": _count(fs, "status", audit.STATUSES), "groups": len(res["groups"]),
                     "corrections": len(applied)},
@@ -235,7 +298,8 @@ def _parts(p) -> str:
 
 
 def report_text(d, verdicts, urls) -> str:
-    """report.md in plain words. Counts, one section per group, then what could not be verified."""
+    """report.md in plain words. Counts, one section per group, then what could not be verified. For the report layout:
+    what the printed sums cannot see, and whether a second sum exists."""
     c = d["counts"]
     L = [f"# Crossfoot audit: {d['county'].replace('_', ' ').title()} County, run {d['run_id']}", "",
          "The published spreadsheet was copied from a scanned canvass. This audit compares the two. What it finds are "
@@ -259,9 +323,26 @@ def report_text(d, verdicts, urls) -> str:
               f"Why: {'; '.join(x['reasons'])}." for x in sc["still_failing"]]
     else:
         L += ["No sum fails with the corrected file's values."]
+    if d.get("layout") == "report":
+        a = d["audit"]
+        L += ["", "## What the printed sums cannot see", "",
+              "In this layout the only sum printed for a value is its row's own: total = absentee + early voting + election "
+              "day. Where a page prints a contest total (\"Total Votes Cast\", \"Cast Votes\"), the candidates' figures in "
+              "a column also add to it; that is a second sum on the value. "
+              f"Second sum in this county: {'yes' if a.get('second_sum_exists') else 'no'} "
+              f"({a.get('contest_totals_printed', 0)} of {a.get('contests', 0)} contests print a contest total).", "",
+              "What one sum cannot see: two numbers of one row that are both wrong and cancel out are not detected. And when "
+              "a published row differs from the scan's row in two or more values but still adds up to its own total, with no "
+              "contest total over it, no printed total can tell the two rows apart; such a finding is cannot_verify, nothing "
+              "is corrected, and the scan's row is read once more so the finding can say whether two readings of the scan agree."]
     first = [f for f in d["findings"] if f.get("reread_disagrees")]
     L += ["", "## Look at these first", ""]
-    if first:
+    if first and d.get("layout") == "report":
+        L += ["A second reading of the scan's row does not agree with the first. A person should read the row.", ""]
+        L += [f"- {f['id']} (group {f['group']}), {f['candidate'] or f['office']}, precinct {f['precinct']}, {f['part']}: "
+              f"status {f['status']}; the file has {f['file_value']}, the ledger {f['scan_value']}, the second reading "
+              f"{f['reread']['value']}." for f in first]
+    elif first:
         L += ["A single-value look at the scan gave a number other than the one the printed sums settle on. "
               "Whatever the status, a person should read the cell.", ""]
         L += [f"- {f['id']} (group {f['group']}), {f['candidate'] or f['office']}, precinct {f['precinct']}, {f['part']}: "
