@@ -13,14 +13,16 @@
         "T02",
         "T02a",
         "T03a",
-        "T03b"
+        "T03b",
+        "T03c"
       ]
     },
     {
       "id": "M2",
       "goal": "The second layout, all eight counties unattended, and a measured before and after from one real failure found in the traces",
       "tasks": [
-        "T04",
+        "T04a",
+        "T04b",
         "T05"
       ]
     },
@@ -208,30 +210,61 @@
         "uv run crossfoot close --county panola --resume 20261011-094115"
       ],
       "rollback": "git revert the task's commits; committed runs are never changed",
-      "status": "todo",
-      "notes": "Split from T03 on 2026-10-11 so each session has one job."
+      "status": "done",
+      "notes": "Split from T03 on 2026-10-11 so each session has one job.\n[2026-10-11 done] E0021 (46 tests) and E0022 (the close run 20261011-102700) passed inside the task's session on commit 84c88a8; the orchestrator re-ran pytest (46 passed) and read county.json's summary. The ledger closes, but 16 row, 16 column and 12 grand sums still fail and 335 cells are cannot_verify; recorded as the starting point for the next task.",
+      "base": "7de82e7",
+      "started_after": 19,
+      "evidence": [
+        "E0021",
+        "E0022"
+      ]
     },
     {
       "id": "T03b",
-      "title": "The audit against the published file, and the outputs",
-      "objective": "`crossfoot audit --county panola` compares the closed ledger with the published file, settles each disagreement with printed totals and writes findings, crops, a corrected file, a diff and a report",
+      "title": "The reader chosen by measurement; wrong values located where two failing sums cross",
+      "objective": "`crossfoot read` picks the model from a measured sample; `crossfoot close` leaves at most 3 sums failing on Panola, each with a verdict",
       "role": "product-engineer",
       "size": "L",
       "deps": [
         "T03a"
       ],
       "writes": [
-        "crossfoot/audit.py",
-        "crossfoot/policy.py",
-        "crossfoot/outputs.py",
-        "crossfoot/cli.py",
-        "crossfoot/agent.py",
-        "crossfoot/ledger.py",
-        "crossfoot/checks.py",
+        "crossfoot/**",
+        "tests/**",
+        "runs/**",
+        "docs/evidence/before-after.md",
+        "hackathon.md",
+        ".prod-build/reports/T03b.md",
+        ".prod-build/evidence.jsonl"
+      ],
+      "acceptance": [
+        "AC-1",
+        "AC-3",
+        "AC-4"
+      ],
+      "verify": [
+        "uv run pytest -q",
+        "uv run crossfoot close --county panola --resume latest"
+      ],
+      "rollback": "git revert the task's commits; committed runs are never changed",
+      "status": "todo",
+      "notes": "Added 2026-10-11 after T03a and a scout read: the cheap model plus a blind loop cost more and closed less than one read with the stronger model."
+    },
+    {
+      "id": "T03c",
+      "title": "The audit against the published file, and the outputs",
+      "objective": "`crossfoot audit --county panola` compares the closed ledger with the published file, settles each disagreement with printed totals and writes findings, crops, a corrected file, a diff and a report",
+      "role": "product-engineer",
+      "size": "L",
+      "deps": [
+        "T03b"
+      ],
+      "writes": [
+        "crossfoot/**",
         "tests/**",
         "runs/**",
         "hackathon.md",
-        ".prod-build/reports/T03b.md",
+        ".prod-build/reports/T03c.md",
         ".prod-build/evidence.jsonl"
       ],
       "acceptance": [
@@ -243,74 +276,96 @@
         "uv run crossfoot audit --county panola --resume latest",
         "uv run crossfoot verify-known --county panola"
       ],
-      "rollback": "git revert the task's commits; no data migration",
+      "rollback": "git revert the task's commits; committed runs are never changed",
       "status": "todo",
-      "notes": "Split from T03 on 2026-10-11."
+      "notes": "Was T03b before 2026-10-11 11:15 UTC."
     },
     {
-      "id": "T04",
-      "title": "The report layout, the layout decision and the unattended run over all counties",
-      "objective": "Counties in the one-precinct-per-page layout are read and audited, the layout is decided per county, and `crossfoot audit --all` runs unattended and resumes",
+      "id": "T04a",
+      "title": "The one-precinct-per-page layout, the layout decision, and San Saba audited",
+      "objective": "Counties in the report layout are read and audited; the layout is decided per county; a county with no printed totals is left alone",
       "role": "product-engineer",
       "size": "L",
       "deps": [
-        "T03b"
+        "T03c"
       ],
       "writes": [
-        "crossfoot/layouts/report.py",
-        "crossfoot/layouts/profile.py",
-        "crossfoot/layouts/__init__.py",
-        "crossfoot/cli.py",
-        "crossfoot/agent.py",
-        "crossfoot/audit.py",
-        "crossfoot/outputs.py",
+        "crossfoot/**",
         "tests/**",
         "runs/**",
         "hackathon.md",
-        ".prod-build/reports/T04.md",
+        ".prod-build/reports/T04a.md",
         ".prod-build/evidence.jsonl"
       ],
       "acceptance": [
         "WHEN `crossfoot audit --county san_saba` finishes THE SYSTEM SHALL list the published file's row that fails its own total",
-        "AC-4",
         "IF a county's layout cannot be decided THEN THE SYSTEM SHALL report it as not supported and leave it alone"
       ],
       "verify": [
         "uv run pytest -q",
         "uv run crossfoot audit --county san_saba"
       ],
-      "rollback": "git revert the task's commit; no data migration",
+      "rollback": "git revert the task's commits; committed runs are never changed",
       "status": "todo",
-      "notes": ""
+      "notes": "Split from T04 on 2026-10-11."
     },
     {
-      "id": "T05",
-      "title": "The recovery run and the evidence of the full run",
-      "objective": "One place in the full run where an action failed and what the agent did next is written down from the run's events, and the worst remaining failure of the full run is either fixed with a second before and after or listed as a known limit",
+      "id": "T04b",
+      "title": "Every county unattended, with a budget, resume and a summary",
+      "objective": "`crossfoot audit --all` runs unattended, resumes, stays inside a budget and writes a summary; the full run is made once",
       "role": "product-engineer",
-      "size": "M",
+      "size": "L",
       "deps": [
-        "T04"
+        "T04a"
       ],
       "writes": [
         "crossfoot/**",
         "tests/**",
         "runs/**",
-        "docs/evidence/**",
         "hackathon.md",
-        ".mcp.json",
-        ".prod-build/reports/T05.md",
+        ".prod-build/reports/T04b.md",
         ".prod-build/evidence.jsonl"
       ],
       "acceptance": [
-        "WHEN the fix is in THE SYSTEM SHALL have two run folders for the same counties, before and after, and a table of their numbers in docs/evidence/before-after.md"
+        "AC-4",
+        "IF the metered cost would pass the budget THEN THE SYSTEM SHALL stop before the next call and list the counties not reached"
       ],
       "verify": [
         "uv run pytest -q"
       ],
+      "rollback": "git revert the task's commits; committed runs are never changed",
+      "status": "todo",
+      "notes": "Split from T04 on 2026-10-11. The full run is made once inside the task and recorded with `pb.py run`."
+    },
+    {
+      "id": "T05",
+      "title": "The one-prompt baseline scored the same way, and the recovery evidence",
+      "objective": "The baseline's findings are scored against the audit's ledger with the audit's rules and reported whatever they show; one real recovery is written up from the runs' events",
+      "role": "product-engineer",
+      "size": "M",
+      "deps": [
+        "T04b"
+      ],
+      "writes": [
+        "crossfoot/score.py",
+        "crossfoot/audit.py",
+        "crossfoot/cli.py",
+        "tests/**",
+        "docs/evidence/**",
+        "hackathon.md",
+        ".prod-build/reports/T05.md",
+        ".prod-build/evidence.jsonl"
+      ],
+      "acceptance": [
+        "WHEN `crossfoot score` runs THE SYSTEM SHALL put every claimed disagreement in one of four groups by the audit's own rules"
+      ],
+      "verify": [
+        "uv run pytest -q",
+        "uv run crossfoot score --findings docs/evidence/baseline/findings.json --county panola --resume latest"
+      ],
       "rollback": "git revert the task's commit; no data migration",
       "status": "todo",
-      "notes": "Changed 2026-10-11: the first before-and-after moved to T02a."
+      "notes": "Changed 2026-10-11: both before-and-after sections are written by T02a and T03b, so this task scores the baseline (S3) and writes the recovery evidence."
     },
     {
       "id": "T06",
@@ -319,7 +374,7 @@
       "role": "product-engineer",
       "size": "L",
       "deps": [
-        "T03b"
+        "T03c"
       ],
       "writes": [
         "crossfoot/outputs.py",

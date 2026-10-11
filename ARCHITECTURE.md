@@ -69,10 +69,14 @@ rejected; the other layout is tried; if neither holds the county is reported as 
 1. `render.py` renders a page at 200 dpi.
 2. Matrix: `segment.py` finds the blocks as bands of ink separated by blank bands, and the column lines inside a
    block as columns of dark pixels that run the height of the ruled rows. Report: the page is read whole.
-3. `model.py` sends one crop per block (matrix) or one page (report) to `claude-haiku` and asks for strict JSON.
-   Every value comes back with the block, row kind and column it belongs to. The answer is validated (right number
-   of columns, integers only); one repair request is allowed.
-4. The values go into the ledger as `first_read`, with the page and the pixel box of each cell where it is known.
+3. Matrix: each block is cut into column groups no wider than 1,500 px at 300 dpi, one model call per group; report:
+   one page per call. The answer is strict JSON, validated (right number of columns, integers only), with one repair
+   request. Every value comes back with the block, row kind and column it belongs to.
+4. Which model reads a county is decided by measurement, not fixed. A sample of the first page is read with
+   `claude-haiku`; if more than a tenth of the sample's row sums fail, the county is read with `claude-sonnet-4.6`.
+   Measured on Panola on 11 October 2026, same code and crops: `claude-haiku` left 85 of 943 printed sums failing
+   (44 after a 20-minute re-read loop with 565 more calls); `claude-sonnet-4.6` left 6 of 942.
+5. The values go into the ledger as `first_read`, with the page and the pixel box of each value where it is known.
 
 ## The ledger (`ledger.py`, SQLite, one file per run)
 
@@ -92,20 +96,29 @@ is present in one place and absent in another.
 
 ## The investigation loop (`agent.py`)
 
-This is the agent. Its work list is every cell on a failing sum after the first read, and later every
-disagreement with the published file. For each item the model is shown the item, what has been tried, and the
-checks' output, and returns one action as JSON:
+Every value on a matrix sheet sits on two printed sums. A cell sits on its row and its column. The small total under
+a column sits on that column and on the grand total (the small totals add to it). A row's printed total sits on its
+row and on the grand total (the three row totals add to it). So one wrong value makes exactly two sums fail, and they
+cross at it. `checks.locate()` pairs failing sums that share one value and whose differences agree: that value is the
+suspect, and the difference says what it would have to be.
 
-- `reread {target, dpi, model}`: crop a cell, a column slice or a block half at a higher dpi and read it again
-- `accept {cell, value}`: code accepts only if the row and column sums then hold; otherwise it answers with the sums that fail
-- `classify {finding, kind}`: name the kind of disagreement with the published file
+The loop works the sums that still fail after the first read, and later every disagreement with the published file.
+For a located suspect it looks at the scan again: a re-read of that one value, cut at 400 dpi or more and enlarged.
+A value changes only because a re-read of the scan gave the new value; arithmetic says where to look, never what to
+write. What pairing cannot locate goes to the model, which is shown the failing sums and what has been tried and
+returns one action as JSON:
+
+- `reread {target, dpi, model}`: a single value, a column slice or a row strip
+- `conclude {item, verdict, reason}`: `document_inconsistent` or `cannot_verify`
 - `ask_policy {question_id}`: use the stored answer, or the default marked as unconfirmed
-- `cannot_verify {item, reason}`: stop work on the item and leave the published value alone
 - `done {item}`
 
-Rules that code enforces whatever the model says: at most six actions per item; the stronger model
-(`claude-sonnet-4.6`) only after two failed re-reads with `claude-haiku`; no value is accepted without passing
-sums; a correction is written only when the printed totals agree with the new value and disagree with the old one.
+Rules that code enforces whatever the model says: at most six actions per item; re-reads climb one step at a time
+(the county's reader, then `claude-sonnet-4.6`, then `claude-opus-4.6`), a step only after the one below has failed
+to settle the value; the same target is never re-read twice with the same model and dpi; no value is accepted unless
+both of its sums hold; a value the scan shows the same way twice while its two sums still fail is
+`document_inconsistent` (the document disagrees with itself there) and the stored policy answer applies; a correction
+is written only when the printed totals agree with the new value and disagree with the old one.
 Every action and its result is an event in the ledger and a span in neatlogs.
 
 ## The audit (`audit.py`)

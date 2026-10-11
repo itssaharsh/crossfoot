@@ -76,7 +76,7 @@ AC-7: WHEN a correction is written THE SYSTEM SHALL include it only if the print
 
 ## 10. Assumptions
 A-1 [reversible]: block and column positions on ruled sheets can be found from the image itself; if not, the model supplies approximate positions - validate on Panola pages 1 to 6.
-A-2 [reversible]: `claude-haiku` reads block crops well enough for a first pass at 200 dpi - validate by the first-read figure on Panola.
+A-2 [reversible, disproved on 11 October 2026]: `claude-haiku` reads block crops well enough for a first pass. Measured on Panola: it left 85 of 943 printed sums failing, against 6 of 942 for `claude-sonnet-4.6` on the same crops. Replaced by: the reader is chosen per county from a measured sample of its first page (ARCHITECTURE.md, Reading).
 A-3 [safe]: the scans and published files may be downloaded and quoted with attribution; the project publishes them openly.
 A-4 [reversible]: the default answer to the policy question is "follow the cells as printed and list the printed total as inconsistent", recorded as a default until a person confirms it.
 

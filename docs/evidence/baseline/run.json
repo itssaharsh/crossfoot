@@ -1,0 +1,25 @@
+{
+  "what": "one prompt to a general coding agent on the same county, in an empty folder holding only the scan (scan.pdf) and the published file (published.csv)",
+  "agent": "Claude Code, headless (claude -p), model claude-sonnet-5-5",
+  "tools_allowed": [
+    "Bash",
+    "Read",
+    "Write",
+    "Edit",
+    "Glob",
+    "Grep",
+    "TodoWrite"
+  ],
+  "network": "web tools and curl/wget disallowed",
+  "started_utc": "2026-10-11T09:28:04Z",
+  "turns": 79,
+  "seconds": 411,
+  "cost_usd_api_equivalent": 1.5254,
+  "tool_calls": {
+    "Bash": 30,
+    "Read": 25
+  },
+  "findings_listed": 74,
+  "isolation": "its transcript shows file access only inside its own folder and a scratch folder it made",
+  "scored": "not yet; a later task scores findings.json against the audit's ledger"
+}

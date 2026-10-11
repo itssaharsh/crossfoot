@@ -1,0 +1,7 @@
+This folder holds scan.pdf, a county's scanned precinct-level results for the November 2024 general election (6 pages, images only, no text layer), and published.csv, a volunteer transcription of that scan (columns: county, precinct, office, district, party, candidate, votes, absentee, early_voting, election_day).
+
+Audit the CSV against the scan: find every value in the CSV that disagrees with the scan.
+
+Write findings.json: a JSON list with one object per disagreement, with the keys office, candidate, precinct, part (one of votes, absentee, early_voting, election_day), file_value, scan_value and evidence (one sentence on how you know). Also write summary.md saying what you checked, how, and what you could not check.
+
+Work only inside this folder and do not use the network.

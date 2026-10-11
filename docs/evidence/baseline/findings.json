@@ -1,0 +1,668 @@
+[
+ {
+  "office": "President",
+  "candidate": "Chase Oliver",
+  "precinct": "18",
+  "part": "early_voting",
+  "file_value": 0,
+  "scan_value": 1,
+  "evidence": "Scan page p1, Chase Oliver block: precinct 18 column reads 1 for early voting, while the CSV has 0; scan row totals reconcile."
+ },
+ {
+  "office": "President",
+  "candidate": "Chase Oliver",
+  "precinct": "18",
+  "part": "election_day",
+  "file_value": 1,
+  "scan_value": 0,
+  "evidence": "Scan page p1, Chase Oliver block: precinct 18 column reads 0 for election day, while the CSV has 1; scan row totals reconcile."
+ },
+ {
+  "office": "President",
+  "candidate": "Chase Oliver",
+  "precinct": "29",
+  "part": "election_day",
+  "file_value": 0,
+  "scan_value": 1,
+  "evidence": "Scan page p1, Chase Oliver block: precinct 29 column reads 1 for election day, while the CSV has 0; scan row totals reconcile."
+ },
+ {
+  "office": "President",
+  "candidate": "Chase Oliver",
+  "precinct": "29",
+  "part": "votes",
+  "file_value": 0,
+  "scan_value": 1,
+  "evidence": "Scan page p1, Chase Oliver block: precinct 29 column reads 1 for votes (printed precinct subtotal), while the CSV has 0; scan row totals reconcile."
+ },
+ {
+  "office": "President",
+  "candidate": "Jill Stein",
+  "precinct": "2",
+  "part": "election_day",
+  "file_value": 1,
+  "scan_value": 0,
+  "evidence": "Scan page p1, Jill Stein block: precinct 2 column reads 0 for election day, while the CSV has 1; scan row totals reconcile."
+ },
+ {
+  "office": "President",
+  "candidate": "Jill Stein",
+  "precinct": "2",
+  "part": "votes",
+  "file_value": 1,
+  "scan_value": 0,
+  "evidence": "Scan page p1, Jill Stein block: precinct 2 column reads 0 for votes (printed precinct subtotal), while the CSV has 1; scan row totals reconcile."
+ },
+ {
+  "office": "President",
+  "candidate": "Jill Stein",
+  "precinct": "3",
+  "part": "election_day",
+  "file_value": 0,
+  "scan_value": 1,
+  "evidence": "Scan page p1, Jill Stein block: precinct 3 column reads 1 for election day, while the CSV has 0; scan row totals reconcile."
+ },
+ {
+  "office": "President",
+  "candidate": "Jill Stein",
+  "precinct": "3",
+  "part": "votes",
+  "file_value": 0,
+  "scan_value": 1,
+  "evidence": "Scan page p1, Jill Stein block: precinct 3 column reads 1 for votes (printed precinct subtotal), while the CSV has 0; scan row totals reconcile."
+ },
+ {
+  "office": "President",
+  "candidate": "Jill Stein",
+  "precinct": "18",
+  "part": "absentee",
+  "file_value": 0,
+  "scan_value": 1,
+  "evidence": "Scan page p1, Jill Stein block: precinct 18 column reads 1 for absentee, while the CSV has 0; scan row totals reconcile."
+ },
+ {
+  "office": "President",
+  "candidate": "Jill Stein",
+  "precinct": "18",
+  "part": "votes",
+  "file_value": 0,
+  "scan_value": 1,
+  "evidence": "Scan page p1, Jill Stein block: precinct 18 column reads 1 for votes (printed precinct subtotal), while the CSV has 0; scan row totals reconcile."
+ },
+ {
+  "office": "President",
+  "candidate": "Jill Stein",
+  "precinct": "27",
+  "part": "early_voting",
+  "file_value": 0,
+  "scan_value": 1,
+  "evidence": "Scan page p1, Jill Stein block: precinct 27 column reads 1 for early voting, while the CSV has 0; scan row totals reconcile."
+ },
+ {
+  "office": "President",
+  "candidate": "Jill Stein",
+  "precinct": "27",
+  "part": "election_day",
+  "file_value": 0,
+  "scan_value": 1,
+  "evidence": "Scan page p1, Jill Stein block: precinct 27 column reads 1 for election day, while the CSV has 0; scan row totals reconcile."
+ },
+ {
+  "office": "President",
+  "candidate": "Jill Stein",
+  "precinct": "27",
+  "part": "votes",
+  "file_value": 0,
+  "scan_value": 2,
+  "evidence": "Scan page p1, Jill Stein block: precinct 27 column reads 2 for votes (printed precinct subtotal), while the CSV has 0; scan row totals reconcile."
+ },
+ {
+  "office": "President",
+  "candidate": "Jill Stein",
+  "precinct": "28",
+  "part": "early_voting",
+  "file_value": 0,
+  "scan_value": 1,
+  "evidence": "Scan page p1, Jill Stein block: precinct 28 column reads 1 for early voting, while the CSV has 0; scan row totals reconcile."
+ },
+ {
+  "office": "President",
+  "candidate": "Jill Stein",
+  "precinct": "28",
+  "part": "election_day",
+  "file_value": 4,
+  "scan_value": 0,
+  "evidence": "Scan page p1, Jill Stein block: precinct 28 column reads 0 for election day, while the CSV has 4; scan row totals reconcile."
+ },
+ {
+  "office": "President",
+  "candidate": "Jill Stein",
+  "precinct": "28",
+  "part": "votes",
+  "file_value": 4,
+  "scan_value": 1,
+  "evidence": "Scan page p1, Jill Stein block: precinct 28 column reads 1 for votes (printed precinct subtotal), while the CSV has 4; scan row totals reconcile."
+ },
+ {
+  "office": "President",
+  "candidate": "Peter Sonski",
+  "precinct": "9",
+  "part": "election_day",
+  "file_value": 0,
+  "scan_value": 2,
+  "evidence": "Scan page p1, Peter Sonski block: precinct 9 column reads 2 for election day, while the CSV has 0; scan row totals reconcile."
+ },
+ {
+  "office": "President",
+  "candidate": "Peter Sonski",
+  "precinct": "9",
+  "part": "votes",
+  "file_value": 0,
+  "scan_value": 2,
+  "evidence": "Scan page p1, Peter Sonski block: precinct 9 column reads 2 for votes (printed precinct subtotal), while the CSV has 0; scan row totals reconcile."
+ },
+ {
+  "office": "President",
+  "candidate": "Peter Sonski",
+  "precinct": "28",
+  "part": "election_day",
+  "file_value": 2,
+  "scan_value": 0,
+  "evidence": "Scan page p1, Peter Sonski block: precinct 28 column reads 0 for election day, while the CSV has 2; scan row totals reconcile."
+ },
+ {
+  "office": "President",
+  "candidate": "Peter Sonski",
+  "precinct": "28",
+  "part": "votes",
+  "file_value": 2,
+  "scan_value": 0,
+  "evidence": "Scan page p1, Peter Sonski block: precinct 28 column reads 0 for votes (printed precinct subtotal), while the CSV has 2; scan row totals reconcile."
+ },
+ {
+  "office": "Railroad Commissioner",
+  "candidate": "Hawk Dunlap",
+  "precinct": "12",
+  "part": "absentee",
+  "file_value": 3,
+  "scan_value": 0,
+  "evidence": "Scan page p3, Hawk Dunlap block: precinct 12 column reads 0 for absentee, while the CSV has 3; scan row totals reconcile."
+ },
+ {
+  "office": "Railroad Commissioner",
+  "candidate": "Hawk Dunlap",
+  "precinct": "12",
+  "part": "election_day",
+  "file_value": 4,
+  "scan_value": 7,
+  "evidence": "Scan page p3, Hawk Dunlap block: precinct 12 column reads 7 for election day, while the CSV has 4; scan row totals reconcile."
+ },
+ {
+  "office": "Railroad Commissioner",
+  "candidate": "Hawk Dunlap",
+  "precinct": "13",
+  "part": "absentee",
+  "file_value": 0,
+  "scan_value": 1,
+  "evidence": "Scan page p3, Hawk Dunlap block: precinct 13 column reads 1 for absentee, while the CSV has 0; scan row totals reconcile."
+ },
+ {
+  "office": "Railroad Commissioner",
+  "candidate": "Hawk Dunlap",
+  "precinct": "13",
+  "part": "election_day",
+  "file_value": 4,
+  "scan_value": 3,
+  "evidence": "Scan page p3, Hawk Dunlap block: precinct 13 column reads 3 for election day, while the CSV has 4; scan row totals reconcile."
+ },
+ {
+  "office": "Railroad Commissioner",
+  "candidate": "Hawk Dunlap",
+  "precinct": "14",
+  "part": "early_voting",
+  "file_value": 3,
+  "scan_value": 13,
+  "evidence": "Scan page p3, Hawk Dunlap block: precinct 14 column reads 13 for early voting, while the CSV has 3; scan row totals reconcile."
+ },
+ {
+  "office": "Railroad Commissioner",
+  "candidate": "Hawk Dunlap",
+  "precinct": "14",
+  "part": "election_day",
+  "file_value": 4,
+  "scan_value": 3,
+  "evidence": "Scan page p3, Hawk Dunlap block: precinct 14 column reads 3 for election day, while the CSV has 4; scan row totals reconcile."
+ },
+ {
+  "office": "Railroad Commissioner",
+  "candidate": "Hawk Dunlap",
+  "precinct": "14",
+  "part": "votes",
+  "file_value": 7,
+  "scan_value": 16,
+  "evidence": "Scan page p3, Hawk Dunlap block: precinct 14 column reads 16 for votes (printed precinct subtotal), while the CSV has 7; scan row totals reconcile."
+ },
+ {
+  "office": "Railroad Commissioner",
+  "candidate": "Hawk Dunlap",
+  "precinct": "18",
+  "part": "absentee",
+  "file_value": 2,
+  "scan_value": 1,
+  "evidence": "Scan page p3, Hawk Dunlap block: precinct 18 column reads 1 for absentee, while the CSV has 2; scan row totals reconcile."
+ },
+ {
+  "office": "Railroad Commissioner",
+  "candidate": "Hawk Dunlap",
+  "precinct": "18",
+  "part": "election_day",
+  "file_value": 9,
+  "scan_value": 10,
+  "evidence": "Scan page p3, Hawk Dunlap block: precinct 18 column reads 10 for election day, while the CSV has 9; scan row totals reconcile."
+ },
+ {
+  "office": "Railroad Commissioner",
+  "candidate": "Hawk Dunlap",
+  "precinct": "27",
+  "part": "absentee",
+  "file_value": 0,
+  "scan_value": 1,
+  "evidence": "Scan page p3, Hawk Dunlap block: precinct 27 column reads 1 for absentee, while the CSV has 0; scan row totals reconcile."
+ },
+ {
+  "office": "Railroad Commissioner",
+  "candidate": "Hawk Dunlap",
+  "precinct": "27",
+  "part": "election_day",
+  "file_value": 7,
+  "scan_value": 6,
+  "evidence": "Scan page p3, Hawk Dunlap block: precinct 27 column reads 6 for election day, while the CSV has 7; scan row totals reconcile."
+ },
+ {
+  "office": "Railroad Commissioner",
+  "candidate": "Hawk Dunlap",
+  "precinct": "29",
+  "part": "early_voting",
+  "file_value": 0,
+  "scan_value": 1,
+  "evidence": "Scan page p3, Hawk Dunlap block: precinct 29 column reads 1 for early voting, while the CSV has 0; scan row totals reconcile."
+ },
+ {
+  "office": "Railroad Commissioner",
+  "candidate": "Hawk Dunlap",
+  "precinct": "29",
+  "part": "election_day",
+  "file_value": 0,
+  "scan_value": 9,
+  "evidence": "Scan page p3, Hawk Dunlap block: precinct 29 column reads 9 for election day, while the CSV has 0; scan row totals reconcile."
+ },
+ {
+  "office": "Railroad Commissioner",
+  "candidate": "Hawk Dunlap",
+  "precinct": "29",
+  "part": "votes",
+  "file_value": 0,
+  "scan_value": 10,
+  "evidence": "Scan page p3, Hawk Dunlap block: precinct 29 column reads 10 for votes (printed precinct subtotal), while the CSV has 0; scan row totals reconcile."
+ },
+ {
+  "office": "Railroad Commissioner",
+  "candidate": "Eddie Espinoza",
+  "precinct": "2",
+  "part": "early_voting",
+  "file_value": 3,
+  "scan_value": 1,
+  "evidence": "Scan page p3, Eddie Espinoza block: precinct 2 column reads 1 for early voting, while the CSV has 3; scan row totals reconcile."
+ },
+ {
+  "office": "Railroad Commissioner",
+  "candidate": "Eddie Espinoza",
+  "precinct": "2",
+  "part": "votes",
+  "file_value": 6,
+  "scan_value": 4,
+  "evidence": "Scan page p3, Eddie Espinoza block: precinct 2 column reads 4 for votes (printed precinct subtotal), while the CSV has 6; scan row totals reconcile."
+ },
+ {
+  "office": "Railroad Commissioner",
+  "candidate": "Eddie Espinoza",
+  "precinct": "3",
+  "part": "early_voting",
+  "file_value": 1,
+  "scan_value": 3,
+  "evidence": "Scan page p3, Eddie Espinoza block: precinct 3 column reads 3 for early voting, while the CSV has 1; scan row totals reconcile."
+ },
+ {
+  "office": "Railroad Commissioner",
+  "candidate": "Eddie Espinoza",
+  "precinct": "3",
+  "part": "election_day",
+  "file_value": 2,
+  "scan_value": 0,
+  "evidence": "Scan page p3, Eddie Espinoza block: precinct 3 column reads 0 for election day, while the CSV has 2; scan row totals reconcile."
+ },
+ {
+  "office": "Railroad Commissioner",
+  "candidate": "Eddie Espinoza",
+  "precinct": "7",
+  "part": "early_voting",
+  "file_value": 0,
+  "scan_value": 1,
+  "evidence": "Scan page p3, Eddie Espinoza block: precinct 7 column reads 1 for early voting, while the CSV has 0; scan row totals reconcile."
+ },
+ {
+  "office": "Railroad Commissioner",
+  "candidate": "Eddie Espinoza",
+  "precinct": "7",
+  "part": "votes",
+  "file_value": 5,
+  "scan_value": 6,
+  "evidence": "Scan page p3, Eddie Espinoza block: precinct 7 column reads 6 for votes (printed precinct subtotal), while the CSV has 5; scan row totals reconcile."
+ },
+ {
+  "office": "Railroad Commissioner",
+  "candidate": "Eddie Espinoza",
+  "precinct": "9",
+  "part": "election_day",
+  "file_value": 6,
+  "scan_value": 1,
+  "evidence": "Scan page p3, Eddie Espinoza block: precinct 9 column reads 1 for election day, while the CSV has 6; scan row totals reconcile."
+ },
+ {
+  "office": "Railroad Commissioner",
+  "candidate": "Eddie Espinoza",
+  "precinct": "9",
+  "part": "votes",
+  "file_value": 6,
+  "scan_value": 1,
+  "evidence": "Scan page p3, Eddie Espinoza block: precinct 9 column reads 1 for votes (printed precinct subtotal), while the CSV has 6; scan row totals reconcile."
+ },
+ {
+  "office": "Railroad Commissioner",
+  "candidate": "Eddie Espinoza",
+  "precinct": "13",
+  "part": "election_day",
+  "file_value": 2,
+  "scan_value": 0,
+  "evidence": "Scan page p3, Eddie Espinoza block: precinct 13 column reads 0 for election day, while the CSV has 2; scan row totals reconcile."
+ },
+ {
+  "office": "Railroad Commissioner",
+  "candidate": "Eddie Espinoza",
+  "precinct": "13",
+  "part": "votes",
+  "file_value": 3,
+  "scan_value": 1,
+  "evidence": "Scan page p3, Eddie Espinoza block: precinct 13 column reads 1 for votes (printed precinct subtotal), while the CSV has 3; scan row totals reconcile."
+ },
+ {
+  "office": "Railroad Commissioner",
+  "candidate": "Eddie Espinoza",
+  "precinct": "14",
+  "part": "early_voting",
+  "file_value": 0,
+  "scan_value": 1,
+  "evidence": "Scan page p3, Eddie Espinoza block: precinct 14 column reads 1 for early voting, while the CSV has 0; scan row totals reconcile."
+ },
+ {
+  "office": "Railroad Commissioner",
+  "candidate": "Eddie Espinoza",
+  "precinct": "14",
+  "part": "election_day",
+  "file_value": 0,
+  "scan_value": 1,
+  "evidence": "Scan page p3, Eddie Espinoza block: precinct 14 column reads 1 for election day, while the CSV has 0; scan row totals reconcile."
+ },
+ {
+  "office": "Railroad Commissioner",
+  "candidate": "Eddie Espinoza",
+  "precinct": "14",
+  "part": "votes",
+  "file_value": 0,
+  "scan_value": 2,
+  "evidence": "Scan page p3, Eddie Espinoza block: precinct 14 column reads 2 for votes (printed precinct subtotal), while the CSV has 0; scan row totals reconcile."
+ },
+ {
+  "office": "Railroad Commissioner",
+  "candidate": "Eddie Espinoza",
+  "precinct": "18",
+  "part": "absentee",
+  "file_value": 1,
+  "scan_value": 0,
+  "evidence": "Scan page p3, Eddie Espinoza block: precinct 18 column reads 0 for absentee, while the CSV has 1; scan row totals reconcile."
+ },
+ {
+  "office": "Railroad Commissioner",
+  "candidate": "Eddie Espinoza",
+  "precinct": "18",
+  "part": "election_day",
+  "file_value": 4,
+  "scan_value": 2,
+  "evidence": "Scan page p3, Eddie Espinoza block: precinct 18 column reads 2 for election day, while the CSV has 4; scan row totals reconcile."
+ },
+ {
+  "office": "Railroad Commissioner",
+  "candidate": "Eddie Espinoza",
+  "precinct": "18",
+  "part": "votes",
+  "file_value": 9,
+  "scan_value": 6,
+  "evidence": "Scan page p3, Eddie Espinoza block: precinct 18 column reads 6 for votes (printed precinct subtotal), while the CSV has 9; scan row totals reconcile."
+ },
+ {
+  "office": "Railroad Commissioner",
+  "candidate": "Eddie Espinoza",
+  "precinct": "27",
+  "part": "election_day",
+  "file_value": 0,
+  "scan_value": 4,
+  "evidence": "Scan page p3, Eddie Espinoza block: precinct 27 column reads 4 for election day, while the CSV has 0; scan row totals reconcile."
+ },
+ {
+  "office": "Railroad Commissioner",
+  "candidate": "Eddie Espinoza",
+  "precinct": "27",
+  "part": "votes",
+  "file_value": 1,
+  "scan_value": 5,
+  "evidence": "Scan page p3, Eddie Espinoza block: precinct 27 column reads 5 for votes (printed precinct subtotal), while the CSV has 1; scan row totals reconcile."
+ },
+ {
+  "office": "Railroad Commissioner",
+  "candidate": "Eddie Espinoza",
+  "precinct": "28",
+  "part": "early_voting",
+  "file_value": 0,
+  "scan_value": 9,
+  "evidence": "Scan page p3, Eddie Espinoza block: precinct 28 column reads 9 for early voting, while the CSV has 0; scan row totals reconcile."
+ },
+ {
+  "office": "Railroad Commissioner",
+  "candidate": "Eddie Espinoza",
+  "precinct": "28",
+  "part": "election_day",
+  "file_value": 9,
+  "scan_value": 4,
+  "evidence": "Scan page p3, Eddie Espinoza block: precinct 28 column reads 4 for election day, while the CSV has 9; scan row totals reconcile."
+ },
+ {
+  "office": "Railroad Commissioner",
+  "candidate": "Eddie Espinoza",
+  "precinct": "28",
+  "part": "votes",
+  "file_value": 9,
+  "scan_value": 13,
+  "evidence": "Scan page p3, Eddie Espinoza block: precinct 28 column reads 13 for votes (printed precinct subtotal), while the CSV has 9; scan row totals reconcile."
+ },
+ {
+  "office": "Railroad Commissioner",
+  "candidate": "Eddie Espinoza",
+  "precinct": "29",
+  "part": "early_voting",
+  "file_value": 0,
+  "scan_value": 1,
+  "evidence": "Scan page p3, Eddie Espinoza block: precinct 29 column reads 1 for early voting, while the CSV has 0; scan row totals reconcile."
+ },
+ {
+  "office": "Railroad Commissioner",
+  "candidate": "Eddie Espinoza",
+  "precinct": "29",
+  "part": "votes",
+  "file_value": 0,
+  "scan_value": 1,
+  "evidence": "Scan page p3, Eddie Espinoza block: precinct 29 column reads 1 for votes (printed precinct subtotal), while the CSV has 0; scan row totals reconcile."
+ },
+ {
+  "office": "Registered Voters",
+  "candidate": "",
+  "precinct": "3",
+  "part": "votes",
+  "file_value": 1453,
+  "scan_value": 1459,
+  "evidence": "Scan page 1 header row, precinct 3 column clearly reads 1459 (confirmed at 300 dpi), while the CSV has 1453."
+ },
+ {
+  "office": "Justice, Supreme Court, Place 2",
+  "candidate": "DaSean Jones",
+  "precinct": "29",
+  "part": "early_voting",
+  "file_value": 4,
+  "scan_value": 3,
+  "evidence": "Scan page 4, DaSean Jones block, precinct 29 column reads 3; subtotal 4 = 3+0+1; the CSV has 4."
+ },
+ {
+  "office": "Justice, Supreme Court, Place 2",
+  "candidate": "DaSean Jones",
+  "precinct": "29",
+  "part": "election_day",
+  "file_value": 0,
+  "scan_value": 1,
+  "evidence": "Scan page 4, DaSean Jones block, precinct 29 column reads 1; subtotal 4 = 3+0+1; the CSV has 0."
+ },
+ {
+  "office": "Justice, Supreme Court, Place 4",
+  "candidate": "Christine Vinh Weems",
+  "precinct": "29",
+  "part": "election_day",
+  "file_value": 0,
+  "scan_value": 1,
+  "evidence": "Scan page 4, Christine Vinh Weems block, precinct 29 column reads 1; subtotal 3 = 2+0+1; the CSV has 0."
+ },
+ {
+  "office": "Justice, Supreme Court, Place 4",
+  "candidate": "Christine Vinh Weems",
+  "precinct": "29",
+  "part": "votes",
+  "file_value": 2,
+  "scan_value": 3,
+  "evidence": "Scan page 4, Christine Vinh Weems block, precinct 29 column reads 3; printed subtotal 3; the CSV has 2."
+ },
+ {
+  "office": "Justice, Supreme Court, Place 6",
+  "candidate": "J.David Roberson",
+  "precinct": "12",
+  "part": "early_voting",
+  "file_value": 1,
+  "scan_value": 3,
+  "evidence": "Scan page 4, J.David Roberson block: precinct 12 column reads 3 for early voting, while the CSV has 1; scan row totals reconcile."
+ },
+ {
+  "office": "Justice, Supreme Court, Place 6",
+  "candidate": "J.David Roberson",
+  "precinct": "12",
+  "part": "votes",
+  "file_value": 2,
+  "scan_value": 4,
+  "evidence": "Scan page 4, J.David Roberson block: precinct 12 column reads 4 for votes (printed precinct subtotal), while the CSV has 2; scan row totals reconcile."
+ },
+ {
+  "office": "Justice, Supreme Court, Place 6",
+  "candidate": "J.David Roberson",
+  "precinct": "13",
+  "part": "early_voting",
+  "file_value": 3,
+  "scan_value": 0,
+  "evidence": "Scan page 4, J.David Roberson block: precinct 13 column reads 0 for early voting, while the CSV has 3; scan row totals reconcile."
+ },
+ {
+  "office": "Justice, Supreme Court, Place 6",
+  "candidate": "J.David Roberson",
+  "precinct": "13",
+  "part": "election_day",
+  "file_value": 4,
+  "scan_value": 2,
+  "evidence": "Scan page 4, J.David Roberson block: precinct 13 column reads 2 for election day, while the CSV has 4; scan row totals reconcile."
+ },
+ {
+  "office": "Justice, Supreme Court, Place 6",
+  "candidate": "J.David Roberson",
+  "precinct": "13",
+  "part": "votes",
+  "file_value": 7,
+  "scan_value": 2,
+  "evidence": "Scan page 4, J.David Roberson block: precinct 13 column reads 2 for votes (printed precinct subtotal), while the CSV has 7; scan row totals reconcile."
+ },
+ {
+  "office": "Justice, Supreme Court, Place 6",
+  "candidate": "J.David Roberson",
+  "precinct": "14",
+  "part": "early_voting",
+  "file_value": 2,
+  "scan_value": 4,
+  "evidence": "Scan page 4, J.David Roberson block: precinct 14 column reads 4 for early voting, while the CSV has 2; scan row totals reconcile."
+ },
+ {
+  "office": "Justice, Supreme Court, Place 6",
+  "candidate": "J.David Roberson",
+  "precinct": "14",
+  "part": "election_day",
+  "file_value": 2,
+  "scan_value": 3,
+  "evidence": "Scan page 4, J.David Roberson block: precinct 14 column reads 3 for election day, while the CSV has 2; scan row totals reconcile."
+ },
+ {
+  "office": "Justice, Supreme Court, Place 6",
+  "candidate": "J.David Roberson",
+  "precinct": "14",
+  "part": "votes",
+  "file_value": 4,
+  "scan_value": 7,
+  "evidence": "Scan page 4, J.David Roberson block: precinct 14 column reads 7 for votes (printed precinct subtotal), while the CSV has 4; scan row totals reconcile."
+ },
+ {
+  "office": "Justice, Supreme Court, Place 6",
+  "candidate": "J.David Roberson",
+  "precinct": "29",
+  "part": "election_day",
+  "file_value": 0,
+  "scan_value": 3,
+  "evidence": "Scan page 4, J.David Roberson block: precinct 29 column reads 3 for election day, while the CSV has 0; scan row totals reconcile."
+ },
+ {
+  "office": "Justice, Supreme Court, Place 6",
+  "candidate": "J.David Roberson",
+  "precinct": "29",
+  "part": "votes",
+  "file_value": 1,
+  "scan_value": 4,
+  "evidence": "Scan page 4, J.David Roberson block: precinct 29 column reads 4 for votes (printed precinct subtotal), while the CSV has 1; scan row totals reconcile."
+ },
+ {
+  "office": "Judge, Court of Criminal Appeals, Place 8",
+  "candidate": "Chika Anyiam",
+  "precinct": "29",
+  "part": "absentee",
+  "file_value": 2,
+  "scan_value": 0,
+  "evidence": "Scan page 5, Chika Anyiam block, precinct 29 column reads 0; precinct 2, subtotal 8; the CSV has 2."
+ },
+ {
+  "office": "Judge, Court of Criminal Appeals, Place 8",
+  "candidate": "Chika Anyiam",
+  "precinct": "29",
+  "part": "election_day",
+  "file_value": 0,
+  "scan_value": 2,
+  "evidence": "Scan page 5, Chika Anyiam block, precinct 29 column reads 2; the CSV has 0."
+ }
+]

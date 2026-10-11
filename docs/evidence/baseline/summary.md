@@ -1,0 +1,14 @@
+# Audit of published.csv against scan.pdf
+
+## What I checked
+- Rendered all 6 scan pages at 300 dpi (no text layer, no OCR tool available) and read the numbers by eye in half-width crops, comparing each to the CSV.
+- Compared every candidate block on pages 1-6: registered voters, ballots cast (early/absentee/precinct), and every candidate's early, absentee, election-day (printed "PRECINCT") and per-precinct subtotal ("votes"), for all 19 precincts, plus the printed TOTAL column.
+- Used the scan's arithmetic (early + absentee + precinct = subtotal; column sums = TOTAL) to cross-check my readings, and the CSV's own votes = sum-of-parts check.
+- Result: 74 cell disagreements in findings.json, concentrated in: Chase Oliver, Jill Stein, Peter Sonski (President); Hawk Dunlap and Eddie Espinoza (Railroad Commissioner); J.David Roberson; plus single-precinct errors for DaSean Jones, Christine Vinh Weems, Chika Anyiam (all precinct 29) and Registered Voters precinct 3. A disagreement in a part usually also changes the CSV `votes` figure; these are listed as separate rows.
+- All other candidates (Trump, Harris, Cruz, Allred, Brown, Moran, Craddick, Culbert, Blacklock, Devine, Bland, Goldstein, Schenck, Taylor, Parker, Mulder, Finley, Shofner, Rambin, Rafferty, Clinton, Gibbs, Andrus, zero-vote write-ins) matched on every cell I read.
+
+## Could not check / caveats
+- Values were read visually, not by OCR; the small bold subtotal digits are the least legible, so I relied on arithmetic reconciliation. A single-digit swap in a large cell that still reconciled could have escaped me.
+- Page 6 (County Commissioner Pct 1 & 3, Constable 1&4, 2&3) has blacked-out cells and no precinct header, so I assigned columns by alignment with the Holly Gibbs row above them. By that alignment the CSV's precinct labels for these races look wrong (e.g. Lawless values labelled precinct 3 and 28 sit in the scan's precinct 7 and 10 columns; Ivy's rows appear shifted; LaGrone's "22/26/28" rows do not line up). The numbers themselves mostly match the scan's visible cells, but I did not put these in findings.json because the schema has no precinct-label field. Also apparently missing from the CSV: Alexander precincts 18 and 20, Lawless precincts 22 and 27, Ivy precinct 1 (818/44/214), LaGrone precinct 27 (415/13/147); LaGrone's "precinct 28" row has early and election-day swapped relative to the scan column (103/81 vs 81/103), and the CSV "precinct 26" LaGrone row (41/3/37) has no counterpart in the scan.
+- Office name "Rail-road Commissioner" (precinct 29 Espinoza row) is a typo vs the scan; not a numeric value, so not in findings.
+- Scan-internal inconsistencies (not CSV errors, CSV agrees with the printed values): registered-voter columns sum to 17923 vs printed TOTAL 17921; Leann Kay Rafferty precinct 22 parts sum to 179 vs printed subtotal 178 (the CSV's own sum check flags this row); Jeff Ivy precinct 1 printed subtotal 1079 vs 818+44+214=1076.
