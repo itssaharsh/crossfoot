@@ -1,0 +1,23 @@
+Read AGENTS.md, then .prod-build/briefs/T08.md and do exactly that task.
+Run checks through `python3 .prod-build/pb.py` as the brief says.
+Finish by writing .prod-build/reports/T08.md in the format at the end of the brief, commit (do not push), and reply with the report.
+
+---
+
+<task-notification>
+<task-id>b3zabiofp</task-id>
+<tool-use-id>toolu_01FNYRamkKjhVGWbt1jk9iAM</tool-use-id>
+<output-file>/tmp/claude-1000/-home-saharsh-contri-crossfoot/63164fbf-72bf-423e-8f4e-3ebe2bee402b/tasks/b3zabiofp.output</output-file>
+<status>completed</status>
+<summary>Background command "grep -n "t07\|t06\|\.mjs\|timeline" tests/*.py | head -20; (uv run --with playwright python tools/qa/axe.py 2&gt;&amp;1 | tail -4); ls qa/final | head -40" completed (exit code 0)</summary>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>bdsigs1by</task-id>
+<tool-use-id>toolu_01DhryusP7xnxFH7EhCYqjrD</tool-use-id>
+<output-file>/tmp/claude-1000/-home-saharsh-contri-crossfoot/63164fbf-72bf-423e-8f4e-3ebe2bee402b/tasks/bdsigs1by.output</output-file>
+<status>completed</status>
+<summary>Background command "git log --all -p | grep -o -i -E ".{0,25}(sk-[A-Za-z0-9_-]{16,}|AKIA[0-9A-Z]{16}|Bearer [A-Za-z0-9]{20,}).{0,6}" | sed -E 's/[A-Za-z0-9_-]{8,}/&lt;w&gt;/g' | sort | uniq -c | head" completed (exit code 0)</summary>
+</task-notification>
