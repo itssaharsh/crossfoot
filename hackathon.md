@@ -307,7 +307,7 @@ the history (last present in commit `247425f`), and each session's task and repo
   `20261011-141300`); some of those run folders were removed in T08, so their figures survive only in those summaries.
 - **README table** is written from it by `tools/readme_tables.py` (the results table did not change). **Page**: a county's
   `model cost` and `minutes` are the reading run's plus the later audits'; the replay's label divides those seconds by the
-  replay's length (Panola 17x, Jones 16x; Jones read 1x before). Measured in the browser at 1440x900: `qa/final/costs.json`
+  replay's length (Panola 17x, Jones 16x; Jones read 1x before). Measured in the browser at 1440x900 (files removed later with the redesign): `qa/final/costs.json`
   (page text and county file side by side) and `qa/final/*-run-numbers-1440.png`.
 - **Paths check.** `tools/named_paths.py --check` skips a bullet that says something was removed or renamed; `qa/final/checks.json`
   now exists (`tools/qa/check.py` wrote it). `runs/20261011-140000` is kept: this log names it and `summarize` follows it back.
@@ -358,6 +358,7 @@ list are gone.
   a dashed line from the crop crossed the proof sentence (removed); "Show every number" had no marker
   (arrow added); on a phone the page opened scrolled to the county cards (fixed); the wordmark is hidden under 520 px so
   the four links fit.
+- Removed with the old layout: the run-number grid and its measurement files (`qa/final/costs.json`, `qa/final/*-run-numbers-1440.png`) that an earlier entry names; `qa/final/` now holds the redesigned page's screenshots.
 
 ## Demo
 - Live: https://crossfoot-zeta.vercel.app/ (deployed from `site/` on 11 October 2026; no sign-in).
