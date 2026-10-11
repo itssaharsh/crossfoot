@@ -1,0 +1,105 @@
+{
+  "cli_version": "0.11.4",
+  "checkpoint_id": "01M4NT00T1637AEYJXFHN5NBSM",
+  "session_id": "99b3ebf3-86b6-4c14-a80d-13b77e6aa8f3",
+  "strategy": "manual-commit",
+  "created_at": "2026-10-11T15:41:12.38468496Z",
+  "branch": "main",
+  "checkpoints_count": 1,
+  "save_step_count": 1,
+  "files_touched": [
+    ".prod-build/evidence.jsonl",
+    ".prod-build/plan.json",
+    "README.md",
+    "crossfoot/allrun.py",
+    "crossfoot/cli.py",
+    "crossfoot/sitebuild.py",
+    "hackathon.md",
+    "qa/final/costs.json",
+    "qa/final/cottle-empty-1440.png",
+    "qa/final/cottle-empty-390.png",
+    "qa/final/jones-cannot-verify-1440.png",
+    "qa/final/jones-cannot-verify-390.png",
+    "qa/final/jones-run-numbers-1440.png",
+    "qa/final/jones-settled-1440.png",
+    "qa/final/jones-settled-390.png",
+    "qa/final/lynn-wrong-column-1440.png",
+    "qa/final/lynn-wrong-column-390.png",
+    "qa/final/panola-open-1440.png",
+    "qa/final/panola-open-390.png",
+    "qa/final/panola-run-numbers-1440.png",
+    "qa/final/san-saba-cannot-verify-1440.png",
+    "qa/final/san-saba-cannot-verify-390.png",
+    "qa/final/san-saba-open-1440.png",
+    "qa/final/san-saba-open-390.png",
+    "qa/final/scurry-open-1440.png",
+    "qa/final/scurry-open-390.png",
+    "runs/20261011-150000/summary.json",
+    "runs/20261011-150000/summary.md",
+    "site/data/cottle.json",
+    "site/data/foard.json",
+    "site/data/index.json",
+    "site/data/jones.json",
+    "site/data/lynn.json",
+    "site/data/panola.json",
+    "site/data/san_saba.json",
+    "site/data/scurry.json",
+    "tests/test_cli_missing_input.py",
+    "tests/test_site_build_safe.py",
+    "tests/test_summary_two_costs.py",
+    "tools/named_paths.py",
+    "tools/qa/costs.py",
+    "tools/readme_tables.py"
+  ],
+  "agent": "Claude Code",
+  "model": "claude-sonnet-5-5",
+  "turn_id": "9d9147c97b9e",
+  "compact_transcript_start": 0,
+  "token_usage": {
+    "input_tokens": 118,
+    "cache_creation_tokens": 146228,
+    "cache_read_tokens": 7649263,
+    "output_tokens": 41627,
+    "api_call_count": 58
+  },
+  "session_metrics": {
+    "turn_count": 1
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-10-11T15:41:12.283591887Z",
+    "agent_lines": 1441,
+    "agent_removed": 50,
+    "human_added": 181,
+    "human_modified": 2,
+    "human_removed": 0,
+    "total_committed": 1624,
+    "total_lines_changed": 1674,
+    "agent_percentage": 89.06810035842294,
+    "metric_version": 2
+  },
+  "prompt_attributions": [
+    {
+      "checkpoint_number": 1,
+      "user_lines_added": 4,
+      "user_lines_removed": 2,
+      "agent_lines_added": 0,
+      "agent_lines_removed": 0,
+      "user_added_per_file": {
+        ".prod-build/plan.json": 4
+      },
+      "user_removed_per_file": {
+        ".prod-build/plan.json": 2
+      }
+    },
+    {
+      "checkpoint_number": 2,
+      "user_lines_added": 181,
+      "user_lines_removed": 0,
+      "agent_lines_added": 1447,
+      "agent_lines_removed": 52,
+      "user_added_per_file": {
+        "qa/final/checks.json": 181
+      }
+    }
+  ]
+}
