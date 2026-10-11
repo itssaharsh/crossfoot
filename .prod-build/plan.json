@@ -77,10 +77,16 @@
         "uv run crossfoot render --county panola --page 1"
       ],
       "rollback": "git revert the task's commit; no data migration",
-      "status": "doing",
+      "status": "done",
       "notes": "",
       "base": "82a6b67",
-      "started_after": 1
+      "started_after": 1,
+      "evidence": [
+        "E0007",
+        "E0008",
+        "E0009",
+        "E0010"
+      ]
     },
     {
       "id": "T02",
