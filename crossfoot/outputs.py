@@ -276,6 +276,7 @@ def write_findings(run_dir, county, run_id, res, *, policy, raw_file, file_name,
          "counts": {"findings": len(fs), "by_kind": _count(fs, "kind", audit.KINDS),
                     "by_status": _count(fs, "status", audit.STATUSES), "groups": len(res["groups"]),
                     "corrections": len(applied)},
+         **{k: res["coverage"][k] for k in ("rows_published", "rows_compared", "not_compared")},
          "findings": fs, "groups": res["groups"], "corrections": applied, "could_not_correct": could,
          "sums_check": check,
          "unmatched": {"scan": m.unmatched_scan, "file": m.unmatched_file, "rejected": m.rejected, "model": m.model},
@@ -310,6 +311,14 @@ def report_text(d, verdicts, urls) -> str:
          "corrected file.", "", "| kind | findings |", "|---|---|"]
     L += [f"| {k} | {v} |" for k, v in c["by_kind"].items()] or ["| none | 0 |"]
     L += ["", "| status | findings |", "|---|---|"] + ([f"| {k} | {v} |" for k, v in c["by_status"].items()] or ["| none | 0 |"])
+    L += ["", "## Coverage", "",
+          f"The published file has {d['rows_published']} rows; {d['rows_compared']} of {d['rows_published']} were compared "
+          f"with the scan."]
+    if d["not_compared"]:
+        L += ["Not compared:", ""]
+        L += [f"- {x['contest']}: {x['rows']} row{'' if x['rows'] == 1 else 's'}. {x['reason'][0].upper() + x['reason'][1:]}." for x in d["not_compared"]]
+    else:
+        L += ["Every published row was compared."]
     sc = d["sums_check"]
     L += ["", "## Printed sums, checked against the published file and the corrected file", "",
           f"Printed sums in all: {sc['in_all']} printed sums (row totals, small totals, grand totals). Recomputed with the "

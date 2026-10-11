@@ -1,0 +1,95 @@
+--- a/20241105__tx__general__panola__precinct.csv
++++ b/corrected/20241105__tx__general__panola__precinct.csv
+@@ -89 +89 @@
+-Panola,18,President,,LIB,Chase Oliver,1,0,0,1
++Panola,18,President,,LIB,Chase Oliver,1,0,1,0
+@@ -96 +96 @@
+-Panola,29,President,,LIB,Chase Oliver,0,0,0,0
++Panola,29,President,,LIB,Chase Oliver,1,0,0,1
+@@ -98,2 +98,2 @@
+-Panola,2,President,,GRN,Jill Stein,1,0,0,1
+-Panola,3,President,,GRN,Jill Stein,0,0,0,0
++Panola,2,President,,GRN,Jill Stein,0,0,0,0
++Panola,3,President,,GRN,Jill Stein,1,0,0,1
+@@ -108 +108 @@
+-Panola,18,President,,GRN,Jill Stein,0,0,0,0
++Panola,18,President,,GRN,Jill Stein,1,1,0,0
+@@ -113,2 +113,2 @@
+-Panola,27,President,,GRN,Jill Stein,0,0,0,0
+-Panola,28,President,,GRN,Jill Stein,4,0,0,4
++Panola,27,President,,GRN,Jill Stein,2,0,1,1
++Panola,28,President,,GRN,Jill Stein,1,0,1,0
+@@ -198 +198 @@
+-Panola,9,President,,,Peter Sonski,0,0,0,0
++Panola,9,President,,,Peter Sonski,2,0,0,2
+@@ -209 +209 @@
+-Panola,28,President,,,Peter Sonski,2,0,0,2
++Panola,28,President,,,Peter Sonski,0,0,0,0
+@@ -286 +286 @@
+-Panola,29,U.S. Senate,,LIB,Ted Brown,0,0,0,0
++Panola,29,U.S. Senate,,LIB,Ted Brown,4,0,0,4
+@@ -371,4 +371,4 @@
+-Panola,12,Railroad Commissioner,,LIB,Hawk Dunlap,13,3,6,4
+-Panola,13,Railroad Commissioner,,LIB,Hawk Dunlap,5,0,1,4
+-Panola,14,Railroad Commissioner,,LIB,Hawk Dunlap,7,0,3,4
+-Panola,18,Railroad Commissioner,,LIB,Hawk Dunlap,40,2,29,9
++Panola,12,Railroad Commissioner,,LIB,Hawk Dunlap,13,0,6,7
++Panola,13,Railroad Commissioner,,LIB,Hawk Dunlap,5,1,1,3
++Panola,14,Railroad Commissioner,,LIB,Hawk Dunlap,16,0,13,3
++Panola,18,Railroad Commissioner,,LIB,Hawk Dunlap,40,1,29,10
+@@ -379 +379 @@
+-Panola,27,Railroad Commissioner,,LIB,Hawk Dunlap,21,0,14,7
++Panola,27,Railroad Commissioner,,LIB,Hawk Dunlap,21,1,14,6
+@@ -381 +381 @@
+-Panola,29,Railroad Commissioner,,LIB,Hawk Dunlap,0,0,0,0
++Panola,29,Railroad Commissioner,,LIB,Hawk Dunlap,10,0,1,9
+@@ -383,2 +383,2 @@
+-Panola,2,Railroad Commissioner,,CRN,Eddie Espinoza,6,0,3,3
+-Panola,3,Railroad Commissioner,,CRN,Eddie Espinoza,3,0,1,2
++Panola,2,Railroad Commissioner,,CRN,Eddie Espinoza,4,0,1,3
++Panola,3,Railroad Commissioner,,CRN,Eddie Espinoza,3,0,3,0
+@@ -386 +386 @@
+-Panola,7,Railroad Commissioner,,CRN,Eddie Espinoza,5,0,0,5
++Panola,7,Railroad Commissioner,,CRN,Eddie Espinoza,6,0,1,5
+@@ -388 +388 @@
+-Panola,9,Railroad Commissioner,,CRN,Eddie Espinoza,6,0,0,6
++Panola,9,Railroad Commissioner,,CRN,Eddie Espinoza,1,0,0,1
+@@ -391,3 +391,3 @@
+-Panola,13,Railroad Commissioner,,CRN,Eddie Espinoza,3,0,1,2
+-Panola,14,Railroad Commissioner,,CRN,Eddie Espinoza,0,0,0,0
+-Panola,18,Railroad Commissioner,,CRN,Eddie Espinoza,9,1,4,4
++Panola,13,Railroad Commissioner,,CRN,Eddie Espinoza,1,0,1,0
++Panola,14,Railroad Commissioner,,CRN,Eddie Espinoza,2,0,1,1
++Panola,18,Railroad Commissioner,,CRN,Eddie Espinoza,6,0,4,2
+@@ -398,3 +398,3 @@
+-Panola,27,Railroad Commissioner,,CRN,Eddie Espinoza,1,0,1,0
+-Panola,28,Railroad Commissioner,,CRN,Eddie Espinoza,9,0,0,9
+-Panola,29,Rail-road Commissioner,,CRN,Eddie Espinoza,0,0,0,0
++Panola,27,Railroad Commissioner,,CRN,Eddie Espinoza,5,0,1,4
++Panola,28,Railroad Commissioner,,CRN,Eddie Espinoza,13,0,9,4
++Panola,29,Rail-road Commissioner,,CRN,Eddie Espinoza,1,0,1,0
+@@ -457 +457 @@
+-Panola,29,"Justice, Supreme Court, Place 2",,DEM,DaSean Jones,4,0,4,0
++Panola,29,"Justice, Supreme Court, Place 2",,DEM,DaSean Jones,4,0,3,1
+@@ -495 +495 @@
+-Panola,29,"Justice, Supreme Court, Place 4",,DEM,Christine Vinh Weems,2,0,2,0
++Panola,29,"Justice, Supreme Court, Place 4",,DEM,Christine Vinh Weems,3,0,2,1
+@@ -542,3 +542,3 @@
+-Panola,12,"Justice, Supreme Court, Place 6",,LIB,J.David Roberson,2,0,1,1
+-Panola,13,"Justice, Supreme Court, Place 6",,LIB,J.David Roberson,7,0,3,4
+-Panola,14,"Justice, Supreme Court, Place 6",,LIB,J.David Roberson,4,0,2,2
++Panola,12,"Justice, Supreme Court, Place 6",,LIB,J.David Roberson,4,0,3,1
++Panola,13,"Justice, Supreme Court, Place 6",,LIB,J.David Roberson,2,0,0,2
++Panola,14,"Justice, Supreme Court, Place 6",,LIB,J.David Roberson,7,0,4,3
+@@ -552 +552 @@
+-Panola,29,"Justice, Supreme Court, Place 6",,LIB,J.David Roberson,1,0,1,0
++Panola,29,"Justice, Supreme Court, Place 6",,LIB,J.David Roberson,4,0,1,3
+@@ -666 +666 @@
+-Panola,29,"Judge, Court of Criminal Appeals, Place 8",,DEM,Chika Anyiam,8,2,6,0
++Panola,29,"Judge, Court of Criminal Appeals, Place 8",,DEM,Chika Anyiam,8,0,6,2
+@@ -719 +719 @@
+-Panola,22,"District Judge, 123rd Judicial District",,REP,Leann Kay Rafferty,178,3,81,95
++Panola,22,"District Judge, 123rd Judicial District",,REP,Leann Kay Rafferty,179,3,81,95
+@@ -782 +782 @@
+-Panola,22,Constable,2 & 3,REP,Brack LaGrone,182,7,98,77
++Panola,22,Constable,2 & 3,REP,Brack LaGrone,187,3,81,103

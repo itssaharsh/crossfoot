@@ -16,7 +16,7 @@ from . import tracing
 from .model import BudgetExceeded
 
 ORDER = ("panola", "san_saba", "cottle", "jones", "lynn", "scurry", "foard", "limestone")
-CLOSED = ("audited", "unchecked")      # a county in one of these states is final for the run
+CLOSED = ("audited", "partly_audited", "unchecked")      # a county in one of these states is final for the run
 STATS = ("model_calls", "prompt_tokens", "completion_tokens", "metered_cost", "seconds")
 
 
@@ -81,11 +81,17 @@ def totals(rows: list[dict]) -> dict:
          "cells_reread": sum(r.get("cells_reread", 0) for r in rows),
          "cells_accepted": sum(r.get("cells_accepted", 0) for r in rows),
          "cannot_verify": sum(r.get("cannot_verify", 0) for r in rows),
+         "rows_published": sum(r.get("rows_published", 0) for r in rows),
+         "rows_compared": sum(r.get("rows_compared", 0) for r in rows),
          "sums_first_read": _sum_dicts(rows, "sums_first_read"),
          "sums_check": _sum_dicts(rows, "sums_check"),
          "findings_by_kind": _sum_dicts(rows, "findings_by_kind"),
          "findings_by_status": _sum_dicts(rows, "findings_by_status")}
     return t
+
+
+def _cov(r) -> str:
+    return "" if r.get("rows_published") is None else f"{r.get('rows_compared', 0)} of {r['rows_published']}"
 
 
 def write_summary(run_dir, summary: dict) -> None:
@@ -101,6 +107,10 @@ def write_summary(run_dir, summary: dict) -> None:
         sums_first_read      {passing, failing}: printed sums after the first read, before any re-read
         cells_reread         cells read more than once; cells_accepted: cells on a printed sum that holds
         cannot_verify        findings left cannot_verify (a row with one sum only)
+        rows_published       rows of the published file that carry figures; rows_compared: those compared with the scan;
+                             not_compared [{contest, rows, reason}]: the rest. status is audited only when at least 95 percent
+                             were compared, else partly_audited
+        from_run             (a summary made by `crossfoot summarize`) the run the county's figures come from
         findings_by_kind, findings_by_status
         second_sum_exists    true when the scan prints a second sum (contest totals) to check a row against
         sums_check           {in_all, holding_with_published, holding_with_corrected}: printed sums, counted from findings.json
@@ -120,8 +130,8 @@ def write_summary(run_dir, summary: dict) -> None:
          f"{t['seconds']} s; {t['closed']} of {t['counties']} counties closed.", "",
          "| county | status | layout | pages | cells | sums ok / failing after first read | cells re-read | cells accepted | "
          "cannot_verify | findings | printed sums in all / hold with published / hold with corrected | second sum | "
-         "calls | cost $ | seconds |",
-         "|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|"]
+         "published rows compared | calls | cost $ | seconds |",
+         "|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|"]
     for r in rows:
         s1, sc = r.get("sums_first_read") or {}, r.get("sums_check") or {}
         L.append(f"| {r['county']} | {r['status']} | {f(r.get('layout'))} | {f(r.get('pages'))} | {f(r.get('cells_read'))} | "
@@ -130,12 +140,20 @@ def write_summary(run_dir, summary: dict) -> None:
                  f"{sum((r.get('findings_by_status') or {}).values()) if r.get('findings_by_status') is not None else ''} | "
                  f"{sc.get('in_all', '')} / {sc.get('holding_with_published', '')} / {sc.get('holding_with_corrected', '')} | "
                  f"{'yes' if r.get('second_sum_exists') else 'no' if r.get('second_sum_exists') is not None else ''} | "
-                 f"{r.get('model_calls', 0)} | {r.get('metered_cost', 0):.4f} | {r.get('seconds', 0)} |")
+                 f"{_cov(r)} | {r.get('model_calls', 0)} | {r.get('metered_cost', 0):.4f} | {r.get('seconds', 0)} |")
     s1, sc = t["sums_first_read"], t["sums_check"]
     L.append(f"| **all** | | | | {t['cells_read']} | {s1.get('passing', 0)} / {s1.get('failing', 0)} | {t['cells_reread']} | "
              f"{t['cells_accepted']} | {t['cannot_verify']} | {sum(t['findings_by_status'].values())} | "
              f"{sc.get('in_all', 0)} / {sc.get('holding_with_published', 0)} / {sc.get('holding_with_corrected', 0)} | | "
-             f"{t['model_calls']} | {t['metered_cost']:.4f} | {t['seconds']} |")
+             f"{t['rows_compared']} of {t['rows_published']} | {t['model_calls']} | {t['metered_cost']:.4f} | {t['seconds']} |")
+    L += ["", "## Published rows compared with the scan", ""]
+    for r in rows:
+        if r.get("rows_published") is not None:
+            L.append(f"- {r['county']}: {_cov(r)} published rows compared" +
+                     (f" (figures from run {r['from_run']})" if r.get("from_run") else "") +
+                     (f"; {r['status']}" if r["status"] == "partly_audited" else "") + ".")
+            L += [f"  - not compared: {x['contest']}, {x['rows']} row{'' if x['rows'] == 1 else 's'}. {x['reason'][0].upper() + x['reason'][1:]}."
+                  for x in r.get("not_compared") or []]
     L += ["", "## Findings by kind and status", ""]
     for r in rows:
         if r.get("findings_by_kind") is not None:
@@ -143,6 +161,14 @@ def write_summary(run_dir, summary: dict) -> None:
     L += ["", "## Model calls by model", ""]
     for m, v in t["model_calls_by_model"].items():
         L.append(f"- {m}: {v['calls']} calls, {v['prompt_tokens']} tokens in, {v['completion_tokens']} out, ${v['cost']:.4f}")
+    if any(r.get("from_run") for r in rows):
+        L += ["", "## Where each county's figures come from", ""]
+        L += [f"- {r['county']}: run {r.get('from_run')}" for r in rows]
+        base = (summary.get("made_from") or {}).get("base")
+        if base:
+            L += ["", f"A county taken from a single-county audit reused the ledger of run {base}, so its calls, cost and seconds "
+                  f"are those of the audit alone; the reading was paid for in run {base}. The cost and calls in the header "
+                  "and the **all** row therefore add the reading of no county that was audited again."]
     L += ["", "## Not audited", ""]
     if not summary["skipped"] and not summary["not_reached"]:
         L.append("Every county was audited.")
@@ -303,7 +329,8 @@ def audit_one(county, ctx) -> dict:
                                verdicts=led.verdicts(county))
     cells = led.cells(county)
     sc = d["sums_check"]
-    return {"outcome": "audited", "layout": info["layout"], "pages": info["pages"], "cells_read": len(cells),
+    return {"outcome": audit.coverage_status(res["coverage"]), "layout": info["layout"], "pages": info["pages"],
+            "cells_read": len(cells), **res["coverage"],
             "sums_first_read": info["sums_first_read"], "cells_reread": sum(c["tries"] > 0 for c in cells),
             "cells_accepted": sum(c["status"] == "accepted" for c in cells),
             "cannot_verify": d["counts"]["by_status"].get("cannot_verify", 0),
@@ -311,3 +338,52 @@ def audit_one(county, ctx) -> dict:
             "second_sum_exists": bool(d["audit"].get("second_sum_exists", bool(led.totals(county)))),
             "sums_check": {k: sc[k] for k in ("in_all", "holding_with_published", "holding_with_corrected")},
             "reader": reader}
+
+
+# ---- a summary over runs --------------------------------------------------------------------------------------------------
+
+def _row_from_folder(folder: Path, county: str, old: dict) -> dict:
+    """A county's summary row from the folder of a single-county audit: the audit's figures from findings.json and the cells
+    from its ledger; the read's figures (layout, pages, first-read sums) stay those of the row it replaces. Calls, cost and
+    seconds are those of that audit alone."""
+    from . import audit
+    from .ledger import Ledger
+    f = json.loads((folder / county / "findings.json").read_text())
+    run = json.loads((folder / "run.json").read_text())
+    cells = Ledger(folder / "ledger.sqlite").cells(county)
+    sc = f["sums_check"]
+    cov = {k: f[k] for k in ("rows_published", "rows_compared", "not_compared")}
+    by = run.get("model_calls_by_model") or {}
+    return {**{k: v for k, v in old.items() if k not in ("reason", "note")}, "county": county,
+            "status": audit.coverage_status(cov), "cells_read": len(cells),
+            "cells_reread": sum(c["tries"] > 0 for c in cells), "cells_accepted": sum(c["status"] == "accepted" for c in cells),
+            "cannot_verify": f["counts"]["by_status"].get("cannot_verify", 0),
+            "findings_by_kind": f["counts"]["by_kind"], "findings_by_status": f["counts"]["by_status"],
+            "second_sum_exists": bool(f["audit"].get("second_sum_exists")),
+            "sums_check": {k: sc[k] for k in ("in_all", "holding_with_published", "holding_with_corrected")}, **cov,
+            "model_calls": run.get("model_calls", 0), "model_calls_by_model": by,
+            "prompt_tokens": run.get("prompt_tokens", 0), "completion_tokens": run.get("completion_tokens", 0),
+            "metered_cost": run.get("metered_cost_estimate", 0), "seconds": run.get("seconds", 0)}
+
+
+def combine(out, base: str, use: dict, command: str = "") -> dict:
+    """A new run folder whose summary covers every county of run `base` with the newest result of each: a county in `use`
+    ({county: run id}) takes its audit from that run's folder, the others stay as `base` has them. Every row says which run its
+    figures come from. Nothing is read and no model is called; the runs it names are not changed."""
+    out = Path(out)
+    root = out.parent
+    old = json.loads((root / base / "summary.json").read_text())
+    rows = []
+    for r in old["counties"]:
+        run = use.get(r["county"], base)
+        row = _row_from_folder(root / run, r["county"], r) if r["county"] in use else dict(r)
+        rows.append({**row, "from_run": run})
+    now = time.strftime("%Y-%m-%dT%H:%M:%S")
+    summary = {"run_id": out.name, "command": command, "budget": old["budget"], "started": now, "ended": now,
+               "resumed": False, "counties": rows, "totals": totals(rows), "not_reached": [],
+               "skipped": [{"county": r["county"], "reason": r.get("note") or r.get("reason") or r["status"]}
+                           for r in rows if r["status"] in ("unchecked", "failed", "stopped")],
+               "made_from": {"base": base, "use": use}}
+    out.mkdir(parents=True, exist_ok=True)
+    write_summary(out, summary)
+    return summary

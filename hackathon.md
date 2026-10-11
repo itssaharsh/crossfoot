@@ -171,6 +171,28 @@ Planned, and updated as each part is actually used:
   their findings are all `extra_row` and `cannot_verify`; this is a matching gap, not a measurement of those files. Not fixed here.
 - Tests: `tests/test_all_run.py` (12 tests, fake model); `uv run pytest -q` 160 passed.
 
+### 11 October 2026, T04c: every published row compared, or listed as not compared; a real stop and resume
+- Changed: every county's `findings.json` and `report.md` now carry `rows_published`, `rows_compared` and `not_compared`
+  (contest, rows, reason); `summary.json`/`summary.md` carry them per county and in all; a county is `audited` only when at least 95
+  percent of its published rows were compared, else `partly_audited`. A row of a contest that was not paired is `not_compared`, never
+  `extra_row`. Pairing rules by label shape (`layouts/report.py contest_canon`, `audit.py find_candidate`/`fuzzy`): "Vote For 1"
+  dropped, United States/U.S./US, Senator/Senate, Representative/House, "President and Vice President", Precinct No./Pct,
+  "46th Judicial District", Place/Pl/PI, running mates joined with or without a slash, a one-letter spelling slip inside a paired
+  contest; over/under votes are compared like candidates; a contest the model pairs must name the same candidates and have close
+  totals. A page that could not be read leaves its precinct's rows `not_compared`, not `extra_row`. `crossfoot audit --all --only a,b`
+  and `crossfoot summarize --base <run> --use county=run` (new folder, names the run each county's figures come from) were added.
+- Measured (`runs/20261011-140000/summary.md`, built from the committed run 20261011-130414 and seven single-county audits on its
+  ledger, no scan read again): published rows compared 3,005 of 3,061. Foard 294 of 298 (Ballots Cast, 4 rows, not paired); Scurry 518
+  of 545 (95.05 percent; Registered Voters 11 rows not paired, 16 rows of Precinct 10 not compared because scan page 18 failed to
+  read in the first run); Jones 335 of 344; Lynn 634 of 650; Panola, San Saba, Cottle all rows. Foard and Scurry findings went from 2
+  and 15 (all `extra_row`/`cannot_verify`, the matcher's doing) to 0 and 0. Lynn 47 findings and Jones 26 (Lynn rose from 43 because
+  its over/under rows are now compared). Calls, cost and seconds of a re-audited county in that summary are those of the re-audit only.
+- Stop and resume (`docs/evidence/recovery.md`): `audit --all --only san_saba,cottle --budget 0.25` stopped in Cottle (exit 2), the
+  resume with `--budget 2` closed it; no accepted cell was read again. Cottle's 3 half-read pages were paid twice (7 calls).
+- Failed / not done: Scurry page 18 was never read (a first-run page failure); it is still unread, and the 95 percent line is met
+  only just. Not fixed here: reading it again needs a scan read.
+- Gateway's own figure: $9.6386 before, $10.3736 after (change $0.7350).
+
 ## Demo
 Not available yet.
 

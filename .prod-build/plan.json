@@ -431,8 +431,10 @@
         "uv run pytest -q"
       ],
       "rollback": "git revert the task's commits; committed runs are never changed",
-      "status": "todo",
-      "notes": "Added 2026-10-11 after reading the full run's summary: two counties were marked audited without their rows being compared."
+      "status": "doing",
+      "notes": "Added 2026-10-11 after reading the full run's summary: two counties were marked audited without their rows being compared.",
+      "base": "eba2561",
+      "started_after": 56
     },
     {
       "id": "T05",

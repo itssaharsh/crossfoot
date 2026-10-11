@@ -74,13 +74,28 @@ def nk(s) -> str:
     return re.sub(r"[^a-z0-9]", "", str(s or "").lower())
 
 
-_PARTY = re.compile(r"\s*[\(\[]\s*(?:[A-Za-z]{2,4}|write[\s-]*in)\s*[\)\]]\s*$", re.I)
+_PARTY = re.compile(r"\s*[\(\[]\s*(?:[A-Za-z]{1,4}|write[\s-]*in)\s*[\)\]]\s*$", re.I)
 _WORDS = re.compile(r"\b(?:district|precinct no\.?|precinct)\b", re.I)
 
 
 def candidate_key(label) -> str:
     """A candidate's label as the scan prints it ("A/B (PARTY)", "Name [REP]") or the file has it, normalised."""
     return nk(_PARTY.sub("", str(label or "")).split("/")[0])
+
+
+MIN_PREFIX = 6      # a name this long, with more after it, is the same candidate (a running mate joined on)
+NEAR_NAME = 0.85    # two spellings this alike, inside one paired contest and with no other candidate near, are one candidate
+
+
+def find_candidate(fc, ck, taken=()) -> str | None:
+    """The file contest's candidate key that a scan candidate key names: the same key; or one is the other with a running
+    mate joined on ("Donald J. Trump JD Vance" for "Donald J. Trump"), when exactly one file candidate fits."""
+    if ck in fc.cands:
+        return ck
+    if len(ck) < MIN_PREFIX:
+        return None
+    hit = [k for k in fc.cands if k not in taken and len(k) >= MIN_PREFIX and (ck.startswith(k) or k.startswith(ck))]
+    return hit[0] if len(hit) == 1 else None
 
 
 def contest_keys(label) -> list[str]:
@@ -166,6 +181,22 @@ def file_votes(cand: FileCand) -> int:
     return sum(_int(r.get("votes")) or 0 for _, r in cand.rows.values())
 
 
+NOT_NAMED = ("overvotes", "undervotes")      # over/under votes are rows of a contest, not candidates in it
+
+
+def contest_votes(fc: FileContest) -> int:
+    return sum(file_votes(c) for k, c in fc.cands.items() if k not in NOT_NAMED)
+
+
+def same_candidates(bs, fc: FileContest) -> bool:
+    """A scan contest and a file contest name the same candidates (after normalising, running mates joined or not): at
+    least one in common, and at least half of the fewer of the two lists."""
+    sk = [candidate_key(b.candidate) for b in bs if candidate_key(b.candidate) not in NOT_NAMED]
+    fk = [k for k in fc.cands if k not in NOT_NAMED]
+    common = sum(find_candidate(fc, k) is not None for k in sk)
+    return common >= 1 and 2 * common >= min(len(sk), len(fk))
+
+
 # ---- matching ----------------------------------------------------------------------------------------------------
 
 MATCH_PROMPT = """Two lists of election contests and candidates describe the same election. One list is read from a
@@ -221,13 +252,31 @@ def match(blocks: list[Block], fcs: dict, gw=None, log=print, keys=None) -> Matc
         for b in bs:
             fk = label_map.get(b.contest)
             ck = candidate_key(b.candidate)
-            if fk is not None and ck in fcs[fk].cands and (fk, ck) not in used and b.id not in m.block_map:
-                m.block_map[b.id] = (fk, ck)
-                used.add((fk, ck))
+            if fk is not None and b.id not in m.block_map:
+                ck = find_candidate(fcs[fk], ck, {c for f, c in used if f == fk})
+                if ck is not None and (fk, ck) not in used:
+                    m.block_map[b.id] = (fk, ck)
+                    used.add((fk, ck))
         used.update(m.block_map.values())
         return used
 
+    def fuzzy():
+        """Inside a paired contest, a scan spelling a letter or two off a file candidate nobody else claims."""
+        import difflib
+        used = set(m.block_map.values())
+        for b in blocks:
+            fk = cmap.get(b.contest)
+            ck = candidate_key(b.candidate)
+            if fk is None or b.id in m.block_map or len(ck) < MIN_PREFIX:
+                continue
+            left = [k for k in fcs[fk].cands if (fk, k) not in used and len(k) >= MIN_PREFIX]
+            near = sorted(((difflib.SequenceMatcher(None, ck, k).ratio(), k) for k in left), reverse=True)
+            if near and near[0][0] >= NEAR_NAME and (len(near) == 1 or near[1][0] < NEAR_NAME):
+                m.block_map[b.id] = (fk, near[0][1])
+                used.add((fk, near[0][1]))
+
     by_names(blocks, cmap)
+    fuzzy()
 
     def leftovers():
         used = set(m.block_map.values())
@@ -267,14 +316,19 @@ def match(blocks: list[Block], fcs: dict, gw=None, log=print, keys=None) -> Matc
                 m.rejected.append({"what": f"contest pair {i}/{j}", "why": "not one-to-one, or not in the list"})
                 continue
             seen_s.add(i); seen_f.add(j)
-            sa = sum(b.total() or 0 for b in blocks if b.contest == s_con[i])
-            fb = sum(file_votes(c) for c in f_con[j].cands.values())
+            sb = [b for b in blocks if b.contest == s_con[i]]
+            sa, fb = sum(b.total() or 0 for b in sb if candidate_key(b.candidate) not in NOT_NAMED), contest_votes(f_con[j])
+            if not same_candidates(sb, f_con[j]):
+                m.rejected.append({"what": f"{s_con[i]} = {f_con[j].label}",
+                                   "why": "they do not name the same candidates"})
+                continue
             if not _close(sa, fb):
                 m.rejected.append({"what": f"{s_con[i]} = {f_con[j].label}",
                                    "why": f"county totals are not close (scan {sa}, file {fb})"})
                 continue
             cmap[s_con[i]] = f_con[j].key
         by_names(blocks, cmap)
+        fuzzy()
         sc, fc = leftovers()
         fset = set(fc)
         seen_s, seen_f = set(), set()
@@ -301,6 +355,58 @@ def match(blocks: list[Block], fcs: dict, gw=None, log=print, keys=None) -> Matc
     m.unmatched_file = [{"contest": fcs[fk].label, "district": fcs[fk].district, "candidate": fcs[fk].cands[ck].label,
                          "rows": len(fcs[fk].cands[ck].rows)} for fk, ck in fc]
     return m
+
+
+# ---- coverage ----------------------------------------------------------------------------------------------------
+
+AUDITED_FROM = 0.95     # a county is audited when at least this share of its published rows were compared
+
+
+def unread_gaps(read_pages: dict, failed: list) -> dict:
+    """Precinct key -> the failed pages that may hold part of its section. A failed page sits between the pages read around
+    it: both neighbours name the precinct when they agree, else each of them may (`read_pages`: page -> precinct key)."""
+    out: dict = {}
+    for p in failed:
+        before = [q for q in read_pages if q < p]
+        after = [q for q in read_pages if q > p]
+        near = {read_pages[max(before)] if before else None, read_pages[min(after)] if after else None} - {None}
+        for k in near:
+            out.setdefault(k, []).append(p)
+    return out
+
+
+def coverage(rows: list, matching: Matching, fcs: dict, file_rows: list[dict], unread: dict | None = None) -> dict:
+    """How many published rows (those that carry any of the four figures) were compared with the scan, and which were not,
+    by contest and reason. A row is compared when it sits in a block of the scan that is paired with its candidate (a row
+    the scan lacks in such a block is a finding, extra_row). A row of a contest that was not paired is not compared."""
+    unread = unread or {}                 # file row index -> why the scan could not be compared (a page was not read)
+    seen = {r.file_idx for r in rows if r.file_idx is not None and r.block is not None and r.file_idx not in unread}
+    paired = {fk for fk, _ in matching.block_map.values()}
+    pub = {i for i, r in enumerate(file_rows) if any(_int(r.get(p)) is not None for p in PARTS)}
+    where = {idx: (fc, ck) for fc in fcs.values() for ck, c in fc.cands.items() for idx, _ in c.rows.values()}
+    left: dict = {}
+    for i in sorted(pub - seen):
+        fc, ck = where.get(i, (None, None))
+        label = file_rows[i].get("office") or ""
+        if file_rows[i].get("district"):
+            label += f", district {file_rows[i]['district']}"
+        if i in unread:
+            reason = unread[i]
+        elif fc is None:
+            reason = "the row repeats a precinct of the same candidate and contest"
+        elif fc.key not in paired:
+            reason = "the contest was not paired with a contest on the scan"
+        else:
+            reason = "the contest is paired, but this candidate has no block on the scan"
+        left.setdefault((label, reason), []).append(i)
+    return {"rows_published": len(pub), "rows_compared": len(pub & seen),
+            "not_compared": [{"contest": c, "rows": len(v), "reason": why} for (c, why), v in left.items()]}
+
+
+def coverage_status(cov: dict) -> str:
+    """audited when at least 95 percent of the published rows were compared, else partly_audited."""
+    pub = cov["rows_published"]
+    return "audited" if pub == 0 or cov["rows_compared"] / pub >= AUDITED_FROM else "partly_audited"
 
 
 # ---- rows --------------------------------------------------------------------------------------------------------
@@ -736,6 +842,7 @@ def audit_county(county, led, geo, gw, file_rows, *, run_dir, make_crops=True, l
         slots = classify(rows)
     findings, groups = _findings(county, slots, reads, cells, totals, geo, file_rows)
     res = {"findings": findings, "groups": groups, "matching": matching, "rows": len(rows), "crop_dir": crop_dir,
+           "coverage": coverage(rows, matching, fcs, file_rows),
            "row_objs": rows, "cells": cells, "totals": totals,
            "corrected_events": corrected_events, "reads": reads,
            "audit": {"disagreements_found": n0, "rereads": len(reads),
@@ -1077,7 +1184,9 @@ def _near_block(blocks, key, prec):
     for b in blocks:
         if report.contest_canon(b.contest) != key[0] or prec in b.scan_parts or not key[1]:
             continue
-        r = difflib.SequenceMatcher(None, candidate_key(b.candidate), key[1]).ratio()
+        bk = candidate_key(b.candidate)
+        joined = len(key[1]) >= MIN_PREFIX and len(bk) >= MIN_PREFIX and (bk.startswith(key[1]) or key[1].startswith(bk))
+        r = 1.0 if joined else difflib.SequenceMatcher(None, bk, key[1]).ratio()
         if r >= NEAR and (best is None or r > best[0]):
             best = (r, b)
     return best[1] if best else None
@@ -1091,10 +1200,13 @@ def report_blocks(cells, file_precincts, printed=None) -> list[Block]:
         rows.setdefault((c["page"], c["block_id"], c["row_kind"]), []).append(c)
     blocks, by = [], {}
     for (page, bid, label), cs in rows.items():
-        if checks.row_label_kind(label) != "candidate":
+        kind = checks.row_label_kind(label)
+        if kind == "total":
             continue
         contest = cs[0]["contest"] or ""
-        cand = "" if contest in STAT_CONTESTS else report.split_label(label)[1]
+        # over and under votes are rows of the contest the file publishes too, so they are compared like a candidate
+        cand = (("Over Votes" if nk(label).startswith("over") else "Under Votes") if kind == "skip" else
+                "" if contest in STAT_CONTESTS else report.split_label(label)[1])
         pk = bid.split("|")[0]
         prec = pmap.get(pk) or printed.get(pk) or pk
         key = (report.contest_canon(contest), candidate_key(cand))
@@ -1214,7 +1326,16 @@ def audit_report_county(county, led, geo, gw, file_rows, *, run_dir, log=print, 
     fcs = file_contests(file_rows, keyfn=report_file_key)
     matching = match(blocks, fcs, gw, log, keys=lambda l: [report.contest_canon(l)])
     rows = build_rows(blocks, matching, fcs, file_rows)
-    slots = classify(rows)
+    # a page that could not be read leaves rows of its precinct without a scan row: that is not an extra row
+    read_pages = {json.loads(e["payload_json"])["page"]: report.precinct_key(json.loads(e["payload_json"])["precinct"])
+                  for e in led.events(county) if e["kind"] == "page_read"}
+    failed = sorted({json.loads(e["payload_json"])["page"] for e in led.events(county) if e["kind"] == "page_failed"} -
+                    set(read_pages))
+    gaps = unread_gaps(read_pages, failed)
+    unread = {r.file_idx: f"scan page {', '.join(map(str, gaps[report.precinct_key(r.precinct)]))} could not be read and may "
+                          f"hold this row" for r in rows if r.file_idx is not None and r.scan is None and r.block is not None
+              and report.precinct_key(r.precinct) in gaps}
+    slots = classify([r for r in rows if r.file_idx not in unread])
     con = checks.report_contest_checks(cells)
     covered = {c.block_id for c in con}
     log(f"  {len(rows)} rows compared; {len(slots)} disagreements to look at on the scan")
@@ -1270,6 +1391,7 @@ def audit_report_county(county, led, geo, gw, file_rows, *, run_dir, log=print, 
     groups = _make_groups(findings, gnames, slots)
     n_con = len({c["block_id"] for c in cells if checks.row_label_kind(c["row_kind"]) == "candidate"})
     return {"layout": "report", "findings": findings, "groups": groups, "matching": matching, "rows": len(rows),
+            "coverage": coverage(rows, matching, fcs, file_rows, unread),
             "crop_dir": run_dir / county / "crops", "row_objs": rows, "cells": cells, "totals": totals,
             "corrected_events": [], "reads": {},
             "audit": {"disagreements_found": len(slots), "rereads": len(seconds), "rereads_skipped_sums_decide": 0,

@@ -393,9 +393,10 @@ def _audit_all(args) -> int:
     gw = audit.AuditGateway(budget=budget)
     led = Ledger(out / "ledger.sqlite")
     started = time.strftime("%Y-%m-%dT%H:%M:%S")
-    log(f"run {run_id}: auditing {', '.join(allrun.ORDER)}{' (continuing)' if resume else ''}, run budget ${budget:.2f}")
+    counties = only_counties(args.only)
+    log(f"run {run_id}: auditing {', '.join(counties)}{' (continuing)' if resume else ''}, run budget ${budget:.2f}")
     try:
-        summary = allrun.run_all(out, run_id, gw, led, allrun.audit_one, resume=bool(resume), log=log,
+        summary = allrun.run_all(out, run_id, gw, led, allrun.audit_one, resume=bool(resume), log=log, counties=counties,
                                  command="crossfoot " + " ".join(sys.argv[1:]), budget=budget, started=started)
     finally:
         tracing.shutdown()
@@ -407,7 +408,7 @@ def _audit_all(args) -> int:
     except (KeyError, OSError, ValueError, TypeError):
         pass
     outputs.write_run(out, run_id, started=started, ended=summary["ended"], command=summary["command"],
-                      counties=list(allrun.ORDER), gw=gw, resumed_from=resume)
+                      counties=list(counties), gw=gw, resumed_from=resume)
     t = summary["totals"]
     log(f"{t['closed']} of {t['counties']} counties closed; model calls {t['model_calls']}; metered cost (estimate) "
         f"${t['metered_cost']:.4f}; seconds {t['seconds']}")
@@ -579,7 +580,39 @@ def cmd_policy(args) -> int:
     return 0
 
 
-def main(argv=None) -> int:
+def only_counties(text):
+    """`--only a,b`: the counties of an --all run, in the run's fixed order; an unknown name stops the command."""
+    from . import allrun
+    if not text:
+        return allrun.ORDER
+    want = [c.strip() for c in text.split(",") if c.strip()]
+    bad = [c for c in want if c not in allrun.ORDER]
+    if bad:
+        raise SystemExit(f"--only: unknown county {', '.join(bad)} (known: {', '.join(allrun.ORDER)})")
+    return tuple(c for c in allrun.ORDER if c in want)
+
+
+def cmd_summarize(args) -> int:
+    """Rebuild a summary over all counties from the newest result of each, in a new run folder."""
+    import time
+    from pathlib import Path
+
+    from . import allrun
+    src = {}
+    for item in args.use:
+        county, _, run = item.partition("=")
+        if county not in allrun.ORDER or not run:
+            print(f"--use takes county=run_id (known counties: {', '.join(allrun.ORDER)}), got {item!r}", file=sys.stderr)
+            return 1
+        src[county] = run
+    out = Path("runs") / (args.run_id or time.strftime("%Y%m%d-%H%M%S"))
+    s = allrun.combine(out, args.base, src, command="crossfoot " + " ".join(sys.argv[1:]))
+    print(f"written: {out / 'summary.json'}, {out / 'summary.md'}; {s['totals']['closed']} of "
+          f"{s['totals']['counties']} counties closed")
+    return 0
+
+
+def build_parser():
     p = argparse.ArgumentParser(prog="crossfoot")
     sub = p.add_subparsers(dest="cmd", required=True)
     for name, fn, h in (("fetch", cmd_fetch, "download a county's scan and published file"),
@@ -615,6 +648,7 @@ def main(argv=None) -> int:
     g.add_argument("--county", choices=list(sources.COUNTIES))
     g.add_argument("--all", action="store_true", help="every county in turn, no input; --resume <run_id> continues "
                    "that run in its own folder")
+    s.add_argument("--only", help="with --all: only these counties, comma-separated (e.g. san_saba,cottle)")
     s.add_argument("--resume", help="run id whose ledger is reused instead of reading again, or 'latest' for the "
                    "newest run with a county.json (with --all: the run to continue)")
     s.add_argument("--budget", type=float, default=None, help="dollars this run may meter (default 2.00 for a county, "
@@ -629,7 +663,18 @@ def main(argv=None) -> int:
     s.set_defaults(fn=cmd_policy)
     s = sub.add_parser("budget", help="print the gateway's spend and limit for the key")
     s.set_defaults(fn=cmd_budget)
-    args = p.parse_args(argv)
+    s = sub.add_parser("summarize", help="a new run folder whose summary covers every county with the newest result of "
+                                         "each; nothing is read and no model is called")
+    s.add_argument("--base", required=True, help="run id whose summary gives every county's figures unless --use says otherwise")
+    s.add_argument("--use", action="append", default=[], metavar="COUNTY=RUN_ID",
+                   help="take this county's audit from that run's folder (repeatable)")
+    s.add_argument("--run-id", help="the new folder's name (default: now)")
+    s.set_defaults(fn=cmd_summarize)
+    return p
+
+
+def main(argv=None) -> int:
+    args = build_parser().parse_args(argv)
     return args.fn(args)
 
 

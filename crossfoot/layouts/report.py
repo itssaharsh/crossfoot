@@ -51,8 +51,17 @@ def precinct_key(name) -> str:
 
 def contest_canon(label) -> str:
     """A contest's name with the scan's and the file's spellings made one: "Pl 2" = "PI 2", "Dist" = "District" (the word
-    is dropped on both sides)."""
-    s = re.sub(r"\b(?:district|dist)\b", " ", str(label or "").lower())
+    is dropped on both sides), "Vote For 1" lines dropped, "United States Senator" = "U.S. Senate", "Representative" =
+    "House", "President and Vice President" = "President", "Precinct No. 1" = "Pct 1" = "1", "46th Judicial District" = "46"."""
+    s = str(label or "").lower()
+    s = re.sub(r"[,;]?\s*vote\s+for\s+\d+\s*$", "", s.strip())
+    s = re.sub(r"\s*(?:/|\band\b)\s*vice[\s-]*president\b", "", s)
+    s = re.sub(r"\bunited\s+states\b|\bu\.\s?s\.?(?=\s|$)", "us", s)
+    s = re.sub(r"\bsenator\b", "senate", s)
+    s = re.sub(r"\brepresentative\b", "house", s)
+    s = re.sub(r"(\d+)(?:st|nd|rd|th)\s+judicial\b", r"\1", s)
+    s = re.sub(r"\b(?:district|dist|precinct|pct|no)\b\.?", " ", s)
+    s = re.sub(r"\bplace\b", "pl", s)
     s = re.sub(r"\bp[il](?=\s*\d)", "pl", s)
     return re.sub(r"[^a-z0-9]", "", s)
 

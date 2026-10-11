@@ -1,0 +1,135 @@
+{
+ "county": "scurry",
+ "run_id": "20261011-134418",
+ "layout": "report",
+ "file": "20241105__tx__general__scurry__precinct.csv",
+ "policy": {
+  "question_id": "document_disagrees_with_itself",
+  "answer": "cells",
+  "answered_by": "default, not yet confirmed by a person",
+  "meaning": "follow the cells as printed and list the printed total as inconsistent"
+ },
+ "counts": {
+  "findings": 0,
+  "by_kind": {},
+  "by_status": {},
+  "groups": 0,
+  "corrections": 0
+ },
+ "rows_published": 545,
+ "rows_compared": 518,
+ "not_compared": [
+  {
+   "contest": "Registered Voters",
+   "rows": 11,
+   "reason": "the contest was not paired with a contest on the scan"
+  },
+  {
+   "contest": "Justice, Supreme Court, Pl 4",
+   "rows": 2,
+   "reason": "scan page 18 could not be read and may hold this row"
+  },
+  {
+   "contest": "Justice, Supreme Court, PI 6",
+   "rows": 3,
+   "reason": "scan page 18 could not be read and may hold this row"
+  },
+  {
+   "contest": "Presiding Judge, Ct of Crim App",
+   "rows": 2,
+   "reason": "scan page 18 could not be read and may hold this row"
+  },
+  {
+   "contest": "Judge, Ct of Crim App, PI 7",
+   "rows": 2,
+   "reason": "scan page 18 could not be read and may hold this row"
+  },
+  {
+   "contest": "Judge, Ct of Crim App, PI 8",
+   "rows": 2,
+   "reason": "scan page 18 could not be read and may hold this row"
+  },
+  {
+   "contest": "Member, State BoE, Dist 15",
+   "rows": 3,
+   "reason": "scan page 18 could not be read and may hold this row"
+  },
+  {
+   "contest": "State House, district 83",
+   "rows": 1,
+   "reason": "scan page 18 could not be read and may hold this row"
+  },
+  {
+   "contest": "Chief Justice, 11th Ct of App Dist",
+   "rows": 1,
+   "reason": "scan page 18 could not be read and may hold this row"
+  }
+ ],
+ "findings": [],
+ "groups": [],
+ "corrections": [],
+ "could_not_correct": [],
+ "sums_check": {
+  "in_all": 529,
+  "holding_with_ledger": 529,
+  "holding_with_published": 529,
+  "holding_with_corrected": 529,
+  "still_failing": [],
+  "rows_failing_own_total": {
+   "published": 0,
+   "corrected": 0
+  }
+ },
+ "unmatched": {
+  "scan": [
+   {
+    "block": "c002",
+    "page": 1,
+    "contest": "Ballots Cast Blank",
+    "candidate": ""
+   }
+  ],
+  "file": [
+   {
+    "contest": "Registered Voters",
+    "district": "",
+    "candidate": "",
+    "rows": 11
+   }
+  ],
+  "rejected": [],
+  "model": {
+   "asked": {
+    "scan_contests": [
+     "Ballots Cast Blank"
+    ],
+    "file_contests": [
+     "Registered Voters"
+    ],
+    "scan_candidates": [
+     "Ballots Cast Blank :: "
+    ],
+    "file_candidates": [
+     "Registered Voters :: "
+    ]
+   },
+   "answer": {
+    "contests": [],
+    "candidates": []
+   }
+  }
+ },
+ "corrected_events": [],
+ "audit": {
+  "disagreements_found": 0,
+  "rereads": 0,
+  "rereads_skipped_sums_decide": 0,
+  "rereads_agreed_with_ledger": 0,
+  "rereads_agreed_with_file": 0,
+  "ledger_corrected": 0,
+  "contests": 252,
+  "contest_totals_printed": 0,
+  "second_sum_exists": false,
+  "seconds": 1.6
+ }
+}

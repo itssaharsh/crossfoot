@@ -1,0 +1,43 @@
+{
+ "run_id": "20261011-134552",
+ "started": "2026-10-11T13:45:52",
+ "ended": "2026-10-11T13:46:26",
+ "seconds": 33.8,
+ "commit": "eba2561af06dbe2e2227f1438297ce393c14f2cb",
+ "command": "crossfoot audit --county san_saba --resume 20261011-130414 --budget 0.5",
+ "counties": [
+  "san_saba"
+ ],
+ "resumed_from": "20261011-130414",
+ "reader": "claude-haiku",
+ "sample": {
+  "row_sums": 19,
+  "failing": 0,
+  "rate": 0.0,
+  "line": 0.1,
+  "sampled_with": "claude-haiku",
+  "reader": "claude-haiku",
+  "kept_sample": true
+ },
+ "phases_seconds": {
+  "close": 7.9,
+  "audit": 16.7
+ },
+ "model_calls": 9,
+ "model_calls_by_model": {
+  "claude-sonnet-4.6": {
+   "calls": 9,
+   "prompt_tokens": 7621,
+   "completion_tokens": 279,
+   "cost": 0.0298
+  }
+ },
+ "prompt_tokens": 7621,
+ "completion_tokens": 279,
+ "metered_cost_estimate": 0.0298,
+ "gateway_spend": {
+  "before": 9.673211554999996,
+  "after": 9.702964354999997,
+  "change": 0.0298
+ }
+}

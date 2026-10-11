@@ -1,0 +1,149 @@
+{
+ "county": "foard",
+ "run_id": "20261011-134509",
+ "layout": "report",
+ "file": "20241105__tx__general__foard__precinct.csv",
+ "policy": {
+  "question_id": "document_disagrees_with_itself",
+  "answer": "cells",
+  "answered_by": "default, not yet confirmed by a person",
+  "meaning": "follow the cells as printed and list the printed total as inconsistent"
+ },
+ "counts": {
+  "findings": 0,
+  "by_kind": {},
+  "by_status": {},
+  "groups": 0,
+  "corrections": 0
+ },
+ "rows_published": 298,
+ "rows_compared": 294,
+ "not_compared": [
+  {
+   "contest": "Ballots Cast",
+   "rows": 4,
+   "reason": "the contest was not paired with a contest on the scan"
+  }
+ ],
+ "findings": [],
+ "groups": [],
+ "corrections": [],
+ "could_not_correct": [],
+ "sums_check": {
+  "in_all": 700,
+  "holding_with_ledger": 700,
+  "holding_with_published": 700,
+  "holding_with_corrected": 700,
+  "still_failing": [],
+  "rows_failing_own_total": {
+   "published": 0,
+   "corrected": 0
+  }
+ },
+ "unmatched": {
+  "scan": [
+   {
+    "block": "c005",
+    "page": 1,
+    "contest": "President and Vice President, Vote For 1",
+    "candidate": "Shiva Ayyadurai Crystal Ellis (W)"
+   },
+   {
+    "block": "c006",
+    "page": 1,
+    "contest": "President and Vice President, Vote For 1",
+    "candidate": "Jessie Cuellar Wesley Lasley (W)"
+   },
+   {
+    "block": "c007",
+    "page": 1,
+    "contest": "President and Vice President, Vote For 1",
+    "candidate": "Claudia De la Cruz Karina Garcia (W)"
+   },
+   {
+    "block": "c008",
+    "page": 1,
+    "contest": "President and Vice President, Vote For 1",
+    "candidate": "Cherunda Fox Harlan McVay (W)"
+   },
+   {
+    "block": "c009",
+    "page": 1,
+    "contest": "President and Vice President, Vote For 1",
+    "candidate": "Peter Sonski Lauren Onak (W)"
+   },
+   {
+    "block": "c010",
+    "page": 1,
+    "contest": "President and Vice President, Vote For 1",
+    "candidate": "Cornel West Melinda Abdullah (W)"
+   },
+   {
+    "block": "c016",
+    "page": 1,
+    "contest": "United States Senator, Vote For 1",
+    "candidate": "Tracy Andrus (W)"
+   },
+   {
+    "block": "c017",
+    "page": 1,
+    "contest": "United States Senator, Vote For 1",
+    "candidate": "Analisa Roche (W)"
+   },
+   {
+    "block": "c027",
+    "page": 1,
+    "contest": "Railroad Commissioner, Vote For 1",
+    "candidate": "Richard McKibbin (W)"
+   }
+  ],
+  "file": [
+   {
+    "contest": "Ballots Cast",
+    "district": "",
+    "candidate": "",
+    "rows": 4
+   }
+  ],
+  "rejected": [],
+  "model": {
+   "asked": {
+    "scan_contests": [],
+    "file_contests": [
+     "Ballots Cast"
+    ],
+    "scan_candidates": [
+     "President and Vice President, Vote For 1 :: Shiva Ayyadurai Crystal Ellis (W)",
+     "President and Vice President, Vote For 1 :: Jessie Cuellar Wesley Lasley (W)",
+     "President and Vice President, Vote For 1 :: Claudia De la Cruz Karina Garcia (W)",
+     "President and Vice President, Vote For 1 :: Cherunda Fox Harlan McVay (W)",
+     "President and Vice President, Vote For 1 :: Peter Sonski Lauren Onak (W)",
+     "President and Vice President, Vote For 1 :: Cornel West Melinda Abdullah (W)",
+     "United States Senator, Vote For 1 :: Tracy Andrus (W)",
+     "United States Senator, Vote For 1 :: Analisa Roche (W)",
+     "Railroad Commissioner, Vote For 1 :: Richard McKibbin (W)"
+    ],
+    "file_candidates": [
+     "Ballots Cast :: "
+    ]
+   },
+   "answer": {
+    "contests": [],
+    "candidates": []
+   }
+  }
+ },
+ "corrected_events": [],
+ "audit": {
+  "disagreements_found": 0,
+  "rereads": 0,
+  "rereads_skipped_sums_decide": 0,
+  "rereads_agreed_with_ledger": 0,
+  "rereads_agreed_with_file": 0,
+  "ledger_corrected": 0,
+  "contests": 74,
+  "contest_totals_printed": 74,
+  "second_sum_exists": true,
+  "seconds": 1.6
+ }
+}
