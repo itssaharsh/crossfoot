@@ -678,10 +678,14 @@
         "uv run crossfoot site build --run latest"
       ],
       "rollback": "git revert the task's commits",
-      "status": "doing",
-      "notes": "Added 2026-10-11 from the orchestrator's fresh-clone test.",
+      "status": "done",
+      "notes": "Added 2026-10-11 from the orchestrator's fresh-clone test.\n[2026-10-11 done] Verify passed inside the task's session on commit 07b72c9 (253 tests). The orchestrator repeated the fresh-clone run: 253 tests, the page build downloads the scans and leaves the tree unchanged, the README figure check passes, and the cost table shows the reading run (552 calls, 2.87 dollars, 1,671 s). One crop that before-after.md names was only on this machine; it is added in this commit.",
       "base": "99e74dc",
-      "started_after": 99
+      "started_after": 99,
+      "evidence": [
+        "E0101",
+        "E0102"
+      ]
     },
     {
       "id": "T09",
