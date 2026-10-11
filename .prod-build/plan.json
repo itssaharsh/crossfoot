@@ -323,10 +323,14 @@
         "uv run crossfoot verify-known --county panola"
       ],
       "rollback": "git revert the task's commits",
-      "status": "doing",
-      "notes": "Added 2026-10-11 after the orchestrator compared T03c's corrected file with printed totals read by eye.",
+      "status": "done",
+      "notes": "Added 2026-10-11 after the orchestrator compared T03c's corrected file with printed totals read by eye.\n[2026-10-11 done] The session's verify had one failing test: the T03c test of the rule this task replaces by decision; the orchestrator removed it with a commit that says so (121 passed). Checked independently: for 11 candidates the corrected file's sums equal the printed row totals read by eye on the scan; 0 corrected rows fail their own total; verify-known 8 of 8; printed sums holding 949 of 984 with the published file and 978 with the corrected file.",
       "base": "9448ad5",
-      "started_after": 39
+      "started_after": 39,
+      "evidence": [
+        "E0042",
+        "E0043"
+      ]
     },
     {
       "id": "T04a",
