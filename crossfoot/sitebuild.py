@@ -22,6 +22,8 @@ Short keys in <county>.json
             grand_row (the row totals add to it), y key, pr printed, co computed,
             t = indexes into values, in the order the sum is added
   events  [{t, k, p}]                            ts, kind, payload, as recorded
+  vd      [{s, v, r, e}]                         the run's verdicts as recorded: sum key, verdict, reason, entity
+  sm      {sums_failing_before, sums_failing_after, items_worked, cells_reread}   the summary's figures the replay reads
   layout, run, county                            as recorded
   fd      the audit's findings, when the run has a findings.json (a field the run lacks is left out, never zero-filled):
             path       the findings file's path in the repository; evidence = its copy, data/<county>-findings.json
@@ -37,7 +39,9 @@ Short keys in <county>.json
                        sums = [{kind, name, label, printed, with_file, with_scan, holds_file, holds_scan,
                                 terms [[ref or null, value]]}]
             figures    {cells, right_first, right_after, reread, disagreements, settled}   what the run recorded
-            run_info   {reader, sample, seconds, phases_seconds, model_calls_by_model, metered_cost_estimate}
+            run_info   {reader, sample, seconds, phases_seconds, model_calls_by_model, metered_cost_estimate,
+                        resumed_from, seconds_total}   seconds_total = this run's seconds plus those of the runs it
+                       resumed, present only when every one of them recorded its seconds
 """
 from __future__ import annotations
 
@@ -215,7 +219,7 @@ def build_findings(raw: dict, index: dict, doc: dict, run: dict | None = None, p
     fd["figures"] = fig
     if run:
         info = {k: run[k] for k in ("reader", "sample", "seconds", "phases_seconds", "model_calls_by_model",
-                                    "metered_cost_estimate", "resumed_from") if run.get(k) is not None}
+                                    "metered_cost_estimate", "resumed_from", "seconds_total") if run.get(k) is not None}
         if info:
             fd["run_info"] = info
     return fd
@@ -287,6 +291,14 @@ def build_county(raw: dict, sizes: dict, img_path=lambda county, n: f"data/pages
     out = {"county": county, "run": raw["run_id"], "layout": raw["layout"], "pages": pages, "blocks": blocks,
            "values": values, "checks": checks,
            "events": [{"t": e["ts"], "k": e["kind"], "p": e["payload"]} for e in raw["events"]]}
+    vd = [{"s": v.get("sum"), "v": v.get("verdict"), "r": v.get("reason"), "e": v.get("entity")}
+          for v in raw.get("verdicts") or [] if isinstance(v, dict)]
+    if vd:
+        out["vd"] = vd
+    sm = {k: raw["summary"][k] for k in ("sums_failing_before", "sums_failing_after", "items_worked", "cells_reread")
+          if (raw.get("summary") or {}).get(k) is not None}
+    if sm:
+        out["sm"] = sm
     if findings:
         out["fd"] = build_findings(raw, index, findings, run, findings_path, evidence, crop_path)
     return out
@@ -349,6 +361,25 @@ def render_blocks(raw: dict, sizes: dict, out_dir: Path, data_root=None) -> dict
     return inks, rules
 
 
+def total_seconds(meta: dict, runs_dir="runs"):
+    """This run's seconds plus those of every run it resumed (`resumed_from`, followed back); None when the run, or
+    one it resumed, did not record its seconds or its run.json cannot be found."""
+    total, seen = 0.0, set()
+    while meta:
+        if not isinstance(meta.get("seconds"), (int, float)):
+            return None
+        total += meta["seconds"]
+        prior = meta.get("resumed_from")
+        if not prior:
+            return round(total, 1)
+        if prior in seen:
+            return None
+        seen.add(prior)
+        path = Path(runs_dir) / str(prior) / "run.json"
+        meta = json.loads(path.read_text()) if path.exists() else None
+    return None
+
+
 def latest_run(runs_dir="runs") -> str:
     """The newest run that has a findings.json."""
     ids = sorted(p.parent.parent.name for p in Path(runs_dir).glob("*/*/findings.json"))
@@ -364,6 +395,10 @@ def build(run_id: str, runs_dir="runs", out="site/data", counties=None, data_roo
     out = Path(out)
     out.mkdir(parents=True, exist_ok=True)
     meta = json.loads((run_dir / "run.json").read_text()) if (run_dir / "run.json").exists() else {}
+    if meta.get("resumed_from"):
+        tot = total_seconds(meta, runs_dir)
+        if tot is not None:
+            meta["seconds_total"] = tot
     keys = counties or sorted(p.parent.name for p in run_dir.glob("*/county.json"))
     if not keys:
         raise SystemExit(f"no county.json under {run_dir}")

@@ -25,6 +25,7 @@
     <div class="controls" id="controls" role="group" aria-label="Stage controls">
       <div class="dock">
         <button class="primary" id="replay" type="button" disabled aria-describedby="replay-hint">Replay the audit</button>
+        <button type="button" id="speed" hidden>Speed 1x</button>
         <p class="hint" id="replay-hint">Replay comes with the run's events</p>
       </div>
       <button type="button" id="flat">Lay flat</button>
@@ -32,6 +33,7 @@
       <button type="button" id="next">Next page</button>
       <span class="pageno" id="pageno" role="status"></span>
     </div>
+    <p class="rp-cap" id="rp-cap" aria-live="polite"></p>
     <div class="viewport" id="viewport">
       <div class="lean" id="lean">
         <div class="pose" id="pose">
@@ -56,11 +58,11 @@
   </section>
   <aside class="panel" id="panel" aria-label="The findings and the sums">
     <div class="skeleton" aria-hidden="true"><div class="sk-tape"><i></i><i></i><i></i><i></i></div><div class="sk-card"><i></i><i></i><i></i></div></div>
+    <p class="headline" id="fcount"></p>
     <section class="card" id="card" aria-label="Selected value"></section>
     <div class="tapewrap"><section class="tape" id="tape" aria-label="The arithmetic"></section></div>
     <section class="findings" id="findings" aria-labelledby="findings-h">
       <h2 id="findings-h">Disagreements</h2>
-      <p class="count" id="fcount"></p>
       <div class="filters" id="filters"></div>
       <p class="showing" id="fshowing" role="status"></p>
       <ul id="flist" class="flist" role="listbox" tabindex="0" aria-labelledby="findings-h"></ul>

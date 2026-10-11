@@ -15,15 +15,27 @@ const svg = (tag, attrs = {}) => {
 const fmt = n => (n === null || n === undefined ? 'none' : Number(n).toLocaleString('en-US'));
 
 export class Loupe {
-  constructor({ root, view, note }, { onPick, reduced = false }) {
-    this.root = root; this.view = view; this.note = note; this.onPick = onPick; this.reduced = reduced;
+  constructor({ root, view, note, ctx = null }, { onPick, reduced = false }) {
+    this.root = root; this.view = view; this.note = note; this.ctxEl = ctx; this.stemEl = null; this.tagEdge = 'top'; this.onPick = onPick; this.reduced = reduced;
     this.layer = null; this.last = null; this.ringEl = null; this.token = 0; this.tagEl = null; this.peekEl = null;
+  }
+  setTag(text) {   // the replay's tag: a text of its own on the ring that is drawn
+    this.tagText = text;
+    if (this.last) this.moveTag(this.layer, this.last.store.values[this.last.i], false);
+    if (this.tagEl && text) this.tagEl.classList.add('on');
+  }
+  // the ring's colour: holds, fails, or warn (the document disagrees with itself, or nothing can decide)
+  setRing(cls) {
+    for (const r of this.view.querySelectorAll('.lp-ring')) r.setAttribute('class', `lp-ring ${cls}`);
+    for (const l of this.view.querySelectorAll('.lp-svg line')) l.setAttribute('class', cls === 'holds' ? 'holds' : 'fails');
   }
   get W() { return this.view.clientWidth; }
   get H() { return this.view.clientHeight; }
 
   clear() {
-    this.last = null; this.ringEl = null; this.peekEl = null; this.tagEl = null;
+    this.last = null; this.ringEl = null; this.peekEl = null;
+    for (const e of [this.tagEl, this.stemEl]) if (e) e.remove();
+    this.tagEl = this.stemEl = null; this.setCtx(null);
     for (const l of this.view.querySelectorAll('.lp-layer')) l.remove();
     this.layer = null; this.note.hidden = true;
   }
@@ -119,7 +131,7 @@ export class Loupe {
   showCrop(src, alt, animate = true) {
     const old = this.layer;
     this.last = null; this.ringEl = null; this.peekEl = null;
-    if (this.tagEl) this.tagEl.classList.remove('on');
+    this.hideTag();
     this.note.hidden = true;
     const el = document.createElement('div');
     el.className = 'lp-layer lp-cropbox';
@@ -202,32 +214,69 @@ export class Loupe {
     this.tagText = extra.tag === undefined ? null : extra.tag;
   }
 
-  // the paper tag that hangs from the ring: under it, never over the digits
+  // the paper tag: in the blank left part of the ringed value's own cell, level with the ring (figures are printed at the
+  // right of their cells); when that part is too narrow, just outside the loupe's top edge with a short line down to the ring
+  hideTag() {
+    for (const e of [this.tagEl, this.stemEl]) if (e) e.classList.remove('on');
+    this.setCtx(null);
+  }
+  // the caption above the loupe gives way to a tag that sits outside the loupe's top edge
+  setCtx(gap) {
+    const c = this.ctxEl;
+    if (!c) return;
+    if (!gap) { c.style.left = c.style.right = c.style.textAlign = ''; return; }
+    const W = c.parentElement.clientWidth, [l, r] = gap, side = l - 24 >= W - r - 24;
+    if (side) { c.style.left = '24px'; c.style.right = `${W - l + 12}px`; c.style.textAlign = 'right'; }
+    else { c.style.left = `${r + 12}px`; c.style.right = '24px'; c.style.textAlign = 'left'; }
+  }
   moveTag(layer, v, slide) {
-    if (!this.tagText || !v.x) { if (this.tagEl) this.tagEl.classList.remove('on'); return; }
+    if (!this.tagText || !v.x || !layer || layer.crop) { this.hideTag(); return; }
     if (!this.tagEl) {
       this.tagEl = document.createElement('div');
       this.tagEl.className = 'lp-tag';
       this.tagEl.setAttribute('aria-hidden', 'true');
+      this.stemEl = document.createElement('div');
+      this.stemEl.className = 'lp-stem';
+      this.stemEl.setAttribute('aria-hidden', 'true');
     }
-    const t = this.tagEl;
-    if (!t.isConnected) this.view.append(t);
+    const t = this.tagEl, stem = this.stemEl, blk = layer.blk;
     t.textContent = this.tagText;
-    t.classList.toggle('slide', !!slide);
-    const [a, b, , yb] = layer.ext, S = layer.S;
-    const w = t.offsetWidth;
-    // hangs from the loop's lower left, wholly to the left of the digits: figures sit at the right of their cells, so the
-    // paper under and left of the loop is clear, and the figure of the row below is not covered
-    const left = Math.max(4, Math.min(this.W - w - 4, layer.tx + a * S - 2 - w));
-    const topPx = layer.ty + (yb + LOOP_BELOW) * S + TAG_GAP;
-    t.style.transform = `translate(${left}px, ${topPx}px)`;
+    if (t.parentNode !== this.view) this.view.append(t);   // measured where it will usually sit
+    const w = t.offsetWidth, [a, b, ya, yb] = layer.ext, S = layer.S;
+    const mx = blk.bi.w / (blk.x[2] - blk.x[0]);
+    const cellL = layer.tx + (v.x[0] - blk.x[0]) * mx * S;          // the cell's left edge, in the view
+    const ringL = layer.tx + a * S - 12, ringR = layer.tx + b * S + 12;
+    const midY = layer.ty + ((ya + yb) / 2) * S, ringTop = layer.ty + ya * S - 12;
+    const left = ringL - TAG_GAP - w, need = Math.max(cellL + 3, 4);
+    const inside = left >= need && midY - TAG_H / 2 >= 2 && midY + TAG_H / 2 <= this.H - 2;
+    t.classList.toggle('in-cell', inside);
+    t.classList.toggle('out', !inside);
+    if (inside) {
+      t.classList.toggle('slide', !!slide);
+      t.style.transform = `translate(${left}px, ${midY - TAG_H / 2}px)`;
+      stem.classList.remove('on');
+      this.setCtx(null);
+    } else {
+      const stage = this.root.parentElement, sb = stage.getBoundingClientRect(), lb = this.root.getBoundingClientRect();
+      if (t.parentNode !== stage) stage.append(t);
+      t.classList.remove('slide');
+      const cx = Math.max(10, Math.min(this.W - 10, (ringL + ringR) / 2));       // the ring's middle, in the view
+      const x = Math.max(lb.left - sb.left, Math.min(lb.right - sb.left - w, lb.left - sb.left + cx - w / 2));
+      const low = this.tagEdge === 'bottom', ringBottom = layer.ty + yb * S + 12;   // the replay hangs it under the loupe: its caption is above
+      t.style.transform = `translate(${x}px, ${low ? lb.bottom - sb.top + 1 : lb.top - sb.top - TAG_H - 1}px)`;
+      if (stem.parentNode !== this.view) this.view.append(stem);
+      const len = low ? Math.max(0, this.H - ringBottom) : Math.max(0, ringTop);
+      stem.style.cssText = `left:${cx}px;top:${low ? ringBottom : 0}px;height:${len}px`;
+      stem.classList.toggle('on', len > 2 && (!this.ringEl || this.ringEl.style.strokeDashoffset !== '1'));
+      this.setCtx(low ? null : [x, x + w]);
+    }
     t.classList.toggle('on', !this.ringEl || this.ringEl.style.strokeDashoffset !== '1');
   }
 
   // draws the ring on, from its top left, once the sums are drawn
   reveal(animate = true, ms = RING_MS) {
     const r = this.ringEl;
-    const tag = () => { if (this.tagEl && this.tagText) this.tagEl.classList.add('on'); };
+    const tag = () => { if (this.tagEl && this.tagText) { this.tagEl.classList.add('on'); if (this.stemEl && this.tagEl.classList.contains('out')) this.stemEl.classList.add('on'); } };
     if (!r || r.style.strokeDashoffset !== '1') { tag(); return Promise.resolve(); }
     if (!animate || this.reduced) { r.style.strokeDashoffset = ''; r.style.strokeDasharray = ''; tag(); return Promise.resolve(); }
     const done = () => { r.style.strokeDashoffset = ''; r.style.strokeDasharray = ''; tag(); };
@@ -249,8 +298,7 @@ export class Loupe {
     l.ext = ext;
     this.apply(l, this.place(l, ext));
     if (this.tagEl) {
-      this.tagEl.classList.toggle('slide', true);
-      if (away) this.tagEl.classList.remove('on'); else { this.moveTag(l, v, true); this.tagEl.classList.add('on'); }
+      if (away) this.hideTag(); else this.moveTag(l, v, true);
     }
     if (!away || !v.x) return;
     const { blk } = l, { bi } = blk, S = l.S;

@@ -219,13 +219,13 @@ export class Stage {
       m.append(r);
       this.rects.push({ r, i, cx: (v.x[0] + v.x[2]) / 2, cy: (v.x[1] + v.x[3]) / 2 });
     }
-    this.ticks = new Map(); this.tickPaths = [];   // a pencil tick at every finding's value on this page (the selected one has its ring instead)
+    this.ticks = new Map(); this.tickPaths = [];   // a hollow pencil circle at every finding's value on this page (the selected one has its ring instead)
     const tg = svg('g', { class: 'ticks', 'aria-hidden': 'true' });
     for (const f of this.store.items) {
       const v = f.ref === undefined ? null : this.store.values[f.ref];
       if (!v || !v.x || v.p !== this.page) continue;
       const g = svg('g', { transform: `translate(${v.x[0]} ${(v.x[1] + v.x[3]) / 2})`, class: 'tick ' + (f.status === 'settled_against_file' ? 'settled' : 'open') });
-      const path = svg('path', { d: 'M3 0L7 5L15 -7' });
+      const path = svg('circle', { cx: 8, cy: 0, r: 4.5 });   // 9 px across at the sheet's scale, 2 px stroke; hollow
       g.append(path);
       this.tickPaths.push(path);
       tg.append(g);

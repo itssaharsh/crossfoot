@@ -6,7 +6,13 @@ const termLabel = (c, t) => (c.k === 'col' ? t.r : c.k === 'grand_row' ? t.c : `
 const heading = c => c.k === 'col' ? `Down the column · precinct ${c.y}` : c.k === 'row' ? `Across the row · ${c.y}`
   : c.k === 'grand_row' ? 'Down the row totals' : 'Across the small totals';
 const kindLabel = (kind, v) => (kind === 'col' ? v.r : kind === 'row' ? `Precinct ${v.c}` : kind === 'grand_row' ? v.c : `Precinct ${v.c}`);
-// a short heading for a deciding sum; its whole name is in the card under "Decided by"
+// a short name for a deciding sum, carried by the headers of its two columns; the whole name is in the card's crop dialog
+const sumName = (s, f, store) => {
+  const v = f.ref === undefined ? null : store.values[f.ref];
+  return s.kind === 'col' ? `column ${v && !store.isTotal(v) ? v.c : f.precinct || ''}`.trim()
+    : s.kind === 'row' ? `row ${v && v.r ? v.r : ''}`.trim()
+    : s.kind === 'grand_row' ? 'row totals' : 'small totals';
+};
 const sumHeading = (s, f, store) => {
   const v = f.ref === undefined ? null : store.values[f.ref];
   return s.kind === 'col' ? `Down the column${v && !store.isTotal(v) ? ` · precinct ${v.c}` : f.precinct ? ` · precinct ${f.precinct}` : ''}`
@@ -62,13 +68,15 @@ export function pairLines(store, f, s) {
     // a row only the file has: no term of the scan's sum is it
     rows.push({ label: 'file only', scan: '—', file: fmt(f.file), diff: true });
   }
-  if (rows.length <= 6) return rows;
-  const keep = new Set([0, 1, rows.length - 1]);
+  // long sums: the first term, the term that differs, the last, and a line for each run of terms left out between them
+  // (a run of one is shown as the term itself)
+  if (rows.length <= 5) return rows;
+  const keep = new Set([0, rows.length - 1]);
   rows.forEach((r, i) => { if (r.diff) keep.add(i); });
-  const out = []; let gap = 0;
-  rows.forEach((r, i) => {
-    if (keep.has(i)) { if (gap) { out.push({ label: `… ${gap} more`, scan: '', file: '', more: true }); gap = 0; } out.push(r); } else gap++;
-  });
+  const out = []; let gap = [];
+  const flush = () => { if (gap.length === 1) out.push(gap[0]); else if (gap.length) out.push({ label: `… ${gap.length} more`, scan: '', file: '', more: true }); gap = []; };
+  rows.forEach((r, i) => { if (keep.has(i)) { flush(); out.push(r); } else gap.push(r); });
+  flush();
   return out;
 }
 
@@ -97,7 +105,7 @@ export class Tape {
         const lab = el('span', '', side.label);
         if (side.diff) lab.append(el('span', 'sr', ' (differs)'));
         cell.append(lab, el('span', '', side.fig));
-        if (pick && side.ref !== undefined) {
+        if (pick && side.ref !== undefined && !side.diff) {   // the value itself is already selected
           const bt = el('button', 'ln pick' + (side.diff ? ' diff' : ''));
           bt.type = 'button'; bt.append(...cell.children);
           bt.addEventListener('click', () => this.onPick(side.ref));
@@ -107,15 +115,17 @@ export class Tape {
       return row;
     };
     if (!f.sums.length) this.root.append(el('p', 'empty', 'No printed sum was recorded through this value.'));
-    for (const s of f.sums) {
+    f.sums.forEach((s, n) => {
       const box = el('div', 'sum two');
-      box.append(el('h3', '', sumHeading(s, f, store)));
+      const h3 = el('h3', 'sr', sumHeading(s, f, store));
+      box.append(h3);
       const heads = el('div', 'pair heads');
-      heads.append(el('h4', '', "With the public file's value"), el('h4', '', "With the scan's value"));
+      heads.setAttribute('aria-hidden', 'true');   // the same words are in the heading above and in the lines
+      heads.append(el('h4', '', `Public file · ${sumName(s, f, store)}`), el('h4', '', `Scan · ${sumName(s, f, store)}`));
       box.append(heads);
       for (const l of pairLines(store, f, s)) {
         const cls = l.more ? 'more' : '';
-        mk(box, pair(cls, { label: l.label, fig: l.file, diff: l.diff, ref: l.ref, cls }, { label: l.label, fig: l.scan, diff: l.diff, ref: l.ref, cls }, true));
+        mk(box, pair(cls, { label: l.label, fig: l.file, diff: l.diff, ref: l.ref, cls }, { label: l.label, fig: l.scan, diff: l.diff, ref: l.ref, cls }, false));   // plain lines: 16 px each, so two sums fit on the first screen
       }
       mk(box, pair('rule', { label: 'adds to', fig: fmt(s.with_file) }, { label: 'adds to', fig: fmt(s.with_scan) }));
       // when the value the finding sits on is this sum's printed total, the file's column carries the file's value there
@@ -126,7 +136,7 @@ export class Tape {
       for (const holds of [s.holds_file, s.holds_scan]) res.append(el('div', 'res ' + (holds ? 'holds' : 'fails'), holds ? '✓ matches' : '✗ does not match'));
       mk(box, res);
       this.root.append(box);
-    }
+    });
     if (others.length) {
       const more = el('div', 'others');
       more.append(el('h3', '', 'Other printed sums through this value'));

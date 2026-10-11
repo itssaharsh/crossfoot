@@ -6,7 +6,6 @@ const hid = e => { e.setAttribute('aria-hidden', 'true'); return e; };
 const cap = s => (s ? s[0].toUpperCase() + s.slice(1) : s);
 const val = n => (n === undefined || n === null ? '—' : fmt(n));
 const valWords = n => (n === undefined || n === null ? 'none' : fmt(n));
-const plural = (n, one, many) => `${fmt(n)} ${n === 1 ? one : many}`;
 export const VIRTUAL_ABOVE = 200;   // rows; more than this and only the rows near the viewport are in the page
 
 // the other finding of the group that holds the value this one's scan has (a swap): where the file put it
@@ -47,8 +46,10 @@ export function renderFindingCard(root, store, f, { onCrop, onEvidence }) {
   root.setAttribute('aria-label', 'Selected finding');
   const kind = KIND[f.kind] || { word: f.kind, glyph: '' };
   const st = STATUS[f.status] || { word: f.status, glyph: '', line: '' };
-  root.append(el('p', 'eyebrow', [f.office, f.page ? `page ${f.page}` : null].filter(Boolean).join(' · ')));
-  root.append(el('h2', '', [f.row, f.precinct ? `precinct ${f.precinct}` : null, PART[f.part]].filter(Boolean).join(' · ')));
+  const title = [f.row, f.precinct ? `precinct ${f.precinct}` : null, PART[f.part]].filter(Boolean).join(' · ');
+  const h = el('h2', '', title);
+  h.title = [f.office, f.page ? `page ${f.page}` : null, title].filter(Boolean).join(' · ');   // the full label is in the loupe's caption
+  root.append(h);
   const pair = el('div', 'two-values');
   for (const [label, n, cls] of [['Public file', f.file, 'file'], ['Scan', f.scan, 'scan']]) {
     const d = el('div', 'one ' + cls);
@@ -61,14 +62,6 @@ export function renderFindingCard(root, store, f, { onCrop, onEvidence }) {
   k.append(el('span', 'lab', 'Kind of slip'), el('span', 'kg', kind.glyph), el('span', 'kw', kind.word));
   k.querySelector('.kg').setAttribute('aria-hidden', 'true');
   root.append(k, el('p', 'sentence', sentence(store, f)));
-  const dec = el('div', 'decided');
-  dec.append(el('span', 'lab', 'Decided by'));
-  if (f.sums.length) {
-    const ul = el('ul');
-    for (const s of f.sums) ul.append(el('li', '', cap(s.name)));
-    dec.append(ul);
-  } else dec.append(el('span', '', 'No printed sum was recorded for this value.'));
-  root.append(dec);
   const status = el('p', 'status ' + (f.status === 'settled_against_file' ? 'ok' : 'open'));
   status.append(hid(el('span', 'sg', st.glyph)), st.line);
   root.append(status);
@@ -147,6 +140,36 @@ export class Dialog {
   }
 }
 
+// ---- the headline strip: the count line, figures in the typewriter face, the settled figure the strongest
+export const countsOf = items => ({
+  all: items.length,
+  settled: items.filter(f => f.status === 'settled_against_file').length,
+  cannot: items.filter(f => f.status === 'cannot_verify').length,
+  doc: items.filter(f => f.status === 'document_inconsistent').length,
+  confirmed: items.filter(f => f.confirmed_by_person).length,
+});
+// the parts of the line; `doc` is left out when it is zero in the full count, so the line keeps its shape while counting up
+export function renderHeadline(root, c, { withDoc = c.doc > 0 } = {}) {
+  root.replaceChildren();
+  root.dataset.doc = withDoc ? '1' : '0';
+  const part = (key, n, words, cls = '') => {
+    const s = el('span', 'hl-part');
+    s.append(el('span', 'hl-n ' + (cls || key), fmt(n)), ` ${words}`);
+    s.firstChild.dataset.key = key;
+    return s;
+  };
+  const parts = [part('all', c.all, c.all === 1 ? 'disagreement' : 'disagreements'),
+                 part('settled', c.settled, STATUS.settled_against_file.count, 'settled'),
+                 part('cannot', c.cannot, STATUS.cannot_verify.count)];
+  if (withDoc) parts.push(part('doc', c.doc, STATUS.document_inconsistent.count));
+  parts.push(part('confirmed', c.confirmed, 'confirmed by a person'));
+  parts.forEach((p, i) => { if (i) root.append(el('span', 'hl-dot', ' · ')); root.append(p); });
+}
+// sets the figures of a strip already drawn
+export function setHeadline(root, c) {
+  for (const n of root.querySelectorAll('.hl-n')) if (c[n.dataset.key] !== undefined) n.textContent = fmt(c[n.dataset.key]);
+}
+
 // ---- the list
 const rowOf = f => (f.precinct ? `precinct ${f.precinct}` : '');
 
@@ -168,14 +191,8 @@ export class FindingList {
   destroy() { removeEventListener('scroll', this.onScroll, true); removeEventListener('resize', this.onScroll); }
 
   counts() {
-    const fd = this.store.fd, all = this.all, n = all.length;
-    if (!fd) { this.countEl.textContent = ''; return; }
-    const by = s => all.filter(f => f.status === s).length;
-    const parts = [plural(n, 'disagreement', 'disagreements'), `${fmt(by('settled_against_file'))} ${STATUS.settled_against_file.count}`,
-                   `${fmt(by('cannot_verify'))} ${STATUS.cannot_verify.count}`];
-    if (by('document_inconsistent')) parts.push(`${fmt(by('document_inconsistent'))} ${STATUS.document_inconsistent.count}`);
-    parts.push(`${fmt(all.filter(f => f.confirmed_by_person).length)} confirmed by a person`);
-    this.countEl.textContent = parts.join(' · ');
+    if (!this.store.fd) { this.countEl.textContent = ''; return; }
+    renderHeadline(this.countEl, countsOf(this.all));
   }
 
   chips() {
@@ -298,6 +315,10 @@ export class FindingList {
   }
 }
 
+// the seconds the run took: a run that was resumed counts the runs it resumed too, and when one of them did not record its
+// seconds there is no honest figure (undefined)
+export const runSeconds = info => (info.resumed_from ? info.seconds_total : info.seconds);
+
 // ---- the run's numbers, and the sentence about the reader
 export function runFigures(fd) {
   const f = fd.figures || {}, info = fd.run_info || {};
@@ -310,7 +331,8 @@ export function runFigures(fd) {
   add('disagreements', f.disagreements, 'values');
   add('settled', f.settled, 'values');
   if (info.metered_cost_estimate !== undefined) out.push(['model cost', `$${Number(info.metered_cost_estimate).toFixed(2)}`, 'US dollars']);
-  if (info.seconds !== undefined) out.push(['minutes', (info.seconds / 60).toFixed(1), 'min']);
+  const secs = runSeconds(info);
+  if (secs !== undefined) out.push(['minutes', (secs / 60).toFixed(1), 'min']);
   return out.map(([label, n, unit]) => [label, typeof n === 'number' ? fmt(n) : n, unit]);
 }
 

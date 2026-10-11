@@ -186,3 +186,40 @@ def test_latest_is_the_newest_run_with_findings(tmp_path):
         if has:
             (tmp_path / rid / "c" / "findings.json").write_text("{}")
     assert latest_run(tmp_path) == "20261011-110000"
+
+
+def test_verdicts_and_the_summary_figures_are_passed_on():
+    r = raw()
+    r["verdicts"] = [{"sum": "col:1:b1:1", "page": 1, "block": "b1", "verdict": "cannot_verify", "reason": "why", "entity": None}]
+    r["summary"] = {"sums_failing_before": {"row": 1}, "model_calls": 3}
+    d = build_county(r, {1: (2000, 1000, 1000, 500)})
+    assert d["vd"] == [{"s": "col:1:b1:1", "v": "cannot_verify", "r": "why", "e": None}]
+    assert d["sm"] == {"sums_failing_before": {"row": 1}}               # only the figures the replay reads
+    bare = build_county(raw(), {1: (2000, 1000, 1000, 500)})
+    assert "vd" not in bare and "sm" not in bare
+
+
+def test_total_seconds_adds_the_runs_a_run_resumed(tmp_path):
+    import json
+    from crossfoot.sitebuild import total_seconds
+    for rid, meta in (("a", {"seconds": 600.0, "resumed_from": None}), ("b", {"seconds": 100.0, "resumed_from": "a"}),
+                      ("c", {"resumed_from": "b"})):
+        (tmp_path / rid).mkdir()
+        (tmp_path / rid / "run.json").write_text(json.dumps(meta))
+    read = lambda rid: json.loads((tmp_path / rid / "run.json").read_text())
+    assert total_seconds(read("a"), tmp_path) == 600.0
+    assert total_seconds(read("b"), tmp_path) == 700.0
+    assert total_seconds({"seconds": 5.0, "resumed_from": "c"}, tmp_path) is None   # c never recorded its seconds
+    assert total_seconds({"seconds": 5.0, "resumed_from": "gone"}, tmp_path) is None
+    assert total_seconds({"resumed_from": "a"}, tmp_path) is None
+
+
+def test_the_replay_timeline_follows_the_runs_own_events():
+    """qa/t07b/timeline.mjs builds the timeline from the real county data and checks its order and counts against the events."""
+    import pathlib, shutil, subprocess
+    root = pathlib.Path(__file__).resolve().parents[1]
+    node = shutil.which("node")
+    if not node or not (root / "site" / "data" / "panola.json").exists():
+        pytest.skip("needs node and the built county data")
+    r = subprocess.run([node, str(root / "qa" / "t07b" / "timeline.mjs")], capture_output=True, text=True, cwd=root)
+    assert r.returncode == 0, r.stdout + r.stderr

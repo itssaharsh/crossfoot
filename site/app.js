@@ -3,7 +3,8 @@ import { Stage } from './stage.js';
 import { Loupe } from './loupe.js';
 import { Tape } from './tape.js';
 import { renderCard, stageLabel, FailList } from './panel.js';
-import { renderFindingCard, FindingList, Dialog, renderRun, contextLine, siblingOf } from './findings.js';
+import { renderFindingCard, FindingList, Dialog, renderRun, contextLine, siblingOf, setHeadline, runSeconds } from './findings.js';
+import { Replay } from './replay.js';
 
 const $ = id => document.getElementById(id);
 const q = new URLSearchParams(location.search);
@@ -24,11 +25,11 @@ const stage = new Stage({
   loupeEl: $('loupe'), leader: $('leader'), leaderLine: $('leader-line'), controls: $('controls'),
   scan: $('scan'), bands: $('bands'), marks: $('marks'), notice: $('notice'), flatEl: $('flatblock'),
 }, { reduced, coarse, onPick: i => select(i), onError: loadMessage, onFocusValue: i => peek(i) });
-const loupe = new Loupe({ root: $('loupe'), view: $('lp-view'), note: $('lp-note') }, { onPick: i => select(i), reduced });
+const loupe = new Loupe({ root: $('loupe'), view: $('lp-view'), note: $('lp-note'), ctx: $('ctx') }, { onPick: i => select(i), reduced });
 stage.setLoupe(loupe);
 const tape = new Tape($('tape'), reduced, i => select(i));
 const dialog = new Dialog($('dlg'));
-const state = { store: null, list: null, flist: null, sel: null, finding: null, index: null, counties: {}, first: true };
+const state = { replay: null, opening: null, store: null, list: null, flist: null, sel: null, finding: null, index: null, counties: {}, first: true };
 const sorted = c => c.t.slice().sort((a, b) => a - b).join(',');
 
 // ---- the page's state: body[data-state] decides what shows (styles.css); the controls follow it
@@ -54,6 +55,7 @@ function fail(file) {
 // ---- selection
 // a value of the sheet; when a finding sits on it, the page shows the finding
 async function select(i, { animate = true, entrance = false, settle = false } = {}) {
+  if (state.replay) state.replay.stop();      // a selection by hand ends the replay
   const { store } = state;
   const v = store.values[i];
   if (!v) return;
@@ -89,6 +91,7 @@ async function select(i, { animate = true, entrance = false, settle = false } = 
 
 // a finding the sheet has no place for: the group's crop, flat, and no ring
 async function selectPlaceless(f, { animate = true } = {}) {
+  if (state.replay) state.replay.stop();
   const { store } = state;
   state.sel = null; state.finding = f;
   const card = $('card');
@@ -112,6 +115,7 @@ function setContext(text) { $('ctx').textContent = text; }
 function peek(i) { if (state.store) loupe.peek(state.store, i); }
 
 async function goPage(n, animate, dir, pick = true) {
+  if (state.replay) state.replay.stop();
   await stage.setPage(n, animate, dir);
   updatePager();
   if (pick) {
@@ -130,6 +134,7 @@ function updatePager() {
 function setFlatLabel() { $('flat').textContent = stage.flat ? 'Tilt sheet' : 'Lay flat'; }
 
 async function openCounty(key) {
+  if (state.replay) { state.replay.stop(); state.replay = null; }
   const entry = state.index.counties.find(c => c.key === key);
   let data = state.counties[key];
   if (!data) {
@@ -160,9 +165,10 @@ async function openCounty(key) {
   if (wantF && store.itemById.has(wantF)) startFinding = store.itemById.get(wantF);
   else if (want && store.byId.has(want)) start = store.byId.get(want);
   else if (hasFindings) startFinding = opening(store);
+  state.opening = startFinding || null;
   if (startFinding) {
     if (startFinding.ref !== undefined) start = startFinding.ref;
-    else { await openPlaceless(startFinding, entry, key); return; }
+    else { await openPlaceless(startFinding, entry, key); makeReplay(); return; }
   }
   if (start === null) start = store.defaultOn(1);
   if (start === null) { fail(entry.file); return; }
@@ -181,6 +187,26 @@ async function openCounty(key) {
   state.first = false;
   setFlatLabel();
   for (const b of document.querySelectorAll('#tabs button')) b.setAttribute('aria-pressed', String(b.dataset.key === key));
+  makeReplay(start);
+}
+
+// the replay of the county's recorded run; its end puts the page back on the opening value, drawn as on load
+function makeReplay(start = null) {
+  const { store } = state;
+  const info = (store.fd && store.fd.run_info) || {};
+  const started = state.index.started ? new Date(state.index.started) : null;
+  const date = started && !isNaN(started) ? started.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }) : state.index.run;
+  const o = state.opening;
+  state.replay = new Replay({
+    store, stage, loupe, reduced, date, onPage: () => updatePager(), seconds: runSeconds(info), disabled: !!forced,
+    els: { cap: $('rp-cap'), btn: $('replay'), speedBtn: $('speed'), hint: $('replay-hint'), card: $('card'), findings: $('findings'), loupeEl: $('loupe'), leaderEl: $('leader') },
+    headline: { set: c => setHeadline($('fcount'), c), full: () => state.flist.counts() },
+    restore: async animate => {
+      if (o && o.ref === undefined) await selectPlaceless(o, { animate });
+      else await select(start !== null ? start : o.ref, { animate });
+    },
+  });
+  stage.layout(true);   // the speed control and the replay label change how tall the controls are
 }
 
 // the opening finding: the first wrong-column group the printed sums all settled, else the first settled finding
@@ -243,10 +269,15 @@ addEventListener('keydown', e => {
     e.preventDefault();
     for (const k of ['state', 'cell', 'flat', 'reset']) q.delete(k);
     location.assign(location.pathname + (q.toString() ? '?' + q : ''));
-  } else if (e.code === 'KeyP') {     // reserved for the replay: nothing to do yet, and no error
+  } else if (e.code === 'KeyP') {     // the replay: start, pause, resume
     e.preventDefault();
-    document.dispatchEvent(new CustomEvent('crossfoot:replay'));
+    if (state.replay) state.replay.toggle();
   }
+});
+// Escape pauses a running replay (a dialog that is open takes the key for itself)
+addEventListener('keydown', e => {
+  if (e.key !== 'Escape' || e.altKey || e.ctrlKey || e.metaKey || $('dlg').open) return;
+  if (state.replay && state.replay.state === 'running') { e.preventDefault(); state.replay.pause(); }
 });
 
 main();
