@@ -1,9 +1,9 @@
-// The findings: the card, the list with its filters, the run numbers and the crop and evidence dialogs.
-import { fmt, KIND, KINDS, STATUS, STATUSES, PART, UNCONFIRMED, COLS, COL_WORD, pcl } from './data.js';
+// The findings: the panel for one finding, the list with its filter, and the crop and evidence dialogs.
+import { fmt, KIND, STATUS, PART, UNCONFIRMED, COLS, COL_WORD, pcl, cap } from './data.js';
+import { pairRows } from './tape.js';
 
 const el = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text !== undefined) e.textContent = text; return e; };
 const hid = e => { e.setAttribute('aria-hidden', 'true'); return e; };
-const cap = s => (s ? s[0].toUpperCase() + s.slice(1) : s);
 const val = n => (n === undefined || n === null ? '—' : fmt(n));
 const valWords = n => (n === undefined || n === null ? 'none' : fmt(n));
 export const VIRTUAL_ABOVE = 200;   // rows; more than this and only the rows near the viewport are in the page
@@ -54,16 +54,7 @@ function reportSentence(store, f, sib) {
     }
   }
 }
-// the status in one plain line; in the report layout a row nothing can decide says why, from the finding's own sums
-export function statusLine(store, f) {
-  const st = STATUS[f.status] || { line: '' };
-  if (!store.report || f.status !== 'cannot_verify') return st.line;
-  const rows = f.sums.filter(s => s.kind === 'report_row');
-  const both = rows.length > 0 && rows.every(s => s.holds_file && s.holds_scan);
-  let t = both ? 'Both rows add up to their own total, and nothing else printed on this page can tell them apart. Left as published.' : st.line;
-  if (f.reread_agrees) t += ' The scan was read twice and both readings agree.';
-  return t;
-}
+
 // the tag on the loupe: the file's value, or the file's values of every figure of the row that differs
 export function tagText(store, f) {
   if (f.file === undefined && !(f.rv && f.rv.file)) return 'public file: none';
@@ -72,47 +63,113 @@ export function tagText(store, f) {
   return `public file: ${f.file === undefined ? 'none' : fmt(f.file)}`;
 }
 
-// the line above the loupe: page, contest, row label, precinct (report layout: page, precinct, contest, row label)
-export const contextLine = (store, f) => (store.report
-  ? [f.page ? `Page ${f.page}` : null, f.precinct ? pcl(f.precinct) : null, f.office, f.row].filter(Boolean).join(' · ')
-  : [f.page ? `Page ${f.page}` : null, f.office, f.row, f.precinct ? pcl(f.precinct) : null].filter(Boolean).join(' · '));
+// where the finding is, in plain words: "Precinct 18 · early voting", and the row as printed on the scan with its page
+export const placeOf = f => cap([f.precinct ? pcl(f.precinct) : null, PART[f.part]].filter(Boolean).join(' · ') || f.row || 'This value');
+export const printedOf = f => [f.office, f.row, f.page ? `page ${f.page}` : null].filter(Boolean).join(' · ');
+export const stageLabel = (store, f) =>
+  `Page ${f.page} of the scan. Selected: ${placeOf(f)}, ${printedOf(f)}. Public file ${valWords(f.file)}, scan ${valWords(f.scan)}.`;
 
-export function renderFindingCard(root, store, f, { onCrop, onEvidence }) {
+// ---- the sum, said short: at most five terms, the changed one marked, the rest folded into "…"
+const noun = kind => (kind === 'row' || kind === 'report_row' ? 'row' : kind === 'col' || kind === 'report_contest' || kind === 'grand_row' ? 'column' : 'set of totals');
+// the sum that decides: the first one that holds with the scan's value and fails with the file's
+export const decidingSum = f => f.sums.find(s => s.holds_scan && !s.holds_file) || null;
+export function termTokens(store, f, s, side) {
+  const rows = pairRows(store, f, s);
+  const keep = new Set(rows.map((r, i) => (r.diff ? i : -1)).filter(i => i >= 0).slice(0, 3));
+  if (rows.length <= 5) rows.forEach((_, i) => keep.add(i));
+  else { keep.add(0); keep.add(rows.length - 1); }
+  const out = []; let gap = false;
+  rows.forEach((r, i) => {
+    if (!keep.has(i)) { gap = true; return; }
+    if (gap) { out.push({ t: '…' }); gap = false; }
+    out.push({ t: side === 'file' ? r.file : r.scan, diff: r.diff });
+  });
+  if (gap) out.push({ t: '…' });
+  return out;
+}
+// "4 + 4 + … + 1 + … = 10" as a span, the changed term strong
+function sumSpan(tokens, total) {
+  const s = el('span', 'terms');
+  tokens.forEach((k, i) => {
+    if (i) s.append(' + ');
+    if (k.diff) s.append(el('strong', 'chg', k.t)); else s.append(k.t);
+  });
+  s.append(` = ${fmt(total)}`);
+  return s;
+}
+// one plain sentence when nothing decides, from the finding's own sums (else its own reason, cut at the first clause)
+export function whyNot(store, f) {
+  const sums = f.sums || [];
+  let t;
+  if (f.status === 'document_inconsistent') t = 'The printed totals on this page disagree with each other, so they cannot say which number is right.';
+  else if (sums.length && sums.every(s => s.holds_file && s.holds_scan)) t = 'Every printed sum through this number holds with either value, so the totals cannot tell them apart.';
+  else if (sums.length && sums.every(s => !s.holds_file && !s.holds_scan)) t = 'The printed sums through this number fail with either value, so the totals cannot say which is right.';
+  else if (sums.length) t = 'The printed sums through this number give the same answer with either value, so they cannot decide.';
+  else {
+    const r = String(f.reason || '').split(/;|\. /)[0].replace(/[.\s]+$/, '');
+    t = r ? `${cap(r)}.` : 'No printed total can decide this one.';
+  }
+  if (f.reread_agrees) t += ' The scan was read twice and both readings agree.';
+  return t;
+}
+
+export function renderFindingPanel(root, store, f, { onCrop, onEvidence, details, tapeHost, open, onToggle }) {
   root.replaceChildren();
-  root.className = 'card finding';
-  root.setAttribute('aria-label', 'Selected finding');
-  const kind = KIND[f.kind] || { word: f.kind, glyph: '' };
   const st = STATUS[f.status] || { word: f.status, glyph: '', line: '' };
-  const title = [f.row, f.precinct ? pcl(f.precinct) : null, PART[f.part]].filter(Boolean).join(' · ');
-  const h = el('h2', '', title);
-  h.title = [f.office, f.page ? `page ${f.page}` : null, title].filter(Boolean).join(' · ');   // the full label is in the loupe's caption
-  root.append(h);
+  const place = el('h3', 'place', placeOf(f));
+  place.id = 'place';
+  place.tabIndex = -1;
+  root.append(place, el('p', 'printed', printedOf(f)));
   if (store.report && f.rv) root.append(reportValues(f));
-  const pair = el('div', 'two-values');
-  for (const [label, n, cls] of store.report && f.rv ? [] : [['Public file', f.file, 'file'], ['Scan', f.scan, 'scan']]) {
-    const d = el('div', 'one ' + cls);
-    d.append(el('span', 'lab', label), el('span', 'fig', val(n)));
-    if (n === undefined || n === null) d.firstChild.after(Object.assign(el('span', 'sr', ': none')));
-    pair.append(d);
+  else {
+    const pair = el('div', 'two-values');
+    for (const [label, n, cls] of [['Public file', f.file, 'file'], ['Scan', f.scan, 'scan']]) {
+      const d = el('div', 'one ' + cls);
+      d.append(el('span', 'lab', label), el('span', 'fig', val(n)));
+      if (n === undefined || n === null) d.firstChild.after(el('span', 'sr', ': none'));
+      pair.append(d);
+    }
+    root.append(pair);
   }
-  if (pair.children.length) root.append(pair);
-  const k = el('p', 'kind');
-  k.append(el('span', 'lab', 'Kind of slip'), el('span', 'kg', kind.glyph), el('span', 'kw', kind.word));
-  k.querySelector('.kg').setAttribute('aria-hidden', 'true');
-  root.append(k, el('p', 'sentence', sentence(store, f)));
-  const status = el('p', 'status ' + (f.status === 'settled_against_file' ? 'ok' : 'open'));
-  status.append(hid(el('span', 'sg', st.glyph)), statusLine(store, f));
+  root.append(el('p', 'sentence', sentence(store, f)));
+  const status = el('p', 'status ' + (st.proven ? 'ok' : 'open'));
+  status.append(hid(el('span', 'sg', st.glyph)), st.line);
   root.append(status);
-  root.append(el('p', 'person', UNCONFIRMED));
-  if (f.reread_disagrees) {
-    root.append(el('p', 'how', `A closer look at this one value read ${val(f.reread_value)}. The printed sums decide.`));
+
+  const why = el('div', 'why');
+  why.append(el('h4', '', 'Why'));
+  const ds = decidingSum(f);
+  if (st.proven && ds) {
+    const own = store.report ? ds.kind === 'report_row' && f.col === 'total' : f.ref !== undefined && store.isTotal(store.values[f.ref]) && !ds.terms.some(t => t[0] === f.ref);
+    for (const [who, side, total, holds] of [["scan's", 'scan', ds.with_scan, ds.holds_scan], ["file's", 'file', ds.with_file, ds.holds_file]]) {
+      const line = el('p', 'sumline ' + (holds ? 'holds' : 'fails'));
+      line.append(el('span', 'who', `With the ${who} number:`), ' ', sumSpan(termTokens(store, f, ds, side), total), ' ');
+      line.append(hid(el('span', 'tick', holds ? '✓' : '✗')), el('span', 'sr', holds ? ', matches the printed total' : ', does not match the printed total'));
+      why.append(line);
+    }
+    why.append(el('p', 'printed-total', `printed total ${fmt(ds.printed)}${own && f.file !== undefined ? ` (the file has ${fmt(f.file)})` : ''}`));
+  } else why.append(el('p', 'why-not', whyNot(store, f)));
+  root.append(why);
+
+  if (f.sums.length) {
+    details.open = !!open;
+    details.replaceChildren(el('summary', '', 'Show every number'), tapeHost);
+    details.ontoggle = () => onToggle(details.open);
+    root.append(details);
   }
+  root.append(el('p', 'person', UNCONFIRMED));
   const btns = el('div', 'btns');
-  const crop = el('button', '', 'Open crop'), ev = el('button', '', 'Evidence file');
-  crop.type = ev.type = 'button';
-  crop.addEventListener('click', () => onCrop(f, crop));
+  const g = store.groupById.get(f.group);
+  const ev = el('button', '', 'Evidence (JSON)');
+  ev.type = 'button';
   ev.addEventListener('click', () => onEvidence(f, ev));
-  btns.append(crop, ev);
+  if (g && g.crop) {
+    const crop = el('button', '', 'Open the full crop');
+    crop.type = 'button';
+    crop.addEventListener('click', () => onCrop(f, crop));
+    btns.append(crop);
+  }
+  btns.append(ev);
   root.append(btns);
 }
 
@@ -165,7 +222,7 @@ export class Dialog {
       img.alt = `The scan around ${f.row || 'the row'}, ${pcl(f.precinct)}, as cropped by the audit`;
       fig.append(img);
       nodes.push(fig);
-    } else nodes.push(el('p', 'dlg-note', 'No crop was saved for this group.'));
+    }
     nodes.push(el('p', 'dlg-note', 'The scan is the source. Add the figures up yourself.'));
     for (const s of f.sums) {
       const d = el('div', 'dlg-sum');
@@ -186,7 +243,7 @@ export class Dialog {
     pre.tabIndex = 0;
     pre.setAttribute('aria-label', `The evidence for finding ${f.id}, as recorded`);
     pre.textContent = 'Loading…';
-    this.open('Evidence file', [p, pre], opener);
+    this.open('Evidence (JSON)', [p, pre], opener);
     try {
       if (!this.evidence || this.evidence.file !== fd.evidence) {
         const r = await fetch(fd.evidence);
@@ -201,93 +258,59 @@ export class Dialog {
   }
 }
 
-// ---- the headline strip: the count line, figures in the typewriter face, the settled figure the strongest
-export const countsOf = items => ({
-  all: items.length,
-  settled: items.filter(f => f.status === 'settled_against_file').length,
-  cannot: items.filter(f => f.status === 'cannot_verify').length,
-  doc: items.filter(f => f.status === 'document_inconsistent').length,
-  confirmed: items.filter(f => f.confirmed_by_person).length,
-});
-// the parts of the line; `doc` is left out when it is zero in the full count, so the line keeps its shape while counting up
-export function renderHeadline(root, c, { withDoc = c.doc > 0 } = {}) {
-  root.replaceChildren();
-  root.dataset.doc = withDoc ? '1' : '0';
-  const part = (key, n, words, cls = '') => {
-    const s = el('span', 'hl-part');
-    s.append(el('span', 'hl-n ' + (cls || key), fmt(n)), ` ${words}`);
-    s.firstChild.dataset.key = key;
-    return s;
-  };
-  const parts = [part('all', c.all, c.all === 1 ? 'disagreement' : 'disagreements'),
-                 part('settled', c.settled, STATUS.settled_against_file.count, 'settled'),
-                 part('cannot', c.cannot, STATUS.cannot_verify.count)];
-  if (withDoc) parts.push(part('doc', c.doc, STATUS.document_inconsistent.count));
-  parts.push(part('confirmed', c.confirmed, 'confirmed by a person'));
-  parts.forEach((p, i) => { if (i) root.append(el('span', 'hl-dot', ' · ')); root.append(p); });
-}
-// sets the figures of a strip already drawn
-export function setHeadline(root, c) {
-  for (const n of root.querySelectorAll('.hl-n')) if (c[n.dataset.key] !== undefined) n.textContent = fmt(c[n.dataset.key]);
-}
-
 // ---- the list
 const rowOf = f => (f.precinct ? pcl(f.precinct) : '');
+export const FILTERS = [['all', 'All'], ['proven', 'Proven'], ['cant', "Can't be proven"]];
+const passes = (mode, f) => mode === 'all' || (mode === 'proven') === !!(STATUS[f.status] && STATUS[f.status].proven);
 
 export class FindingList {
-  constructor(root, store, { onPick, none = false, countEl, filterEl, statusEl }) {
-    this.root = root; this.store = store; this.onPick = onPick; this.countEl = countEl; this.filterEl = filterEl; this.statusEl = statusEl;
+  constructor(root, store, { onPick, none = false, filterEl, statusEl, onChange = () => {} }) {
+    this.root = root; this.store = store; this.onPick = onPick; this.filterEl = filterEl; this.statusEl = statusEl; this.onChange = onChange;
     this.all = none ? [] : store.items;
-    this.fs = new Set(); this.fk = new Set();   // filters: statuses, kinds
+    this.mode = 'all';
     this.cur = null; this.sel = null; this.rows = []; this.vis = [];
     root.onkeydown = e => this.keys(e);
     root.onfocus = () => this.mark(true);
     root.onclick = e => { const li = e.target.closest('li[data-id]'); if (li) { this.cur = li.dataset.id; this.mark(); this.pick(); } };
-    this.scroller = null;
     this.onScroll = () => { if (this.virtual) this.paint(); };
     addEventListener('scroll', this.onScroll, true);
     addEventListener('resize', this.onScroll);
-    this.counts(); this.chips(); this.build();
+    this.seg(); this.build();
   }
   destroy() { removeEventListener('scroll', this.onScroll, true); removeEventListener('resize', this.onScroll); }
 
-  counts() {
-    if (!this.store.fd) { this.countEl.textContent = ''; return; }
-    renderHeadline(this.countEl, countsOf(this.all));
-  }
-
-  chips() {
+  // All · Proven · Can't be proven; with only one kind of status in the county there is nothing to choose, so no filter
+  seg() {
     const box = this.filterEl;
     box.replaceChildren();
-    const mk = (set, key, label, group) => {
-      const b = el('button', 'chip', label);
-      b.type = 'button'; b.setAttribute('aria-pressed', 'false'); b.dataset.key = key;
+    const n = m => this.all.filter(f => passes(m, f)).length;
+    const shown = n('proven') > 0 && n('cant') > 0;
+    box.hidden = !shown;
+    if (!shown) return;
+    for (const [m, label] of FILTERS) {
+      const b = el('button', 'segb', label);
+      b.type = 'button'; b.dataset.mode = m;
+      b.setAttribute('aria-pressed', String(m === this.mode));
+      b.append(' ', el('span', 'segn', fmt(n(m))));
       b.addEventListener('click', () => {
-        if (set.has(key)) set.delete(key); else set.add(key);
-        b.setAttribute('aria-pressed', String(set.has(key)));
+        this.mode = m;
+        for (const x of box.children) x.setAttribute('aria-pressed', String(x.dataset.mode === m));
         this.build();
+        this.onChange();
       });
-      group.append(b);
-    };
-    const present = (list, f) => list.filter(x => this.all.some(i => f(i) === x));
-    const sg = el('div', 'chips'), kg = el('div', 'chips');
-    sg.setAttribute('role', 'group'); sg.setAttribute('aria-label', 'Filter by status');
-    kg.setAttribute('role', 'group'); kg.setAttribute('aria-label', 'Filter by kind of slip');
-    for (const s of present(STATUSES, i => i.status)) mk(this.fs, s, STATUS[s].word, sg);
-    for (const k of present(KINDS, i => i.kind)) mk(this.fk, k, KIND[k].word, kg);
-    box.append(...[sg, kg].filter(g => g.children.length));
+      box.append(b);
+    }
   }
 
-  // the rows to show: a group line, then one line per finding of the group that passes the filters
+  // the rows to show: a group line, then one line per finding of the group that passes the filter
   build() {
-    const keep = f => (!this.fs.size || this.fs.has(f.status)) && (!this.fk.size || this.fk.has(f.kind));
     const byGroup = new Map();
-    for (const f of this.all) { if (!keep(f)) continue; if (!byGroup.has(f.group)) byGroup.set(f.group, []); byGroup.get(f.group).push(f); }
+    for (const f of this.all) { if (!passes(this.mode, f)) continue; if (!byGroup.has(f.group)) byGroup.set(f.group, []); byGroup.get(f.group).push(f); }
     this.rows = []; this.vis = [];
     for (const [gid, fs] of byGroup) {
       const g = this.store.groupById.get(gid);
       this.rows.push({ g: g || { id: gid, kind: fs[0].kind, row: fs[0].row, precincts: [fs[0].precinct] }, fs, h: 40 });
-      for (const f of fs) { this.rows.push({ f, h: 36 }); this.vis.push(f.id); }
+      for (const f of fs) { this.rows.push({ f, h: 40 }); this.vis.push(f.id); }
     }
     let y = 0;
     for (const r of this.rows) { r.y = y; y += r.h; }
@@ -297,10 +320,7 @@ export class FindingList {
     this.root.style.height = this.virtual ? `${this.total}px` : '';
     if (!this.vis.includes(this.cur)) this.cur = this.vis.includes(this.sel) ? this.sel : this.vis[0] || null;
     this.paint();
-    if (this.statusEl) {
-      const filtered = this.fs.size || this.fk.size;
-      this.statusEl.textContent = filtered ? `Showing ${fmt(this.vis.length)} of ${fmt(this.all.length)}` : '';
-    }
+    if (this.statusEl) this.statusEl.textContent = this.mode !== 'all' ? `Showing ${fmt(this.vis.length)} of ${fmt(this.all.length)}` : '';
   }
 
   // which rows are in the page: all of them, or (long lists) those within a screen of the viewport
@@ -308,8 +328,8 @@ export class FindingList {
     let list = this.rows;
     if (this.virtual) {
       const r = this.root.getBoundingClientRect();
-      const panel = this.root.closest('.panel');
-      const sc = panel && panel.scrollHeight > panel.clientHeight + 1 ? panel.getBoundingClientRect() : { top: 0, bottom: innerHeight };
+      const wrap = this.root.parentElement;
+      const sc = wrap && wrap.scrollHeight > wrap.clientHeight + 1 ? wrap.getBoundingClientRect() : { top: 0, bottom: innerHeight };
       const y0 = Math.max(0, sc.top - r.top) - 400, y1 = sc.bottom - r.top + 400;
       const curRow = this.rows.find(x => x.f && x.f.id === this.cur);
       list = this.rows.filter(x => (x.y + x.h >= y0 && x.y <= y1) || x === curRow);
@@ -326,7 +346,7 @@ export class FindingList {
       const g = r.g, k = KIND[g.kind] || { word: g.kind, glyph: '' };
       li.className = 'grp'; li.setAttribute('role', 'presentation');
       const pr = g.precincts && g.precincts.length ? (g.precincts.length === 1 ? pcl(g.precincts[0]) : `precincts ${g.precincts.join(', ')}`) : '';
-      li.append(hid(el('span', 'kg', k.glyph)), el('span', 'kw', k.word), el('span', 'rl', g.row || ''), el('span', 'pc', pr));
+      li.append(hid(el('span', 'kg', k.glyph)), el('span', 'kw', cap(k.word)), el('span', 'rl', g.row || ''), el('span', 'pc', pr));
       return li;
     }
     const f = r.f, st = STATUS[f.status] || { word: f.status, glyph: '' };
@@ -334,11 +354,11 @@ export class FindingList {
     li.setAttribute('role', 'option');
     li.setAttribute('aria-selected', String(f.id === this.sel));
     li.setAttribute('aria-label', `${KIND[f.kind] ? KIND[f.kind].word : f.kind}, ${f.row || ''}, ${rowOf(f)}, ${PART[f.part] || ''}. Public file ${valWords(f.file)}, scan ${valWords(f.scan)}. ${st.word}.`);
-    li.append(el('span', 'wh', [f.precinct ? pcl(f.precinct) : null, PART[f.part]].filter(Boolean).join(' · ')));
+    li.append(el('span', 'wh', [f.precinct ? cap(pcl(f.precinct)) : null, PART[f.part]].filter(Boolean).join(' · ')));
     const v = el('span', 'vs');
     v.append(el('span', 'fv', val(f.file)), el('span', 'ar', '→'), el('span', 'sv', val(f.scan)));
     li.append(v);
-    const s = el('span', 'st ' + (f.status === 'settled_against_file' ? 'ok' : 'open'));
+    const s = el('span', 'st ' + (st.proven ? 'ok' : 'open'));
     s.append(hid(el('span', 'sg', st.glyph)), st.word);
     li.append(s);
     return li;
@@ -364,60 +384,30 @@ export class FindingList {
     if (!li) { this.root.removeAttribute('aria-activedescendant'); return; }
     li.classList.add('cur');
     this.root.setAttribute('aria-activedescendant', li.id);
-    if (scroll || document.activeElement === this.root) li.scrollIntoView({ block: 'nearest' });
+    if (scroll || document.activeElement === this.root) this.reveal(li);
+  }
+  // scrolls the list's own box, never the page
+  reveal(li) {
+    const w = this.root.parentElement;
+    if (!w || w.scrollHeight <= w.clientHeight) return;
+    const a = li.getBoundingClientRect(), b = w.getBoundingClientRect();
+    if (a.top < b.top) w.scrollTop -= b.top - a.top; else if (a.bottom > b.bottom) w.scrollTop += a.bottom - b.bottom;
   }
   pick() { const f = this.store.itemById.get(this.cur); if (f) this.onPick(f); }
-  // the finding that is selected (null: none, a value of the sheet that is not a finding)
+  // the finding that is selected
   select(id) {
     this.sel = id;
     if (id && this.vis.includes(id)) this.cur = id;
     for (const li of this.root.querySelectorAll('li[data-id]')) li.setAttribute('aria-selected', String(li.dataset.id === id));
     this.mark();
+    const li = this.root.querySelector(`li[data-id="${id}"]`);
+    if (li) this.reveal(li);
   }
+  // the position of a finding among those shown, from 1; 0 when it is not shown
+  position(id) { return this.vis.indexOf(id) + 1; }
+  at(n) { return this.store.itemById.get(this.vis[n]) || null; }
 }
 
 // the seconds the run took: a run that was resumed counts the runs it resumed too, and when one of them did not record its
 // seconds there is no honest figure (undefined)
 export const runSeconds = info => (info.resumed_from ? info.seconds_total : info.seconds);
-
-// ---- the run's numbers, and the sentence about the reader
-export function runFigures(fd) {
-  const f = fd.figures || {}, info = fd.run_info || {};
-  const out = [];
-  const add = (label, n, unit) => { if (n !== undefined && n !== null) out.push([label, n, unit]); };
-  add('cells audited', f.cells, 'cells');
-  add('right on first read', f.right_first, 'cells');
-  add('right after re-reads', f.right_after, f.right_after === 1 ? 'cell' : 'cells');
-  add('re-read', f.reread, f.reread === 1 ? 'cell' : 'cells');
-  add('disagreements', f.disagreements, 'values');
-  add('settled', f.settled, 'values');
-  if (info.metered_cost_estimate !== undefined) out.push(['model cost', `$${Number(info.metered_cost_estimate).toFixed(2)}`, 'US dollars']);
-  const secs = runSeconds(info);
-  if (secs !== undefined) out.push(['minutes', (secs / 60).toFixed(1), 'min']);
-  return out.map(([label, n, unit]) => [label, typeof n === 'number' ? fmt(n) : n, unit]);
-}
-
-export function readerSentence(fd) {
-  const info = fd.run_info || {}, s = info.sample;
-  if (!s || !info.reader || s.row_sums === undefined || s.failing === undefined || !s.sampled_with) return '';
-  const pages = [...new Set((s.blocks || []).map(b => (/^p(\d+)-/.exec(b) || [])[1]).filter(Boolean))];
-  const what = !s.blocks ? 'A sample' : pages.length === 1 && pages[0] === '1' ? 'A sample of the first page' : 'A sample of a few pages';   // the run may not say which pages
-  return `${what} read with ${s.sampled_with} failed ${fmt(s.failing)} of ${fmt(s.row_sums)} row sums, so this county was read with ${info.reader}.`;
-}
-
-export function renderRun(root, fd) {
-  root.replaceChildren();
-  if (!fd) return;
-  const rows = runFigures(fd);
-  if (rows.length) {
-    const dl = el('dl', 'nums');
-    for (const [label, n, unit] of rows) {
-      const d = el('div');
-      d.append(el('dt', '', label), el('dd', '', n), el('dd', 'unit', unit));
-      dl.append(d);
-    }
-    root.append(el('h2', '', 'Run numbers'), dl);
-  }
-  const s = readerSentence(fd);
-  if (s) root.append(el('p', 'reader', s));
-}

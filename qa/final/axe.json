@@ -10,120 +10,110 @@
  "violations_total": 0,
  "runs": [
   {
-   "case": "Panola (opening)",
+   "case": "top of the page",
    "viewport": "1440x900",
    "violations": [],
-   "passes": 36,
+   "passes": 35,
    "incomplete": [
-    "aria-prohibited-attr",
     "color-contrast"
    ],
    "pageErrors": []
   },
   {
-   "case": "San Saba (opening)",
+   "case": "how it works",
    "viewport": "1440x900",
    "violations": [],
-   "passes": 36,
+   "passes": 35,
    "incomplete": [
-    "aria-prohibited-attr",
     "color-contrast"
    ],
    "pageErrors": []
   },
   {
-   "case": "San Saba (a row nothing can decide)",
+   "case": "explorer, Panola finding",
    "viewport": "1440x900",
    "violations": [],
-   "passes": 36,
+   "passes": 35,
    "incomplete": [
-    "aria-prohibited-attr",
     "color-contrast"
    ],
    "pageErrors": []
   },
   {
-   "case": "Jones (a settled row)",
+   "case": "explorer, Panola, the tape open",
    "viewport": "1440x900",
    "violations": [],
-   "passes": 36,
+   "passes": 35,
    "incomplete": [
-    "aria-prohibited-attr",
     "color-contrast"
    ],
    "pageErrors": []
   },
   {
-   "case": "Jones (a column sum in the finding)",
+   "case": "explorer, Jones (a row)",
    "viewport": "1440x900",
    "violations": [],
-   "passes": 36,
+   "passes": 35,
    "incomplete": [
-    "aria-prohibited-attr",
     "color-contrast"
    ],
    "pageErrors": []
   },
   {
-   "case": "Lynn (wrong column)",
+   "case": "explorer, San Saba (a row nothing can decide)",
    "viewport": "1440x900",
    "violations": [],
-   "passes": 36,
+   "passes": 35,
    "incomplete": [
-    "aria-prohibited-attr",
     "color-contrast"
    ],
    "pageErrors": []
   },
   {
-   "case": "Scurry (rows only the file has)",
+   "case": "explorer, Cottle (nothing found)",
    "viewport": "1440x900",
    "violations": [],
-   "passes": 33,
+   "passes": 31,
    "incomplete": [
-    "aria-prohibited-attr",
     "color-contrast"
    ],
    "pageErrors": []
   },
   {
-   "case": "Cottle (nothing found)",
+   "case": "explorer, Limestone (not checked)",
    "viewport": "1440x900",
    "violations": [],
-   "passes": 33,
+   "passes": 31,
    "incomplete": [
-    "aria-prohibited-attr",
     "color-contrast"
    ],
    "pageErrors": []
   },
   {
-   "case": "Limestone (not checked)",
+   "case": "the run and the limits",
    "viewport": "1440x900",
    "violations": [],
-   "passes": 24,
+   "passes": 35,
    "incomplete": [
-    "aria-prohibited-attr",
     "color-contrast"
    ],
    "pageErrors": []
   },
   {
-   "case": "tabs with keyboard focus",
+   "case": "crop dialog",
    "viewport": "1440x900",
    "violations": [],
-   "passes": 36,
+   "passes": 17,
    "incomplete": [
-    "aria-prohibited-attr",
     "color-contrast"
    ],
    "pageErrors": []
   },
   {
-   "case": "San Saba replay paused (a row read again)",
+   "case": "evidence dialog",
    "viewport": "1440x900",
    "violations": [],
-   "passes": 36,
+   "passes": 15,
    "incomplete": [
     "aria-prohibited-attr",
     "color-contrast"
@@ -131,120 +121,110 @@
    "pageErrors": []
   },
   {
-   "case": "Panola (opening)",
+   "case": "top of the page",
    "viewport": "390x844",
    "violations": [],
-   "passes": 36,
+   "passes": 35,
    "incomplete": [
-    "aria-prohibited-attr",
     "color-contrast"
    ],
    "pageErrors": []
   },
   {
-   "case": "San Saba (opening)",
+   "case": "how it works",
    "viewport": "390x844",
    "violations": [],
-   "passes": 36,
+   "passes": 35,
    "incomplete": [
-    "aria-prohibited-attr",
     "color-contrast"
    ],
    "pageErrors": []
   },
   {
-   "case": "San Saba (a row nothing can decide)",
+   "case": "explorer, Panola finding",
    "viewport": "390x844",
    "violations": [],
-   "passes": 36,
+   "passes": 35,
    "incomplete": [
-    "aria-prohibited-attr",
     "color-contrast"
    ],
    "pageErrors": []
   },
   {
-   "case": "Jones (a settled row)",
+   "case": "explorer, Panola, the tape open",
    "viewport": "390x844",
    "violations": [],
-   "passes": 36,
+   "passes": 35,
    "incomplete": [
-    "aria-prohibited-attr",
     "color-contrast"
    ],
    "pageErrors": []
   },
   {
-   "case": "Jones (a column sum in the finding)",
+   "case": "explorer, Jones (a row)",
    "viewport": "390x844",
    "violations": [],
-   "passes": 36,
+   "passes": 35,
    "incomplete": [
-    "aria-prohibited-attr",
     "color-contrast"
    ],
    "pageErrors": []
   },
   {
-   "case": "Lynn (wrong column)",
+   "case": "explorer, San Saba (a row nothing can decide)",
    "viewport": "390x844",
    "violations": [],
-   "passes": 36,
+   "passes": 35,
    "incomplete": [
-    "aria-prohibited-attr",
     "color-contrast"
    ],
    "pageErrors": []
   },
   {
-   "case": "Scurry (rows only the file has)",
+   "case": "explorer, Cottle (nothing found)",
    "viewport": "390x844",
    "violations": [],
-   "passes": 34,
+   "passes": 32,
    "incomplete": [
-    "aria-prohibited-attr",
     "color-contrast"
    ],
    "pageErrors": []
   },
   {
-   "case": "Cottle (nothing found)",
+   "case": "explorer, Limestone (not checked)",
    "viewport": "390x844",
    "violations": [],
-   "passes": 34,
+   "passes": 32,
    "incomplete": [
-    "aria-prohibited-attr",
     "color-contrast"
    ],
    "pageErrors": []
   },
   {
-   "case": "Limestone (not checked)",
+   "case": "the run and the limits",
    "viewport": "390x844",
    "violations": [],
-   "passes": 25,
+   "passes": 35,
    "incomplete": [
-    "aria-prohibited-attr",
     "color-contrast"
    ],
    "pageErrors": []
   },
   {
-   "case": "tabs with keyboard focus",
+   "case": "crop dialog",
    "viewport": "390x844",
    "violations": [],
-   "passes": 36,
+   "passes": 17,
    "incomplete": [
-    "aria-prohibited-attr",
     "color-contrast"
    ],
    "pageErrors": []
   },
   {
-   "case": "San Saba replay paused (a row read again)",
+   "case": "evidence dialog",
    "viewport": "390x844",
    "violations": [],
-   "passes": 36,
+   "passes": 15,
    "incomplete": [
     "aria-prohibited-attr",
     "color-contrast"

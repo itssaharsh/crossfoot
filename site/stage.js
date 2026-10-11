@@ -15,16 +15,22 @@ const ease = t => (t < 0.5 ? 8 * t ** 4 : 1 - ((-2 * t + 2) ** 4) / 2);
 const mix = (a, b, t) => a + (b - a) * t;
 
 export class Stage {
-  constructor(els, { reduced, coarse, onPick, onError, onFocusValue = () => {} }) {
+  constructor(els, { reduced, coarse, onPick, onError, onStep = () => {} }) {
     Object.assign(this, els);
-    this.reduced = reduced; this.coarse = coarse; this.onPick = onPick; this.onError = onError; this.onFocusValue = onFocusValue;
-    this.partial = false; this.forcePartial = false; this.focusRing = null;
+    this.reduced = reduced; this.coarse = coarse; this.onPick = onPick; this.onError = onError; this.onStep = onStep;
+    this.partial = false; this.forcePartial = false;
     this.flat = false; this.token = 0; this.sel = null; this.page = null;
     this.P = { f: 1, tx: 0, ty: 0, rx: 0, rz: 0 }; this.base = this.P; this.anchor = null; this.loupe = null;
     this.lean = { x: 0, y: 0, tx: 0, ty: 0, raf: 0 };
     this.until = 0; this.pumping = false;
     new ResizeObserver(() => { this.layout(true); }).observe(this.viewport);
     if (!reduced && !coarse) this.watchPointer();
+    // the stage has focus: left and up go to the previous finding, right and down to the next
+    this.viewport.addEventListener('keydown', e => {
+      if (e.altKey || e.ctrlKey || e.metaKey) return;
+      const d = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 }[e.key];
+      if (d) { e.preventDefault(); this.onStep(d); }
+    });
   }
 
   setStore(store) { this.store = store; this.page = null; this.sel = null; }
@@ -37,8 +43,8 @@ export class Stage {
   area() {
     const W = this.viewport.clientWidth, H = this.viewport.clientHeight;
     // with the loupe out of the way (nothing selected) the sheet starts under the caption line
-    const top = this.loupeEl && this.loupeEl.offsetParent !== null ? this.loupeEl.offsetTop + this.loupeEl.offsetHeight + 12 : 36;
-    const bottom = this.controls && this.controls.offsetHeight ? this.controls.offsetTop - 10 : H;
+    const top = this.loupeEl && this.loupeEl.offsetParent !== null ? this.loupeEl.offsetTop + this.loupeEl.offsetHeight + 12 : 44;
+    const bottom = H;
     const c = innerWidth <= NARROW || innerHeight <= 720 ? CLEAR_NARROW : CLEAR;
     const a = { l: c, r: W - c, t: top + c, b: bottom - c };
     if (a.b - a.t < 60) a.b = a.t + 60;
@@ -160,7 +166,7 @@ export class Stage {
       const e = document.createElement('i');
       const d = `calc(var(--inv, 1) * ${(i + 1) * STACK_PX}px)`;
       e.style.transform = `translate3d(${d}, ${d}, calc(var(--inv, 1) * ${-(i + 1) * 2}px))`;
-      e.style.background = ['#c9c6b8', '#bfbcae', '#b5b2a4', '#abaa9b', '#a1a092'][i];
+      e.style.background = ['#e6e3d8', '#dcd9cd', '#d2cfc2', '#c8c5b7', '#bebbab'][i];
       return e;
     }));
     const depth = this.stackCount(), d = `calc(var(--inv, 1) * ${(depth + 1) * STACK_PX}px)`;
@@ -174,10 +180,9 @@ export class Stage {
     this.buildMarks();
     this.notice.hidden = true;
     this.setPartial(this.forcePartial);
-    // a report county writes the image of the pages that carry a finding and page 1 only: the others are a blank sheet
+    // a report county writes the image of the pages that carry a finding and page 1 only; a page with none is not drawn at all
     const blank = !pg.img;
-    this.sheet.classList.toggle('blank', blank);
-    if (this.blankNote) { this.blankNote.hidden = !blank; this.blankNote.textContent = blank ? `Page ${n}. No image of this page is included.` : ''; }
+    this.root.classList.toggle('no-sheet', blank);
     if (blank) this.scan.removeAttribute('src');
     if (!this.forcePartial && !blank) await new Promise(res => {
       this.scan.onload = () => { loaded(); res(); };
@@ -213,16 +218,11 @@ export class Stage {
     this.rects = [];
     for (const i of this.store.byPage.get(this.page) || []) {
       const v = this.store.values[i];
-      if (!v.x) continue;
+      if (!v.x || !this.store.itemByRef.has(i)) continue;   // a finding's value is a target; no other value is
       const bx = this.store.report && v.fx ? v.fx : v.x;   // a figure of the report layout: its own box where the ink gave it, else its row
-      const r = svg('rect', { x: bx[0], y: bx[1], width: bx[2] - bx[0], height: bx[3] - bx[1], tabindex: -1, role: 'button' });
+      const r = svg('rect', { x: bx[0], y: bx[1], width: bx[2] - bx[0], height: bx[3] - bx[1] });
       r.dataset.i = i; r.dataset.b = v.b;
-      r.addEventListener('focus', () => { this.showFocus(bx); this.onFocusValue(i); });
-      r.addEventListener('blur', () => { this.showFocus(null); setTimeout(() => { if (!this.marks.contains(document.activeElement)) this.onFocusValue(null); }); });
-      if (this.store.isTotal(v)) r.classList.add('total');
-      r.setAttribute('aria-label', `${v.v}, ${this.store.rowLabel(v)} ${this.store.colLabel(v)}`.trim());
       r.addEventListener('click', () => this.onPick(i));
-      r.addEventListener('keydown', e => this.keys(e, r));
       m.append(r);
       this.rects.push({ r, i, cx: (bx[0] + bx[2]) / 2, cy: (bx[1] + bx[3]) / 2 });
     }
@@ -245,46 +245,10 @@ export class Stage {
       if (this.store.report) rowSeen.set(`${v.b}:${v.r}`, g);
     }
     m.prepend(tg);
-    this.focusRing = svg('g', { class: 'focus-ring', 'aria-hidden': 'true' });
-    for (const cls of ['dark', 'light']) this.focusRing.append(svg('rect', { class: cls }));
-    this.focusRing.setAttribute('display', 'none');
-    m.append(this.focusRing);
     this.markSelected();
-  }
-  // two strokes round the focused value, so it shows on white paper: ink outside, --focus inside, 2 px
-  showFocus(b) {
-    const g = this.focusRing;
-    if (!g) return;
-    if (!b) { g.setAttribute('display', 'none'); return; }
-    for (const r of g.children) {
-      r.setAttribute('x', b[0] - 1); r.setAttribute('y', b[1] - 1);
-      r.setAttribute('width', b[2] - b[0] + 2); r.setAttribute('height', b[3] - b[1] + 2);
-    }
-    g.removeAttribute('display');
   }
   markSelected() {
     for (const [r, g] of this.ticks || []) { if (r === this.sel) g.setAttribute('display', 'none'); else g.removeAttribute('display'); }
-    for (const o of this.rects || []) o.r.setAttribute('tabindex', o.i === this.sel ? 0 : -1);
-    if (!this.rects.some(o => o.i === this.sel) && this.rects[0]) this.rects[0].r.setAttribute('tabindex', 0);
-  }
-  keys(e, r) {
-    const i = +r.dataset.i;
-    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); this.onPick(i); return; }
-    const dirs = { ArrowRight: [1, 0], ArrowLeft: [-1, 0], ArrowDown: [0, 1], ArrowUp: [0, -1] };
-    const d = dirs[e.key];
-    if (!d) return;
-    e.preventDefault();
-    const cur = this.rects.find(o => o.i === i);
-    let best = null, bs = Infinity;
-    const inBlock = this.rects.filter(o => o.r.dataset.b === r.dataset.b);
-    for (const o of this.rects.length && inBlock.some(o => o !== cur && (o.cx - cur.cx) * d[0] + (o.cy - cur.cy) * d[1] >= 4) ? inBlock : this.rects) {
-      const dx = o.cx - cur.cx, dy = o.cy - cur.cy;
-      const along = dx * d[0] + dy * d[1], across = Math.abs(dx * d[1] - dy * d[0]);
-      if (along < 4) continue;
-      const score = along + across * 4;
-      if (score < bs) { bs = score; best = o; }
-    }
-    if (best) { r.setAttribute('tabindex', -1); best.r.setAttribute('tabindex', 0); best.r.focus(); }
   }
 
   // ---- the bands
@@ -309,7 +273,7 @@ export class Stage {
       this.bands.append(this.anchor);
     }
     const loupeDraws = draws.map(d => ({ line: d.line, ok: d.check.ok, axis: d.axis }));
-    if (this.loupe) this.loupe.show(this.store, i, loupeDraws, !instant, opts.extra || {});
+    if (this.loupe) { this.loupe.show(this.store, i, loupeDraws, !instant, opts.extra || {}); if (this.loupe.toggled) { this.loupe.toggled = false; this.layout(true); } }
     this.flatArgs = { v, draws: loupeDraws };
     if (this.partial) this.updateFlat();
     if (opts.settle) {   // the first load: the sheet settles from flat into its tilt
@@ -409,6 +373,7 @@ export class Stage {
   // ---- partial: no page image, so the block's own image is shown flat where the sheet would be
   hasBlockImage() { return this.store.blocks.size && [...this.store.blocks.values()].some(b => b.p === this.page && b.bi); }
   setPartial(on) {
+    if (on && !this.hasBlockImage()) on = false;   // nothing to show instead of the sheet: the sheet stays
     this.partial = on;
     this.root.classList.toggle('partial', on);
     const bs = document.body.dataset;
@@ -422,7 +387,7 @@ export class Stage {
     el.replaceChildren();
     if (!a || !el.clientWidth) return;
     const { v, draws } = a, blk = this.store.block(v);
-    if (!blk || !blk.bi || !blk.x) { const p = document.createElement('p'); p.textContent = 'No image of this block is available.'; el.append(p); return; }
+    if (!blk || !blk.bi || !blk.x) return;
     const { bi } = blk, W = el.clientWidth, H = el.clientHeight;
     const k = Math.min(0.75, H / bi.h);
     const mx = bi.w / (blk.x[2] - blk.x[0]), my = bi.h / (blk.x[3] - blk.x[1]);

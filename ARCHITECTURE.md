@@ -185,12 +185,18 @@ figure for the key (`GET <gateway root>/key/info`). The guard refuses a call tha
 ## The results page (`site/`)
 
 Plain HTML, CSS and JavaScript modules, no framework and no build step, so it deploys as static files. It reads
-`site/data/`. The scan is an image inside a container with CSS perspective; values, sums and marks are DOM and SVG
-elements placed in the image's own coordinates, so they tilt with it and stay real, selectable elements. The page
-opens on a finished run with a settled finding selected: the value ringed in a loupe that shows the scan's own
-pixels, the public file's value beside the scan's, and a tape that adds the deciding sum both ways. `Replay the
-audit` plays the run's recorded events. Query parameters: `?county=`, `?finding=`, `?cell=`, `?flat=1`,
-`?record=1`, `?state=loading|error|empty|partial|first-run`, `?reset=1`.
+`site/data/` and is one scrolling page in a clean light look. Top to bottom: a hero that says in words what the project
+is and what was found (figures from `index.json`) beside one worked example made from the opening finding, with a
+crop of the real scan and the printed totals that prove it (`hero.js`); `How it works` in three steps; the explorer;
+`The run`; `What it cannot do`. The explorer is a row of county cards (`cards.js`), then the stage and a panel for the
+selected finding. On the stage the scan is an image inside a container with CSS perspective; values, sums and marks
+are DOM and SVG elements placed in the image's own coordinates, so they tilt with it and stay real, selectable
+elements. The loupe shows the scan's own pixels, the panel gives the two values, one sentence, the status and the
+deciding sum in two lines, and `Show every number` opens the tape. `Previous` and `Next` step through the list of
+the county's findings; `Replay the audit` plays the run's recorded events. Nothing is drawn without its data: a page
+with no image, a row with no crop, or a county with nothing to show leaves that element out and the rest reflows.
+Query parameters: `?county=`, `?finding=`, `?cell=`, `?flat=1`, `?record=1`, `?state=loading|error|empty|partial|first-run`,
+`?reset=1`.
 
 ## What can fail and what happens
 

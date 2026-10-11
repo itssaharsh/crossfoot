@@ -1,181 +1,308 @@
 {
- "tabs": [
+ "first_screen_1440": {
+  "headline": "215 numbers in a public election dataset don't match the scanned originals.",
+  "figures": [
+   "7county files checked",
+   "215mismatches found",
+   "185proven by the scans' own totals"
+  ],
+  "crop_bottom": 380,
+  "labels_inside": [
+   "The scan says 1",
+   "The public file says 0"
+  ],
+  "proof": "Proof: with the file's number this row adds up to 9. The scan prints a total of 10.",
+  "screen": 900,
+  "crop_digit_px_min": 28
+ },
+ "errors_1440": [],
+ "first_screen_390": {
+  "headline": "215 numbers in a public election dataset don't match the scanned originals.",
+  "figures": [
+   "7county files checked",
+   "215mismatches found",
+   "185proven by the scans' own totals"
+  ],
+  "crop_bottom": 783,
+  "labels_inside": [
+   "The scan says 1",
+   "The public file says 0"
+  ],
+  "proof": "Proof: with the file's number this row adds up to 9. The scan prints a total of 10.",
+  "screen": 844,
+  "crop_digit_px_min": 28
+ },
+ "errors_390": [],
+ "cards": [
   {
-   "text": "Panola 121",
+   "text": "Panola121 mismatches, 109 proven by the printed totals, 12 not proven",
    "stop": false,
    "sel": "false"
   },
   {
-   "text": "San Saba 21",
+   "text": "San Saba21 mismatches, 3 proven by the printed totals, 18 not proven",
    "stop": false,
    "sel": "false"
   },
   {
-   "text": "Cottle 0",
+   "text": "CottleNo mismatches",
    "stop": false,
    "sel": "false"
   },
   {
-   "text": "Jones 26",
+   "text": "Jones26 mismatches, 26 proven by the printed totals, 0 not proven",
    "stop": false,
    "sel": "false"
   },
   {
-   "text": "Lynn 47",
+   "text": "Lynn47 mismatches, 47 proven by the printed totals, 0 not proven",
    "stop": true,
    "sel": "true"
   },
   {
-   "text": "Scurry 0",
+   "text": "ScurryNo mismatches",
    "stop": false,
    "sel": "false"
   },
   {
-   "text": "Foard 0",
+   "text": "FoardNo mismatches",
    "stop": false,
    "sel": "false"
   },
   {
-   "text": "Limestone \u2013 not checked",
+   "text": "LimestoneCan't be checked",
    "stop": false,
    "sel": "false"
   }
  ],
- "tab_stops": 1,
+ "card_tab_stops": 1,
  "selected_by_query": [
-  "Lynn 47"
+  "Lynn47 mismatches, 47 proven by the printed totals, 0 not proven"
  ],
  "arrow_keys": {
-  "ArrowRight": "Scurry 0",
-  "End": "Limestone \u2013 not checked",
-  "ArrowRight_wraps": "Panola 121",
-  "Home": "Panola 121"
+  "ArrowRight": "ScurryNo mismatches",
+  "End": "LimestoneCan't be checked",
+  "ArrowRight_wraps": "Panola121 mismatches, 109 proven by the printed totals, 12 not proven",
+  "Home": "Panola121 mismatches, 109 proven by the printed totals, 12 not proven"
  },
  "enter_opens": {
   "url": "?county=panola",
-  "selected": "Panola 121",
-  "card": "Chase Oliver/Mike ter Maat (LIB) \u00b7 precinct 18 \u00b7 early voting"
+  "selected": "Panola121 mismatches, 109 proven by the printed totals, 12 not proven"
  },
- "run_line": "8 counties \u00b7 7 read \u00b7 215 disagreements \u00b7 185 settled by the printed totals \u00b7 0 confirmed by a person \u00b7 5,887 printed sums: 5,766 hold with the published files, 5,881 with the corrected",
- "errors_tabs": [],
- "tabs_390": {
-  "scrolls_inside": true,
-  "bar_h": 52,
-  "page_overflow": false,
-  "tab_h": 44
+ "prev_next": {
+  "start": [
+   "2 of 121",
+   "Precinct 18 \u00b7 early voting"
+  ],
+  "after_next": [
+   "3 of 121",
+   "Precinct 18 \u00b7 election day"
+  ],
+  "after_left_arrow": "2 of 121",
+  "after_filter_cant": "1 of 12",
+  "errors": []
  },
- "run_line_above_stage_390": {
-  "runline_bottom": 114,
-  "stage_top": 130
+ "county_panola_1440": {
+  "placeholder_text": [],
+  "broken_images": 0,
+  "overflow_x": false,
+  "loupe_visible": true,
+  "loupe_has_picture": true,
+  "stage_visible": true,
+  "kind": "finding",
+  "errors": []
  },
- "overflow_1440_panola": false,
- "overflow_1440_?county=jones&finding=f009": false,
- "overflow_1440_?county=cottle": false,
- "overflow_1440_?county=limestone": false,
- "overflow_1024_panola": false,
- "overflow_1024_?county=jones&finding=f009": false,
- "overflow_1024_?county=cottle": false,
- "overflow_1024_?county=limestone": false,
- "overflow_390_panola": false,
- "overflow_390_?county=jones&finding=f009": false,
- "overflow_390_?county=cottle": false,
- "overflow_390_?county=limestone": false,
- "overflow_320_panola": false,
- "overflow_320_?county=jones&finding=f009": false,
- "overflow_320_?county=cottle": false,
- "overflow_320_?county=limestone": false,
- "one_county": {
-  "tabs_hidden": true,
-  "runline_hidden": true
+ "county_san_saba_1440": {
+  "placeholder_text": [],
+  "broken_images": 0,
+  "overflow_x": false,
+  "loupe_visible": true,
+  "loupe_has_picture": true,
+  "stage_visible": true,
+  "kind": "finding",
+  "errors": []
  },
- "loupe_1440x900_?county=san_saba": {
-  "scale": 0.729,
-  "loupe": [
-   576,
-   240
-  ]
+ "county_cottle_1440": {
+  "placeholder_text": [],
+  "broken_images": 0,
+  "overflow_x": false,
+  "loupe_visible": false,
+  "loupe_has_picture": false,
+  "stage_visible": true,
+  "kind": "empty",
+  "errors": []
  },
- "loupe_1440x900_?county=jones&finding=f009": {
-  "scale": 0.7,
-  "loupe": [
-   576,
-   240
-  ]
+ "county_jones_1440": {
+  "placeholder_text": [],
+  "broken_images": 0,
+  "overflow_x": false,
+  "loupe_visible": true,
+  "loupe_has_picture": true,
+  "stage_visible": true,
+  "kind": "finding",
+  "errors": []
  },
- "loupe_1440x900_?county=lynn&finding=f004": {
-  "scale": 0.7,
-  "loupe": [
-   576,
-   240
-  ]
+ "county_lynn_1440": {
+  "placeholder_text": [],
+  "broken_images": 0,
+  "overflow_x": false,
+  "loupe_visible": true,
+  "loupe_has_picture": true,
+  "stage_visible": true,
+  "kind": "finding",
+  "errors": []
  },
- "loupe_390x844_?county=san_saba": {
-  "scale": 0.675,
-  "loupe": [
-   332,
-   150
-  ]
+ "county_scurry_1440": {
+  "placeholder_text": [],
+  "broken_images": 0,
+  "overflow_x": false,
+  "loupe_visible": false,
+  "loupe_has_picture": false,
+  "stage_visible": true,
+  "kind": "empty",
+  "errors": []
  },
- "loupe_390x844_?county=jones&finding=f009": {
-  "scale": 0.648,
-  "loupe": [
-   332,
-   150
-  ]
+ "county_foard_1440": {
+  "placeholder_text": [],
+  "broken_images": 0,
+  "overflow_x": false,
+  "loupe_visible": false,
+  "loupe_has_picture": false,
+  "stage_visible": true,
+  "kind": "empty",
+  "errors": []
  },
- "loupe_390x844_?county=lynn&finding=f004": {
-  "scale": 0.648,
-  "loupe": [
-   332,
-   150
-  ]
+ "county_limestone_1440": {
+  "placeholder_text": [],
+  "broken_images": 0,
+  "overflow_x": false,
+  "loupe_visible": false,
+  "loupe_has_picture": false,
+  "stage_visible": false,
+  "kind": "unchecked",
+  "errors": []
  },
- "loupe_1440x650_?county=san_saba": {
-  "scale": 0.729,
-  "loupe": [
-   576,
-   150
-  ]
+ "county_panola_390": {
+  "placeholder_text": [],
+  "broken_images": 0,
+  "overflow_x": false,
+  "loupe_visible": true,
+  "loupe_has_picture": true,
+  "stage_visible": true,
+  "kind": "finding",
+  "errors": []
  },
- "loupe_1440x650_?county=jones&finding=f009": {
-  "scale": 0.7,
-  "loupe": [
-   576,
-   150
-  ]
+ "county_san_saba_390": {
+  "placeholder_text": [],
+  "broken_images": 0,
+  "overflow_x": false,
+  "loupe_visible": true,
+  "loupe_has_picture": true,
+  "stage_visible": true,
+  "kind": "finding",
+  "errors": []
  },
- "loupe_1440x650_?county=lynn&finding=f004": {
-  "scale": 0.7,
-  "loupe": [
-   576,
-   150
-  ]
+ "county_cottle_390": {
+  "placeholder_text": [],
+  "broken_images": 0,
+  "overflow_x": false,
+  "loupe_visible": false,
+  "loupe_has_picture": false,
+  "stage_visible": true,
+  "kind": "empty",
+  "errors": []
+ },
+ "county_jones_390": {
+  "placeholder_text": [],
+  "broken_images": 0,
+  "overflow_x": false,
+  "loupe_visible": true,
+  "loupe_has_picture": true,
+  "stage_visible": true,
+  "kind": "finding",
+  "errors": []
+ },
+ "county_lynn_390": {
+  "placeholder_text": [],
+  "broken_images": 0,
+  "overflow_x": false,
+  "loupe_visible": true,
+  "loupe_has_picture": true,
+  "stage_visible": true,
+  "kind": "finding",
+  "errors": []
+ },
+ "county_scurry_390": {
+  "placeholder_text": [],
+  "broken_images": 0,
+  "overflow_x": false,
+  "loupe_visible": false,
+  "loupe_has_picture": false,
+  "stage_visible": true,
+  "kind": "empty",
+  "errors": []
+ },
+ "county_foard_390": {
+  "placeholder_text": [],
+  "broken_images": 0,
+  "overflow_x": false,
+  "loupe_visible": false,
+  "loupe_has_picture": false,
+  "stage_visible": true,
+  "kind": "empty",
+  "errors": []
+ },
+ "county_limestone_390": {
+  "placeholder_text": [],
+  "broken_images": 0,
+  "overflow_x": false,
+  "loupe_visible": false,
+  "loupe_has_picture": false,
+  "stage_visible": false,
+  "kind": "unchecked",
+  "errors": []
+ },
+ "loupe_1440_?county=san_saba": {
+  "scale": 0.729
+ },
+ "loupe_1440_?county=jones": {
+  "scale": 0.62
+ },
+ "loupe_1440_?county=lynn": {
+  "scale": 0.7
+ },
+ "loupe_390_?county=san_saba": {
+  "scale": 0.675
+ },
+ "loupe_390_?county=jones": {
+  "scale": 0.559
+ },
+ "loupe_390_?county=lynn": {
+  "scale": 0.648
  },
  "replay_?county=san_saba": {
   "captions_seen": 27,
+  "blank_sheet_frames": 0,
   "finished": true,
   "errors": [],
-  "button": "Replay the audit",
-  "headline": "21 disagreements \u00b7 3 settled by the printed totals \u00b7 18 cannot be verified \u00b7 0 confirmed by a person"
+  "button": "Replay the audit"
  },
  "replay_?county=cottle": {
   "captions_seen": 14,
+  "blank_sheet_frames": 0,
   "finished": true,
   "errors": [],
-  "button": "Replay the audit",
-  "headline": "0 disagreements \u00b7 0 settled by the printed totals \u00b7 0 cannot be verified \u00b7 0 confirmed by a person"
+  "button": "Replay the audit"
  },
  "replay_?county=jones": {
-  "captions_seen": 42,
+  "captions_seen": 23,
+  "blank_sheet_frames": 0,
   "finished": true,
   "errors": [],
-  "button": "Replay the audit",
-  "headline": "26 disagreements \u00b7 26 settled by the printed totals \u00b7 0 cannot be verified \u00b7 0 confirmed by a person"
+  "button": "Replay the audit"
  },
- "limestone": {
-  "disabled": true,
-  "hint": "Nothing on this scan can be cross-checked; left as published.",
-  "headline": "Nothing on this scan can be cross-checked; left as published.",
-  "stage": "Nothing on this scan can be cross-checked; left as published."
- }
+ "overflow_1440": false,
+ "overflow_1024": false,
+ "overflow_390": false,
+ "overflow_320": true
 }

@@ -335,6 +335,30 @@ the history (last present in commit `247425f`), and each session's task and repo
 - Published the same day: the repository (https://github.com/itssaharsh/crossfoot) and the page
   (https://crossfoot-zeta.vercel.app/).
 
+### 2026-10-11, T12: the results page redesigned so a stranger understands it
+The owner could not read the page ("too messy, I don't get anything if I don't know what this project does", and the dark
+green look). The page is now one scrolling light page: a hero that says in words what the project is and what was found
+(figures read from `site/data/index.json`: 215 mismatches, 185 proven, 30 left alone, 7 county files checked) beside one
+real example (Panola, precinct 18) with a crop of the scan and the printed totals; three steps; a simpler explorer (county
+cards, stage, one panel, a list with one filter); the run; the limits. The machinery of the stage, loupe, tape and replay
+is kept; the line of ten figures, the county tabs in the bar, page buttons, kind chips, run-number grid and the 90-second
+list are gone.
+- **Nothing empty on screen.** A page with no image is not drawn (the replay skips such steps); a loupe with no picture is
+  left out and the stage reflows; marks exist only on findings. `tools/qa/check.py` found no placeholder text, no broken
+  image and no sheet without an image in any of the 8 counties at both sizes, and no blank sheet in three whole replays
+  (`qa/final/checks.json`).
+- **Failed and fixed.** The first build scrolled the page on load (a card's `scrollIntoView`), the top bar wrapped at 390 px,
+  and a 3D layer made the page 671 px wide at 390 px; each was fixed and re-measured. At 320 px the page is still wider
+  than the window (`overflow_320: true`); not fixed, below the sizes the brief names.
+- **Evidence.** axe-core, 11 cases at 1440x900 and 390x844 (top, steps, explorer with a finding, tape open, a row county, a
+  cannot-prove finding, a county with nothing found, the not-checked county, the run, both dialogs): 0 violations
+  (`qa/final/axe.json`). Screenshots in `qa/final/`. `uv run pytest -q`: 253 passed; the two replay timeline checks pass
+  (Panola 30.2 s). No model call was made; `sitebuild.py` and `site/data/` are unchanged.
+- **Changed after looking at the screenshots:** the sheet in the hero was cut off at the bottom (made smaller, taller box);
+  a dashed line from the crop crossed the proof sentence (removed); "Show every number" had no marker
+  (arrow added); on a phone the page opened scrolled to the county cards (fixed); the wordmark is hidden under 520 px so
+  the four links fit.
+
 ## Demo
 - Live: https://crossfoot-zeta.vercel.app/ (deployed from `site/` on 11 October 2026; no sign-in).
 - The results page is static. From a clone: `python3 -m http.server -d site 8000`, then open http://localhost:8000/.

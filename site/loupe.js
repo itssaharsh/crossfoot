@@ -6,7 +6,6 @@ const S0 = 1.25, CLEAR = 10, ROW_PAD = 8, FADE_MS = 150, AIR = 8, RING_PX = 2.5,
 const TAG_H = 22, TAG_GAP = 5, LOOP_BELOW = 10;   // the tag, its distance from the ring, and how far the loop reaches below the digits (block px)
 // scale tiers tried in turn when the view is fitted to column edges: [smallest, largest, the row-label column must be whole]
 const TIERS = [[1.0, 1.6, true], [0.8, 1.9, true], [1.0, 1.6, false], [0.8, 1.9, false]];
-const NOTE = "This value has no position in this run's data", NOTE_REPORT = 'No crop was cut for this row: rows with a finding have one.';
 const READ_PX = 17.5, S_MIN = 0.62, S_MAX = 1.15;   // the report layout: figures at least this tall on screen (px), and the scales allowed
 const RIGHT_AIR = 44, LEFT_AIR = 14, COLUMN_AIR = 56, MIN_PX = 16.2;   // COLUMN_AIR: other rows' figures in a column may be wider than the ringed one   // the report layout: clear paper right of the last figure, so the column heading above it is whole
 const EDGE_AIR = 14;   // the loop needs this much clear paper (block pixels) between the digits and the view's edge
@@ -19,8 +18,8 @@ const svg = (tag, attrs = {}) => {
 const fmt = n => (n === null || n === undefined ? 'none' : Number(n).toLocaleString('en-US'));
 
 export class Loupe {
-  constructor({ root, view, note, ctx = null }, { onPick, reduced = false }) {
-    this.root = root; this.view = view; this.note = note; this.ctxEl = ctx; this.stemEl = null; this.tagEdge = 'top'; this.onPick = onPick; this.reduced = reduced;
+  constructor({ root, view, ctx = null }, { onPick, reduced = false }) {
+    this.root = root; this.view = view; this.ctxEl = ctx; this.toggled = false; this.stemEl = null; this.tagEdge = 'top'; this.onPick = onPick; this.reduced = reduced;
     this.layer = null; this.last = null; this.ringEl = null; this.token = 0; this.tagEl = null; this.peekEl = null;
   }
   setTag(text) {   // the replay's tag: a text of its own on the ring that is drawn
@@ -41,7 +40,13 @@ export class Loupe {
     for (const e of [this.tagEl, this.stemEl]) if (e) e.remove();
     this.tagEl = this.stemEl = null; this.setCtx(null);
     for (const l of this.view.querySelectorAll('.lp-layer')) l.remove();
-    this.layer = null; this.note.hidden = true; this.note.textContent = NOTE;
+    this.layer = null; this.setShown(false);
+  }
+  // the loupe is on the page only while it has a picture of the scan to show; the stage makes room when that changes
+  setShown(on) {
+    if (this.root.hidden === !on) return;
+    this.root.hidden = !on;
+    this.toggled = true;
   }
 
   // the part of the block image a value takes: [x0, x1, y0, y1] in block-image pixels
@@ -100,8 +105,8 @@ export class Loupe {
     if (store.report) return this.showReport(store, i, v, draws, animate, extra);
     const blk = store.block(v);
     this.last = { store, i, draws, extra };
-    if (!blk || !blk.bi || !blk.x) { this.clear(); this.last = { store, i, draws, extra }; this.note.hidden = !!v.x; return; }
-    this.note.hidden = !!v.x;
+    if (!blk || !blk.bi || !blk.x) { this.clear(); this.last = { store, i, draws, extra }; return; }
+    this.setShown(true);
     const key = `${blk.p}:${blk.id}`;
     const same = this.layer && this.layer.key === key;
     let layer = this.layer;
@@ -124,8 +129,8 @@ export class Loupe {
   showReport(store, i, v, draws, animate, extra) {
     const rc = store.rowCrop(v);
     this.last = { store, i, draws, extra };
-    if (!rc) { this.clear(); this.last = { store, i, draws, extra }; this.note.textContent = NOTE_REPORT; this.note.hidden = false; return; }
-    this.note.hidden = true;
+    if (!rc) { this.clear(); this.last = { store, i, draws, extra }; return; }
+    this.setShown(true);
     const key = `rc:${rc.id}`;
     const same = this.layer && this.layer.key === key;
     let layer = this.layer;
@@ -274,7 +279,7 @@ export class Loupe {
     const old = this.layer;
     this.last = null; this.ringEl = null; this.peekEl = null;
     this.hideTag();
-    this.note.hidden = true;
+    this.setShown(true);
     const el = document.createElement('div');
     el.className = 'lp-layer lp-cropbox';
     const img = document.createElement('img');
@@ -431,37 +436,6 @@ export class Loupe {
     const done = () => { r.style.strokeDashoffset = ''; r.style.strokeDasharray = ''; tag(); };
     return r.animate([{ strokeDashoffset: 1 }, { strokeDashoffset: 0 }], { duration: ms, easing: 'ease-out', fill: 'forwards' })
       .finished.then(done, done);
-  }
-
-  // the keyboard is on another value of the sheet: show it here too, without selecting it (i null: back to the selection)
-  peek(store, i) {
-    const l = this.layer;
-    if (!l || l.crop || l.report) return;
-    if (this.peekEl) { this.peekEl.remove(); this.peekEl = null; }
-    const sel = this.last && store.values[this.last.i];
-    const v = i === null || i === undefined ? sel : store.values[i];
-    if (!v || v.p !== l.blk.p || v.b !== l.blk.id) return;
-    l.pan.classList.add('slide');
-    const away = !(i === null || i === undefined || i === (this.last && this.last.i));
-    const ext = this.extent(store, l.blk, v, l);
-    l.ext = ext;
-    this.apply(l, this.place(l, ext));
-    if (this.tagEl) {
-      if (away) this.hideTag(); else this.moveTag(l, v, true);
-    }
-    if (!away || !v.x) return;
-    const { blk } = l, { bi } = blk, S = l.S;
-    const mx = bi.w / (blk.x[2] - blk.x[0]), my = bi.h / (blk.x[3] - blk.x[1]);
-    const b = v.ix ? [v.ix[0] - 3, v.ix[1] - 3, v.ix[2] + 3, v.ix[3] + 3]
-                   : [(v.x[0] - blk.x[0]) * mx, (v.x[1] - blk.x[1]) * my, (v.x[2] - blk.x[0]) * mx, (v.x[3] - blk.x[1]) * my];
-    const g = svg('g', { class: 'lp-peek' });
-    for (const [cls, w] of [['dark', 4], ['light', 2]]) {
-      const r = svg('rect', { x: b[0], y: b[1], width: b[2] - b[0], height: b[3] - b[1], class: cls });
-      r.style.strokeWidth = w / S;
-      g.append(r);
-    }
-    l.svg.append(g);
-    this.peekEl = g;
   }
 
   // the window changed size: put the pan back where it belongs, at once

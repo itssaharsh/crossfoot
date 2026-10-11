@@ -4,82 +4,136 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Crossfoot</title>
-<meta name="description" content="Crossfoot audits public election data against the certified scans.">
+<meta name="description" content="Crossfoot is an AI agent that checks a public election dataset against the scanned county documents it was typed from, and proves each wrong number with the totals printed on the page.">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=Public+Sans:wght@400;600;800&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=Instrument+Serif&family=Public+Sans:wght@400;600;700&display=swap">
 <link rel="stylesheet" href="styles.css">
 </head>
 <body data-state="loading">
+<a class="skip" href="#explore">Skip to the findings</a>
 <header class="bar">
-  <a class="brand" href="./" aria-label="Crossfoot">
+  <a class="brand" href="#top" aria-label="Crossfoot, back to the top">
     <svg class="mark" viewBox="0 0 48 48" width="28" height="28" aria-hidden="true"><path d="M3 24H45" stroke="var(--data-holds)" stroke-width="5"/><path d="M24 3V45" stroke="var(--data-fails)" stroke-width="5"/><circle cx="24" cy="24" r="9" fill="none" stroke="var(--ink)" stroke-width="3"/></svg>
     <span class="word">Crossfoot</span>
   </a>
-  <p class="descriptor">audits public election data against the certified scans</p>
-  <nav id="tabs" class="tabs" aria-label="County" hidden></nav>
+  <nav class="links" aria-label="On this page">
+    <a href="#how">How it works</a>
+    <a href="#explore">Findings</a>
+    <a href="#run">The run</a>
+    <a class="gh" href="https://github.com/itssaharsh/crossfoot" aria-label="Source on GitHub"><span class="long">Source on GitHub</span><span class="short" aria-hidden="true">GitHub</span></a>
+  </nav>
 </header>
-<p class="runline" id="runline" aria-label="The whole run" hidden></p>
-<main class="main" id="main">
-  <section class="stage" id="stage" aria-label="Scanned sheet">
-    <div class="controls" id="controls" role="group" aria-label="Stage controls">
-      <div class="dock">
-        <button class="primary" id="replay" type="button" disabled aria-describedby="replay-hint">Replay the audit</button>
-        <button type="button" id="speed" hidden>Speed 1x</button>
-        <p class="hint" id="replay-hint">Replay comes with the run's events</p>
-      </div>
-      <button type="button" id="flat">Lay flat</button>
-      <button type="button" id="prev">Previous page</button>
-      <button type="button" id="next">Next page</button>
-      <span class="pageno" id="pageno" role="status"></span>
+<main id="top">
+  <section class="hero" id="hero" aria-labelledby="headline">
+    <div class="wrap hero-state" id="hero-state">
+      <div class="ghost" aria-hidden="true"><div class="ghost-sheet"><i class="scanline"></i></div></div>
+      <p class="statebox" id="statebox" role="status"></p>
+      <div class="notice" id="notice" role="alert" hidden></div>
     </div>
-    <p class="rp-cap" id="rp-cap" aria-live="polite"></p>
-    <div class="viewport" id="viewport">
-      <div class="lean" id="lean">
-        <div class="pose" id="pose">
-          <div class="paper" id="paper" role="img" aria-label="Loading the scan">
-            <div class="stack" id="stack"></div>
-            <div class="sheet" id="sheet"><img id="scan" alt="" decoding="async"><p class="blank-note" id="blank-note" hidden></p><div class="far"></div><svg id="bands" class="bands" aria-hidden="true"></svg></div>
-          </div>
-          <svg id="marks" class="marks" role="group" aria-label="Values on this page"></svg>
+    <div class="wrap hero-grid" id="hero-grid">
+      <div class="hero-text" id="hero-text">
+        <p class="eyebrow">An audit of a public dataset, by an AI agent</p>
+        <h1 id="headline"></h1>
+        <p class="lede">Volunteers typed these results from scanned county documents. Crossfoot read the scans again and used the totals printed on every page to prove which typed numbers are wrong.</p>
+        <ul class="figs" id="figs"></ul>
+        <p class="quiet" id="figs-note"></p>
+        <div class="actions">
+          <button type="button" class="btn solid" id="see-proof">See the proof</button>
+          <button type="button" class="btn plain" id="watch">Watch the agent work</button>
         </div>
+        <p class="small caveat">These are typing slips in a volunteer dataset, not errors in any county's results. The scans are the source of truth. No finding has been confirmed by a person yet.</p>
+      </div>
+      <figure class="hero-pic" id="hero-pic"></figure>
+    </div>
+  </section>
+
+  <section class="sec" id="how" aria-labelledby="how-h">
+    <div class="wrap">
+      <h2 id="how-h">How it works</h2>
+      <ol class="steps" id="steps"></ol>
+      <p class="after-steps">When the printed totals cannot prove a number wrong, Crossfoot says so and changes nothing.</p>
+    </div>
+  </section>
+
+  <section class="sec" id="explore" aria-labelledby="explore-h">
+    <div class="wrap">
+      <h2 id="explore-h">Explore the findings</h2>
+      <p class="sec-sub">Pick a county. Each mismatch is shown on the scan, with the sums that prove it.</p>
+      <div class="cards" id="counties" aria-label="County"></div>
+      <div class="xpanel" id="xpanel" role="tabpanel" tabindex="-1">
+        <p class="notice local" id="xnotice" role="alert" hidden></p>
+        <p class="county-msg" id="county-msg" hidden></p>
+        <div class="x-grid" id="x-grid">
+          <div class="x-left">
+            <section class="stage" id="stage" aria-label="Scanned sheet">
+              <p class="rp-cap" id="rp-cap" aria-live="polite"></p>
+              <div class="viewport" id="viewport" tabindex="0" role="group" aria-label="The scanned sheet. Left and right arrow keys step through the findings.">
+                <div class="lean" id="lean">
+                  <div class="pose" id="pose">
+                    <div class="paper" id="paper" role="img" aria-label="Loading the scan">
+                      <div class="stack" id="stack"></div>
+                      <div class="sheet" id="sheet"><img id="scan" alt="" decoding="async"><div class="far"></div><svg id="bands" class="bands" aria-hidden="true"></svg></div>
+                    </div>
+                    <svg id="marks" class="marks" aria-hidden="true"></svg>
+                  </div>
+                </div>
+              </div>
+              <div class="flatblock" id="flatblock" hidden></div>
+              <div class="loupe" id="loupe" role="group" aria-label="The scan around the selected value, enlarged" hidden>
+                <div class="lp-view" id="lp-view"></div>
+              </div>
+              <svg class="leader" id="leader" aria-hidden="true"><line id="leader-line" x1="0" y1="0" x2="0" y2="0" hidden=""/></svg>
+              <p class="notice in-stage" id="snotice" role="alert" hidden></p>
+            </section>
+            <div class="controls" id="controls" role="group" aria-label="Stage controls">
+              <div class="c-step" id="c-step">
+                <button type="button" id="prev">Previous</button>
+                <button type="button" id="next">Next</button>
+                <span class="counter" id="counter" role="status"></span>
+              </div>
+              <button type="button" id="flat">Lay flat</button>
+              <div class="c-replay">
+                <button type="button" class="replay-btn" id="replay" disabled aria-describedby="replay-hint">Replay the audit</button>
+                <button type="button" id="speed" hidden>Speed 1x</button>
+                <p class="hint" id="replay-hint">Replay comes with the run's events</p>
+              </div>
+            </div>
+          </div>
+          <aside class="panel" id="panel" aria-label="The selected finding"></aside>
+        </div>
+        <section class="findings" id="findings" aria-labelledby="findings-h">
+          <div class="f-head">
+            <h3 id="findings-h">All mismatches</h3>
+            <div class="seg" id="filters" role="group" aria-label="Show"></div>
+          </div>
+          <p class="showing" id="fshowing" role="status"></p>
+          <div class="flist-wrap"><ul id="flist" class="flist" role="listbox" tabindex="0" aria-labelledby="findings-h"></ul></div>
+        </section>
       </div>
     </div>
-    <div class="flatblock" id="flatblock" hidden></div>
-    <p class="ctx" id="ctx"></p>
-    <div class="loupe" id="loupe" role="group" aria-label="The scan around the selected value, enlarged">
-      <div class="lp-view" id="lp-view"></div>
-      <p class="lp-note" id="lp-note" role="status" hidden>This value has no position in this run's data</p>
-    </div>
-    <svg class="leader" id="leader" aria-hidden="true"><line id="leader-line" x1="0" y1="0" x2="0" y2="0" hidden=""/></svg>
-    <div class="ghost" id="ghost" aria-hidden="true"><div class="ghost-sheet"><i class="scanline"></i></div></div>
-    <p class="statebox" id="statebox" role="status"></p>
-    <div class="notice" id="notice" role="alert" hidden></div>
   </section>
-  <aside class="panel" id="panel" aria-label="The findings and the sums">
-    <div class="skeleton" aria-hidden="true"><div class="sk-tape"><i></i><i></i><i></i><i></i></div><div class="sk-card"><i></i><i></i><i></i></div></div>
-    <p class="headline" id="fcount"></p>
-    <section class="card" id="card" aria-label="Selected value"></section>
-    <div class="tapewrap"><section class="tape" id="tape" aria-label="The arithmetic"></section></div>
-    <section class="findings" id="findings" aria-labelledby="findings-h">
-      <h2 id="findings-h">Disagreements</h2>
-      <div class="filters" id="filters"></div>
-      <p class="showing" id="fshowing" role="status"></p>
-      <ul id="flist" class="flist" role="listbox" tabindex="0" aria-labelledby="findings-h"></ul>
-    </section>
-    <section class="run" id="run" aria-label="Run numbers"></section>
-    <details class="fails" id="fails-sec">
-      <summary id="fails-h">Printed sums that do not hold on the scan itself</summary>
-      <ul id="fails" class="list" role="listbox" tabindex="0" aria-labelledby="fails-h"></ul>
-    </details>
-    <section class="judge judge-only" aria-labelledby="judge-h">
-      <h2 id="judge-h">Judge this in 90 seconds</h2>
-      <ol><li>Replay the audit</li><li>Pick a finding</li><li>Open its crop and add it up yourself</li></ol>
-    </section>
-  </aside>
+
+  <section class="sec" id="run" aria-labelledby="run-h">
+    <div class="wrap" id="run-box">
+      <h2 id="run-h">The run</h2>
+    </div>
+  </section>
+
+  <section class="sec" id="limits" aria-labelledby="limits-h">
+    <div class="wrap">
+      <h2 id="limits-h">What it cannot do</h2>
+      <ul class="limits">
+        <li>The sums cannot see two errors that cancel each other out.</li>
+        <li>A row with one printed sum can only be proven wrong when that sum breaks.</li>
+        <li>A scan with no printed totals cannot be checked.</li>
+        <li>A person still has to confirm each finding, and none has been confirmed yet.</li>
+      </ul>
+    </div>
+  </section>
 </main>
-<footer class="foot">These are transcription slips in a volunteer dataset. Each county's certified scan is the source of truth. Sources: the <a href="https://github.com/openelections/openelections-sources-tx">OpenElections sources</a> and <a href="https://github.com/openelections/openelections-data-tx">data repositories</a> for the 2024 Texas general election.</footer>
+<footer class="foot"><div class="wrap">These are transcription slips in a volunteer dataset. Each county's certified scan is the source of truth. Sources: the <a href="https://github.com/openelections/openelections-sources-tx">OpenElections sources</a> and <a href="https://github.com/openelections/openelections-data-tx">data repositories</a> for the 2024 Texas general election.</div></footer>
 <dialog class="dlg" id="dlg" aria-labelledby="dlg-title">
   <div class="dlg-head"><h2 class="dlg-title" id="dlg-title"></h2><button type="button" class="dlg-close">Close</button></div>
   <div class="dlg-body"></div>

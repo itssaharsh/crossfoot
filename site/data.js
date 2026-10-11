@@ -175,9 +175,12 @@ export const KIND = {
 };
 export const STATUSES = ['settled_against_file', 'cannot_verify', 'document_inconsistent'];
 export const STATUS = {
-  settled_against_file: { word: 'settled', glyph: '✓', line: 'Settled by the printed totals', count: 'settled by the printed totals' },
-  cannot_verify: { word: 'cannot verify', glyph: '?', line: 'No printed total can decide this. Left as published.', count: 'cannot be verified' },
-  document_inconsistent: { word: 'document disagrees', glyph: '!', line: 'The document disagrees with itself. Listed for a person.', count: 'where the document disagrees with itself' },
+  settled_against_file: { word: 'Proven', glyph: '✓', line: 'Proven by the printed totals', proven: true },
+  cannot_verify: { word: "Can't be proven", glyph: '?', line: "Can't be proven. Left as published.", proven: false },
+  document_inconsistent: { word: 'Document disagrees', glyph: '!', line: 'The document disagrees with itself. Listed for a person.', proven: false },
 };
 export const PART = { votes: 'total', absentee: 'absentee', early_voting: 'early voting', election_day: 'election day' };
-export const UNCONFIRMED = 'Read from the scan by the agent. A person has not confirmed this yet.';
+export const UNCONFIRMED = 'Read from the scan by the agent. Not yet confirmed by a person.';
+export const NOT_CHECKED = "Nothing on this scan can be cross-checked; left as published.";
+export const cap = s => (s ? s[0].toUpperCase() + s.slice(1) : s);
+export const plural = (n, one, many) => `${fmt(n)} ${n === 1 ? one : many}`;

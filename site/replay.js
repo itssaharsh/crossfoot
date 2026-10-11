@@ -358,8 +358,12 @@ export class Replay {
   }
 
   // ---- the layer on the sheet: what is drawn is kept per page, so a page that is turned back to shows it again
+  // true when the sheet shows page n afterwards; a page the run has no image of is not drawn (false), and nothing is put on it
   async page(n, tok) {
-    if (n === this.curPage || n === undefined) return;
+    if (n === this.curPage) return true;
+    if (n === undefined) return false;
+    const have = this.store.pages.find(p => p.n === n);
+    if (!have || !have.img) return false;
     const dir = this.curPage !== null && n < this.curPage ? -1 : 1;
     this.curPage = n;
     await this.stage.setPage(n, this.animate, dir);
@@ -369,6 +373,7 @@ export class Replay {
     this.layer.setAttribute('viewBox', `0 0 ${pg.w} ${pg.h}`);
     this.layer.replaceChildren();
     for (const m of this.mem.get(n) || []) this.layer.append(this.node(m, false));
+    return true;
   }
   node(m, fresh) {
     if (m.type === 'rect') {
@@ -401,7 +406,7 @@ export class Replay {
   // ---- the steps
   async sampleStep(s, tok) {
     const first = (s.blocks[0] || '').match(/^p(\d+)-/);
-    await this.page(first ? +first[1] : 1, tok);
+    if (!(await this.page(first ? +first[1] : 1, tok))) return;
     for (const id of s.blocks) {
       const m = /^p(\d+)-/.exec(id), x = m ? this.boxOf(+m[1], id) : null;
       if (x && +m[1] === this.curPage) this.put(this.curPage, { type: 'rect', cls: 'frame', x });
@@ -409,7 +414,7 @@ export class Replay {
   }
   async readStep(s, tok) {
     if (s.first) this.clearLayer();
-    await this.page(s.page, tok);
+    if (!(await this.page(s.page, tok))) return;
     const x = s.block ? this.boxOf(s.page, s.block) : this.pageBox(s.page);   // the report layout is read a page at a time
     if (x) this.put(s.page, { type: 'rect', cls: 'wash', x });
   }
@@ -419,7 +424,7 @@ export class Replay {
     const pages = [...new Set(checks.map(c => c.p))].sort((a, b) => a - b);
     const each = (s.ms - 400) / Math.max(1, pages.length);
     for (const n of pages) {
-      await this.page(n, tok);
+      if (!(await this.page(n, tok))) continue;
       for (const c of checks.filter(c => c.p === n)) {
         const line = this.store.band(c);
         if (line) this.put(n, { type: 'line', cls: 'sum fails', ...line });
@@ -441,7 +446,7 @@ export class Replay {
     this.clearLayer();
     if (i === null) return;                          // nothing on the sheet to point at: the step is left out
     const v = store.values[i], said = suspectCaptions(s);
-    await this.page(v.p, tok);
+    if (!(await this.page(v.p, tok))) return;                  // a page with no image is not drawn: the step is left out
     this.say(said.first);
     // the sums that run through the value, drawn as failing: that is what the run saw on the first read
     const mine = new Set(s.sums.map(checkKey));
@@ -475,7 +480,7 @@ export class Replay {
     document.body.classList.add('rp-ticks');
     let from = { all: 0, settled: 0, cannot: 0, doc: 0, confirmed: 0 };
     for (const n of s.pages) {
-      await this.page(n, tok);
+      if (!(await this.page(n, tok))) continue;
       stage.marks.querySelectorAll('.tick').forEach((t, k) => { t.classList.add('pop'); t.style.animationDelay = this.animate ? `${Math.min(k * 14, 400)}ms` : '0ms'; });
       const to = this.countsTo(all, n);
       await this.countUp(from, to, Math.min(per, 600), tok);
