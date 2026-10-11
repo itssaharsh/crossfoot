@@ -1,0 +1,33 @@
+{
+  "cli_version": "0.11.4",
+  "checkpoint_id": "01M4NJN7NGZE93HZR972C3D12K",
+  "strategy": "manual-commit",
+  "branch": "main",
+  "checkpoints_count": 19,
+  "files_touched": [
+    ".prod-build/evidence.jsonl",
+    ".prod-build/plan.json",
+    "crossfoot/cli.py",
+    "crossfoot/layouts/report.py",
+    "crossfoot/model.py",
+    "runs/20261011-130414/limestone/county.json",
+    "runs/20261011-130414/limestone/report.md",
+    "runs/20261011-130414/run.json"
+  ],
+  "sessions": [
+    {
+      "metadata": "/0/metadata.json",
+      "transcript": "/0/full.jsonl",
+      "compact_transcript": "/0/transcript.jsonl",
+      "content_hash": "/0/content_hash.txt",
+      "prompt": "/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 154,
+    "cache_creation_tokens": 87793,
+    "cache_read_tokens": 7976426,
+    "output_tokens": 39125,
+    "api_call_count": 61
+  }
+}
