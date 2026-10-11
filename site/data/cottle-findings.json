@@ -1,6 +1,6 @@
 {
  "county": "cottle",
- "run_id": "20261011-130414",
+ "run_id": "20261011-141131",
  "layout": "report",
  "file": "20241105__tx__general__cottle__precinct.csv",
  "policy": {
@@ -16,6 +16,9 @@
   "groups": 0,
   "corrections": 0
  },
+ "rows_published": 166,
+ "rows_compared": 166,
+ "not_compared": [],
  "findings": [],
  "groups": [],
  "corrections": [],
@@ -32,121 +35,10 @@
   }
  },
  "unmatched": {
-  "scan": [
-   {
-    "block": "c021",
-    "page": 2,
-    "contest": "Justice, Supreme Court, Pl 4",
-    "candidate": "Christine Vinh Weerns"
-   }
-  ],
-  "file": [
-   {
-    "contest": "Justice, Supreme Court",
-    "district": "Pl 4",
-    "candidate": "Christine Vinh Weems",
-    "rows": 4
-   }
-  ],
+  "scan": [],
+  "file": [],
   "rejected": [],
-  "model": {
-   "asked": {
-    "scan_contests": [
-     "President/Vice President",
-     "US Senator",
-     "US Representative, Dist 13"
-    ],
-    "file_contests": [
-     "President",
-     "U.S. Senate",
-     "U.S. House"
-    ],
-    "scan_candidates": [
-     "President/Vice President :: Donald J. Trump",
-     "President/Vice President :: Kamala D. Harris",
-     "President/Vice President :: Chase Oliver",
-     "President/Vice President :: Jill Stein",
-     "President/Vice President :: Write-ins",
-     "US Senator :: Ted Cruz",
-     "US Senator :: Colin Allred",
-     "US Senator :: Ted Brown",
-     "US Senator :: Write-ins",
-     "US Representative, Dist 13 :: Ronny Jackson",
-     "Justice, Supreme Court, Pl 4 :: Christine Vinh Weerns"
-    ],
-    "file_candidates": [
-     "President :: Donald J. Trump",
-     "President :: Kamala D. Harris",
-     "President :: Chase Oliver",
-     "President :: Jill Stein",
-     "President :: Write-ins",
-     "U.S. Senate :: Ted Cruz",
-     "U.S. Senate :: Colin Allred",
-     "U.S. Senate :: Ted Brown",
-     "U.S. Senate :: Write-ins",
-     "U.S. House :: Ronny Jackson",
-     "Justice, Supreme Court :: Christine Vinh Weems"
-    ]
-   },
-   "answer": {
-    "contests": [
-     [
-      0,
-      0
-     ],
-     [
-      1,
-      1
-     ],
-     [
-      2,
-      2
-     ]
-    ],
-    "candidates": [
-     [
-      0,
-      0
-     ],
-     [
-      1,
-      1
-     ],
-     [
-      2,
-      2
-     ],
-     [
-      3,
-      3
-     ],
-     [
-      4,
-      4
-     ],
-     [
-      5,
-      5
-     ],
-     [
-      6,
-      6
-     ],
-     [
-      7,
-      7
-     ],
-     [
-      8,
-      8
-     ],
-     [
-      9,
-      9
-     ]
-    ]
-   }
-  }
+  "model": {}
  },
  "corrected_events": [],
  "audit": {
@@ -159,6 +51,7 @@
   "contests": 82,
   "contest_totals_printed": 0,
   "second_sum_exists": false,
-  "seconds": 1.7
+  "ballot_sums_not_used": [],
+  "seconds": 0.1
  }
 }

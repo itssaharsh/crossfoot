@@ -153,7 +153,6 @@ SPACER = 18          # white between the heading and the row's piece, when the t
 EDGE_REACH = 10      # an edge of a piece moves at most this far to land on blank paper
 FIG_GAP = 14         # blank columns (300 dpi) between two figures
 FIG_DARK = 4         # dark pixels a column of a figure holds at least (a dotted rule holds one or two)
-FIG_NEED = 4
 
 
 def _dark(im, box, below=INK_BELOW):
@@ -750,10 +749,12 @@ def total_seconds(meta: dict, runs_dir="runs"):
 
 
 def latest_run(runs_dir="runs") -> str:
-    """The newest run that has a findings.json."""
-    ids = sorted(p.parent.parent.name for p in Path(runs_dir).glob("*/*/findings.json"))
+    """The newest run folder that has a summary.json, else the newest that has a findings.json."""
+    ids = sorted(p.parent.name for p in Path(runs_dir).glob("*/summary.json"))
     if not ids:
-        raise SystemExit(f"no run under {runs_dir} has a findings.json")
+        ids = sorted(p.parent.parent.name for p in Path(runs_dir).glob("*/*/findings.json"))
+    if not ids:
+        raise SystemExit(f"no run under {runs_dir} has a summary.json or a findings.json")
     return ids[-1]
 
 
@@ -833,6 +834,8 @@ def build(run_id: str, runs_dir="runs", out="site/data", counties=None, data_roo
         if tot is not None:
             meta["seconds_total"] = tot
     summary = json.loads((run_dir / "summary.json").read_text()) if (run_dir / "summary.json").exists() else None
+    if summary:       # a summary run has no run.json: its own span of time stands for the run
+        meta = {**{k: summary[k] for k in ("started", "ended") if summary.get(k)}, **meta}
     by_summary = {c["county"]: c for c in (summary or {}).get("counties", [])}
     # the run's own order when it kept one; else the folders' (alphabetical)
     keys = [c["county"] for c in (summary or {}).get("counties", [])] or sorted(p.parent.name for p in run_dir.glob("*/county.json"))
@@ -844,13 +847,15 @@ def build(run_id: str, runs_dir="runs", out="site/data", counties=None, data_roo
              "run_totals": {k: meta[k] for k in ("model_calls", "prompt_tokens", "completion_tokens",
                                                  "metered_cost_estimate") if k in meta}}
     for key in keys:
-        raw = json.loads((run_dir / key / "county.json").read_text())
         summ = by_summary.get(key)
+        # a summary run names the run each county's figures come from
+        cdir = Path(runs_dir) / str((summ or {}).get("from_run") or run_id) / key
+        raw = json.loads((cdir / "county.json").read_text())
         if (summ or {}).get("status") == "unchecked" or raw.get("layout") == "no_printed_totals":
             index["counties"].append(unchecked_entry(key, summ, raw))
             continue
         _clear(out, key)
-        fpath = run_dir / key / "findings.json"
+        fpath = cdir / "findings.json"
         findings = json.loads(fpath.read_text()) if fpath.exists() else None
         report = raw.get("layout") == "report"
         rows, images = None, None
@@ -878,7 +883,7 @@ def build(run_id: str, runs_dir="runs", out="site/data", counties=None, data_roo
             inks, rules = render_blocks(raw, sizes, out / "blocks", data_root)
         crops_dir = out / "crops"
 
-        def crop_path(county, gid, src, _dir=run_dir / key):
+        def crop_path(county, gid, src, _dir=cdir):
             if not src or not (_dir / src).exists():
                 return None
             crops_dir.mkdir(parents=True, exist_ok=True)

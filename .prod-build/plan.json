@@ -634,9 +634,11 @@
         "uv run crossfoot site build --run 20261011-141300"
       ],
       "rollback": "git revert the task's commit; no data migration",
-      "status": "todo",
+      "status": "doing",
       "notes": "",
-      "kind": "docs"
+      "kind": "docs",
+      "base": "20cb3b3",
+      "started_after": 93
     },
     {
       "id": "T09",

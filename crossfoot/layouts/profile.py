@@ -33,7 +33,6 @@ def sentence(d: dict) -> str:
 # ---- which layout a county uses, decided from its first page ----------------------------------------------------------
 
 LAYOUTS = ("matrix", "report", "no_printed_totals")
-REJECT_SHARE = 1 / 3        # more than this share of the first page's row sums failing rejects the decision
 REPORT_COLUMNS = ("total", "absentee", "early", "election_day")
 
 LAYOUT_PROMPT = """TASK: layout.

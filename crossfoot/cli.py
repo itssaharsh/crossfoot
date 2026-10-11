@@ -685,6 +685,13 @@ def cmd_score(args) -> int:
     return 0
 
 
+def cmd_site_build(args) -> int:
+    from . import sitebuild
+    keys = sitebuild.build(args.run, args.runs_dir, args.out, args.county)
+    print(f"wrote {args.out}/index.json and {len(keys)} county file(s): {', '.join(keys)}")
+    return 0
+
+
 def build_parser():
     p = argparse.ArgumentParser(prog="crossfoot")
     sub = p.add_subparsers(dest="cmd", required=True)
@@ -754,6 +761,14 @@ def build_parser():
                    help="take this county's audit from that run's folder (repeatable)")
     s.add_argument("--run-id", help="the new folder's name (default: now)")
     s.set_defaults(fn=cmd_summarize)
+    s = sub.add_parser("site", help="build the results page's data")
+    s.add_argument("action", choices=["build"])
+    s.add_argument("--run", required=True, help="a run id, or latest: the newest run with a summary.json, else the "
+                   "newest with a findings.json")
+    s.add_argument("--runs-dir", default="runs")
+    s.add_argument("--out", default="site/data")
+    s.add_argument("--county", action="append")
+    s.set_defaults(fn=cmd_site_build)
     return p
 
 

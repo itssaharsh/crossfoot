@@ -1,6 +1,6 @@
 {
  "county": "jones",
- "run_id": "20261011-130414",
+ "run_id": "20261011-140556",
  "layout": "report",
  "file": "20241105__tx__general__jones__precinct.csv",
  "policy": {
@@ -15,12 +15,30 @@
    "wrong_number": 26
   },
   "by_status": {
-   "settled_against_file": 18,
-   "cannot_verify": 8
+   "settled_against_file": 26
   },
   "groups": 13,
-  "corrections": 18
+  "corrections": 26
  },
+ "rows_published": 344,
+ "rows_compared": 335,
+ "not_compared": [
+  {
+   "contest": "Registered Voters",
+   "rows": 4,
+   "reason": "the contest was not paired with a contest on the scan"
+  },
+  {
+   "contest": "Ballots Cast Blank",
+   "rows": 4,
+   "reason": "the contest was not paired with a contest on the scan"
+  },
+  {
+   "contest": "Trustee Roby CISD",
+   "rows": 1,
+   "reason": "the contest is paired, but this candidate has no block on the scan"
+  }
+ ],
  "findings": [
   {
    "id": "f001",
@@ -35,8 +53,8 @@
    "file_value": 1263,
    "scan_value": 1363,
    "kind": "wrong_number",
-   "status": "cannot_verify",
-   "reason": "no printed total decides: the candidates' total figures add to the contest total's total figure give the same answer with either value",
+   "status": "settled_against_file",
+   "reason": "the candidates' total figures add to the contest total's total figure hold(s) with the scan's value and fail(s) with the file's, and no printed total holds with the file's value and fails with the scan's",
    "sums": [
     {
      "name": "the row's total printed on the scan equals its absentee + early voting + election day (REP Donald J. Trump/JD Vance)",
@@ -129,40 +147,13 @@
         "total"
        ],
        "value": 7
-      },
-      {
-       "cell": [
-        6,
-        "2|1",
-        "Write-In: Uncertified",
-        "total"
-       ],
-       "value": 6
-      },
-      {
-       "cell": [
-        6,
-        "2|1",
-        "Write-In: Peter Sonski/Lauren Onak",
-        "total"
-       ],
-       "value": 1
-      },
-      {
-       "cell": [
-        6,
-        "2|1",
-        "Not Assigned",
-        "total"
-       ],
-       "value": 0
       }
      ],
      "printed": 1629,
      "printed_label": "contest total printed on the scan",
-     "computed_with_scan": 1636,
-     "holds_with_scan": false,
-     "computed_with_file": 1536,
+     "computed_with_scan": 1629,
+     "holds_with_scan": true,
+     "computed_with_file": 1529,
      "holds_with_file": false
     }
    ],
@@ -182,7 +173,7 @@
    "row_values": null,
    "file_row": 86,
    "file_line": 88,
-   "corrected": false,
+   "corrected": true,
    "confirmed_by_person": false
   },
   {
@@ -198,8 +189,8 @@
    "file_value": 494,
    "scan_value": 594,
    "kind": "wrong_number",
-   "status": "cannot_verify",
-   "reason": "no printed total decides: the candidates' election day figures add to the contest total's election day figure give the same answer with either value",
+   "status": "settled_against_file",
+   "reason": "the candidates' election day figures add to the contest total's election day figure hold(s) with the scan's value and fail(s) with the file's, and no printed total holds with the file's value and fails with the scan's",
    "sums": [
     {
      "name": "the row's total printed on the scan equals its absentee + early voting + election day (REP Donald J. Trump/JD Vance)",
@@ -292,40 +283,13 @@
         "election_day"
        ],
        "value": 5
-      },
-      {
-       "cell": [
-        6,
-        "2|1",
-        "Write-In: Uncertified",
-        "election_day"
-       ],
-       "value": 4
-      },
-      {
-       "cell": [
-        6,
-        "2|1",
-        "Write-In: Peter Sonski/Lauren Onak",
-        "election_day"
-       ],
-       "value": 1
-      },
-      {
-       "cell": [
-        6,
-        "2|1",
-        "Not Assigned",
-        "election_day"
-       ],
-       "value": 0
       }
      ],
      "printed": 721,
      "printed_label": "contest total printed on the scan",
-     "computed_with_scan": 726,
-     "holds_with_scan": false,
-     "computed_with_file": 626,
+     "computed_with_scan": 721,
+     "holds_with_scan": true,
+     "computed_with_file": 621,
      "holds_with_file": false
     }
    ],
@@ -345,7 +309,7 @@
    "row_values": null,
    "file_row": 86,
    "file_line": 88,
-   "corrected": false,
+   "corrected": true,
    "confirmed_by_person": false
   },
   {
@@ -361,8 +325,8 @@
    "file_value": 1858,
    "scan_value": 1868,
    "kind": "wrong_number",
-   "status": "cannot_verify",
-   "reason": "no printed total decides: the candidates' total figures add to the contest total's total figure give the same answer with either value",
+   "status": "settled_against_file",
+   "reason": "the candidates' total figures add to the contest total's total figure hold(s) with the scan's value and fail(s) with the file's, and no printed total holds with the file's value and fails with the scan's",
    "sums": [
     {
      "name": "the row's total printed on the scan equals its absentee + early voting + election day (REP Donald J. Trump/JD Vance)",
@@ -455,40 +419,13 @@
         "total"
        ],
        "value": 2
-      },
-      {
-       "cell": [
-        11,
-        "3|1",
-        "Write-In: Unidentified",
-        "total"
-       ],
-       "value": 2
-      },
-      {
-       "cell": [
-        11,
-        "3|1",
-        "Write-In: Peter Sonski/Lauren Onak",
-        "total"
-       ],
-       "value": 0
-      },
-      {
-       "cell": [
-        11,
-        "3|1",
-        "Not Assigned",
-        "total"
-       ],
-       "value": 0
       }
      ],
      "printed": 2102,
      "printed_label": "contest total printed on the scan",
-     "computed_with_scan": 2104,
-     "holds_with_scan": false,
-     "computed_with_file": 2094,
+     "computed_with_scan": 2102,
+     "holds_with_scan": true,
+     "computed_with_file": 2092,
      "holds_with_file": false
     }
    ],
@@ -508,7 +445,7 @@
    "row_values": null,
    "file_row": 178,
    "file_line": 180,
-   "corrected": false,
+   "corrected": true,
    "confirmed_by_person": false
   },
   {
@@ -524,8 +461,8 @@
    "file_value": 722,
    "scan_value": 732,
    "kind": "wrong_number",
-   "status": "cannot_verify",
-   "reason": "no printed total decides: the candidates' election day figures add to the contest total's election day figure give the same answer with either value",
+   "status": "settled_against_file",
+   "reason": "the candidates' election day figures add to the contest total's election day figure hold(s) with the scan's value and fail(s) with the file's, and no printed total holds with the file's value and fails with the scan's",
    "sums": [
     {
      "name": "the row's total printed on the scan equals its absentee + early voting + election day (REP Donald J. Trump/JD Vance)",
@@ -618,40 +555,13 @@
         "election_day"
        ],
        "value": 2
-      },
-      {
-       "cell": [
-        11,
-        "3|1",
-        "Write-In: Unidentified",
-        "election_day"
-       ],
-       "value": 2
-      },
-      {
-       "cell": [
-        11,
-        "3|1",
-        "Write-In: Peter Sonski/Lauren Onak",
-        "election_day"
-       ],
-       "value": 0
-      },
-      {
-       "cell": [
-        11,
-        "3|1",
-        "Not Assigned",
-        "election_day"
-       ],
-       "value": 0
       }
      ],
      "printed": 819,
      "printed_label": "contest total printed on the scan",
-     "computed_with_scan": 821,
-     "holds_with_scan": false,
-     "computed_with_file": 811,
+     "computed_with_scan": 819,
+     "holds_with_scan": true,
+     "computed_with_file": 809,
      "holds_with_file": false
     }
    ],
@@ -671,7 +581,7 @@
    "row_values": null,
    "file_row": 178,
    "file_line": 180,
-   "corrected": false,
+   "corrected": true,
    "confirmed_by_person": false
   },
   {
@@ -687,8 +597,8 @@
    "file_value": 112,
    "scan_value": 110,
    "kind": "wrong_number",
-   "status": "cannot_verify",
-   "reason": "no printed total decides: the candidates' early voting figures add to the contest total's early voting figure give the same answer with either value",
+   "status": "settled_against_file",
+   "reason": "the candidates' early voting figures add to the contest total's early voting figure hold(s) with the scan's value and fail(s) with the file's, and no printed total holds with the file's value and fails with the scan's",
    "sums": [
     {
      "name": "the row's total printed on the scan equals its absentee + early voting + election day (DEM Kamala D. Harris/Tim Walz)",
@@ -781,40 +691,13 @@
         "early"
        ],
        "value": 2
-      },
-      {
-       "cell": [
-        6,
-        "2|1",
-        "Write-In: Uncertified",
-        "early"
-       ],
-       "value": 2
-      },
-      {
-       "cell": [
-        6,
-        "2|1",
-        "Write-In: Peter Sonski/Lauren Onak",
-        "early"
-       ],
-       "value": 0
-      },
-      {
-       "cell": [
-        6,
-        "2|1",
-        "Not Assigned",
-        "early"
-       ],
-       "value": 0
       }
      ],
      "printed": 841,
      "printed_label": "contest total printed on the scan",
-     "computed_with_scan": 843,
-     "holds_with_scan": false,
-     "computed_with_file": 845,
+     "computed_with_scan": 841,
+     "holds_with_scan": true,
+     "computed_with_file": 843,
      "holds_with_file": false
     }
    ],
@@ -834,7 +717,7 @@
    "row_values": null,
    "file_row": 87,
    "file_line": 89,
-   "corrected": false,
+   "corrected": true,
    "confirmed_by_person": false
   },
   {
@@ -850,8 +733,8 @@
    "file_value": 111,
    "scan_value": 113,
    "kind": "wrong_number",
-   "status": "cannot_verify",
-   "reason": "no printed total decides: the candidates' election day figures add to the contest total's election day figure give the same answer with either value",
+   "status": "settled_against_file",
+   "reason": "the candidates' election day figures add to the contest total's election day figure hold(s) with the scan's value and fail(s) with the file's, and no printed total holds with the file's value and fails with the scan's",
    "sums": [
     {
      "name": "the row's total printed on the scan equals its absentee + early voting + election day (DEM Kamala D. Harris/Tim Walz)",
@@ -944,40 +827,13 @@
         "election_day"
        ],
        "value": 5
-      },
-      {
-       "cell": [
-        6,
-        "2|1",
-        "Write-In: Uncertified",
-        "election_day"
-       ],
-       "value": 4
-      },
-      {
-       "cell": [
-        6,
-        "2|1",
-        "Write-In: Peter Sonski/Lauren Onak",
-        "election_day"
-       ],
-       "value": 1
-      },
-      {
-       "cell": [
-        6,
-        "2|1",
-        "Not Assigned",
-        "election_day"
-       ],
-       "value": 0
       }
      ],
      "printed": 721,
      "printed_label": "contest total printed on the scan",
-     "computed_with_scan": 726,
-     "holds_with_scan": false,
-     "computed_with_file": 724,
+     "computed_with_scan": 721,
+     "holds_with_scan": true,
+     "computed_with_file": 719,
      "holds_with_file": false
     }
    ],
@@ -997,7 +853,7 @@
    "row_values": null,
    "file_row": 87,
    "file_line": 89,
-   "corrected": false,
+   "corrected": true,
    "confirmed_by_person": false
   },
   {
@@ -1013,8 +869,8 @@
    "file_value": 136,
    "scan_value": 126,
    "kind": "wrong_number",
-   "status": "cannot_verify",
-   "reason": "no printed total decides: the candidates' early voting figures add to the contest total's early voting figure give the same answer with either value",
+   "status": "settled_against_file",
+   "reason": "the candidates' early voting figures add to the contest total's early voting figure hold(s) with the scan's value and fail(s) with the file's, and no printed total holds with the file's value and fails with the scan's",
    "sums": [
     {
      "name": "the row's total printed on the scan equals its absentee + early voting + election day (DEM Kamala D. Harris/Tim Walz)",
@@ -1107,40 +963,13 @@
         "early"
        ],
        "value": 1
-      },
-      {
-       "cell": [
-        16,
-        "4|1",
-        "Write-In: Uncertified",
-        "early"
-       ],
-       "value": 1
-      },
-      {
-       "cell": [
-        16,
-        "4|1",
-        "Write-In: Peter Sonski/Lauren Onak",
-        "early"
-       ],
-       "value": 0
-      },
-      {
-       "cell": [
-        16,
-        "4|1",
-        "Not Assigned",
-        "early"
-       ],
-       "value": 0
       }
      ],
      "printed": 1271,
      "printed_label": "contest total printed on the scan",
-     "computed_with_scan": 1272,
-     "holds_with_scan": false,
-     "computed_with_file": 1282,
+     "computed_with_scan": 1271,
+     "holds_with_scan": true,
+     "computed_with_file": 1281,
      "holds_with_file": false
     }
    ],
@@ -1160,7 +989,7 @@
    "row_values": null,
    "file_row": 262,
    "file_line": 264,
-   "corrected": false,
+   "corrected": true,
    "confirmed_by_person": false
   },
   {
@@ -1176,8 +1005,8 @@
    "file_value": 72,
    "scan_value": 82,
    "kind": "wrong_number",
-   "status": "cannot_verify",
-   "reason": "no printed total decides: the candidates' election day figures add to the contest total's election day figure give the same answer with either value",
+   "status": "settled_against_file",
+   "reason": "the candidates' election day figures add to the contest total's election day figure hold(s) with the scan's value and fail(s) with the file's, and no printed total holds with the file's value and fails with the scan's",
    "sums": [
     {
      "name": "the row's total printed on the scan equals its absentee + early voting + election day (DEM Kamala D. Harris/Tim Walz)",
@@ -1270,40 +1099,13 @@
         "election_day"
        ],
        "value": 2
-      },
-      {
-       "cell": [
-        16,
-        "4|1",
-        "Write-In: Uncertified",
-        "election_day"
-       ],
-       "value": 2
-      },
-      {
-       "cell": [
-        16,
-        "4|1",
-        "Write-In: Peter Sonski/Lauren Onak",
-        "election_day"
-       ],
-       "value": 0
-      },
-      {
-       "cell": [
-        16,
-        "4|1",
-        "Not Assigned",
-        "election_day"
-       ],
-       "value": 0
       }
      ],
      "printed": 673,
      "printed_label": "contest total printed on the scan",
-     "computed_with_scan": 675,
-     "holds_with_scan": false,
-     "computed_with_file": 665,
+     "computed_with_scan": 673,
+     "holds_with_scan": true,
+     "computed_with_file": 663,
      "holds_with_file": false
     }
    ],
@@ -1323,7 +1125,7 @@
    "row_values": null,
    "file_row": 262,
    "file_line": 264,
-   "corrected": false,
+   "corrected": true,
    "confirmed_by_person": false
   },
   {
@@ -3414,7 +3216,7 @@
     "f002"
    ],
    "statuses": {
-    "cannot_verify": 2
+    "settled_against_file": 2
    },
    "what_to_do": null,
    "crop": "crops/row-0001.png"
@@ -3435,7 +3237,7 @@
     "f004"
    ],
    "statuses": {
-    "cannot_verify": 2
+    "settled_against_file": 2
    },
    "what_to_do": null,
    "crop": "crops/row-0002.png"
@@ -3456,7 +3258,7 @@
     "f006"
    ],
    "statuses": {
-    "cannot_verify": 2
+    "settled_against_file": 2
    },
    "what_to_do": null,
    "crop": "crops/row-0003.png"
@@ -3477,7 +3279,7 @@
     "f008"
    ],
    "statuses": {
-    "cannot_verify": 2
+    "settled_against_file": 2
    },
    "what_to_do": null,
    "crop": "crops/row-0004.png"
@@ -3674,6 +3476,62 @@
  ],
  "corrections": [
   {
+   "finding": "f001",
+   "file_row": 86,
+   "part": "votes",
+   "old": 1263,
+   "new": 1363
+  },
+  {
+   "finding": "f002",
+   "file_row": 86,
+   "part": "election_day",
+   "old": 494,
+   "new": 594
+  },
+  {
+   "finding": "f003",
+   "file_row": 178,
+   "part": "votes",
+   "old": 1858,
+   "new": 1868
+  },
+  {
+   "finding": "f004",
+   "file_row": 178,
+   "part": "election_day",
+   "old": 722,
+   "new": 732
+  },
+  {
+   "finding": "f005",
+   "file_row": 87,
+   "part": "early_voting",
+   "old": 112,
+   "new": 110
+  },
+  {
+   "finding": "f006",
+   "file_row": 87,
+   "part": "election_day",
+   "old": 111,
+   "new": 113
+  },
+  {
+   "finding": "f007",
+   "file_row": 262,
+   "part": "early_voting",
+   "old": 136,
+   "new": 126
+  },
+  {
+   "finding": "f008",
+   "file_row": 262,
+   "part": "election_day",
+   "old": 72,
+   "new": 82
+  },
+  {
    "finding": "f009",
    "file_row": 100,
    "part": "votes",
@@ -3802,266 +3660,11 @@
  ],
  "could_not_correct": [],
  "sums_check": {
-  "in_all": 758,
-  "holding_with_ledger": 738,
-  "holding_with_published": 726,
-  "holding_with_corrected": 738,
-  "still_failing": [
-   {
-    "name": "the candidates' total figures add to the contest total's total figure",
-    "kind": "report_contest",
-    "page": 1,
-    "block": "1|1",
-    "key": "total",
-    "printed": 1206,
-    "computed": 1207,
-    "reasons": [
-     "the scan's own cells and its printed total disagree, and no difference from the file is involved"
-    ]
-   },
-   {
-    "name": "the candidates' election day figures add to the contest total's election day figure",
-    "kind": "report_contest",
-    "page": 1,
-    "block": "1|1",
-    "key": "election_day",
-    "printed": 485,
-    "computed": 486,
-    "reasons": [
-     "the scan's own cells and its printed total disagree, and no difference from the file is involved"
-    ]
-   },
-   {
-    "name": "the candidates' total figures add to the contest total's total figure",
-    "kind": "report_contest",
-    "page": 2,
-    "block": "1|4",
-    "key": "total",
-    "printed": 1153,
-    "computed": 1154,
-    "reasons": [
-     "the scan's own cells and its printed total disagree, and no difference from the file is involved"
-    ]
-   },
-   {
-    "name": "the candidates' absentee figures add to the contest total's absentee figure",
-    "kind": "report_contest",
-    "page": 2,
-    "block": "1|4",
-    "key": "absentee",
-    "printed": 48,
-    "computed": 49,
-    "reasons": [
-     "the scan's own cells and its printed total disagree, and no difference from the file is involved"
-    ]
-   },
-   {
-    "name": "the candidates' total figures add to the contest total's total figure",
-    "kind": "report_contest",
-    "page": 6,
-    "block": "2|1",
-    "key": "total",
-    "printed": 1629,
-    "computed": 1536,
-    "reasons": [
-     "a value that could not be verified (f001: Donald J. Trump/JD Vance, precinct Precinct 2, votes)",
-     "a value that could not be verified (f002: Donald J. Trump/JD Vance, precinct Precinct 2, election_day)",
-     "a value that could not be verified (f005: Kamala D. Harris/Tim Walz, precinct Precinct 2, early_voting)",
-     "a value that could not be verified (f006: Kamala D. Harris/Tim Walz, precinct Precinct 2, election_day)"
-    ]
-   },
-   {
-    "name": "the candidates' early voting figures add to the contest total's early voting figure",
-    "kind": "report_contest",
-    "page": 6,
-    "block": "2|1",
-    "key": "early",
-    "printed": 841,
-    "computed": 845,
-    "reasons": [
-     "a value that could not be verified (f001: Donald J. Trump/JD Vance, precinct Precinct 2, votes)",
-     "a value that could not be verified (f002: Donald J. Trump/JD Vance, precinct Precinct 2, election_day)",
-     "a value that could not be verified (f005: Kamala D. Harris/Tim Walz, precinct Precinct 2, early_voting)",
-     "a value that could not be verified (f006: Kamala D. Harris/Tim Walz, precinct Precinct 2, election_day)"
-    ]
-   },
-   {
-    "name": "the candidates' election day figures add to the contest total's election day figure",
-    "kind": "report_contest",
-    "page": 6,
-    "block": "2|1",
-    "key": "election_day",
-    "printed": 721,
-    "computed": 624,
-    "reasons": [
-     "a value that could not be verified (f001: Donald J. Trump/JD Vance, precinct Precinct 2, votes)",
-     "a value that could not be verified (f002: Donald J. Trump/JD Vance, precinct Precinct 2, election_day)",
-     "a value that could not be verified (f005: Kamala D. Harris/Tim Walz, precinct Precinct 2, early_voting)",
-     "a value that could not be verified (f006: Kamala D. Harris/Tim Walz, precinct Precinct 2, election_day)"
-    ]
-   },
-   {
-    "name": "the candidates' total figures add to the contest total's total figure",
-    "kind": "report_contest",
-    "page": 11,
-    "block": "3|1",
-    "key": "total",
-    "printed": 2102,
-    "computed": 2094,
-    "reasons": [
-     "a value that could not be verified (f003: Donald J. Trump/JD Vance, precinct Precinct 3, votes)",
-     "a value that could not be verified (f004: Donald J. Trump/JD Vance, precinct Precinct 3, election_day)"
-    ]
-   },
-   {
-    "name": "the candidates' election day figures add to the contest total's election day figure",
-    "kind": "report_contest",
-    "page": 11,
-    "block": "3|1",
-    "key": "election_day",
-    "printed": 819,
-    "computed": 811,
-    "reasons": [
-     "a value that could not be verified (f003: Donald J. Trump/JD Vance, precinct Precinct 3, votes)",
-     "a value that could not be verified (f004: Donald J. Trump/JD Vance, precinct Precinct 3, election_day)"
-    ]
-   },
-   {
-    "name": "the candidates' total figures add to the contest total's total figure",
-    "kind": "report_contest",
-    "page": 11,
-    "block": "3|2",
-    "key": "total",
-    "printed": 2096,
-    "computed": 2097,
-    "reasons": [
-     "the scan's own cells and its printed total disagree, and no difference from the file is involved"
-    ]
-   },
-   {
-    "name": "the candidates' election day figures add to the contest total's election day figure",
-    "kind": "report_contest",
-    "page": 11,
-    "block": "3|2",
-    "key": "election_day",
-    "printed": 812,
-    "computed": 813,
-    "reasons": [
-     "the scan's own cells and its printed total disagree, and no difference from the file is involved"
-    ]
-   },
-   {
-    "name": "the candidates' total figures add to the contest total's total figure",
-    "kind": "report_contest",
-    "page": 12,
-    "block": "3|4",
-    "key": "total",
-    "printed": 2037,
-    "computed": 2039,
-    "reasons": [
-     "the scan's own cells and its printed total disagree, and no difference from the file is involved"
-    ]
-   },
-   {
-    "name": "the candidates' absentee figures add to the contest total's absentee figure",
-    "kind": "report_contest",
-    "page": 12,
-    "block": "3|4",
-    "key": "absentee",
-    "printed": 44,
-    "computed": 45,
-    "reasons": [
-     "the scan's own cells and its printed total disagree, and no difference from the file is involved"
-    ]
-   },
-   {
-    "name": "the candidates' early voting figures add to the contest total's early voting figure",
-    "kind": "report_contest",
-    "page": 12,
-    "block": "3|4",
-    "key": "early",
-    "printed": 1205,
-    "computed": 1206,
-    "reasons": [
-     "the scan's own cells and its printed total disagree, and no difference from the file is involved"
-    ]
-   },
-   {
-    "name": "the candidates' total figures add to the contest total's total figure",
-    "kind": "report_contest",
-    "page": 16,
-    "block": "4|1",
-    "key": "total",
-    "printed": 2022,
-    "computed": 2025,
-    "reasons": [
-     "a value that could not be verified (f007: Kamala D. Harris/Tim Walz, precinct Precinct 4, early_voting)",
-     "a value that could not be verified (f008: Kamala D. Harris/Tim Walz, precinct Precinct 4, election_day)"
-    ]
-   },
-   {
-    "name": "the candidates' early voting figures add to the contest total's early voting figure",
-    "kind": "report_contest",
-    "page": 16,
-    "block": "4|1",
-    "key": "early",
-    "printed": 1271,
-    "computed": 1282,
-    "reasons": [
-     "a value that could not be verified (f007: Kamala D. Harris/Tim Walz, precinct Precinct 4, early_voting)",
-     "a value that could not be verified (f008: Kamala D. Harris/Tim Walz, precinct Precinct 4, election_day)"
-    ]
-   },
-   {
-    "name": "the candidates' election day figures add to the contest total's election day figure",
-    "kind": "report_contest",
-    "page": 16,
-    "block": "4|1",
-    "key": "election_day",
-    "printed": 673,
-    "computed": 665,
-    "reasons": [
-     "a value that could not be verified (f007: Kamala D. Harris/Tim Walz, precinct Precinct 4, early_voting)",
-     "a value that could not be verified (f008: Kamala D. Harris/Tim Walz, precinct Precinct 4, election_day)"
-    ]
-   },
-   {
-    "name": "the candidates' total figures add to the contest total's total figure",
-    "kind": "report_contest",
-    "page": 16,
-    "block": "4|2",
-    "key": "total",
-    "printed": 2009,
-    "computed": 2011,
-    "reasons": [
-     "the scan's own cells and its printed total disagree, and no difference from the file is involved"
-    ]
-   },
-   {
-    "name": "the candidates' early voting figures add to the contest total's early voting figure",
-    "kind": "report_contest",
-    "page": 16,
-    "block": "4|2",
-    "key": "early",
-    "printed": 1260,
-    "computed": 1261,
-    "reasons": [
-     "the scan's own cells and its printed total disagree, and no difference from the file is involved"
-    ]
-   },
-   {
-    "name": "the candidates' election day figures add to the contest total's election day figure",
-    "kind": "report_contest",
-    "page": 16,
-    "block": "4|2",
-    "key": "election_day",
-    "printed": 671,
-    "computed": 672,
-    "reasons": [
-     "the scan's own cells and its printed total disagree, and no difference from the file is involved"
-    ]
-   }
-  ],
+  "in_all": 1102,
+  "holding_with_ledger": 1102,
+  "holding_with_published": 1083,
+  "holding_with_corrected": 1102,
+  "still_failing": [],
   "rows_failing_own_total": {
    "published": 0,
    "corrected": 0
@@ -4088,43 +3691,37 @@
     "candidate": "Not Assigned"
    },
    {
-    "block": "c014",
+    "block": "c016",
     "page": 1,
     "contest": "US Senator",
     "candidate": "Write-In: Uncertified"
    },
    {
-    "block": "c015",
+    "block": "c017",
     "page": 1,
     "contest": "US Senator",
     "candidate": "Not Assigned"
    },
    {
-    "block": "c024",
+    "block": "c030",
     "page": 2,
     "contest": "Railroad Commissioner",
     "candidate": "Write-In: Richard McKibbin"
    },
    {
-    "block": "c025",
+    "block": "c031",
     "page": 2,
     "contest": "Railroad Commissioner",
     "candidate": "Write-In: Uncertified"
    },
    {
-    "block": "c026",
+    "block": "c032",
     "page": 2,
     "contest": "Railroad Commissioner",
     "candidate": "Not Assigned"
    },
    {
-    "block": "c052",
-    "page": 10,
-    "contest": "Trustee, At -Large Paint Creek ISD",
-    "candidate": "Alexis Nicole Ender"
-   },
-   {
-    "block": "c059",
+    "block": "c105",
     "page": 20,
     "contest": "Trustee Roby CISD",
     "candidate": "Danny Carrion"
@@ -4144,477 +3741,40 @@
     "rows": 4
    },
    {
-    "contest": "President",
-    "district": "",
-    "candidate": "Over Votes",
-    "rows": 4
-   },
-   {
-    "contest": "President",
-    "district": "",
-    "candidate": "Under Votes",
-    "rows": 4
-   },
-   {
-    "contest": "U.S. Senate",
-    "district": "",
-    "candidate": "Over Votes",
-    "rows": 4
-   },
-   {
-    "contest": "U.S. Senate",
-    "district": "",
-    "candidate": "Under Votes",
-    "rows": 4
-   },
-   {
-    "contest": "U.S. House",
-    "district": "19",
-    "candidate": "Over Votes",
-    "rows": 4
-   },
-   {
-    "contest": "U.S. House",
-    "district": "19",
-    "candidate": "Under Votes",
-    "rows": 4
-   },
-   {
-    "contest": "Railroad Commissioner",
-    "district": "",
-    "candidate": "Over Votes",
-    "rows": 4
-   },
-   {
-    "contest": "Railroad Commissioner",
-    "district": "",
-    "candidate": "Under Votes",
-    "rows": 4
-   },
-   {
-    "contest": "Justice, Supreme Court",
-    "district": "Pl 2",
-    "candidate": "Over Votes",
-    "rows": 4
-   },
-   {
-    "contest": "Justice, Supreme Court",
-    "district": "Pl 2",
-    "candidate": "Under Votes",
-    "rows": 4
-   },
-   {
-    "contest": "Justice, Supreme Court",
-    "district": "Pl 4",
-    "candidate": "Over Votes",
-    "rows": 4
-   },
-   {
-    "contest": "Justice, Supreme Court",
-    "district": "Pl 4",
-    "candidate": "Under Votes",
-    "rows": 4
-   },
-   {
-    "contest": "Justice, Supreme Court",
-    "district": "Pl 6",
-    "candidate": "Over Votes",
-    "rows": 4
-   },
-   {
-    "contest": "Justice, Supreme Court",
-    "district": "Pl 6",
-    "candidate": "Under Votes",
-    "rows": 4
-   },
-   {
-    "contest": "Presiding Judge, Ct of Crim App",
-    "district": "",
-    "candidate": "Over Votes",
-    "rows": 4
-   },
-   {
-    "contest": "Presiding Judge, Ct of Crim App",
-    "district": "",
-    "candidate": "Under Votes",
-    "rows": 4
-   },
-   {
-    "contest": "Judge, Ct of Crim App",
-    "district": "Pl 7",
-    "candidate": "Over Votes",
-    "rows": 4
-   },
-   {
-    "contest": "Judge, Ct of Crim App",
-    "district": "Pl 7",
-    "candidate": "Under Votes",
-    "rows": 4
-   },
-   {
-    "contest": "Judge, Ct of Crim App",
-    "district": "Pl 8",
-    "candidate": "Over Votes",
-    "rows": 4
-   },
-   {
-    "contest": "Judge, Ct of Crim App",
-    "district": "Pl 8",
-    "candidate": "Under Votes",
-    "rows": 4
-   },
-   {
-    "contest": "Member, State BoE",
-    "district": "Dist 15",
-    "candidate": "Over Votes",
-    "rows": 4
-   },
-   {
-    "contest": "Member, State BoE",
-    "district": "Dist 15",
-    "candidate": "Under Votes",
-    "rows": 4
-   },
-   {
-    "contest": "State Representative",
-    "district": "71",
-    "candidate": "Over Votes",
-    "rows": 4
-   },
-   {
-    "contest": "State Representative",
-    "district": "71",
-    "candidate": "Under Votes",
-    "rows": 4
-   },
-   {
-    "contest": "Chief Justice, 11th Ct of App Dist",
-    "district": "",
-    "candidate": "Over Votes",
-    "rows": 4
-   },
-   {
-    "contest": "Chief Justice, 11th Ct of App Dist",
-    "district": "",
-    "candidate": "Under Votes",
-    "rows": 4
-   },
-   {
-    "contest": "Dist Attorney, 259th Judicial Dist",
-    "district": "",
-    "candidate": "Over Votes",
-    "rows": 4
-   },
-   {
-    "contest": "Dist Attorney, 259th Judicial Dist",
-    "district": "",
-    "candidate": "Under Votes",
-    "rows": 4
-   },
-   {
-    "contest": "County Attorney",
-    "district": "",
-    "candidate": "Over Votes",
-    "rows": 4
-   },
-   {
-    "contest": "County Attorney",
-    "district": "",
-    "candidate": "Under Votes",
-    "rows": 4
-   },
-   {
-    "contest": "Sheriff",
-    "district": "",
-    "candidate": "Over Votes",
-    "rows": 4
-   },
-   {
-    "contest": "Sheriff",
-    "district": "",
-    "candidate": "Under Votes",
-    "rows": 4
-   },
-   {
-    "contest": "County Tax Assessor-Collector",
-    "district": "",
-    "candidate": "Over Votes",
-    "rows": 4
-   },
-   {
-    "contest": "County Tax Assessor-Collector",
-    "district": "",
-    "candidate": "Under Votes",
-    "rows": 4
-   },
-   {
-    "contest": "County Commissioner",
-    "district": "Pct 1",
-    "candidate": "Over Votes",
-    "rows": 1
-   },
-   {
-    "contest": "County Commissioner",
-    "district": "Pct 1",
-    "candidate": "Under Votes",
-    "rows": 1
-   },
-   {
-    "contest": "County Constable",
-    "district": "",
-    "candidate": "Over Votes",
-    "rows": 4
-   },
-   {
-    "contest": "County Constable",
-    "district": "",
-    "candidate": "Under Votes",
-    "rows": 4
-   },
-   {
-    "contest": "Trustee, At -Large Paint Creek ISD",
-    "district": "",
-    "candidate": "Alexis Nicole Eader",
-    "rows": 1
-   },
-   {
-    "contest": "Trustee, At -Large Paint Creek ISD",
-    "district": "",
-    "candidate": "Over Votes",
-    "rows": 1
-   },
-   {
-    "contest": "Trustee, At -Large Paint Creek ISD",
-    "district": "",
-    "candidate": "Under Votes",
-    "rows": 1
-   },
-   {
-    "contest": "PROPOSITION A Paint Creek ISD",
-    "district": "",
-    "candidate": "Over Votes",
-    "rows": 1
-   },
-   {
-    "contest": "PROPOSITION A Paint Creek ISD",
-    "district": "",
-    "candidate": "Under Votes",
-    "rows": 1
-   },
-   {
-    "contest": "PROPOSITION B Paint Creek ISD",
-    "district": "",
-    "candidate": "Over Votes",
-    "rows": 1
-   },
-   {
-    "contest": "PROPOSITION B Paint Creek ISD",
-    "district": "",
-    "candidate": "Under Votes",
-    "rows": 1
-   },
-   {
-    "contest": "County Commissioner",
-    "district": "Pct 3",
-    "candidate": "Over Votes",
-    "rows": 1
-   },
-   {
-    "contest": "County Commissioner",
-    "district": "Pct 3",
-    "candidate": "Under Votes",
-    "rows": 1
-   },
-   {
     "contest": "Trustee Roby CISD",
     "district": "",
     "candidate": "Danny Garison",
-    "rows": 1
-   },
-   {
-    "contest": "Trustee Roby CISD",
-    "district": "",
-    "candidate": "Over Votes",
-    "rows": 1
-   },
-   {
-    "contest": "Trustee Roby CISD",
-    "district": "",
-    "candidate": "Under Votes",
     "rows": 1
    }
   ],
   "rejected": [],
   "model": {
    "asked": {
-    "scan_contests": [
-     "President/Vice President",
-     "US Senator",
-     "US Representative, Dist 19"
-    ],
+    "scan_contests": [],
     "file_contests": [
      "Registered Voters",
-     "Ballots Cast Blank",
-     "President",
-     "U.S. Senate",
-     "U.S. House"
+     "Ballots Cast Blank"
     ],
     "scan_candidates": [
-     "President/Vice President :: Donald J. Trump",
-     "President/Vice President :: Kamala D. Harris",
-     "President/Vice President :: Chase Oliver",
-     "President/Vice President :: Jill Stein",
-     "President/Vice President :: Write-ins",
      "President/Vice President :: Write-In: Uncertified",
      "President/Vice President :: Write-In: Peter Sonski",
      "President/Vice President :: Not Assigned",
-     "US Senator :: Ted Cruz",
-     "US Senator :: Colin Allred",
-     "US Senator :: Ted Brown",
-     "US Senator :: Write-ins",
      "US Senator :: Write-In: Uncertified",
      "US Senator :: Not Assigned",
-     "US Representative, Dist 19 :: Jodey C. Arrington",
-     "US Representative, Dist 19 :: Bernard Johnson",
-     "US Representative, Dist 19 :: Nathan Lewis",
      "Railroad Commissioner :: Write-In: Richard McKibbin",
      "Railroad Commissioner :: Write-In: Uncertified",
      "Railroad Commissioner :: Not Assigned",
-     "Trustee, At -Large Paint Creek ISD :: Alexis Nicole Ender",
      "Trustee Roby CISD :: Danny Carrion"
     ],
     "file_candidates": [
      "Registered Voters :: ",
      "Ballots Cast Blank :: ",
-     "President :: Donald J. Trump/JD Vance",
-     "President :: Kamala D. Harris/Tim Walz",
-     "President :: Chase Oliver/Mike ter Maat",
-     "President :: Jill Stein/Rudolph Ware",
-     "President :: Write-ins",
-     "President :: Over Votes",
-     "President :: Under Votes",
-     "U.S. Senate :: Ted Cruz",
-     "U.S. Senate :: Colin Allred",
-     "U.S. Senate :: Ted Brown",
-     "U.S. Senate :: Write-ins",
-     "U.S. Senate :: Over Votes",
-     "U.S. Senate :: Under Votes",
-     "U.S. House :: Jodey C. Arrington",
-     "U.S. House :: Bernard Johnson",
-     "U.S. House :: Nathan Lewis",
-     "U.S. House :: Over Votes",
-     "U.S. House :: Under Votes",
-     "Railroad Commissioner :: Over Votes",
-     "Railroad Commissioner :: Under Votes",
-     "Justice, Supreme Court :: Over Votes",
-     "Justice, Supreme Court :: Under Votes",
-     "Justice, Supreme Court :: Over Votes",
-     "Justice, Supreme Court :: Under Votes",
-     "Justice, Supreme Court :: Over Votes",
-     "Justice, Supreme Court :: Under Votes",
-     "Presiding Judge, Ct of Crim App :: Over Votes",
-     "Presiding Judge, Ct of Crim App :: Under Votes",
-     "Judge, Ct of Crim App :: Over Votes",
-     "Judge, Ct of Crim App :: Under Votes",
-     "Judge, Ct of Crim App :: Over Votes",
-     "Judge, Ct of Crim App :: Under Votes",
-     "Member, State BoE :: Over Votes",
-     "Member, State BoE :: Under Votes",
-     "State Representative :: Over Votes",
-     "State Representative :: Under Votes",
-     "Chief Justice, 11th Ct of App Dist :: Over Votes",
-     "Chief Justice, 11th Ct of App Dist :: Under Votes",
-     "Dist Attorney, 259th Judicial Dist :: Over Votes",
-     "Dist Attorney, 259th Judicial Dist :: Under Votes",
-     "County Attorney :: Over Votes",
-     "County Attorney :: Under Votes",
-     "Sheriff :: Over Votes",
-     "Sheriff :: Under Votes",
-     "County Tax Assessor-Collector :: Over Votes",
-     "County Tax Assessor-Collector :: Under Votes",
-     "County Commissioner :: Over Votes",
-     "County Commissioner :: Under Votes",
-     "County Constable :: Over Votes",
-     "County Constable :: Under Votes",
-     "Trustee, At -Large Paint Creek ISD :: Alexis Nicole Eader",
-     "Trustee, At -Large Paint Creek ISD :: Over Votes",
-     "Trustee, At -Large Paint Creek ISD :: Under Votes",
-     "PROPOSITION A Paint Creek ISD :: Over Votes",
-     "PROPOSITION A Paint Creek ISD :: Under Votes",
-     "PROPOSITION B Paint Creek ISD :: Over Votes",
-     "PROPOSITION B Paint Creek ISD :: Under Votes",
-     "County Commissioner :: Over Votes",
-     "County Commissioner :: Under Votes",
-     "Trustee Roby CISD :: Danny Garison",
-     "Trustee Roby CISD :: Over Votes",
-     "Trustee Roby CISD :: Under Votes"
+     "Trustee Roby CISD :: Danny Garison"
     ]
    },
    "answer": {
-    "contests": [
-     [
-      0,
-      2
-     ],
-     [
-      1,
-      3
-     ],
-     [
-      2,
-      4
-     ]
-    ],
-    "candidates": [
-     [
-      0,
-      2
-     ],
-     [
-      1,
-      3
-     ],
-     [
-      2,
-      4
-     ],
-     [
-      3,
-      5
-     ],
-     [
-      4,
-      6
-     ],
-     [
-      8,
-      9
-     ],
-     [
-      9,
-      10
-     ],
-     [
-      10,
-      11
-     ],
-     [
-      11,
-      12
-     ],
-     [
-      14,
-      15
-     ],
-     [
-      15,
-      16
-     ],
-     [
-      16,
-      17
-     ]
-    ]
+    "contests": [],
+    "candidates": []
    }
   }
  },
@@ -4629,6 +3789,28 @@
   "contests": 82,
   "contest_totals_printed": 78,
   "second_sum_exists": true,
-  "seconds": 5.0
+  "ballot_sums_not_used": [
+   {
+    "block": "2|19",
+    "page": 10,
+    "why": "the contest total, overvotes and undervotes do not add to the precinct's ballots cast in any column (total 9 against 1631, absentee 0 against 67, early 2 against 843, election_day 7 against 721), always on the same side: the contest was not on every ballot of the precinct, so the equation is not a sum for this block"
+   },
+   {
+    "block": "2|20",
+    "page": 10,
+    "why": "the contest total, overvotes and undervotes do not add to the precinct's ballots cast in any column (total 9 against 1631, absentee 0 against 67, early 2 against 843, election_day 7 against 721), always on the same side: the contest was not on every ballot of the precinct, so the equation is not a sum for this block"
+   },
+   {
+    "block": "2|21",
+    "page": 10,
+    "why": "the contest total, overvotes and undervotes do not add to the precinct's ballots cast in any column (total 9 against 1631, absentee 0 against 67, early 2 against 843, election_day 7 against 721), always on the same side: the contest was not on every ballot of the precinct, so the equation is not a sum for this block"
+   },
+   {
+    "block": "4|19",
+    "page": 20,
+    "why": "the contest total, overvotes and undervotes do not add to the precinct's ballots cast in any column (total 33 against 2029, absentee 6 against 78, early 18 against 1276, election_day 9 against 675), always on the same side: the contest was not on every ballot of the precinct, so the equation is not a sum for this block"
+   }
+  ],
+  "seconds": 5.6
  }
 }

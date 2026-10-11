@@ -72,7 +72,7 @@ T03a's close of Panola (run `20261011-102700`) took 565 model calls and 1,177.5 
 12 grand sums failing, with 335 cells `cannot_verify`. The first read it started from used `claude-haiku`.
 
 ## What shows the cause
-- Trace `b5b7e9fe34c976be76a1ec32f2acf2a0` (run `20261011-100540`, same code as T03a's close; 1,057 spans). `search_traces`
+- Trace `b5b7e9fe34c976be76a1ec32f2acf2a0` (run `20261011-100540`, not committed, same code as T03a's close; 1,057 spans). `search_traces`
   for that id returns no rows (11 October 2026); `get_trace_context` with the trace id, `limit` 5 and `offset` 400 works
   and returns the spans. `span_types`, `span_names`, `fields` and `max_chars_per_field` were not tried again here.
 - One item from that page (page 3, block `p3-b4`, row EARLY, which fails by -2 while column 3 fails by -2): the decision

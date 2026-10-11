@@ -1,0 +1,98 @@
+  branch       main
+  checkpoints  31
+
+● 01M4NQYYSSYFE7GFTNSJJ49A84  "Read AGENTS.md, then .prod-build/briefs/T07c.md and do ex..."
+  10-11 15:05 (082d4d0) T07c: every county on the page: county tabs, the run line, the report layout'...
+
+● 01M4NQ870WA4AEDKNEAXVD6D20  chore: T05b closed
+  10-11 14:53 (234f234) chore: T05b closed
+
+● 01M4NQ74BYTZC6KBERQRC4D622  "Read AGENTS.md, then .prod-build/briefs/T05b.md and do ex..."
+  10-11 14:52 (377406b) T05b: trace ids paired with runs; one detection created in neatlogs
+
+● 01M4NNBNH56QYBFAV3PAF668ZF  chore: T05 closed (the detection waits for the tracing se...
+  10-11 14:20 (c80dee8) chore: T05 closed (the detection waits for the tracing server)
+
+● 01M4NN9M7ZCK8Y0PFQJPVZQ9K6  "Read AGENTS.md, then .prod-build/briefs/T05.md and do exa..."
+  10-11 14:19 (6bbcf42) T05: baseline scored against the audit (73 of 74 settled); recovery evidence;...
+
+● 01M4NMZWJMHFPTS9YWGRQ6ZTVP  "Read AGENTS.md, then .prod-build/briefs/T04d.md and do ex..."
+  10-11 14:13 (020911b) T04d: contest sums leave out the write-in breakdown; Scurry page 18 read; fin...
+
+● 01M4NM8GS92HGQ9MPP9V769BA8  "Read AGENTS.md, then .prod-build/briefs/T04c.md and do ex..."
+  10-11 14:00 (78ea016) T04c: every published row compared or listed as not compared; a real stop and...
+
+● 01M4NK9E9PQR8H20JTPATXXP9D  "Read AGENTS.md, then .prod-build/briefs/T07b.md and do ex..."
+  10-11 13:43 (38d6881) T07b: the replay from the run's own events, and a first screen that holds the...
+
+● 01M4NJN7NGZE93HZR972C3D12K  "<task-notification>\n<task-id>b7lgnrbfb</task-id>\n<summary..."
+  10-11 13:32 (4c7553a) T04b: every county audited unattended with a budget, resume and a summary
+
+● 01M4NGQ152AVAX9FDFEX7R50HQ  "Read AGENTS.md, then .prod-build/briefs/T04b.md and do ex..."
+  10-11 12:58 (1574583) chore: the baseline-scoring brief carries two small items
+
+● 6d63dcdd-1b8  [temporary]  carry forward: uncommitted session files
+  10-11 12:56 (0462f81) carry forward: uncommitted session files
+
+● 01M4NGKA19RABXHCRZ85054WBD  "Read AGENTS.md, then .prod-build/briefs/T04a.md and do ex..."
+  10-11 12:56 (fb07bda) T04a: report layout read, layout decided from page 1, San Saba audited end to...
+
+● 01M4NG1NNM575FBSDJ06FSEZ39  "Read AGENTS.md, then .prod-build/briefs/T06c.md and do ex..."
+  10-11 12:47 (e7c1d7b) T06c: the findings on the page (ringed value with the public file's tag, card...
+
+● 01M4NFF6YB0HP21MA9Q3Z9GR5C  "Read AGENTS.md, then .prod-build/briefs/T04a.md and do ex..."
+  10-11 12:37 (c516e71) docs: the README says where the build stands, with figures from the run files
+
+● 01M4NENK58JZF58AWWM1HY1RQM  "Read AGENTS.md, then .prod-build/briefs/T03d.md and do ex..."
+  10-11 12:23 (2dcece1) T03d: sums decide the status, whole-row corrections, sums check (one protecte...
+
+● 01M4NE5QXTJA9H8AASDJQ2ED6B  "Read AGENTS.md, then .prod-build/briefs/T03c.md and do ex..."
+  10-11 12:14 (110c4df) T03c: audit against the published file, findings, corrected file, diff, repor...
+
+● 01M4NDVCSR6S2DQFN36F7H8X88  "Read AGENTS.md, then .prod-build/briefs/T07a.md and do ex..."
+  10-11 12:08 (1e05ccd) T07a: ink-box ring, page states, small screens, motion and keyboard, axe at zero
+
+● 01M4NCAF49NS3E749KSNQ2SHYE  "Read AGENTS.md, then .prod-build/briefs/T06b.md and do ex..."
+  10-11 11:42 (ab63e11) T06b: framed sheet, loupe, leader, 300 dpi block images, paper tape
+
+● 01M4NBPWG7D7K4TBZJD3FE6JTK  "Read AGENTS.md, then .prod-build/briefs/T03b.md and do ex..."
+  10-11 11:31 (4fb474a) T03b: reader chosen by a sample; failing sums paired where they cross (3 sums...
+
+● 01M4NB4Z7344SN0DGSD1X7TCK2  "Read AGENTS.md, then .prod-build/briefs/T06a.md and do ex..."
+  10-11 11:21 (00c369c) T06a: results page stage (sheet in depth, two sums, tape) and site data build
+
+● 01M4NAK0Y2PYF4C4S8CMECS1TX  "Read AGENTS.md, then .prod-build/briefs/T03b.md and do ex..."
+  10-11 11:11 (cc05201) chore: brief for the results page's stage (T06a), built on this branch in par...
+
+● 01M4NAFJATE2D7Z431HKFED0YX  "Read AGENTS.md, then .prod-build/briefs/T03a.md and do ex..."
+  10-11 11:10 (cff34cb) chore: T03a closed; plan change from two measurements
+
+● 01M4N96FWN06W6P7MFHE41MPXQ  "Read AGENTS.md, then .prod-build/briefs/T03a.md and do ex..."
+  10-11 10:47 (e9506e8) T03a: report and evidence
+
+● 01M4N95MX5M23095JFC1HC5QC8  "Read AGENTS.md, then .prod-build/briefs/T03a.md and do ex..."
+  10-11 10:47 (84c88a8) T03a: investigation loop closes Panola's ledger (16 row, 16 column, 12 grand ...
+
+● 01M4N655995AD59HMRQ7T7A426  chore: T02a closed; the loop and the audit become two tas...
+  10-11 09:54 (7de82e7) chore: T02a closed; the loop and the audit become two tasks (T03a, T03b)
+
+● 01M4N5RW8MFTGJDAPNESJ1XZY7  "<task-notification>\n<task-id>bskzzhzyl</task-id>\n<tool-us..."
+  10-11 09:47 (b5c3ce9) T02a: column-group read cuts failing row sums 91 to 32 (target under 20 not met)
+
+● 01M4N5C8KKGEE3QDDG9H73ATHS  "Read AGENTS.md, then .prod-build/briefs/T02a.md and do ex..."
+  10-11 09:40 (338de15) T02a: read each block in column groups at 300 dpi, fix column edges
+
+● 01M4N3Q9086MEKZGF5ZG8PWZK6  T02: report and evidence
+  10-11 09:11 (cf636e3) T02: report and evidence
+
+● 01M4N3PMN2VJYZ54B3WAT1NZHT  "Read AGENTS.md, then .prod-build/briefs/T02.md and do exa..."
+  10-11 09:11 (e21153c) T02: model client, tracing, block finding and first read of Panola
+
+● 01M4N2MSRP6RJFKSKR8T5NYH9H  T01: record commit hash in report
+  10-11 08:53 (894015f) T01: record commit hash in report
+
+● 01M4N2MJRDY60BETX65N5VQXWM  "Read AGENTS.md, then .prod-build/briefs/T01.md and do exa..."
+  10-11 08:52 (4207764) T01: scaffold, sources, rendering, ledger and checks
+
+
+This list was saved by task T08 with `entire checkpoint list`. To open the session behind a commit, read the `Entire-Checkpoint` trailer of its message (`git log -1 <commit>`) and run `entire checkpoint explain <that id>`.

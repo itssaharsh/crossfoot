@@ -1,6 +1,6 @@
 {
  "county": "lynn",
- "run_id": "20261011-130414",
+ "run_id": "20261011-140637",
  "layout": "report",
  "file": "20241105__tx__general__lynn__precinct.csv",
  "policy": {
@@ -10,18 +10,31 @@
   "meaning": "follow the cells as printed and list the printed total as inconsistent"
  },
  "counts": {
-  "findings": 43,
+  "findings": 47,
   "by_kind": {
-   "wrong_number": 37,
+   "wrong_number": 41,
    "wrong_column": 6
   },
   "by_status": {
-   "settled_against_file": 38,
-   "cannot_verify": 5
+   "settled_against_file": 47
   },
-  "groups": 20,
-  "corrections": 37
+  "groups": 22,
+  "corrections": 47
  },
+ "rows_published": 650,
+ "rows_compared": 634,
+ "not_compared": [
+  {
+   "contest": "Registered Voters",
+   "rows": 8,
+   "reason": "the contest was not paired with a contest on the scan"
+  },
+  {
+   "contest": "School Board New Home ISD",
+   "rows": 8,
+   "reason": "the row repeats a precinct of the same candidate and contest"
+  }
+ ],
  "findings": [
   {
    "id": "f001",
@@ -36,8 +49,8 @@
    "file_value": 255,
    "scan_value": 256,
    "kind": "wrong_number",
-   "status": "cannot_verify",
-   "reason": "no printed total can tell the two rows apart: the published row differs from the scan's row in 2 values, adds up to its own total, and no contest total covers it; nothing is corrected. A second reading of the scan's row (claude-sonnet-4.6, 400 dpi) gives total 256, absentee 7, early 181, election_day 68 and agrees with the first reading.",
+   "status": "settled_against_file",
+   "reason": "the contest total, overvotes and undervotes add to the precinct's ballots cast (total); the contest total, overvotes and undervotes add to the precinct's ballots cast (total); the contest total, overvotes and undervotes add to the precinct's ballots cast (total); the contest total, overvotes and undervotes add to the precinct's ballots cast (total); the contest total, overvotes and undervotes add to the precinct's ballots cast (total); the contest total, overvotes and undervotes add to the precinct's ballots cast (total); the contest total, overvotes and undervotes add to the precinct's ballots cast (total); the contest total, overvotes and undervotes add to the precinct's ballots cast (total); the contest total, overvotes and undervotes add to the precinct's ballots cast (total); the contest total, overvotes and undervotes add to the precinct's ballots cast (total); the contest total, overvotes and undervotes add to the precinct's ballots cast (total); the contest total, overvotes and undervotes add to the precinct's ballots cast (total); the contest total, overvotes and undervotes add to the precinct's ballots cast (total); the contest total, overvotes and undervotes add to the precinct's ballots cast (total); the contest total, overvotes and undervotes add to the precinct's ballots cast (total); the contest total, overvotes and undervotes add to the precinct's ballots cast (total); the contest total, overvotes and undervotes add to the precinct's ballots cast (total); the contest total, overvotes and undervotes add to the precinct's ballots cast (total); the contest total, overvotes and undervotes add to the precinct's ballots cast (total) hold(s) with the scan's value and fail(s) with the file's, and no printed total holds with the file's value and fails with the scan's",
    "sums": [
     {
      "name": "the row's total printed on the scan equals its absentee + early voting + election day (Ballots Cast - Total)",
@@ -79,6 +92,785 @@
      "holds_with_scan": true,
      "computed_with_file": 255,
      "holds_with_file": true
+    },
+    {
+     "name": "the contest total, overvotes and undervotes add to the precinct's ballots cast (total)",
+     "kind": "report_ballots",
+     "page": 24,
+     "block": "6|1",
+     "terms": [
+      {
+       "cell": [
+        24,
+        "6|1",
+        "Total Votes Cast",
+        "total"
+       ],
+       "value": 255
+      },
+      {
+       "cell": [
+        24,
+        "6|1",
+        "Overvotes",
+        "total"
+       ],
+       "value": 0
+      },
+      {
+       "cell": [
+        24,
+        "6|1",
+        "Undervotes",
+        "total"
+       ],
+       "value": 1
+      }
+     ],
+     "printed": 256,
+     "printed_label": "ballots cast printed in the precinct's Statistics block",
+     "computed_with_scan": 256,
+     "holds_with_scan": true,
+     "computed_with_file": 256,
+     "holds_with_file": false
+    },
+    {
+     "name": "the contest total, overvotes and undervotes add to the precinct's ballots cast (total)",
+     "kind": "report_ballots",
+     "page": 24,
+     "block": "6|2",
+     "terms": [
+      {
+       "cell": [
+        24,
+        "6|2",
+        "Total Votes Cast",
+        "total"
+       ],
+       "value": 246
+      },
+      {
+       "cell": [
+        24,
+        "6|2",
+        "Overvotes",
+        "total"
+       ],
+       "value": 0
+      },
+      {
+       "cell": [
+        24,
+        "6|2",
+        "Undervotes",
+        "total"
+       ],
+       "value": 10
+      }
+     ],
+     "printed": 256,
+     "printed_label": "ballots cast printed in the precinct's Statistics block",
+     "computed_with_scan": 256,
+     "holds_with_scan": true,
+     "computed_with_file": 256,
+     "holds_with_file": false
+    },
+    {
+     "name": "the contest total, overvotes and undervotes add to the precinct's ballots cast (total)",
+     "kind": "report_ballots",
+     "page": 24,
+     "block": "6|3",
+     "terms": [
+      {
+       "cell": [
+        24,
+        "6|3",
+        "Total Votes Cast",
+        "total"
+       ],
+       "value": 231
+      },
+      {
+       "cell": [
+        24,
+        "6|3",
+        "Overvotes",
+        "total"
+       ],
+       "value": 0
+      },
+      {
+       "cell": [
+        24,
+        "6|3",
+        "Undervotes",
+        "total"
+       ],
+       "value": 25
+      }
+     ],
+     "printed": 256,
+     "printed_label": "ballots cast printed in the precinct's Statistics block",
+     "computed_with_scan": 256,
+     "holds_with_scan": true,
+     "computed_with_file": 256,
+     "holds_with_file": false
+    },
+    {
+     "name": "the contest total, overvotes and undervotes add to the precinct's ballots cast (total)",
+     "kind": "report_ballots",
+     "page": 25,
+     "block": "6|4",
+     "terms": [
+      {
+       "cell": [
+        25,
+        "6|4",
+        "Total Votes Cast",
+        "total"
+       ],
+       "value": 238
+      },
+      {
+       "cell": [
+        25,
+        "6|4",
+        "Overvotes",
+        "total"
+       ],
+       "value": 0
+      },
+      {
+       "cell": [
+        25,
+        "6|4",
+        "Undervotes",
+        "total"
+       ],
+       "value": 18
+      }
+     ],
+     "printed": 256,
+     "printed_label": "ballots cast printed in the precinct's Statistics block",
+     "computed_with_scan": 256,
+     "holds_with_scan": true,
+     "computed_with_file": 256,
+     "holds_with_file": false
+    },
+    {
+     "name": "the contest total, overvotes and undervotes add to the precinct's ballots cast (total)",
+     "kind": "report_ballots",
+     "page": 25,
+     "block": "6|5",
+     "terms": [
+      {
+       "cell": [
+        25,
+        "6|5",
+        "Total Votes Cast",
+        "total"
+       ],
+       "value": 238
+      },
+      {
+       "cell": [
+        25,
+        "6|5",
+        "Overvotes",
+        "total"
+       ],
+       "value": 0
+      },
+      {
+       "cell": [
+        25,
+        "6|5",
+        "Undervotes",
+        "total"
+       ],
+       "value": 18
+      }
+     ],
+     "printed": 256,
+     "printed_label": "ballots cast printed in the precinct's Statistics block",
+     "computed_with_scan": 256,
+     "holds_with_scan": true,
+     "computed_with_file": 256,
+     "holds_with_file": false
+    },
+    {
+     "name": "the contest total, overvotes and undervotes add to the precinct's ballots cast (total)",
+     "kind": "report_ballots",
+     "page": 25,
+     "block": "6|6",
+     "terms": [
+      {
+       "cell": [
+        25,
+        "6|6",
+        "Total Votes Cast",
+        "total"
+       ],
+       "value": 233
+      },
+      {
+       "cell": [
+        25,
+        "6|6",
+        "Overvotes",
+        "total"
+       ],
+       "value": 0
+      },
+      {
+       "cell": [
+        25,
+        "6|6",
+        "Undervotes",
+        "total"
+       ],
+       "value": 23
+      }
+     ],
+     "printed": 256,
+     "printed_label": "ballots cast printed in the precinct's Statistics block",
+     "computed_with_scan": 256,
+     "holds_with_scan": true,
+     "computed_with_file": 256,
+     "holds_with_file": false
+    },
+    {
+     "name": "the contest total, overvotes and undervotes add to the precinct's ballots cast (total)",
+     "kind": "report_ballots",
+     "page": 25,
+     "block": "6|7",
+     "terms": [
+      {
+       "cell": [
+        25,
+        "6|7",
+        "Total Votes Cast",
+        "total"
+       ],
+       "value": 233
+      },
+      {
+       "cell": [
+        25,
+        "6|7",
+        "Overvotes",
+        "total"
+       ],
+       "value": 0
+      },
+      {
+       "cell": [
+        25,
+        "6|7",
+        "Undervotes",
+        "total"
+       ],
+       "value": 23
+      }
+     ],
+     "printed": 256,
+     "printed_label": "ballots cast printed in the precinct's Statistics block",
+     "computed_with_scan": 256,
+     "holds_with_scan": true,
+     "computed_with_file": 256,
+     "holds_with_file": false
+    },
+    {
+     "name": "the contest total, overvotes and undervotes add to the precinct's ballots cast (total)",
+     "kind": "report_ballots",
+     "page": 26,
+     "block": "6|8",
+     "terms": [
+      {
+       "cell": [
+        26,
+        "6|8",
+        "Total Votes Cast",
+        "total"
+       ],
+       "value": 230
+      },
+      {
+       "cell": [
+        26,
+        "6|8",
+        "Overvotes",
+        "total"
+       ],
+       "value": 0
+      },
+      {
+       "cell": [
+        26,
+        "6|8",
+        "Undervotes",
+        "total"
+       ],
+       "value": 26
+      }
+     ],
+     "printed": 256,
+     "printed_label": "ballots cast printed in the precinct's Statistics block",
+     "computed_with_scan": 256,
+     "holds_with_scan": true,
+     "computed_with_file": 256,
+     "holds_with_file": false
+    },
+    {
+     "name": "the contest total, overvotes and undervotes add to the precinct's ballots cast (total)",
+     "kind": "report_ballots",
+     "page": 26,
+     "block": "6|9",
+     "terms": [
+      {
+       "cell": [
+        26,
+        "6|9",
+        "Total Votes Cast",
+        "total"
+       ],
+       "value": 230
+      },
+      {
+       "cell": [
+        26,
+        "6|9",
+        "Overvotes",
+        "total"
+       ],
+       "value": 0
+      },
+      {
+       "cell": [
+        26,
+        "6|9",
+        "Undervotes",
+        "total"
+       ],
+       "value": 26
+      }
+     ],
+     "printed": 256,
+     "printed_label": "ballots cast printed in the precinct's Statistics block",
+     "computed_with_scan": 256,
+     "holds_with_scan": true,
+     "computed_with_file": 256,
+     "holds_with_file": false
+    },
+    {
+     "name": "the contest total, overvotes and undervotes add to the precinct's ballots cast (total)",
+     "kind": "report_ballots",
+     "page": 26,
+     "block": "6|10",
+     "terms": [
+      {
+       "cell": [
+        26,
+        "6|10",
+        "Total Votes Cast",
+        "total"
+       ],
+       "value": 228
+      },
+      {
+       "cell": [
+        26,
+        "6|10",
+        "Overvotes",
+        "total"
+       ],
+       "value": 0
+      },
+      {
+       "cell": [
+        26,
+        "6|10",
+        "Undervotes",
+        "total"
+       ],
+       "value": 28
+      }
+     ],
+     "printed": 256,
+     "printed_label": "ballots cast printed in the precinct's Statistics block",
+     "computed_with_scan": 256,
+     "holds_with_scan": true,
+     "computed_with_file": 256,
+     "holds_with_file": false
+    },
+    {
+     "name": "the contest total, overvotes and undervotes add to the precinct's ballots cast (total)",
+     "kind": "report_ballots",
+     "page": 26,
+     "block": "6|11",
+     "terms": [
+      {
+       "cell": [
+        26,
+        "6|11",
+        "Total Votes Cast",
+        "total"
+       ],
+       "value": 231
+      },
+      {
+       "cell": [
+        26,
+        "6|11",
+        "Overvotes",
+        "total"
+       ],
+       "value": 0
+      },
+      {
+       "cell": [
+        26,
+        "6|11",
+        "Undervotes",
+        "total"
+       ],
+       "value": 25
+      }
+     ],
+     "printed": 256,
+     "printed_label": "ballots cast printed in the precinct's Statistics block",
+     "computed_with_scan": 256,
+     "holds_with_scan": true,
+     "computed_with_file": 256,
+     "holds_with_file": false
+    },
+    {
+     "name": "the contest total, overvotes and undervotes add to the precinct's ballots cast (total)",
+     "kind": "report_ballots",
+     "page": 26,
+     "block": "6|12",
+     "terms": [
+      {
+       "cell": [
+        26,
+        "6|12",
+        "Total Votes Cast",
+        "total"
+       ],
+       "value": 198
+      },
+      {
+       "cell": [
+        26,
+        "6|12",
+        "Overvotes",
+        "total"
+       ],
+       "value": 0
+      },
+      {
+       "cell": [
+        26,
+        "6|12",
+        "Undervotes",
+        "total"
+       ],
+       "value": 58
+      }
+     ],
+     "printed": 256,
+     "printed_label": "ballots cast printed in the precinct's Statistics block",
+     "computed_with_scan": 256,
+     "holds_with_scan": true,
+     "computed_with_file": 256,
+     "holds_with_file": false
+    },
+    {
+     "name": "the contest total, overvotes and undervotes add to the precinct's ballots cast (total)",
+     "kind": "report_ballots",
+     "page": 27,
+     "block": "6|13",
+     "terms": [
+      {
+       "cell": [
+        27,
+        "6|13",
+        "Total Votes Cast",
+        "total"
+       ],
+       "value": 197
+      },
+      {
+       "cell": [
+        27,
+        "6|13",
+        "Overvotes",
+        "total"
+       ],
+       "value": 0
+      },
+      {
+       "cell": [
+        27,
+        "6|13",
+        "Undervotes",
+        "total"
+       ],
+       "value": 59
+      }
+     ],
+     "printed": 256,
+     "printed_label": "ballots cast printed in the precinct's Statistics block",
+     "computed_with_scan": 256,
+     "holds_with_scan": true,
+     "computed_with_file": 256,
+     "holds_with_file": false
+    },
+    {
+     "name": "the contest total, overvotes and undervotes add to the precinct's ballots cast (total)",
+     "kind": "report_ballots",
+     "page": 27,
+     "block": "6|14",
+     "terms": [
+      {
+       "cell": [
+        27,
+        "6|14",
+        "Total Votes Cast",
+        "total"
+       ],
+       "value": 195
+      },
+      {
+       "cell": [
+        27,
+        "6|14",
+        "Overvotes",
+        "total"
+       ],
+       "value": 0
+      },
+      {
+       "cell": [
+        27,
+        "6|14",
+        "Undervotes",
+        "total"
+       ],
+       "value": 61
+      }
+     ],
+     "printed": 256,
+     "printed_label": "ballots cast printed in the precinct's Statistics block",
+     "computed_with_scan": 256,
+     "holds_with_scan": true,
+     "computed_with_file": 256,
+     "holds_with_file": false
+    },
+    {
+     "name": "the contest total, overvotes and undervotes add to the precinct's ballots cast (total)",
+     "kind": "report_ballots",
+     "page": 27,
+     "block": "6|15",
+     "terms": [
+      {
+       "cell": [
+        27,
+        "6|15",
+        "Total Votes Cast",
+        "total"
+       ],
+       "value": 200
+      },
+      {
+       "cell": [
+        27,
+        "6|15",
+        "Overvotes",
+        "total"
+       ],
+       "value": 0
+      },
+      {
+       "cell": [
+        27,
+        "6|15",
+        "Undervotes",
+        "total"
+       ],
+       "value": 56
+      }
+     ],
+     "printed": 256,
+     "printed_label": "ballots cast printed in the precinct's Statistics block",
+     "computed_with_scan": 256,
+     "holds_with_scan": true,
+     "computed_with_file": 256,
+     "holds_with_file": false
+    },
+    {
+     "name": "the contest total, overvotes and undervotes add to the precinct's ballots cast (total)",
+     "kind": "report_ballots",
+     "page": 27,
+     "block": "6|16",
+     "terms": [
+      {
+       "cell": [
+        27,
+        "6|16",
+        "Total Votes Cast",
+        "total"
+       ],
+       "value": 211
+      },
+      {
+       "cell": [
+        27,
+        "6|16",
+        "Overvotes",
+        "total"
+       ],
+       "value": 0
+      },
+      {
+       "cell": [
+        27,
+        "6|16",
+        "Undervotes",
+        "total"
+       ],
+       "value": 45
+      }
+     ],
+     "printed": 256,
+     "printed_label": "ballots cast printed in the precinct's Statistics block",
+     "computed_with_scan": 256,
+     "holds_with_scan": true,
+     "computed_with_file": 256,
+     "holds_with_file": false
+    },
+    {
+     "name": "the contest total, overvotes and undervotes add to the precinct's ballots cast (total)",
+     "kind": "report_ballots",
+     "page": 27,
+     "block": "6|17",
+     "terms": [
+      {
+       "cell": [
+        27,
+        "6|17",
+        "Total Votes Cast",
+        "total"
+       ],
+       "value": 213
+      },
+      {
+       "cell": [
+        27,
+        "6|17",
+        "Overvotes",
+        "total"
+       ],
+       "value": 0
+      },
+      {
+       "cell": [
+        27,
+        "6|17",
+        "Undervotes",
+        "total"
+       ],
+       "value": 43
+      }
+     ],
+     "printed": 256,
+     "printed_label": "ballots cast printed in the precinct's Statistics block",
+     "computed_with_scan": 256,
+     "holds_with_scan": true,
+     "computed_with_file": 256,
+     "holds_with_file": false
+    },
+    {
+     "name": "the contest total, overvotes and undervotes add to the precinct's ballots cast (total)",
+     "kind": "report_ballots",
+     "page": 27,
+     "block": "6|18",
+     "terms": [
+      {
+       "cell": [
+        27,
+        "6|18",
+        "Total Votes Cast",
+        "total"
+       ],
+       "value": 200
+      },
+      {
+       "cell": [
+        27,
+        "6|18",
+        "Overvotes",
+        "total"
+       ],
+       "value": 0
+      },
+      {
+       "cell": [
+        27,
+        "6|18",
+        "Undervotes",
+        "total"
+       ],
+       "value": 56
+      }
+     ],
+     "printed": 256,
+     "printed_label": "ballots cast printed in the precinct's Statistics block",
+     "computed_with_scan": 256,
+     "holds_with_scan": true,
+     "computed_with_file": 256,
+     "holds_with_file": false
+    },
+    {
+     "name": "the contest total, overvotes and undervotes add to the precinct's ballots cast (total)",
+     "kind": "report_ballots",
+     "page": 28,
+     "block": "6|19",
+     "terms": [
+      {
+       "cell": [
+        28,
+        "6|19",
+        "Total Votes Cast",
+        "total"
+       ],
+       "value": 206
+      },
+      {
+       "cell": [
+        28,
+        "6|19",
+        "Overvotes",
+        "total"
+       ],
+       "value": 0
+      },
+      {
+       "cell": [
+        28,
+        "6|19",
+        "Undervotes",
+        "total"
+       ],
+       "value": 50
+      }
+     ],
+     "printed": 256,
+     "printed_label": "ballots cast printed in the precinct's Statistics block",
+     "computed_with_scan": 256,
+     "holds_with_scan": true,
+     "computed_with_file": 256,
+     "holds_with_file": false
     }
    ],
    "page": 24,
@@ -91,26 +883,13 @@
     392
    ],
    "crop": "crops/row-0001.png",
-   "reread": {
-    "model": "claude-sonnet-4.6",
-    "dpi": 400,
-    "value": 256,
-    "crop": "runs/20261011-130414/crops/audit-reread-0001.png",
-    "error": null,
-    "row": {
-     "total": 256,
-     "absentee": 7,
-     "early": 181,
-     "election_day": 68
-    },
-    "agrees_with_ledger": true
-   },
+   "reread": null,
    "reread_disagrees": false,
    "row_not_corrected": null,
    "row_values": null,
    "file_row": 411,
    "file_line": 413,
-   "corrected": false,
+   "corrected": true,
    "confirmed_by_person": false
   },
   {
@@ -126,8 +905,8 @@
    "file_value": 67,
    "scan_value": 68,
    "kind": "wrong_number",
-   "status": "cannot_verify",
-   "reason": "no printed total can tell the two rows apart: the published row differs from the scan's row in 2 values, adds up to its own total, and no contest total covers it; nothing is corrected. A second reading of the scan's row (claude-sonnet-4.6, 400 dpi) gives total 256, absentee 7, early 181, election_day 68 and agrees with the first reading.",
+   "status": "settled_against_file",
+   "reason": "the contest total, overvotes and undervotes add to the precinct's ballots cast (election_day); the contest total, overvotes and undervotes add to the precinct's ballots cast (election_day); the contest total, overvotes and undervotes add to the precinct's ballots cast (election_day); the contest total, overvotes and undervotes add to the precinct's ballots cast (election_day); the contest total, overvotes and undervotes add to the precinct's ballots cast (election_day); the contest total, overvotes and undervotes add to the precinct's ballots cast (election_day); the contest total, overvotes and undervotes add to the precinct's ballots cast (election_day); the contest total, overvotes and undervotes add to the precinct's ballots cast (election_day); the contest total, overvotes and undervotes add to the precinct's ballots cast (election_day); the contest total, overvotes and undervotes add to the precinct's ballots cast (election_day); the contest total, overvotes and undervotes add to the precinct's ballots cast (election_day); the contest total, overvotes and undervotes add to the precinct's ballots cast (election_day); the contest total, overvotes and undervotes add to the precinct's ballots cast (election_day); the contest total, overvotes and undervotes add to the precinct's ballots cast (election_day); the contest total, overvotes and undervotes add to the precinct's ballots cast (election_day); the contest total, overvotes and undervotes add to the precinct's ballots cast (election_day); the contest total, overvotes and undervotes add to the precinct's ballots cast (election_day); the contest total, overvotes and undervotes add to the precinct's ballots cast (election_day); the contest total, overvotes and undervotes add to the precinct's ballots cast (election_day) hold(s) with the scan's value and fail(s) with the file's, and no printed total holds with the file's value and fails with the scan's",
    "sums": [
     {
      "name": "the row's total printed on the scan equals its absentee + early voting + election day (Ballots Cast - Total)",
@@ -169,6 +948,785 @@
      "holds_with_scan": true,
      "computed_with_file": 255,
      "holds_with_file": true
+    },
+    {
+     "name": "the contest total, overvotes and undervotes add to the precinct's ballots cast (election_day)",
+     "kind": "report_ballots",
+     "page": 24,
+     "block": "6|1",
+     "terms": [
+      {
+       "cell": [
+        24,
+        "6|1",
+        "Total Votes Cast",
+        "election_day"
+       ],
+       "value": 67
+      },
+      {
+       "cell": [
+        24,
+        "6|1",
+        "Overvotes",
+        "election_day"
+       ],
+       "value": 0
+      },
+      {
+       "cell": [
+        24,
+        "6|1",
+        "Undervotes",
+        "election_day"
+       ],
+       "value": 1
+      }
+     ],
+     "printed": 68,
+     "printed_label": "ballots cast printed in the precinct's Statistics block",
+     "computed_with_scan": 68,
+     "holds_with_scan": true,
+     "computed_with_file": 68,
+     "holds_with_file": false
+    },
+    {
+     "name": "the contest total, overvotes and undervotes add to the precinct's ballots cast (election_day)",
+     "kind": "report_ballots",
+     "page": 24,
+     "block": "6|2",
+     "terms": [
+      {
+       "cell": [
+        24,
+        "6|2",
+        "Total Votes Cast",
+        "election_day"
+       ],
+       "value": 63
+      },
+      {
+       "cell": [
+        24,
+        "6|2",
+        "Overvotes",
+        "election_day"
+       ],
+       "value": 0
+      },
+      {
+       "cell": [
+        24,
+        "6|2",
+        "Undervotes",
+        "election_day"
+       ],
+       "value": 5
+      }
+     ],
+     "printed": 68,
+     "printed_label": "ballots cast printed in the precinct's Statistics block",
+     "computed_with_scan": 68,
+     "holds_with_scan": true,
+     "computed_with_file": 68,
+     "holds_with_file": false
+    },
+    {
+     "name": "the contest total, overvotes and undervotes add to the precinct's ballots cast (election_day)",
+     "kind": "report_ballots",
+     "page": 24,
+     "block": "6|3",
+     "terms": [
+      {
+       "cell": [
+        24,
+        "6|3",
+        "Total Votes Cast",
+        "election_day"
+       ],
+       "value": 60
+      },
+      {
+       "cell": [
+        24,
+        "6|3",
+        "Overvotes",
+        "election_day"
+       ],
+       "value": 0
+      },
+      {
+       "cell": [
+        24,
+        "6|3",
+        "Undervotes",
+        "election_day"
+       ],
+       "value": 8
+      }
+     ],
+     "printed": 68,
+     "printed_label": "ballots cast printed in the precinct's Statistics block",
+     "computed_with_scan": 68,
+     "holds_with_scan": true,
+     "computed_with_file": 68,
+     "holds_with_file": false
+    },
+    {
+     "name": "the contest total, overvotes and undervotes add to the precinct's ballots cast (election_day)",
+     "kind": "report_ballots",
+     "page": 25,
+     "block": "6|4",
+     "terms": [
+      {
+       "cell": [
+        25,
+        "6|4",
+        "Total Votes Cast",
+        "election_day"
+       ],
+       "value": 60
+      },
+      {
+       "cell": [
+        25,
+        "6|4",
+        "Overvotes",
+        "election_day"
+       ],
+       "value": 0
+      },
+      {
+       "cell": [
+        25,
+        "6|4",
+        "Undervotes",
+        "election_day"
+       ],
+       "value": 8
+      }
+     ],
+     "printed": 68,
+     "printed_label": "ballots cast printed in the precinct's Statistics block",
+     "computed_with_scan": 68,
+     "holds_with_scan": true,
+     "computed_with_file": 68,
+     "holds_with_file": false
+    },
+    {
+     "name": "the contest total, overvotes and undervotes add to the precinct's ballots cast (election_day)",
+     "kind": "report_ballots",
+     "page": 25,
+     "block": "6|5",
+     "terms": [
+      {
+       "cell": [
+        25,
+        "6|5",
+        "Total Votes Cast",
+        "election_day"
+       ],
+       "value": 59
+      },
+      {
+       "cell": [
+        25,
+        "6|5",
+        "Overvotes",
+        "election_day"
+       ],
+       "value": 0
+      },
+      {
+       "cell": [
+        25,
+        "6|5",
+        "Undervotes",
+        "election_day"
+       ],
+       "value": 9
+      }
+     ],
+     "printed": 68,
+     "printed_label": "ballots cast printed in the precinct's Statistics block",
+     "computed_with_scan": 68,
+     "holds_with_scan": true,
+     "computed_with_file": 68,
+     "holds_with_file": false
+    },
+    {
+     "name": "the contest total, overvotes and undervotes add to the precinct's ballots cast (election_day)",
+     "kind": "report_ballots",
+     "page": 25,
+     "block": "6|6",
+     "terms": [
+      {
+       "cell": [
+        25,
+        "6|6",
+        "Total Votes Cast",
+        "election_day"
+       ],
+       "value": 58
+      },
+      {
+       "cell": [
+        25,
+        "6|6",
+        "Overvotes",
+        "election_day"
+       ],
+       "value": 0
+      },
+      {
+       "cell": [
+        25,
+        "6|6",
+        "Undervotes",
+        "election_day"
+       ],
+       "value": 10
+      }
+     ],
+     "printed": 68,
+     "printed_label": "ballots cast printed in the precinct's Statistics block",
+     "computed_with_scan": 68,
+     "holds_with_scan": true,
+     "computed_with_file": 68,
+     "holds_with_file": false
+    },
+    {
+     "name": "the contest total, overvotes and undervotes add to the precinct's ballots cast (election_day)",
+     "kind": "report_ballots",
+     "page": 25,
+     "block": "6|7",
+     "terms": [
+      {
+       "cell": [
+        25,
+        "6|7",
+        "Total Votes Cast",
+        "election_day"
+       ],
+       "value": 58
+      },
+      {
+       "cell": [
+        25,
+        "6|7",
+        "Overvotes",
+        "election_day"
+       ],
+       "value": 0
+      },
+      {
+       "cell": [
+        25,
+        "6|7",
+        "Undervotes",
+        "election_day"
+       ],
+       "value": 10
+      }
+     ],
+     "printed": 68,
+     "printed_label": "ballots cast printed in the precinct's Statistics block",
+     "computed_with_scan": 68,
+     "holds_with_scan": true,
+     "computed_with_file": 68,
+     "holds_with_file": false
+    },
+    {
+     "name": "the contest total, overvotes and undervotes add to the precinct's ballots cast (election_day)",
+     "kind": "report_ballots",
+     "page": 26,
+     "block": "6|8",
+     "terms": [
+      {
+       "cell": [
+        26,
+        "6|8",
+        "Total Votes Cast",
+        "election_day"
+       ],
+       "value": 57
+      },
+      {
+       "cell": [
+        26,
+        "6|8",
+        "Overvotes",
+        "election_day"
+       ],
+       "value": 0
+      },
+      {
+       "cell": [
+        26,
+        "6|8",
+        "Undervotes",
+        "election_day"
+       ],
+       "value": 11
+      }
+     ],
+     "printed": 68,
+     "printed_label": "ballots cast printed in the precinct's Statistics block",
+     "computed_with_scan": 68,
+     "holds_with_scan": true,
+     "computed_with_file": 68,
+     "holds_with_file": false
+    },
+    {
+     "name": "the contest total, overvotes and undervotes add to the precinct's ballots cast (election_day)",
+     "kind": "report_ballots",
+     "page": 26,
+     "block": "6|9",
+     "terms": [
+      {
+       "cell": [
+        26,
+        "6|9",
+        "Total Votes Cast",
+        "election_day"
+       ],
+       "value": 56
+      },
+      {
+       "cell": [
+        26,
+        "6|9",
+        "Overvotes",
+        "election_day"
+       ],
+       "value": 0
+      },
+      {
+       "cell": [
+        26,
+        "6|9",
+        "Undervotes",
+        "election_day"
+       ],
+       "value": 12
+      }
+     ],
+     "printed": 68,
+     "printed_label": "ballots cast printed in the precinct's Statistics block",
+     "computed_with_scan": 68,
+     "holds_with_scan": true,
+     "computed_with_file": 68,
+     "holds_with_file": false
+    },
+    {
+     "name": "the contest total, overvotes and undervotes add to the precinct's ballots cast (election_day)",
+     "kind": "report_ballots",
+     "page": 26,
+     "block": "6|10",
+     "terms": [
+      {
+       "cell": [
+        26,
+        "6|10",
+        "Total Votes Cast",
+        "election_day"
+       ],
+       "value": 55
+      },
+      {
+       "cell": [
+        26,
+        "6|10",
+        "Overvotes",
+        "election_day"
+       ],
+       "value": 0
+      },
+      {
+       "cell": [
+        26,
+        "6|10",
+        "Undervotes",
+        "election_day"
+       ],
+       "value": 13
+      }
+     ],
+     "printed": 68,
+     "printed_label": "ballots cast printed in the precinct's Statistics block",
+     "computed_with_scan": 68,
+     "holds_with_scan": true,
+     "computed_with_file": 68,
+     "holds_with_file": false
+    },
+    {
+     "name": "the contest total, overvotes and undervotes add to the precinct's ballots cast (election_day)",
+     "kind": "report_ballots",
+     "page": 26,
+     "block": "6|11",
+     "terms": [
+      {
+       "cell": [
+        26,
+        "6|11",
+        "Total Votes Cast",
+        "election_day"
+       ],
+       "value": 58
+      },
+      {
+       "cell": [
+        26,
+        "6|11",
+        "Overvotes",
+        "election_day"
+       ],
+       "value": 0
+      },
+      {
+       "cell": [
+        26,
+        "6|11",
+        "Undervotes",
+        "election_day"
+       ],
+       "value": 10
+      }
+     ],
+     "printed": 68,
+     "printed_label": "ballots cast printed in the precinct's Statistics block",
+     "computed_with_scan": 68,
+     "holds_with_scan": true,
+     "computed_with_file": 68,
+     "holds_with_file": false
+    },
+    {
+     "name": "the contest total, overvotes and undervotes add to the precinct's ballots cast (election_day)",
+     "kind": "report_ballots",
+     "page": 26,
+     "block": "6|12",
+     "terms": [
+      {
+       "cell": [
+        26,
+        "6|12",
+        "Total Votes Cast",
+        "election_day"
+       ],
+       "value": 49
+      },
+      {
+       "cell": [
+        26,
+        "6|12",
+        "Overvotes",
+        "election_day"
+       ],
+       "value": 0
+      },
+      {
+       "cell": [
+        26,
+        "6|12",
+        "Undervotes",
+        "election_day"
+       ],
+       "value": 19
+      }
+     ],
+     "printed": 68,
+     "printed_label": "ballots cast printed in the precinct's Statistics block",
+     "computed_with_scan": 68,
+     "holds_with_scan": true,
+     "computed_with_file": 68,
+     "holds_with_file": false
+    },
+    {
+     "name": "the contest total, overvotes and undervotes add to the precinct's ballots cast (election_day)",
+     "kind": "report_ballots",
+     "page": 27,
+     "block": "6|13",
+     "terms": [
+      {
+       "cell": [
+        27,
+        "6|13",
+        "Total Votes Cast",
+        "election_day"
+       ],
+       "value": 49
+      },
+      {
+       "cell": [
+        27,
+        "6|13",
+        "Overvotes",
+        "election_day"
+       ],
+       "value": 0
+      },
+      {
+       "cell": [
+        27,
+        "6|13",
+        "Undervotes",
+        "election_day"
+       ],
+       "value": 19
+      }
+     ],
+     "printed": 68,
+     "printed_label": "ballots cast printed in the precinct's Statistics block",
+     "computed_with_scan": 68,
+     "holds_with_scan": true,
+     "computed_with_file": 68,
+     "holds_with_file": false
+    },
+    {
+     "name": "the contest total, overvotes and undervotes add to the precinct's ballots cast (election_day)",
+     "kind": "report_ballots",
+     "page": 27,
+     "block": "6|14",
+     "terms": [
+      {
+       "cell": [
+        27,
+        "6|14",
+        "Total Votes Cast",
+        "election_day"
+       ],
+       "value": 49
+      },
+      {
+       "cell": [
+        27,
+        "6|14",
+        "Overvotes",
+        "election_day"
+       ],
+       "value": 0
+      },
+      {
+       "cell": [
+        27,
+        "6|14",
+        "Undervotes",
+        "election_day"
+       ],
+       "value": 19
+      }
+     ],
+     "printed": 68,
+     "printed_label": "ballots cast printed in the precinct's Statistics block",
+     "computed_with_scan": 68,
+     "holds_with_scan": true,
+     "computed_with_file": 68,
+     "holds_with_file": false
+    },
+    {
+     "name": "the contest total, overvotes and undervotes add to the precinct's ballots cast (election_day)",
+     "kind": "report_ballots",
+     "page": 27,
+     "block": "6|15",
+     "terms": [
+      {
+       "cell": [
+        27,
+        "6|15",
+        "Total Votes Cast",
+        "election_day"
+       ],
+       "value": 51
+      },
+      {
+       "cell": [
+        27,
+        "6|15",
+        "Overvotes",
+        "election_day"
+       ],
+       "value": 0
+      },
+      {
+       "cell": [
+        27,
+        "6|15",
+        "Undervotes",
+        "election_day"
+       ],
+       "value": 17
+      }
+     ],
+     "printed": 68,
+     "printed_label": "ballots cast printed in the precinct's Statistics block",
+     "computed_with_scan": 68,
+     "holds_with_scan": true,
+     "computed_with_file": 68,
+     "holds_with_file": false
+    },
+    {
+     "name": "the contest total, overvotes and undervotes add to the precinct's ballots cast (election_day)",
+     "kind": "report_ballots",
+     "page": 27,
+     "block": "6|16",
+     "terms": [
+      {
+       "cell": [
+        27,
+        "6|16",
+        "Total Votes Cast",
+        "election_day"
+       ],
+       "value": 55
+      },
+      {
+       "cell": [
+        27,
+        "6|16",
+        "Overvotes",
+        "election_day"
+       ],
+       "value": 0
+      },
+      {
+       "cell": [
+        27,
+        "6|16",
+        "Undervotes",
+        "election_day"
+       ],
+       "value": 13
+      }
+     ],
+     "printed": 68,
+     "printed_label": "ballots cast printed in the precinct's Statistics block",
+     "computed_with_scan": 68,
+     "holds_with_scan": true,
+     "computed_with_file": 68,
+     "holds_with_file": false
+    },
+    {
+     "name": "the contest total, overvotes and undervotes add to the precinct's ballots cast (election_day)",
+     "kind": "report_ballots",
+     "page": 27,
+     "block": "6|17",
+     "terms": [
+      {
+       "cell": [
+        27,
+        "6|17",
+        "Total Votes Cast",
+        "election_day"
+       ],
+       "value": 55
+      },
+      {
+       "cell": [
+        27,
+        "6|17",
+        "Overvotes",
+        "election_day"
+       ],
+       "value": 0
+      },
+      {
+       "cell": [
+        27,
+        "6|17",
+        "Undervotes",
+        "election_day"
+       ],
+       "value": 13
+      }
+     ],
+     "printed": 68,
+     "printed_label": "ballots cast printed in the precinct's Statistics block",
+     "computed_with_scan": 68,
+     "holds_with_scan": true,
+     "computed_with_file": 68,
+     "holds_with_file": false
+    },
+    {
+     "name": "the contest total, overvotes and undervotes add to the precinct's ballots cast (election_day)",
+     "kind": "report_ballots",
+     "page": 27,
+     "block": "6|18",
+     "terms": [
+      {
+       "cell": [
+        27,
+        "6|18",
+        "Total Votes Cast",
+        "election_day"
+       ],
+       "value": 52
+      },
+      {
+       "cell": [
+        27,
+        "6|18",
+        "Overvotes",
+        "election_day"
+       ],
+       "value": 0
+      },
+      {
+       "cell": [
+        27,
+        "6|18",
+        "Undervotes",
+        "election_day"
+       ],
+       "value": 16
+      }
+     ],
+     "printed": 68,
+     "printed_label": "ballots cast printed in the precinct's Statistics block",
+     "computed_with_scan": 68,
+     "holds_with_scan": true,
+     "computed_with_file": 68,
+     "holds_with_file": false
+    },
+    {
+     "name": "the contest total, overvotes and undervotes add to the precinct's ballots cast (election_day)",
+     "kind": "report_ballots",
+     "page": 28,
+     "block": "6|19",
+     "terms": [
+      {
+       "cell": [
+        28,
+        "6|19",
+        "Total Votes Cast",
+        "election_day"
+       ],
+       "value": 54
+      },
+      {
+       "cell": [
+        28,
+        "6|19",
+        "Overvotes",
+        "election_day"
+       ],
+       "value": 0
+      },
+      {
+       "cell": [
+        28,
+        "6|19",
+        "Undervotes",
+        "election_day"
+       ],
+       "value": 14
+      }
+     ],
+     "printed": 68,
+     "printed_label": "ballots cast printed in the precinct's Statistics block",
+     "computed_with_scan": 68,
+     "holds_with_scan": true,
+     "computed_with_file": 68,
+     "holds_with_file": false
     }
    ],
    "page": 24,
@@ -181,26 +1739,13 @@
     392
    ],
    "crop": "crops/row-0001.png",
-   "reread": {
-    "model": "claude-sonnet-4.6",
-    "dpi": 400,
-    "value": 68,
-    "crop": "runs/20261011-130414/crops/audit-reread-0001.png",
-    "error": null,
-    "row": {
-     "total": 256,
-     "absentee": 7,
-     "early": 181,
-     "election_day": 68
-    },
-    "agrees_with_ledger": true
-   },
+   "reread": null,
    "reread_disagrees": false,
    "row_not_corrected": null,
    "row_values": null,
    "file_row": 411,
    "file_line": 413,
-   "corrected": false,
+   "corrected": true,
    "confirmed_by_person": false
   },
   {
@@ -216,8 +1761,8 @@
    "file_value": 141,
    "scan_value": 109,
    "kind": "wrong_column",
-   "status": "cannot_verify",
-   "reason": "no printed total decides: the candidates' early voting figures add to the contest total's early voting figure give the same answer with either value",
+   "status": "settled_against_file",
+   "reason": "the candidates' early voting figures add to the contest total's early voting figure hold(s) with the scan's value and fail(s) with the file's, and no printed total holds with the file's value and fails with the scan's",
    "sums": [
     {
      "name": "the row's total printed on the scan equals its absentee + early voting + election day (REP Donald J. Trump/JD Vance)",
@@ -310,31 +1855,13 @@
         "early"
        ],
        "value": 1
-      },
-      {
-       "cell": [
-        5,
-        "2|1",
-        "Write-In: UnCertified",
-        "early"
-       ],
-       "value": 1
-      },
-      {
-       "cell": [
-        5,
-        "2|1",
-        "Not Assigned",
-        "early"
-       ],
-       "value": 0
       }
      ],
      "printed": 127,
      "printed_label": "contest total printed on the scan",
-     "computed_with_scan": 128,
-     "holds_with_scan": false,
-     "computed_with_file": 160,
+     "computed_with_scan": 127,
+     "holds_with_scan": true,
+     "computed_with_file": 159,
      "holds_with_file": false
     }
    ],
@@ -354,7 +1881,7 @@
    "row_values": null,
    "file_row": 80,
    "file_line": 82,
-   "corrected": false,
+   "corrected": true,
    "confirmed_by_person": false
   },
   {
@@ -464,24 +1991,6 @@
         "election_day"
        ],
        "value": 0
-      },
-      {
-       "cell": [
-        5,
-        "2|1",
-        "Write-In: UnCertified",
-        "election_day"
-       ],
-       "value": 0
-      },
-      {
-       "cell": [
-        5,
-        "2|1",
-        "Not Assigned",
-        "election_day"
-       ],
-       "value": 0
       }
      ],
      "printed": 175,
@@ -504,11 +2013,11 @@
    "crop": "crops/row-0002.png",
    "reread": null,
    "reread_disagrees": false,
-   "row_not_corrected": "the corrected votes 255 would not equal the corrected parts 5 + 141 + 141 = 287",
+   "row_not_corrected": null,
    "row_values": null,
    "file_row": 80,
    "file_line": 82,
-   "corrected": false,
+   "corrected": true,
    "confirmed_by_person": false
   },
   {
@@ -524,8 +2033,8 @@
    "file_value": 512,
    "scan_value": 517,
    "kind": "wrong_number",
-   "status": "cannot_verify",
-   "reason": "no printed total decides: the candidates' early voting figures add to the contest total's early voting figure give the same answer with either value",
+   "status": "settled_against_file",
+   "reason": "the candidates' early voting figures add to the contest total's early voting figure hold(s) with the scan's value and fail(s) with the file's, and no printed total holds with the file's value and fails with the scan's",
    "sums": [
     {
      "name": "the row's total printed on the scan equals its absentee + early voting + election day (REP Donald J. Trump/JD Vance)",
@@ -618,31 +2127,13 @@
         "early"
        ],
        "value": 1
-      },
-      {
-       "cell": [
-        15,
-        "4|1",
-        "Write-In: UnCertified",
-        "early"
-       ],
-       "value": 1
-      },
-      {
-       "cell": [
-        15,
-        "4|1",
-        "Not Assigned",
-        "early"
-       ],
-       "value": 0
       }
      ],
      "printed": 545,
      "printed_label": "contest total printed on the scan",
-     "computed_with_scan": 546,
-     "holds_with_scan": false,
-     "computed_with_file": 541,
+     "computed_with_scan": 545,
+     "holds_with_scan": true,
+     "computed_with_file": 540,
      "holds_with_file": false
     }
    ],
@@ -662,7 +2153,7 @@
    "row_values": null,
    "file_row": 242,
    "file_line": 244,
-   "corrected": false,
+   "corrected": true,
    "confirmed_by_person": false
   },
   {
@@ -678,8 +2169,8 @@
    "file_value": 375,
    "scan_value": 370,
    "kind": "wrong_number",
-   "status": "cannot_verify",
-   "reason": "no printed total decides: the candidates' election day figures add to the contest total's election day figure give the same answer with either value",
+   "status": "settled_against_file",
+   "reason": "the candidates' election day figures add to the contest total's election day figure hold(s) with the scan's value and fail(s) with the file's, and no printed total holds with the file's value and fails with the scan's",
    "sums": [
     {
      "name": "the row's total printed on the scan equals its absentee + early voting + election day (REP Donald J. Trump/JD Vance)",
@@ -772,31 +2263,13 @@
         "election_day"
        ],
        "value": 5
-      },
-      {
-       "cell": [
-        15,
-        "4|1",
-        "Write-In: UnCertified",
-        "election_day"
-       ],
-       "value": 5
-      },
-      {
-       "cell": [
-        15,
-        "4|1",
-        "Not Assigned",
-        "election_day"
-       ],
-       "value": 0
       }
      ],
      "printed": 423,
      "printed_label": "contest total printed on the scan",
-     "computed_with_scan": 428,
-     "holds_with_scan": false,
-     "computed_with_file": 433,
+     "computed_with_scan": 423,
+     "holds_with_scan": true,
+     "computed_with_file": 428,
      "holds_with_file": false
     }
    ],
@@ -816,12 +2289,248 @@
    "row_values": null,
    "file_row": 242,
    "file_line": 244,
-   "corrected": false,
+   "corrected": true,
    "confirmed_by_person": false
   },
   {
    "id": "f007",
    "group": "g004",
+   "county": "lynn",
+   "office": "President",
+   "district": "",
+   "party": "",
+   "candidate": "Under Votes",
+   "precinct": "Precinct 6",
+   "part": "votes",
+   "file_value": 0,
+   "scan_value": 1,
+   "kind": "wrong_number",
+   "status": "settled_against_file",
+   "reason": "the contest total, overvotes and undervotes add to the precinct's ballots cast (total) hold(s) with the scan's value and fail(s) with the file's, and no printed total holds with the file's value and fails with the scan's",
+   "sums": [
+    {
+     "name": "the row's total printed on the scan equals its absentee + early voting + election day (Undervotes)",
+     "kind": "report_row",
+     "page": 24,
+     "block": "6|1",
+     "terms": [
+      {
+       "cell": [
+        24,
+        "6|1",
+        "Undervotes",
+        "absentee"
+       ],
+       "value": 0
+      },
+      {
+       "cell": [
+        24,
+        "6|1",
+        "Undervotes",
+        "early"
+       ],
+       "value": 0
+      },
+      {
+       "cell": [
+        24,
+        "6|1",
+        "Undervotes",
+        "election_day"
+       ],
+       "value": 1
+      }
+     ],
+     "printed": 1,
+     "printed_label": "total printed at the left end of the row",
+     "computed_with_scan": 1,
+     "holds_with_scan": true,
+     "computed_with_file": 0,
+     "holds_with_file": true
+    },
+    {
+     "name": "the contest total, overvotes and undervotes add to the precinct's ballots cast (total)",
+     "kind": "report_ballots",
+     "page": 24,
+     "block": "6|1",
+     "terms": [
+      {
+       "cell": [
+        24,
+        "6|1",
+        "Total Votes Cast",
+        "total"
+       ],
+       "value": 255
+      },
+      {
+       "cell": [
+        24,
+        "6|1",
+        "Overvotes",
+        "total"
+       ],
+       "value": 0
+      },
+      {
+       "cell": [
+        24,
+        "6|1",
+        "Undervotes",
+        "total"
+       ],
+       "value": 1
+      }
+     ],
+     "printed": 256,
+     "printed_label": "ballots cast printed in the precinct's Statistics block",
+     "computed_with_scan": 256,
+     "holds_with_scan": true,
+     "computed_with_file": 255,
+     "holds_with_file": false
+    }
+   ],
+   "page": 24,
+   "block": "6|1",
+   "row": "Undervotes",
+   "box": [
+    0,
+    923,
+    957,
+    963
+   ],
+   "crop": "crops/row-0004.png",
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": null,
+   "file_row": 418,
+   "file_line": 420,
+   "corrected": true,
+   "confirmed_by_person": false
+  },
+  {
+   "id": "f008",
+   "group": "g004",
+   "county": "lynn",
+   "office": "President",
+   "district": "",
+   "party": "",
+   "candidate": "Under Votes",
+   "precinct": "Precinct 6",
+   "part": "election_day",
+   "file_value": 0,
+   "scan_value": 1,
+   "kind": "wrong_number",
+   "status": "settled_against_file",
+   "reason": "the contest total, overvotes and undervotes add to the precinct's ballots cast (election_day) hold(s) with the scan's value and fail(s) with the file's, and no printed total holds with the file's value and fails with the scan's",
+   "sums": [
+    {
+     "name": "the row's total printed on the scan equals its absentee + early voting + election day (Undervotes)",
+     "kind": "report_row",
+     "page": 24,
+     "block": "6|1",
+     "terms": [
+      {
+       "cell": [
+        24,
+        "6|1",
+        "Undervotes",
+        "absentee"
+       ],
+       "value": 0
+      },
+      {
+       "cell": [
+        24,
+        "6|1",
+        "Undervotes",
+        "early"
+       ],
+       "value": 0
+      },
+      {
+       "cell": [
+        24,
+        "6|1",
+        "Undervotes",
+        "election_day"
+       ],
+       "value": 1
+      }
+     ],
+     "printed": 1,
+     "printed_label": "total printed at the left end of the row",
+     "computed_with_scan": 1,
+     "holds_with_scan": true,
+     "computed_with_file": 0,
+     "holds_with_file": true
+    },
+    {
+     "name": "the contest total, overvotes and undervotes add to the precinct's ballots cast (election_day)",
+     "kind": "report_ballots",
+     "page": 24,
+     "block": "6|1",
+     "terms": [
+      {
+       "cell": [
+        24,
+        "6|1",
+        "Total Votes Cast",
+        "election_day"
+       ],
+       "value": 67
+      },
+      {
+       "cell": [
+        24,
+        "6|1",
+        "Overvotes",
+        "election_day"
+       ],
+       "value": 0
+      },
+      {
+       "cell": [
+        24,
+        "6|1",
+        "Undervotes",
+        "election_day"
+       ],
+       "value": 1
+      }
+     ],
+     "printed": 68,
+     "printed_label": "ballots cast printed in the precinct's Statistics block",
+     "computed_with_scan": 68,
+     "holds_with_scan": true,
+     "computed_with_file": 67,
+     "holds_with_file": false
+    }
+   ],
+   "page": 24,
+   "block": "6|1",
+   "row": "Undervotes",
+   "box": [
+    0,
+    923,
+    957,
+    963
+   ],
+   "crop": "crops/row-0004.png",
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": null,
+   "file_row": 418,
+   "file_line": 420,
+   "corrected": true,
+   "confirmed_by_person": false
+  },
+  {
+   "id": "f009",
+   "group": "g005",
    "county": "lynn",
    "office": "U.S. House",
    "district": "19",
@@ -927,7 +2636,7 @@
     957,
     1682
    ],
-   "crop": "crops/row-0004.png",
+   "crop": "crops/row-0005.png",
    "reread": null,
    "reread_disagrees": false,
    "row_not_corrected": null,
@@ -938,8 +2647,8 @@
    "confirmed_by_person": false
   },
   {
-   "id": "f008",
-   "group": "g004",
+   "id": "f010",
+   "group": "g005",
    "county": "lynn",
    "office": "U.S. House",
    "district": "19",
@@ -1045,7 +2754,7 @@
     957,
     1682
    ],
-   "crop": "crops/row-0004.png",
+   "crop": "crops/row-0005.png",
    "reread": null,
    "reread_disagrees": false,
    "row_not_corrected": null,
@@ -1056,8 +2765,8 @@
    "confirmed_by_person": false
   },
   {
-   "id": "f009",
-   "group": "g005",
+   "id": "f011",
+   "group": "g006",
    "county": "lynn",
    "office": "U.S. House",
    "district": "19",
@@ -1163,7 +2872,7 @@
     957,
     1721
    ],
-   "crop": "crops/row-0005.png",
+   "crop": "crops/row-0006.png",
    "reread": null,
    "reread_disagrees": false,
    "row_not_corrected": null,
@@ -1174,8 +2883,8 @@
    "confirmed_by_person": false
   },
   {
-   "id": "f010",
-   "group": "g005",
+   "id": "f012",
+   "group": "g006",
    "county": "lynn",
    "office": "U.S. House",
    "district": "19",
@@ -1281,7 +2990,7 @@
     957,
     1721
    ],
-   "crop": "crops/row-0005.png",
+   "crop": "crops/row-0006.png",
    "reread": null,
    "reread_disagrees": false,
    "row_not_corrected": null,
@@ -1292,8 +3001,8 @@
    "confirmed_by_person": false
   },
   {
-   "id": "f011",
-   "group": "g005",
+   "id": "f013",
+   "group": "g006",
    "county": "lynn",
    "office": "U.S. House",
    "district": "19",
@@ -1399,7 +3108,7 @@
     957,
     1721
    ],
-   "crop": "crops/row-0005.png",
+   "crop": "crops/row-0006.png",
    "reread": null,
    "reread_disagrees": false,
    "row_not_corrected": null,
@@ -1410,8 +3119,8 @@
    "confirmed_by_person": false
   },
   {
-   "id": "f012",
-   "group": "g005",
+   "id": "f014",
+   "group": "g006",
    "county": "lynn",
    "office": "U.S. House",
    "district": "19",
@@ -1517,7 +3226,7 @@
     957,
     1721
    ],
-   "crop": "crops/row-0005.png",
+   "crop": "crops/row-0006.png",
    "reread": null,
    "reread_disagrees": false,
    "row_not_corrected": null,
@@ -1528,8 +3237,8 @@
    "confirmed_by_person": false
   },
   {
-   "id": "f013",
-   "group": "g006",
+   "id": "f015",
+   "group": "g007",
    "county": "lynn",
    "office": "Railroad Commissioner",
    "district": "",
@@ -1634,15 +3343,6 @@
         "early"
        ],
        "value": 0
-      },
-      {
-       "cell": [
-        6,
-        "2|4",
-        "Not Assigned",
-        "early"
-       ],
-       "value": 0
       }
      ],
      "printed": 123,
@@ -1662,7 +3362,7 @@
     957,
     426
    ],
-   "crop": "crops/row-0006.png",
+   "crop": "crops/row-0007.png",
    "reread": null,
    "reread_disagrees": false,
    "row_not_corrected": null,
@@ -1673,8 +3373,8 @@
    "confirmed_by_person": false
   },
   {
-   "id": "f014",
-   "group": "g006",
+   "id": "f016",
+   "group": "g007",
    "county": "lynn",
    "office": "Railroad Commissioner",
    "district": "",
@@ -1779,15 +3479,6 @@
         "election_day"
        ],
        "value": 0
-      },
-      {
-       "cell": [
-        6,
-        "2|4",
-        "Not Assigned",
-        "election_day"
-       ],
-       "value": 0
       }
      ],
      "printed": 164,
@@ -1807,7 +3498,7 @@
     957,
     426
    ],
-   "crop": "crops/row-0006.png",
+   "crop": "crops/row-0007.png",
    "reread": null,
    "reread_disagrees": false,
    "row_not_corrected": null,
@@ -1818,8 +3509,8 @@
    "confirmed_by_person": false
   },
   {
-   "id": "f015",
-   "group": "g007",
+   "id": "f017",
+   "group": "g008",
    "county": "lynn",
    "office": "Railroad Commissioner",
    "district": "",
@@ -1924,15 +3615,6 @@
         "early"
        ],
        "value": 0
-      },
-      {
-       "cell": [
-        21,
-        "5|4",
-        "Not Assigned",
-        "early"
-       ],
-       "value": 0
       }
      ],
      "printed": 29,
@@ -1952,7 +3634,7 @@
     957,
     430
    ],
-   "crop": "crops/row-0007.png",
+   "crop": "crops/row-0008.png",
    "reread": null,
    "reread_disagrees": false,
    "row_not_corrected": null,
@@ -1963,8 +3645,8 @@
    "confirmed_by_person": false
   },
   {
-   "id": "f016",
-   "group": "g007",
+   "id": "f018",
+   "group": "g008",
    "county": "lynn",
    "office": "Railroad Commissioner",
    "district": "",
@@ -2069,15 +3751,6 @@
         "election_day"
        ],
        "value": 0
-      },
-      {
-       "cell": [
-        21,
-        "5|4",
-        "Not Assigned",
-        "election_day"
-       ],
-       "value": 0
       }
      ],
      "printed": 6,
@@ -2097,7 +3770,7 @@
     957,
     430
    ],
-   "crop": "crops/row-0007.png",
+   "crop": "crops/row-0008.png",
    "reread": null,
    "reread_disagrees": false,
    "row_not_corrected": null,
@@ -2108,8 +3781,8 @@
    "confirmed_by_person": false
   },
   {
-   "id": "f017",
-   "group": "g008",
+   "id": "f019",
+   "group": "g009",
    "county": "lynn",
    "office": "Railroad Commissioner",
    "district": "",
@@ -2214,15 +3887,6 @@
         "early"
        ],
        "value": 0
-      },
-      {
-       "cell": [
-        21,
-        "5|4",
-        "Not Assigned",
-        "early"
-       ],
-       "value": 0
       }
      ],
      "printed": 29,
@@ -2242,7 +3906,7 @@
     957,
     508
    ],
-   "crop": "crops/row-0008.png",
+   "crop": "crops/row-0009.png",
    "reread": null,
    "reread_disagrees": false,
    "row_not_corrected": null,
@@ -2253,8 +3917,8 @@
    "confirmed_by_person": false
   },
   {
-   "id": "f018",
-   "group": "g008",
+   "id": "f020",
+   "group": "g009",
    "county": "lynn",
    "office": "Railroad Commissioner",
    "district": "",
@@ -2359,15 +4023,6 @@
         "election_day"
        ],
        "value": 0
-      },
-      {
-       "cell": [
-        21,
-        "5|4",
-        "Not Assigned",
-        "election_day"
-       ],
-       "value": 0
       }
      ],
      "printed": 6,
@@ -2387,7 +4042,7 @@
     957,
     508
    ],
-   "crop": "crops/row-0008.png",
+   "crop": "crops/row-0009.png",
    "reread": null,
    "reread_disagrees": false,
    "row_not_corrected": null,
@@ -2398,8 +4053,8 @@
    "confirmed_by_person": false
   },
   {
-   "id": "f019",
-   "group": "g009",
+   "id": "f021",
+   "group": "g010",
    "county": "lynn",
    "office": "Justice, Supreme Court",
    "district": "2",
@@ -2496,7 +4151,7 @@
     957,
     934
    ],
-   "crop": "crops/row-0009.png",
+   "crop": "crops/row-0010.png",
    "reread": null,
    "reread_disagrees": false,
    "row_not_corrected": null,
@@ -2507,8 +4162,8 @@
    "confirmed_by_person": false
   },
   {
-   "id": "f020",
-   "group": "g009",
+   "id": "f022",
+   "group": "g010",
    "county": "lynn",
    "office": "Justice, Supreme Court",
    "district": "2",
@@ -2605,7 +4260,7 @@
     957,
     934
    ],
-   "crop": "crops/row-0009.png",
+   "crop": "crops/row-0010.png",
    "reread": null,
    "reread_disagrees": false,
    "row_not_corrected": null,
@@ -2616,8 +4271,8 @@
    "confirmed_by_person": false
   },
   {
-   "id": "f021",
-   "group": "g010",
+   "id": "f023",
+   "group": "g011",
    "county": "lynn",
    "office": "Justice, Supreme Court",
    "district": "6",
@@ -2723,7 +4378,7 @@
     957,
     1612
    ],
-   "crop": "crops/row-0010.png",
+   "crop": "crops/row-0011.png",
    "reread": null,
    "reread_disagrees": false,
    "row_not_corrected": null,
@@ -2734,8 +4389,8 @@
    "confirmed_by_person": false
   },
   {
-   "id": "f022",
-   "group": "g010",
+   "id": "f024",
+   "group": "g011",
    "county": "lynn",
    "office": "Justice, Supreme Court",
    "district": "6",
@@ -2841,7 +4496,7 @@
     957,
     1612
    ],
-   "crop": "crops/row-0010.png",
+   "crop": "crops/row-0011.png",
    "reread": null,
    "reread_disagrees": false,
    "row_not_corrected": null,
@@ -2852,8 +4507,8 @@
    "confirmed_by_person": false
   },
   {
-   "id": "f023",
-   "group": "g011",
+   "id": "f025",
+   "group": "g012",
    "county": "lynn",
    "office": "Presiding Judge, Ct of Crim App",
    "district": "",
@@ -2950,7 +4605,7 @@
     957,
     428
    ],
-   "crop": "crops/row-0011.png",
+   "crop": "crops/row-0012.png",
    "reread": null,
    "reread_disagrees": false,
    "row_not_corrected": null,
@@ -2961,8 +4616,8 @@
    "confirmed_by_person": false
   },
   {
-   "id": "f024",
-   "group": "g011",
+   "id": "f026",
+   "group": "g012",
    "county": "lynn",
    "office": "Presiding Judge, Ct of Crim App",
    "district": "",
@@ -3059,7 +4714,7 @@
     957,
     428
    ],
-   "crop": "crops/row-0011.png",
+   "crop": "crops/row-0012.png",
    "reread": null,
    "reread_disagrees": false,
    "row_not_corrected": null,
@@ -3070,8 +4725,8 @@
    "confirmed_by_person": false
   },
   {
-   "id": "f025",
-   "group": "g012",
+   "id": "f027",
+   "group": "g013",
    "county": "lynn",
    "office": "Presiding Judge, Ct of Crim App",
    "district": "",
@@ -3168,7 +4823,7 @@
     957,
     426
    ],
-   "crop": "crops/row-0012.png",
+   "crop": "crops/row-0013.png",
    "reread": null,
    "reread_disagrees": false,
    "row_not_corrected": null,
@@ -3179,8 +4834,8 @@
    "confirmed_by_person": false
   },
   {
-   "id": "f026",
-   "group": "g012",
+   "id": "f028",
+   "group": "g013",
    "county": "lynn",
    "office": "Presiding Judge, Ct of Crim App",
    "district": "",
@@ -3277,7 +4932,7 @@
     957,
     426
    ],
-   "crop": "crops/row-0012.png",
+   "crop": "crops/row-0013.png",
    "reread": null,
    "reread_disagrees": false,
    "row_not_corrected": null,
@@ -3288,8 +4943,8 @@
    "confirmed_by_person": false
   },
   {
-   "id": "f027",
-   "group": "g013",
+   "id": "f029",
+   "group": "g014",
    "county": "lynn",
    "office": "Presiding Judge, Ct of Crim App",
    "district": "",
@@ -3386,7 +5041,7 @@
     957,
     430
    ],
-   "crop": "crops/row-0013.png",
+   "crop": "crops/row-0014.png",
    "reread": null,
    "reread_disagrees": false,
    "row_not_corrected": null,
@@ -3397,8 +5052,8 @@
    "confirmed_by_person": false
   },
   {
-   "id": "f028",
-   "group": "g013",
+   "id": "f030",
+   "group": "g014",
    "county": "lynn",
    "office": "Presiding Judge, Ct of Crim App",
    "district": "",
@@ -3495,7 +5150,7 @@
     957,
     430
    ],
-   "crop": "crops/row-0013.png",
+   "crop": "crops/row-0014.png",
    "reread": null,
    "reread_disagrees": false,
    "row_not_corrected": null,
@@ -3506,8 +5161,8 @@
    "confirmed_by_person": false
   },
   {
-   "id": "f029",
-   "group": "g014",
+   "id": "f031",
+   "group": "g015",
    "county": "lynn",
    "office": "Presiding Judge, Ct of Crim App",
    "district": "",
@@ -3604,7 +5259,7 @@
     957,
     429
    ],
-   "crop": "crops/row-0014.png",
+   "crop": "crops/row-0015.png",
    "reread": null,
    "reread_disagrees": false,
    "row_not_corrected": null,
@@ -3615,8 +5270,8 @@
    "confirmed_by_person": false
   },
   {
-   "id": "f030",
-   "group": "g014",
+   "id": "f032",
+   "group": "g015",
    "county": "lynn",
    "office": "Presiding Judge, Ct of Crim App",
    "district": "",
@@ -3713,7 +5368,7 @@
     957,
     429
    ],
-   "crop": "crops/row-0014.png",
+   "crop": "crops/row-0015.png",
    "reread": null,
    "reread_disagrees": false,
    "row_not_corrected": null,
@@ -3724,8 +5379,8 @@
    "confirmed_by_person": false
   },
   {
-   "id": "f031",
-   "group": "g015",
+   "id": "f033",
+   "group": "g016",
    "county": "lynn",
    "office": "Presiding Judge, Ct of Crim App",
    "district": "",
@@ -3822,7 +5477,7 @@
     957,
     471
    ],
-   "crop": "crops/row-0015.png",
+   "crop": "crops/row-0016.png",
    "reread": null,
    "reread_disagrees": false,
    "row_not_corrected": null,
@@ -3833,8 +5488,8 @@
    "confirmed_by_person": false
   },
   {
-   "id": "f032",
-   "group": "g015",
+   "id": "f034",
+   "group": "g016",
    "county": "lynn",
    "office": "Presiding Judge, Ct of Crim App",
    "district": "",
@@ -3931,7 +5586,7 @@
     957,
     471
    ],
-   "crop": "crops/row-0015.png",
+   "crop": "crops/row-0016.png",
    "reread": null,
    "reread_disagrees": false,
    "row_not_corrected": null,
@@ -3942,8 +5597,8 @@
    "confirmed_by_person": false
   },
   {
-   "id": "f033",
-   "group": "g016",
+   "id": "f035",
+   "group": "g017",
    "county": "lynn",
    "office": "Judge, Ct of Crim App",
    "district": "7",
@@ -4040,7 +5695,7 @@
     957,
     768
    ],
-   "crop": "crops/row-0016.png",
+   "crop": "crops/row-0017.png",
    "reread": null,
    "reread_disagrees": false,
    "row_not_corrected": null,
@@ -4051,8 +5706,8 @@
    "confirmed_by_person": false
   },
   {
-   "id": "f034",
-   "group": "g016",
+   "id": "f036",
+   "group": "g017",
    "county": "lynn",
    "office": "Judge, Ct of Crim App",
    "district": "7",
@@ -4149,7 +5804,7 @@
     957,
     768
    ],
-   "crop": "crops/row-0016.png",
+   "crop": "crops/row-0017.png",
    "reread": null,
    "reread_disagrees": false,
    "row_not_corrected": null,
@@ -4160,8 +5815,8 @@
    "confirmed_by_person": false
   },
   {
-   "id": "f035",
-   "group": "g017",
+   "id": "f037",
+   "group": "g018",
    "county": "lynn",
    "office": "Judge, Ct of Crim App",
    "district": "7",
@@ -4258,7 +5913,7 @@
     957,
     808
    ],
-   "crop": "crops/row-0017.png",
+   "crop": "crops/row-0018.png",
    "reread": null,
    "reread_disagrees": false,
    "row_not_corrected": null,
@@ -4269,8 +5924,8 @@
    "confirmed_by_person": false
   },
   {
-   "id": "f036",
-   "group": "g017",
+   "id": "f038",
+   "group": "g018",
    "county": "lynn",
    "office": "Judge, Ct of Crim App",
    "district": "7",
@@ -4367,7 +6022,7 @@
     957,
     808
    ],
-   "crop": "crops/row-0017.png",
+   "crop": "crops/row-0018.png",
    "reread": null,
    "reread_disagrees": false,
    "row_not_corrected": null,
@@ -4378,8 +6033,8 @@
    "confirmed_by_person": false
   },
   {
-   "id": "f037",
-   "group": "g017",
+   "id": "f039",
+   "group": "g018",
    "county": "lynn",
    "office": "Judge, Ct of Crim App",
    "district": "7",
@@ -4476,7 +6131,7 @@
     957,
     808
    ],
-   "crop": "crops/row-0017.png",
+   "crop": "crops/row-0018.png",
    "reread": null,
    "reread_disagrees": false,
    "row_not_corrected": null,
@@ -4487,8 +6142,244 @@
    "confirmed_by_person": false
   },
   {
-   "id": "f038",
-   "group": "g018",
+   "id": "f040",
+   "group": "g019",
+   "county": "lynn",
+   "office": "Judge, Ct of Crim App",
+   "district": "7",
+   "party": "",
+   "candidate": "Under Votes",
+   "precinct": "Precinct 4",
+   "part": "absentee",
+   "file_value": 0,
+   "scan_value": 1,
+   "kind": "wrong_number",
+   "status": "settled_against_file",
+   "reason": "the contest total, overvotes and undervotes add to the precinct's ballots cast (absentee) hold(s) with the scan's value and fail(s) with the file's, and no printed total holds with the file's value and fails with the scan's",
+   "sums": [
+    {
+     "name": "the row's total printed on the scan equals its absentee + early voting + election day (Undervotes)",
+     "kind": "report_row",
+     "page": 17,
+     "block": "4|9",
+     "terms": [
+      {
+       "cell": [
+        17,
+        "4|9",
+        "Undervotes",
+        "absentee"
+       ],
+       "value": 1
+      },
+      {
+       "cell": [
+        17,
+        "4|9",
+        "Undervotes",
+        "early"
+       ],
+       "value": 10
+      },
+      {
+       "cell": [
+        17,
+        "4|9",
+        "Undervotes",
+        "election_day"
+       ],
+       "value": 15
+      }
+     ],
+     "printed": 26,
+     "printed_label": "total printed at the left end of the row",
+     "computed_with_scan": 26,
+     "holds_with_scan": true,
+     "computed_with_file": 26,
+     "holds_with_file": true
+    },
+    {
+     "name": "the contest total, overvotes and undervotes add to the precinct's ballots cast (absentee)",
+     "kind": "report_ballots",
+     "page": 17,
+     "block": "4|9",
+     "terms": [
+      {
+       "cell": [
+        17,
+        "4|9",
+        "Total Votes Cast",
+        "absentee"
+       ],
+       "value": 10
+      },
+      {
+       "cell": [
+        17,
+        "4|9",
+        "Overvotes",
+        "absentee"
+       ],
+       "value": 0
+      },
+      {
+       "cell": [
+        17,
+        "4|9",
+        "Undervotes",
+        "absentee"
+       ],
+       "value": 1
+      }
+     ],
+     "printed": 11,
+     "printed_label": "ballots cast printed in the precinct's Statistics block",
+     "computed_with_scan": 11,
+     "holds_with_scan": true,
+     "computed_with_file": 10,
+     "holds_with_file": false
+    }
+   ],
+   "page": 17,
+   "block": "4|9",
+   "row": "Undervotes",
+   "box": [
+    0,
+    884,
+    957,
+    924
+   ],
+   "crop": "crops/row-0019.png",
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": null,
+   "file_row": 287,
+   "file_line": 289,
+   "corrected": true,
+   "confirmed_by_person": false
+  },
+  {
+   "id": "f041",
+   "group": "g019",
+   "county": "lynn",
+   "office": "Judge, Ct of Crim App",
+   "district": "7",
+   "party": "",
+   "candidate": "Under Votes",
+   "precinct": "Precinct 4",
+   "part": "election_day",
+   "file_value": 16,
+   "scan_value": 15,
+   "kind": "wrong_number",
+   "status": "settled_against_file",
+   "reason": "the contest total, overvotes and undervotes add to the precinct's ballots cast (election_day) hold(s) with the scan's value and fail(s) with the file's, and no printed total holds with the file's value and fails with the scan's",
+   "sums": [
+    {
+     "name": "the row's total printed on the scan equals its absentee + early voting + election day (Undervotes)",
+     "kind": "report_row",
+     "page": 17,
+     "block": "4|9",
+     "terms": [
+      {
+       "cell": [
+        17,
+        "4|9",
+        "Undervotes",
+        "absentee"
+       ],
+       "value": 1
+      },
+      {
+       "cell": [
+        17,
+        "4|9",
+        "Undervotes",
+        "early"
+       ],
+       "value": 10
+      },
+      {
+       "cell": [
+        17,
+        "4|9",
+        "Undervotes",
+        "election_day"
+       ],
+       "value": 15
+      }
+     ],
+     "printed": 26,
+     "printed_label": "total printed at the left end of the row",
+     "computed_with_scan": 26,
+     "holds_with_scan": true,
+     "computed_with_file": 26,
+     "holds_with_file": true
+    },
+    {
+     "name": "the contest total, overvotes and undervotes add to the precinct's ballots cast (election_day)",
+     "kind": "report_ballots",
+     "page": 17,
+     "block": "4|9",
+     "terms": [
+      {
+       "cell": [
+        17,
+        "4|9",
+        "Total Votes Cast",
+        "election_day"
+       ],
+       "value": 410
+      },
+      {
+       "cell": [
+        17,
+        "4|9",
+        "Overvotes",
+        "election_day"
+       ],
+       "value": 0
+      },
+      {
+       "cell": [
+        17,
+        "4|9",
+        "Undervotes",
+        "election_day"
+       ],
+       "value": 15
+      }
+     ],
+     "printed": 425,
+     "printed_label": "ballots cast printed in the precinct's Statistics block",
+     "computed_with_scan": 425,
+     "holds_with_scan": true,
+     "computed_with_file": 426,
+     "holds_with_file": false
+    }
+   ],
+   "page": 17,
+   "block": "4|9",
+   "row": "Undervotes",
+   "box": [
+    0,
+    884,
+    957,
+    924
+   ],
+   "crop": "crops/row-0019.png",
+   "reread": null,
+   "reread_disagrees": false,
+   "row_not_corrected": null,
+   "row_values": null,
+   "file_row": 287,
+   "file_line": 289,
+   "corrected": true,
+   "confirmed_by_person": false
+  },
+  {
+   "id": "f042",
+   "group": "g020",
    "county": "lynn",
    "office": "Judge, Ct of Crim App",
    "district": "8",
@@ -4585,7 +6476,7 @@
     957,
     1117
    ],
-   "crop": "crops/row-0018.png",
+   "crop": "crops/row-0020.png",
    "reread": null,
    "reread_disagrees": false,
    "row_not_corrected": null,
@@ -4596,8 +6487,8 @@
    "confirmed_by_person": false
   },
   {
-   "id": "f039",
-   "group": "g018",
+   "id": "f043",
+   "group": "g020",
    "county": "lynn",
    "office": "Judge, Ct of Crim App",
    "district": "8",
@@ -4694,7 +6585,7 @@
     957,
     1117
    ],
-   "crop": "crops/row-0018.png",
+   "crop": "crops/row-0020.png",
    "reread": null,
    "reread_disagrees": false,
    "row_not_corrected": null,
@@ -4705,8 +6596,8 @@
    "confirmed_by_person": false
   },
   {
-   "id": "f040",
-   "group": "g019",
+   "id": "f044",
+   "group": "g021",
    "county": "lynn",
    "office": "Member, State BoE",
    "district": "15",
@@ -4812,7 +6703,7 @@
     957,
     1448
    ],
-   "crop": "crops/row-0019.png",
+   "crop": "crops/row-0021.png",
    "reread": null,
    "reread_disagrees": false,
    "row_not_corrected": null,
@@ -4823,8 +6714,8 @@
    "confirmed_by_person": false
   },
   {
-   "id": "f041",
-   "group": "g019",
+   "id": "f045",
+   "group": "g021",
    "county": "lynn",
    "office": "Member, State BoE",
    "district": "15",
@@ -4930,7 +6821,7 @@
     957,
     1448
    ],
-   "crop": "crops/row-0019.png",
+   "crop": "crops/row-0021.png",
    "reread": null,
    "reread_disagrees": false,
    "row_not_corrected": null,
@@ -4941,8 +6832,8 @@
    "confirmed_by_person": false
   },
   {
-   "id": "f042",
-   "group": "g020",
+   "id": "f046",
+   "group": "g022",
    "county": "lynn",
    "office": "Member, State BoE",
    "district": "15",
@@ -5048,7 +6939,7 @@
     957,
     1446
    ],
-   "crop": "crops/row-0020.png",
+   "crop": "crops/row-0022.png",
    "reread": null,
    "reread_disagrees": false,
    "row_not_corrected": null,
@@ -5059,8 +6950,8 @@
    "confirmed_by_person": false
   },
   {
-   "id": "f043",
-   "group": "g020",
+   "id": "f047",
+   "group": "g022",
    "county": "lynn",
    "office": "Member, State BoE",
    "district": "15",
@@ -5166,7 +7057,7 @@
     957,
     1446
    ],
-   "crop": "crops/row-0020.png",
+   "crop": "crops/row-0022.png",
    "reread": null,
    "reread_disagrees": false,
    "row_not_corrected": null,
@@ -5194,7 +7085,7 @@
     "f002"
    ],
    "statuses": {
-    "cannot_verify": 2
+    "settled_against_file": 2
    },
    "what_to_do": null,
    "crop": "crops/row-0001.png"
@@ -5215,8 +7106,7 @@
     "f004"
    ],
    "statuses": {
-    "settled_against_file": 1,
-    "cannot_verify": 1
+    "settled_against_file": 2
    },
    "what_to_do": null,
    "crop": "crops/row-0002.png"
@@ -5237,7 +7127,7 @@
     "f006"
    ],
    "statuses": {
-    "cannot_verify": 2
+    "settled_against_file": 2
    },
    "what_to_do": null,
    "crop": "crops/row-0003.png"
@@ -5245,14 +7135,14 @@
   {
    "id": "g004",
    "kind": "wrong_number",
-   "office": "U.S. House",
-   "district": "19",
-   "candidate": "Bernard Johnson",
+   "office": "President",
+   "district": "",
+   "candidate": "Under Votes",
    "precincts": [
     "Precinct 6"
    ],
    "page": 24,
-   "block": "6|3",
+   "block": "6|1",
    "findings": [
     "f007",
     "f008"
@@ -5268,7 +7158,7 @@
    "kind": "wrong_number",
    "office": "U.S. House",
    "district": "19",
-   "candidate": "Nathan Lewis",
+   "candidate": "Bernard Johnson",
    "precincts": [
     "Precinct 6"
    ],
@@ -5276,12 +7166,10 @@
    "block": "6|3",
    "findings": [
     "f009",
-    "f010",
-    "f011",
-    "f012"
+    "f010"
    ],
    "statuses": {
-    "settled_against_file": 4
+    "settled_against_file": 2
    },
    "what_to_do": null,
    "crop": "crops/row-0005.png"
@@ -5289,20 +7177,22 @@
   {
    "id": "g006",
    "kind": "wrong_number",
-   "office": "Railroad Commissioner",
-   "district": "",
-   "candidate": "Christi Craddick",
+   "office": "U.S. House",
+   "district": "19",
+   "candidate": "Nathan Lewis",
    "precincts": [
-    "Precinct 2"
+    "Precinct 6"
    ],
-   "page": 6,
-   "block": "2|4",
+   "page": 24,
+   "block": "6|3",
    "findings": [
+    "f011",
+    "f012",
     "f013",
     "f014"
    ],
    "statuses": {
-    "settled_against_file": 2
+    "settled_against_file": 4
    },
    "what_to_do": null,
    "crop": "crops/row-0006.png"
@@ -5314,10 +7204,10 @@
    "district": "",
    "candidate": "Christi Craddick",
    "precincts": [
-    "Precinct 5"
+    "Precinct 2"
    ],
-   "page": 21,
-   "block": "5|4",
+   "page": 6,
+   "block": "2|4",
    "findings": [
     "f015",
     "f016"
@@ -5330,10 +7220,10 @@
   },
   {
    "id": "g008",
-   "kind": "wrong_column",
+   "kind": "wrong_number",
    "office": "Railroad Commissioner",
    "district": "",
-   "candidate": "Hawk Dunlap",
+   "candidate": "Christi Craddick",
    "precincts": [
     "Precinct 5"
    ],
@@ -5351,15 +7241,15 @@
   },
   {
    "id": "g009",
-   "kind": "wrong_number",
-   "office": "Justice, Supreme Court",
-   "district": "2",
-   "candidate": "Jimmy Blacklock",
+   "kind": "wrong_column",
+   "office": "Railroad Commissioner",
+   "district": "",
+   "candidate": "Hawk Dunlap",
    "precincts": [
-    "Precinct 1"
+    "Precinct 5"
    ],
-   "page": 2,
-   "block": "1|5",
+   "page": 21,
+   "block": "5|4",
    "findings": [
     "f019",
     "f020"
@@ -5374,13 +7264,13 @@
    "id": "g010",
    "kind": "wrong_number",
    "office": "Justice, Supreme Court",
-   "district": "6",
-   "candidate": "Jane Bland",
+   "district": "2",
+   "candidate": "Jimmy Blacklock",
    "precincts": [
     "Precinct 1"
    ],
    "page": 2,
-   "block": "1|7",
+   "block": "1|5",
    "findings": [
     "f021",
     "f022"
@@ -5394,14 +7284,14 @@
   {
    "id": "g011",
    "kind": "wrong_number",
-   "office": "Presiding Judge, Ct of Crim App",
-   "district": "",
-   "candidate": "David J. Schenck",
+   "office": "Justice, Supreme Court",
+   "district": "6",
+   "candidate": "Jane Bland",
    "precincts": [
-    "Precinct 2"
+    "Precinct 1"
    ],
-   "page": 7,
-   "block": "2|8",
+   "page": 2,
+   "block": "1|7",
    "findings": [
     "f023",
     "f024"
@@ -5419,10 +7309,10 @@
    "district": "",
    "candidate": "David J. Schenck",
    "precincts": [
-    "Precinct 4"
+    "Precinct 2"
    ],
-   "page": 17,
-   "block": "4|8",
+   "page": 7,
+   "block": "2|8",
    "findings": [
     "f025",
     "f026"
@@ -5440,10 +7330,10 @@
    "district": "",
    "candidate": "David J. Schenck",
    "precincts": [
-    "Precinct 9"
+    "Precinct 4"
    ],
-   "page": 31,
-   "block": "9|8",
+   "page": 17,
+   "block": "4|8",
    "findings": [
     "f027",
     "f028"
@@ -5461,10 +7351,10 @@
    "district": "",
    "candidate": "David J. Schenck",
    "precincts": [
-    "Precinct 12"
+    "Precinct 9"
    ],
-   "page": 35,
-   "block": "12|8",
+   "page": 31,
+   "block": "9|8",
    "findings": [
     "f029",
     "f030"
@@ -5477,15 +7367,15 @@
   },
   {
    "id": "g015",
-   "kind": "wrong_column",
+   "kind": "wrong_number",
    "office": "Presiding Judge, Ct of Crim App",
    "district": "",
-   "candidate": "Holly Taylor",
+   "candidate": "David J. Schenck",
    "precincts": [
-    "Precinct 9"
+    "Precinct 12"
    ],
-   "page": 31,
-   "block": "9|8",
+   "page": 35,
+   "block": "12|8",
    "findings": [
     "f031",
     "f032"
@@ -5498,15 +7388,15 @@
   },
   {
    "id": "g016",
-   "kind": "wrong_number",
-   "office": "Judge, Ct of Crim App",
-   "district": "7",
-   "candidate": "Gina Parker",
+   "kind": "wrong_column",
+   "office": "Presiding Judge, Ct of Crim App",
+   "district": "",
+   "candidate": "Holly Taylor",
    "precincts": [
-    "Precinct 4"
+    "Precinct 9"
    ],
-   "page": 17,
-   "block": "4|9",
+   "page": 31,
+   "block": "9|8",
    "findings": [
     "f033",
     "f034"
@@ -5522,7 +7412,7 @@
    "kind": "wrong_number",
    "office": "Judge, Ct of Crim App",
    "district": "7",
-   "candidate": "Nancy Mulder",
+   "candidate": "Gina Parker",
    "precincts": [
     "Precinct 4"
    ],
@@ -5530,11 +7420,10 @@
    "block": "4|9",
    "findings": [
     "f035",
-    "f036",
-    "f037"
+    "f036"
    ],
    "statuses": {
-    "settled_against_file": 3
+    "settled_against_file": 2
    },
    "what_to_do": null,
    "crop": "crops/row-0017.png"
@@ -5543,19 +7432,20 @@
    "id": "g018",
    "kind": "wrong_number",
    "office": "Judge, Ct of Crim App",
-   "district": "8",
-   "candidate": "Lee Finley",
+   "district": "7",
+   "candidate": "Nancy Mulder",
    "precincts": [
-    "Precinct 1"
+    "Precinct 4"
    ],
-   "page": 3,
-   "block": "1|10",
+   "page": 17,
+   "block": "4|9",
    "findings": [
+    "f037",
     "f038",
     "f039"
    ],
    "statuses": {
-    "settled_against_file": 2
+    "settled_against_file": 3
    },
    "what_to_do": null,
    "crop": "crops/row-0018.png"
@@ -5563,14 +7453,14 @@
   {
    "id": "g019",
    "kind": "wrong_number",
-   "office": "Member, State BoE",
-   "district": "15",
-   "candidate": "Aaron Kinsey",
+   "office": "Judge, Ct of Crim App",
+   "district": "7",
+   "candidate": "Under Votes",
    "precincts": [
-    "Precinct 2"
+    "Precinct 4"
    ],
-   "page": 7,
-   "block": "2|11",
+   "page": 17,
+   "block": "4|9",
    "findings": [
     "f040",
     "f041"
@@ -5584,14 +7474,14 @@
   {
    "id": "g020",
    "kind": "wrong_number",
-   "office": "Member, State BoE",
-   "district": "15",
-   "candidate": "Aaron Kinsey",
+   "office": "Judge, Ct of Crim App",
+   "district": "8",
+   "candidate": "Lee Finley",
    "precincts": [
-    "Precinct 4"
+    "Precinct 1"
    ],
-   "page": 17,
-   "block": "4|11",
+   "page": 3,
+   "block": "1|10",
    "findings": [
     "f042",
     "f043"
@@ -5601,415 +7491,388 @@
    },
    "what_to_do": null,
    "crop": "crops/row-0020.png"
+  },
+  {
+   "id": "g021",
+   "kind": "wrong_number",
+   "office": "Member, State BoE",
+   "district": "15",
+   "candidate": "Aaron Kinsey",
+   "precincts": [
+    "Precinct 2"
+   ],
+   "page": 7,
+   "block": "2|11",
+   "findings": [
+    "f044",
+    "f045"
+   ],
+   "statuses": {
+    "settled_against_file": 2
+   },
+   "what_to_do": null,
+   "crop": "crops/row-0021.png"
+  },
+  {
+   "id": "g022",
+   "kind": "wrong_number",
+   "office": "Member, State BoE",
+   "district": "15",
+   "candidate": "Aaron Kinsey",
+   "precincts": [
+    "Precinct 4"
+   ],
+   "page": 17,
+   "block": "4|11",
+   "findings": [
+    "f046",
+    "f047"
+   ],
+   "statuses": {
+    "settled_against_file": 2
+   },
+   "what_to_do": null,
+   "crop": "crops/row-0022.png"
   }
  ],
  "corrections": [
   {
+   "finding": "f001",
+   "file_row": 411,
+   "part": "votes",
+   "old": 255,
+   "new": 256
+  },
+  {
+   "finding": "f002",
+   "file_row": 411,
+   "part": "election_day",
+   "old": 67,
+   "new": 68
+  },
+  {
+   "finding": "f003",
+   "file_row": 80,
+   "part": "early_voting",
+   "old": 141,
+   "new": 109
+  },
+  {
+   "finding": "f004",
+   "file_row": 80,
+   "part": "election_day",
+   "old": 109,
+   "new": 141
+  },
+  {
+   "finding": "f005",
+   "file_row": 242,
+   "part": "early_voting",
+   "old": 512,
+   "new": 517
+  },
+  {
+   "finding": "f006",
+   "file_row": 242,
+   "part": "election_day",
+   "old": 375,
+   "new": 370
+  },
+  {
    "finding": "f007",
+   "file_row": 418,
+   "part": "votes",
+   "old": 0,
+   "new": 1
+  },
+  {
+   "finding": "f008",
+   "file_row": 418,
+   "part": "election_day",
+   "old": 0,
+   "new": 1
+  },
+  {
+   "finding": "f009",
    "file_row": 426,
    "part": "votes",
    "old": 24,
    "new": 14
   },
   {
-   "finding": "f008",
+   "finding": "f010",
    "file_row": 426,
    "part": "election_day",
    "old": 14,
    "new": 4
   },
   {
-   "finding": "f009",
+   "finding": "f011",
    "file_row": 427,
    "part": "votes",
    "old": 14,
    "new": 24
   },
   {
-   "finding": "f010",
+   "finding": "f012",
    "file_row": 427,
    "part": "absentee",
    "old": 2,
    "new": 1
   },
   {
-   "finding": "f011",
+   "finding": "f013",
    "file_row": 427,
    "part": "early_voting",
    "old": 10,
    "new": 13
   },
   {
-   "finding": "f012",
+   "finding": "f014",
    "file_row": 427,
    "part": "election_day",
    "old": 2,
    "new": 10
   },
   {
-   "finding": "f013",
+   "finding": "f015",
    "file_row": 98,
    "part": "early_voting",
    "old": 100,
    "new": 99
   },
   {
-   "finding": "f014",
+   "finding": "f016",
    "file_row": 98,
    "part": "election_day",
    "old": 124,
    "new": 125
   },
   {
-   "finding": "f015",
+   "finding": "f017",
    "file_row": 352,
    "part": "early_voting",
    "old": 26,
    "new": 27
   },
   {
-   "finding": "f016",
+   "finding": "f018",
    "file_row": 352,
    "part": "election_day",
    "old": 5,
    "new": 4
   },
   {
-   "finding": "f017",
+   "finding": "f019",
    "file_row": 354,
    "part": "early_voting",
    "old": 1,
    "new": 0
   },
   {
-   "finding": "f018",
+   "finding": "f020",
    "file_row": 354,
    "part": "election_day",
    "old": 0,
    "new": 1
   },
   {
-   "finding": "f019",
+   "finding": "f021",
    "file_row": 27,
    "part": "early_voting",
    "old": 150,
    "new": 155
   },
   {
-   "finding": "f020",
+   "finding": "f022",
    "file_row": 27,
    "part": "election_day",
    "old": 67,
    "new": 62
   },
   {
-   "finding": "f021",
+   "finding": "f023",
    "file_row": 35,
    "part": "early_voting",
    "old": 153,
    "new": 155
   },
   {
-   "finding": "f022",
+   "finding": "f024",
    "file_row": 35,
    "part": "election_day",
    "old": 63,
    "new": 61
   },
   {
-   "finding": "f023",
+   "finding": "f025",
    "file_row": 118,
    "part": "early_voting",
    "old": 104,
    "new": 105
   },
   {
-   "finding": "f024",
+   "finding": "f026",
    "file_row": 118,
    "part": "election_day",
    "old": 136,
    "new": 135
   },
   {
-   "finding": "f025",
+   "finding": "f027",
    "file_row": 280,
    "part": "early_voting",
    "old": 511,
    "new": 510
   },
   {
-   "finding": "f026",
+   "finding": "f028",
    "file_row": 280,
    "part": "election_day",
    "old": 370,
    "new": 371
   },
   {
-   "finding": "f027",
+   "finding": "f029",
    "file_row": 531,
    "part": "early_voting",
    "old": 32,
    "new": 33
   },
   {
-   "finding": "f028",
+   "finding": "f030",
    "file_row": 531,
    "part": "election_day",
    "old": 10,
    "new": 9
   },
   {
-   "finding": "f029",
+   "finding": "f031",
    "file_row": 609,
    "part": "early_voting",
    "old": 185,
    "new": 187
   },
   {
-   "finding": "f030",
+   "finding": "f032",
    "file_row": 609,
    "part": "election_day",
    "old": 45,
    "new": 43
   },
   {
-   "finding": "f031",
+   "finding": "f033",
    "file_row": 532,
    "part": "early_voting",
    "old": 3,
    "new": 2
   },
   {
-   "finding": "f032",
+   "finding": "f034",
    "file_row": 532,
    "part": "election_day",
    "old": 2,
    "new": 3
   },
   {
-   "finding": "f033",
+   "finding": "f035",
    "file_row": 284,
    "part": "votes",
    "old": 885,
    "new": 889
   },
   {
-   "finding": "f034",
+   "finding": "f036",
    "file_row": 284,
    "part": "election_day",
    "old": 366,
    "new": 370
   },
   {
-   "finding": "f035",
+   "finding": "f037",
    "file_row": 285,
    "part": "votes",
    "old": 71,
    "new": 67
   },
   {
-   "finding": "f036",
+   "finding": "f038",
    "file_row": 285,
    "part": "absentee",
    "old": 3,
    "new": 2
   },
   {
-   "finding": "f037",
+   "finding": "f039",
    "file_row": 285,
    "part": "early_voting",
    "old": 28,
    "new": 25
   },
   {
-   "finding": "f038",
+   "finding": "f040",
+   "file_row": 287,
+   "part": "absentee",
+   "old": 0,
+   "new": 1
+  },
+  {
+   "finding": "f041",
+   "file_row": 287,
+   "part": "election_day",
+   "old": 16,
+   "new": 15
+  },
+  {
+   "finding": "f042",
    "file_row": 48,
    "part": "early_voting",
    "old": 159,
    "new": 158
   },
   {
-   "finding": "f039",
+   "finding": "f043",
    "file_row": 48,
    "part": "election_day",
    "old": 63,
    "new": 64
   },
   {
-   "finding": "f040",
+   "finding": "f044",
    "file_row": 130,
    "part": "early_voting",
    "old": 100,
    "new": 106
   },
   {
-   "finding": "f041",
+   "finding": "f045",
    "file_row": 130,
    "part": "election_day",
    "old": 130,
    "new": 124
   },
   {
-   "finding": "f042",
+   "finding": "f046",
    "file_row": 292,
    "part": "early_voting",
    "old": 494,
    "new": 490
   },
   {
-   "finding": "f043",
+   "finding": "f047",
    "file_row": 292,
    "part": "election_day",
    "old": 352,
    "new": 356
   }
  ],
- "could_not_correct": [
-  {
-   "file_row": 80,
-   "file_line": 82,
-   "office": "President",
-   "candidate": "Donald J. Trump",
-   "precinct": "Precinct 2",
-   "findings": [
-    "f004"
-   ],
-   "reason": "the corrected votes 255 would not equal the corrected parts 5 + 141 + 141 = 287"
-  }
- ],
+ "could_not_correct": [],
  "sums_check": {
-  "in_all": 1427,
-  "holding_with_ledger": 1418,
-  "holding_with_published": 1393,
-  "holding_with_corrected": 1417,
-  "still_failing": [
-   {
-    "name": "the candidates' total figures add to the contest total's total figure",
-    "kind": "report_contest",
-    "page": 1,
-    "block": "1|2",
-    "key": "total",
-    "printed": 330,
-    "computed": 331,
-    "reasons": [
-     "the scan's own cells and its printed total disagree, and no difference from the file is involved"
-    ]
-   },
-   {
-    "name": "the candidates' election day figures add to the contest total's election day figure",
-    "kind": "report_contest",
-    "page": 1,
-    "block": "1|2",
-    "key": "election_day",
-    "printed": 101,
-    "computed": 102,
-    "reasons": [
-     "the scan's own cells and its printed total disagree, and no difference from the file is involved"
-    ]
-   },
-   {
-    "name": "the candidates' total figures add to the contest total's total figure",
-    "kind": "report_contest",
-    "page": 5,
-    "block": "2|1",
-    "key": "total",
-    "printed": 311,
-    "computed": 312,
-    "reasons": [
-     "a value that could not be verified (f003: Donald J. Trump, precinct Precinct 2, early_voting)",
-     "a row that could not be corrected as a whole (f004)"
-    ]
-   },
-   {
-    "name": "the candidates' early voting figures add to the contest total's early voting figure",
-    "kind": "report_contest",
-    "page": 5,
-    "block": "2|1",
-    "key": "early",
-    "printed": 127,
-    "computed": 160,
-    "reasons": [
-     "a value that could not be verified (f003: Donald J. Trump, precinct Precinct 2, early_voting)",
-     "a row that could not be corrected as a whole (f004)"
-    ]
-   },
-   {
-    "name": "the candidates' election day figures add to the contest total's election day figure",
-    "kind": "report_contest",
-    "page": 5,
-    "block": "2|1",
-    "key": "election_day",
-    "printed": 175,
-    "computed": 143,
-    "reasons": [
-     "a value that could not be verified (f003: Donald J. Trump, precinct Precinct 2, early_voting)",
-     "a row that could not be corrected as a whole (f004)"
-    ]
-   },
-   {
-    "name": "the candidates' total figures add to the contest total's total figure",
-    "kind": "report_contest",
-    "page": 15,
-    "block": "4|1",
-    "key": "total",
-    "printed": 979,
-    "computed": 985,
-    "reasons": [
-     "a value that could not be verified (f005: Donald J. Trump, precinct Precinct 4, early_voting)",
-     "a value that could not be verified (f006: Donald J. Trump, precinct Precinct 4, election_day)"
-    ]
-   },
-   {
-    "name": "the candidates' early voting figures add to the contest total's early voting figure",
-    "kind": "report_contest",
-    "page": 15,
-    "block": "4|1",
-    "key": "early",
-    "printed": 545,
-    "computed": 541,
-    "reasons": [
-     "a value that could not be verified (f005: Donald J. Trump, precinct Precinct 4, early_voting)",
-     "a value that could not be verified (f006: Donald J. Trump, precinct Precinct 4, election_day)"
-    ]
-   },
-   {
-    "name": "the candidates' election day figures add to the contest total's election day figure",
-    "kind": "report_contest",
-    "page": 15,
-    "block": "4|1",
-    "key": "election_day",
-    "printed": 423,
-    "computed": 433,
-    "reasons": [
-     "a value that could not be verified (f005: Donald J. Trump, precinct Precinct 4, early_voting)",
-     "a value that could not be verified (f006: Donald J. Trump, precinct Precinct 4, election_day)"
-    ]
-   },
-   {
-    "name": "the candidates' total figures add to the contest total's total figure",
-    "kind": "report_contest",
-    "page": 15,
-    "block": "4|2",
-    "key": "total",
-    "printed": 977,
-    "computed": 978,
-    "reasons": [
-     "the scan's own cells and its printed total disagree, and no difference from the file is involved"
-    ]
-   },
-   {
-    "name": "the candidates' election day figures add to the contest total's election day figure",
-    "kind": "report_contest",
-    "page": 15,
-    "block": "4|2",
-    "key": "election_day",
-    "printed": 420,
-    "computed": 421,
-    "reasons": [
-     "the scan's own cells and its printed total disagree, and no difference from the file is involved"
-    ]
-   }
-  ],
+  "in_all": 2115,
+  "holding_with_ledger": 2115,
+  "holding_with_published": 2049,
+  "holding_with_corrected": 2115,
+  "still_failing": [],
   "rows_failing_own_total": {
    "published": 0,
    "corrected": 0
@@ -6030,85 +7893,67 @@
     "candidate": "Not Assigned"
    },
    {
-    "block": "c013",
+    "block": "c015",
     "page": 1,
     "contest": "US Senator",
     "candidate": "Write-In: UnCertified"
    },
    {
-    "block": "c014",
+    "block": "c016",
     "page": 1,
     "contest": "US Senator",
     "candidate": "Not Assigned"
    },
    {
-    "block": "c023",
+    "block": "c029",
     "page": 2,
     "contest": "Railroad Commissioner",
     "candidate": "Not Assigned"
    },
    {
-    "block": "c041",
-    "page": 4,
-    "contest": "Justice, 7th Ct of App Dist, Pl 2",
-    "candidate": "Judy Parker"
-   },
-   {
-    "block": "c042",
-    "page": 4,
-    "contest": "Justice, 7th Ct of App Dist, Pl 3",
-    "candidate": "Alex Yarbrough"
-   },
-   {
-    "block": "c043",
-    "page": 4,
-    "contest": "Dist Attorney, 106th Judicial Dist",
-    "candidate": "Phillip Mack Furlow"
-   },
-   {
-    "block": "c050",
+    "block": "c090",
     "page": 19,
     "contest": "School Board New Home ISD",
     "candidate": "2 Kevin Bass"
    },
    {
-    "block": "c051",
+    "block": "c091",
     "page": 19,
     "contest": "School Board New Home ISD",
     "candidate": "3 Kevin Bass"
    },
    {
-    "block": "c053",
+    "block": "c093",
     "page": 19,
     "contest": "School Board New Home ISD",
     "candidate": "1 Justin Tubb"
    },
    {
-    "block": "c054",
+    "block": "c094",
     "page": 19,
     "contest": "School Board New Home ISD",
     "candidate": "2 Justin Tubb"
    },
    {
-    "block": "c056",
+    "block": "c096",
     "page": 19,
     "contest": "School Board New Home ISD",
     "candidate": "1 Martin Gill"
    },
    {
-    "block": "c057",
+    "block": "c097",
     "page": 19,
     "contest": "School Board New Home ISD",
     "candidate": "2 Martin Gill"
    },
    {
-    "block": "c059",
+    "block": "c099",
     "page": 19,
     "contest": "School Board New Home ISD",
     "candidate": "1 Shaun Weid"
    },
    {
-    "block": "c060",
+    "block": "c100",
     "page": 19,
     "contest": "School Board New Home ISD",
     "candidate": "2 Shaun Weid"
@@ -6120,310 +7965,12 @@
     "district": "",
     "candidate": "",
     "rows": 8
-   },
-   {
-    "contest": "President",
-    "district": "",
-    "candidate": "Over Votes",
-    "rows": 8
-   },
-   {
-    "contest": "President",
-    "district": "",
-    "candidate": "Under Votes",
-    "rows": 8
-   },
-   {
-    "contest": "U.S. Senate",
-    "district": "",
-    "candidate": "Over Votes",
-    "rows": 8
-   },
-   {
-    "contest": "U.S. Senate",
-    "district": "",
-    "candidate": "Under Votes",
-    "rows": 8
-   },
-   {
-    "contest": "U.S. House",
-    "district": "19",
-    "candidate": "Over Votes",
-    "rows": 8
-   },
-   {
-    "contest": "U.S. House",
-    "district": "19",
-    "candidate": "Under Votes",
-    "rows": 8
-   },
-   {
-    "contest": "Railroad Commissioner",
-    "district": "",
-    "candidate": "Over Votes",
-    "rows": 8
-   },
-   {
-    "contest": "Railroad Commissioner",
-    "district": "",
-    "candidate": "Under Votes",
-    "rows": 8
-   },
-   {
-    "contest": "Justice, Supreme Court",
-    "district": "2",
-    "candidate": "Over Votes",
-    "rows": 8
-   },
-   {
-    "contest": "Justice, Supreme Court",
-    "district": "2",
-    "candidate": "Under Votes",
-    "rows": 8
-   },
-   {
-    "contest": "Justice, Supreme Court",
-    "district": "4",
-    "candidate": "Over Votes",
-    "rows": 8
-   },
-   {
-    "contest": "Justice, Supreme Court",
-    "district": "4",
-    "candidate": "Under Votes",
-    "rows": 8
-   },
-   {
-    "contest": "Justice, Supreme Court",
-    "district": "6",
-    "candidate": "Over Votes",
-    "rows": 8
-   },
-   {
-    "contest": "Justice, Supreme Court",
-    "district": "6",
-    "candidate": "Under Votes",
-    "rows": 8
-   },
-   {
-    "contest": "Presiding Judge, Ct of Crim App",
-    "district": "",
-    "candidate": "Over Votes",
-    "rows": 8
-   },
-   {
-    "contest": "Presiding Judge, Ct of Crim App",
-    "district": "",
-    "candidate": "Under Votes",
-    "rows": 8
-   },
-   {
-    "contest": "Judge, Ct of Crim App",
-    "district": "7",
-    "candidate": "Over Votes",
-    "rows": 8
-   },
-   {
-    "contest": "Judge, Ct of Crim App",
-    "district": "7",
-    "candidate": "Under Votes",
-    "rows": 8
-   },
-   {
-    "contest": "Judge, Ct of Crim App",
-    "district": "8",
-    "candidate": "Over Votes",
-    "rows": 8
-   },
-   {
-    "contest": "Judge, Ct of Crim App",
-    "district": "8",
-    "candidate": "Under Votes",
-    "rows": 8
-   },
-   {
-    "contest": "Member, State BoE",
-    "district": "15",
-    "candidate": "Over Votes",
-    "rows": 8
-   },
-   {
-    "contest": "Member, State BoE",
-    "district": "15",
-    "candidate": "Under Votes",
-    "rows": 8
-   },
-   {
-    "contest": "State Representative",
-    "district": "83",
-    "candidate": "Over Votes",
-    "rows": 8
-   },
-   {
-    "contest": "State Representative",
-    "district": "83",
-    "candidate": "Under Votes",
-    "rows": 8
-   },
-   {
-    "contest": "Justice, 7th Ct of App Dist",
-    "district": "2",
-    "candidate": "Judy Parker",
-    "rows": 8
-   },
-   {
-    "contest": "Justice, 7th Ct of App Dist",
-    "district": "2",
-    "candidate": "Over Votes",
-    "rows": 8
-   },
-   {
-    "contest": "Justice, 7th Ct of App Dist",
-    "district": "2",
-    "candidate": "Under Votes",
-    "rows": 8
-   },
-   {
-    "contest": "Justice, 7th Ct of App Dist",
-    "district": "3",
-    "candidate": "Alex Yarbrough",
-    "rows": 8
-   },
-   {
-    "contest": "Justice, 7th Ct of App Dist",
-    "district": "3",
-    "candidate": "Over Votes",
-    "rows": 8
-   },
-   {
-    "contest": "Justice, 7th Ct of App Dist",
-    "district": "3",
-    "candidate": "Under Votes",
-    "rows": 8
-   },
-   {
-    "contest": "Dist Attorney, 106th Judicial Dist",
-    "district": "",
-    "candidate": "Philip Mack Furlow",
-    "rows": 8
-   },
-   {
-    "contest": "Dist Attorney, 106th Judicial Dist",
-    "district": "",
-    "candidate": "Over Votes",
-    "rows": 8
-   },
-   {
-    "contest": "Dist Attorney, 106th Judicial Dist",
-    "district": "",
-    "candidate": "Under Votes",
-    "rows": 8
-   },
-   {
-    "contest": "County Attorney",
-    "district": "",
-    "candidate": "Over Votes",
-    "rows": 8
-   },
-   {
-    "contest": "County Attorney",
-    "district": "",
-    "candidate": "Under Votes",
-    "rows": 8
-   },
-   {
-    "contest": "Sheriff",
-    "district": "",
-    "candidate": "Over Votes",
-    "rows": 8
-   },
-   {
-    "contest": "Sheriff",
-    "district": "",
-    "candidate": "Under Votes",
-    "rows": 8
-   },
-   {
-    "contest": "County Tax Assessor-Collector",
-    "district": "",
-    "candidate": "Over Votes",
-    "rows": 8
-   },
-   {
-    "contest": "County Tax Assessor-Collector",
-    "district": "",
-    "candidate": "Under Votes",
-    "rows": 8
-   },
-   {
-    "contest": "County Commissioner Pct 1",
-    "district": "",
-    "candidate": "Over Votes",
-    "rows": 2
-   },
-   {
-    "contest": "County Commissioner Pct 1",
-    "district": "",
-    "candidate": "Under Votes",
-    "rows": 2
-   },
-   {
-    "contest": "County Commissioner Pct 3",
-    "district": "",
-    "candidate": "Over Votes",
-    "rows": 2
-   },
-   {
-    "contest": "County Commissioner Pct 3",
-    "district": "",
-    "candidate": "Under Votes",
-    "rows": 2
-   },
-   {
-    "contest": "School Board New Home ISD",
-    "district": "",
-    "candidate": "Over Votes",
-    "rows": 1
-   },
-   {
-    "contest": "School Board New Home ISD",
-    "district": "",
-    "candidate": "Under Votes",
-    "rows": 1
    }
   ],
-  "rejected": [
-   {
-    "what": "Justice, 7th Ct of App Dist, Pl 2 = Justice, 7th Ct of App Dist",
-    "why": "county totals are not close (scan 2210, file 2571)"
-   },
-   {
-    "what": "Justice, 7th Ct of App Dist, Pl 3 = Justice, 7th Ct of App Dist",
-    "why": "county totals are not close (scan 2187, file 2571)"
-   },
-   {
-    "what": "Judy Parker = Judy Parker",
-    "why": "their contests are not paired"
-   },
-   {
-    "what": "Alex Yarbrough = Alex Yarbrough",
-    "why": "their contests are not paired"
-   },
-   {
-    "what": "2 Kevin Bass = Over Votes",
-    "why": "county totals are not close (scan 18, file 0)"
-   },
-   {
-    "what": "candidate pair 33/67",
-    "why": "not one-to-one, or not in the list"
-   }
-  ],
+  "rejected": [],
   "model": {
    "asked": {
     "scan_contests": [
-     "President/Vice President",
-     "US Senator",
-     "US Representative, Dist 19",
      "Justice, Supreme Court, Pl 2",
      "Justice, Supreme Court, Pl 4",
      "Justice, Supreme Court, Pl 6",
@@ -6434,9 +7981,6 @@
     ],
     "file_contests": [
      "Registered Voters",
-     "President",
-     "U.S. Senate",
-     "U.S. House",
      "Justice, Supreme Court",
      "Justice, Supreme Court",
      "Justice, Supreme Court",
@@ -6446,37 +7990,38 @@
      "Justice, 7th Ct of App Dist"
     ],
     "scan_candidates": [
-     "President/Vice President :: Donald J. Trump",
-     "President/Vice President :: Kamala D. Harris",
-     "President/Vice President :: Chase Oliver",
-     "President/Vice President :: Jill Stein",
-     "President/Vice President :: Write-ins",
      "President/Vice President :: Write-In: UnCertified",
      "President/Vice President :: Not Assigned",
-     "US Senator :: Ted Cruz",
-     "US Senator :: Colin Allred",
-     "US Senator :: Ted Brown",
-     "US Senator :: Write-ins",
      "US Senator :: Write-In: UnCertified",
      "US Senator :: Not Assigned",
-     "US Representative, Dist 19 :: Jocey C. Arrington",
-     "US Representative, Dist 19 :: Bernard Johnson",
-     "US Representative, Dist 19 :: Nathan Lewis",
      "Railroad Commissioner :: Not Assigned",
      "Justice, Supreme Court, Pl 2 :: Jimmy Blacklock",
      "Justice, Supreme Court, Pl 2 :: DaSean Jones",
+     "Justice, Supreme Court, Pl 2 :: Over Votes",
+     "Justice, Supreme Court, Pl 2 :: Under Votes",
      "Justice, Supreme Court, Pl 4 :: John Devine",
      "Justice, Supreme Court, Pl 4 :: Christine Vinh Weems",
+     "Justice, Supreme Court, Pl 4 :: Over Votes",
+     "Justice, Supreme Court, Pl 4 :: Under Votes",
      "Justice, Supreme Court, Pl 6 :: Jane Bland",
      "Justice, Supreme Court, Pl 6 :: Bonnie Lee Goldstein",
      "Justice, Supreme Court, Pl 6 :: J. David Roberson",
+     "Justice, Supreme Court, Pl 6 :: Over Votes",
+     "Justice, Supreme Court, Pl 6 :: Under Votes",
      "Judge, Ct of Crim App, Pl 7 :: Gina Parker",
      "Judge, Ct of Crim App, Pl 7 :: Nancy Mulder",
+     "Judge, Ct of Crim App, Pl 7 :: Over Votes",
+     "Judge, Ct of Crim App, Pl 7 :: Under Votes",
      "Judge, Ct of Crim App, Pl 8 :: Lee Finley",
      "Judge, Ct of Crim App, Pl 8 :: Chika Anyiam",
+     "Judge, Ct of Crim App, Pl 8 :: Over Votes",
+     "Judge, Ct of Crim App, Pl 8 :: Under Votes",
      "Justice, 7th Ct of App Dist, Pl 2 :: Judy Parker",
+     "Justice, 7th Ct of App Dist, Pl 2 :: Over Votes",
+     "Justice, 7th Ct of App Dist, Pl 2 :: Under Votes",
      "Justice, 7th Ct of App Dist, Pl 3 :: Alex Yarbrough",
-     "Dist Attorney, 106th Judicial Dist :: Phillip Mack Furlow",
+     "Justice, 7th Ct of App Dist, Pl 3 :: Over Votes",
+     "Justice, 7th Ct of App Dist, Pl 3 :: Under Votes",
      "School Board New Home ISD :: 2 Kevin Bass",
      "School Board New Home ISD :: 3 Kevin Bass",
      "School Board New Home ISD :: 1 Justin Tubb",
@@ -6488,26 +8033,6 @@
     ],
     "file_candidates": [
      "Registered Voters :: ",
-     "President :: Donald J. Trump",
-     "President :: Kamala D. Harris",
-     "President :: Chase Oliver",
-     "President :: Jill Stein",
-     "President :: Write-ins",
-     "President :: Over Votes",
-     "President :: Under Votes",
-     "U.S. Senate :: Ted Cruz",
-     "U.S. Senate :: Colin Allred",
-     "U.S. Senate :: Ted Brown",
-     "U.S. Senate :: Write-ins",
-     "U.S. Senate :: Over Votes",
-     "U.S. Senate :: Under Votes",
-     "U.S. House :: Jodey C. Arrington",
-     "U.S. House :: Bernard Johnson",
-     "U.S. House :: Nathan Lewis",
-     "U.S. House :: Over Votes",
-     "U.S. House :: Under Votes",
-     "Railroad Commissioner :: Over Votes",
-     "Railroad Commissioner :: Under Votes",
      "Justice, Supreme Court :: Jimmy Blacklock",
      "Justice, Supreme Court :: DaSean Jones",
      "Justice, Supreme Court :: Over Votes",
@@ -6521,8 +8046,6 @@
      "Justice, Supreme Court :: J. David Roberson",
      "Justice, Supreme Court :: Over Votes",
      "Justice, Supreme Court :: Under Votes",
-     "Presiding Judge, Ct of Crim App :: Over Votes",
-     "Presiding Judge, Ct of Crim App :: Under Votes",
      "Judge, Ct of Crim App :: Gina Parker",
      "Judge, Ct of Crim App :: Nancy Mulder",
      "Judge, Ct of Crim App :: Over Votes",
@@ -6531,31 +8054,12 @@
      "Judge, Ct of Crim App :: Chika Anyiam",
      "Judge, Ct of Crim App :: Over Votes",
      "Judge, Ct of Crim App :: Under Votes",
-     "Member, State BoE :: Over Votes",
-     "Member, State BoE :: Under Votes",
-     "State Representative :: Over Votes",
-     "State Representative :: Under Votes",
      "Justice, 7th Ct of App Dist :: Judy Parker",
      "Justice, 7th Ct of App Dist :: Over Votes",
      "Justice, 7th Ct of App Dist :: Under Votes",
      "Justice, 7th Ct of App Dist :: Alex Yarbrough",
      "Justice, 7th Ct of App Dist :: Over Votes",
-     "Justice, 7th Ct of App Dist :: Under Votes",
-     "Dist Attorney, 106th Judicial Dist :: Philip Mack Furlow",
-     "Dist Attorney, 106th Judicial Dist :: Over Votes",
-     "Dist Attorney, 106th Judicial Dist :: Under Votes",
-     "County Attorney :: Over Votes",
-     "County Attorney :: Under Votes",
-     "Sheriff :: Over Votes",
-     "Sheriff :: Under Votes",
-     "County Tax Assessor-Collector :: Over Votes",
-     "County Tax Assessor-Collector :: Under Votes",
-     "County Commissioner Pct 1 :: Over Votes",
-     "County Commissioner Pct 1 :: Under Votes",
-     "County Commissioner Pct 3 :: Over Votes",
-     "County Commissioner Pct 3 :: Under Votes",
-     "School Board New Home ISD :: Over Votes",
-     "School Board New Home ISD :: Under Votes"
+     "Justice, 7th Ct of App Dist :: Under Votes"
     ]
    },
    "answer": {
@@ -6587,128 +8091,116 @@
      [
       6,
       7
-     ],
-     [
-      7,
-      8
-     ],
-     [
-      8,
-      9
-     ],
-     [
-      9,
-      10
      ]
     ],
     "candidates": [
      [
-      0,
+      5,
       1
      ],
      [
-      1,
+      6,
       2
      ],
      [
-      2,
+      7,
       3
      ],
      [
-      3,
+      8,
       4
      ],
      [
-      4,
+      9,
       5
      ],
      [
-      7,
+      10,
+      6
+     ],
+     [
+      11,
+      7
+     ],
+     [
+      12,
       8
      ],
      [
-      8,
+      13,
       9
      ],
      [
-      9,
+      14,
       10
      ],
      [
-      10,
+      15,
       11
      ],
      [
-      13,
-      14
-     ],
-     [
-      14,
-      15
-     ],
-     [
-      15,
-      16
+      16,
+      12
      ],
      [
       17,
-      21
+      13
      ],
      [
       18,
-      22
+      14
      ],
      [
       19,
-      25
+      15
      ],
      [
       20,
-      26
+      16
      ],
      [
       21,
-      29
+      17
      ],
      [
       22,
-      30
+      18
      ],
      [
       23,
-      31
+      19
      ],
      [
       24,
-      36
+      20
      ],
      [
       25,
-      37
+      21
      ],
      [
       26,
-      40
+      22
      ],
      [
       27,
-      41
+      23
      ],
      [
       28,
-      48
+      24
      ],
      [
       29,
-      51
+      25
+     ],
+     [
+      30,
+      26
      ],
      [
       31,
-      67
-     ],
-     [
-      33,
-      67
+      27
      ]
     ]
    }
@@ -6716,15 +8208,22 @@
  },
  "corrected_events": [],
  "audit": {
-  "disagreements_found": 43,
-  "rereads": 1,
+  "disagreements_found": 47,
+  "rereads": 0,
   "rereads_skipped_sums_decide": 0,
-  "rereads_agreed_with_ledger": 1,
+  "rereads_agreed_with_ledger": 0,
   "rereads_agreed_with_file": 0,
   "ledger_corrected": 0,
   "contests": 157,
   "contest_totals_printed": 149,
   "second_sum_exists": true,
-  "seconds": 12.3
+  "ballot_sums_not_used": [
+   {
+    "block": "4|19",
+    "page": 19,
+    "why": "the contest total, overvotes and undervotes do not add to the precinct's ballots cast in any column (total 273 against 982, absentee 0 against 11, early 273 against 546, election_day 0 against 425), always on the same side: the contest was not on every ballot of the precinct, so the equation is not a sum for this block"
+   }
+  ],
+  "seconds": 7.6
  }
 }

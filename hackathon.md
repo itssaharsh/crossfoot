@@ -250,11 +250,34 @@ Planned, and updated as each part is actually used:
   backend_upload_contract_unavailable"). Server refused: search with `fields`, and the `get_trace_context` options (`not_enabled`).
 - Evidence: see `.prod-build/reports/T05b.md`. No model spend.
 
-## Demo
-Not available yet.
+### 11 October 2026, T08: the evidence page, the page from the final run, the security pass, the cleanup
+- `crossfoot site build --run <run_id>|latest` added (`crossfoot/cli.py`); `latest` is the newest run folder with a `summary.json`,
+  else the newest with a `findings.json`. On a summary run the builder takes each county from the run that `summary.json` names
+  (`from_run`), and the run's start and end from the summary. Built from `20261011-141300`; the page's headline line (8 counties, 7 read,
+  215 disagreements, 185 settled, 0 confirmed, 5,887 / 5,766 / 5,881 printed sums) equals `runs/20261011-141300/summary.json`.
+- Screenshots (Chromium already downloaded by Playwright, 1440x900 and 390x844, nine states over every county) and the axe-core results
+  (11 states at both sizes, 22 runs, 0 violations) are in `qa/final/`; the scripts moved to `tools/qa/`.
+- README rewritten; its two tables and the picture are written from the files by `tools/readme_tables.py` (`--check` verifies them).
+  `docs/evidence/checkpoints.txt` is `entire checkpoint list` as of this task. No link is given for anything that does not exist yet.
+- Security pass: no key-shaped string or email address (other than the assistant's `noreply` commit trailer) in the tree or the whole history; no
+  value of `LITELLM_API_KEY` or `NEATLOGS_API_KEY` in any tracked file or in the history; no `.env` file tracked or ever committed; `data/`
+  and `.env` are ignored; the only absolute home paths in tracked files are in `.prod-build/evidence.jsonl` (the machine's working
+  folder). A dependency audit (`pip-audit` on the exported lock) reported no known vulnerability; it could not audit the project itself.
+- Cleanup, tracked files only (what history keeps stays in history): 132.6 MB in 1,153 files before, 44.0 MB in 664 files after (with
+  `qa/final/`, 2.6 MB). Removed: the run folders no document names (`20261011-134418`, `-134509`, `-134535`, `-134552`, `-135058`,
+  `-140946`); `ledger.sqlite` everywhere except the three a document quotes (`20261011-090307`, `-102700`, `-135519`); crops and
+  `corrected/` of runs that are earlier steps; `county.json` of earlier-step runs unless a document names or quotes it; the
+  `qa/t06*`, `qa/t07*` screenshots and scripts no document links. `tools/named_paths.py --check` lists every run id and path under
+  `runs/` and `qa/` that the README, this log, `docs/`, the reports and the tests name, and reports that none is missing.
+  Two earlier documents were touched to keep that true: a "not committed" added to one run mention in `docs/evidence/before-after.md`, and
+  `qa/axe.min.js` renamed to `tools/qa/axe.min.js` in `.prod-build/reports/T07a.md`. Files that were not tracked (the run-level
+  `crops/` folders, which `.gitignore` already excluded) were left on disk.
+- Removed from the code (each hit of `vulture` checked by search): `SUM_KINDS`, `FIG_NEED`, `REJECT_SHARE`, `tracing.enabled`.
+  Not removed because tests use them: `grid_gaps`, `open_cells`, `to_page`, and the `make_crops` argument.
+- Not measured: whether a person reading the README's first screen finds the links without scrolling.
 
-## Known limitations and next steps
-- Nothing is built yet. This section is rewritten as tasks land.
+## Known limitations
+See the Limits section of [README.md](README.md).
 
 ## Submission
 Confirmed requirements (event page, read 11 October 2026): a public quote post on X with team, name, project, public

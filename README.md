@@ -3,87 +3,134 @@
 Crossfoot is an agent that audits published data against the scanned documents it was copied from, proves each
 error with the document's own printed totals, and proposes the fix.
 
-**Status (11 October 2026, in progress):** built during neatHack. One county is audited end to end; the second
-layout, the run over all eight counties and the results page are being built now. The plan, the architecture and the
-UI specification in this repository were written before any code, and no code existed before the event's start. The
-build log is in [hackathon.md](hackathon.md).
+<!-- picture:start -->
+![crop of the scan: Chase Oliver, precinct 29, the cell outlined](runs/20261011-135350/panola/crops/g003.png)
 
-## The idea
+*Panola County, page 1, Chase Oliver, precinct 29, election day. The published file has 0; the scan has 1. The row's printed total is 12: the cells add to 12 with the scan's value and to 11 with the file's, so the printed total decides (finding f005 in [runs/20261011-135350/panola/findings.json](runs/20261011-135350/panola/findings.json); not confirmed by a person).*
+<!-- picture:end -->
 
-A scanned table prints its own totals. On a canvass sheet every value sits on two printed sums: a cell on its row
-and its column, the small total under a column on that column and on the grand total. So one wrong value makes
-exactly two sums fail, and they cross at it. Crossfoot reads the scan with a vision model, accepts a value only when
-its sums hold, looks again where two failing sums cross, and then uses the closed ledger to audit the public file
-that was copied from the same scan. A correction is proposed only when printed totals agree with the new value and
-disagree with the old one. Where no printed total can decide, it says "cannot verify" and leaves the value alone.
+Open: [the results page](site/) · [traces and the detection](docs/evidence/traces.md) ·
+[checkpoints](docs/evidence/checkpoints.txt) · [the plan](.prod-build/contract.md) ·
+[the build log](hackathon.md)
 
-## What it works on
+## What it found
 
-The eight Texas county files (2024 general election) that the [OpenElections](https://github.com/openelections)
-project uses as a manually verified answer key for grading document-reading models
+Eight Texas county files for the 2024 general election, each checked against its county's own scan. Every figure
+below is made from [`runs/20261011-141300/summary.json`](runs/20261011-141300/summary.json) by
+[`tools/readme_tables.py`](tools/readme_tables.py); each county's own folder holds its report, corrected file and crops.
+
+<!-- table:start -->
+| County | Layout | Published rows compared | Disagreements | Settled by the printed totals | Cannot be verified | Printed sums in all | Holding with the published file | Holding with the corrected file |
+|---|---|---|---|---|---|---|---|---|
+| Panola | matrix | 783 of 783 | 121 | 109 | 12 | 984 | 949 | 978 |
+| San Saba | report | 275 of 275 | 21 | 3 | 18 | 275 | 274 | 275 |
+| Cottle | report | 166 of 166 | 0 | 0 | 0 | 166 | 166 | 166 |
+| Jones | report | 335 of 344 | 26 | 26 | 0 | 1,102 | 1,083 | 1,102 |
+| Lynn | report | 634 of 650 | 47 | 47 | 0 | 2,115 | 2,049 | 2,115 |
+| Scurry | report | 534 of 545 | 0 | 0 | 0 | 545 | 545 | 545 |
+| Foard | report | 294 of 298 | 0 | 0 | 0 | 700 | 700 | 700 |
+| Limestone | no_printed_totals | not checked: nothing printed on the scan can be summed | | | | | | |
+| **All** | | 3,021 of 3,061 | 215 | 185 | 30 | 5,887 | 5,766 | 5,881 |
+<!-- table:end -->
+
+Confirmed by a person: 0. Nothing has been sent to the project.
+
+What these are: transcription slips in a volunteer dataset, found by comparing it with the counties' certified scans,
+which are the source of truth. The scans and the published files are public
 ([scans](https://github.com/openelections/openelections-sources-tx/tree/master/2024/general),
-[published files](https://github.com/openelections/openelections-data-tx/tree/master/2024/counties)). The scans
-are the counties' own documents and are the source of truth. What Crossfoot finds are transcription slips in a
-volunteer dataset, never anything about the results themselves. No finding below has been confirmed by a person yet,
-and nothing has been sent to the project.
+[published files](https://github.com/openelections/openelections-data-tx/tree/master/2024/counties), from the
+[OpenElections](https://github.com/openelections) project). Neither the project nor any county has seen or approved
+this. Nothing here says anything about the results themselves.
 
-## Where it stands: Panola County (6 scanned pages, 783 published rows)
+How to check one: open the county's `report.md` (for example
+[Panola's](runs/20261011-135350/panola/report.md)). Each group has a crop of the scan, the cells, and each printed sum
+with the value that makes it hold. Add the numbers on the crop yourself.
 
-Figures from `runs/20261011-120008` (one full run from nothing) and `runs/20261011-122159` (the audit of that
-ledger with the current rules):
+## How it works
 
-| | |
-|---|---|
-| Places where the published file disagrees with the scan | 121 values, in 46 groups |
-| Settled by the scan's printed totals | 109 |
-| Cannot be verified, left as published | 12 |
-| Confirmed by a person | 0 |
-| Printed sums on the scan | 984 |
-| ... that hold with the published file's values | 949 |
-| ... that hold with the corrected file's values | 978 (6 still fail, each with its reason in the report) |
-| Published rows that fail their own total | 1, and 0 in the corrected file |
-| One full run | 639 seconds, 269 model calls, $0.88 (metered estimate) |
-
-The report with a crop and the deciding sums for every group is
-[runs/20261011-122159/panola/report.md](runs/20261011-122159/panola/report.md); the corrected file and the diff are
-next to it.
-
-How the reader was chosen, from the run's own record: a sample of the first page read with `claude-haiku`
-failed 6 of 22 row sums, so the county was read with `claude-sonnet-4.6`.
+1. Read a sample of the first page with a cheap model and choose the reader by how many printed row sums fail.
+2. Read every page into a ledger, one cell at a time.
+3. Check every printed sum: a value is accepted only when the sums it sits on hold.
+4. Where two failing sums cross, look again at that cell with a bigger crop and, if needed, a stronger model.
+5. Lay the published file over the closed ledger, row by row.
+6. The printed sums decide: a correction is proposed only when a printed total agrees with the new value and
+   disagrees with the old one; otherwise it says "cannot verify" and leaves the value alone.
 
 ## Run it
 
 ```
 uv sync
-export LITELLM_API_KEY=... LITELLM_BASE_URL=...   # an OpenAI-compatible gateway; NEATLOGS_API_KEY is optional
-uv run crossfoot audit --county panola             # read, close, audit; writes runs/<run_id>/panola/
-uv run crossfoot verify-known --county panola      # checks the findings against eight slips read by eye
-uv run pytest -q
+export LITELLM_API_KEY=... LITELLM_BASE_URL=...      # an OpenAI-compatible gateway; NEATLOGS_API_KEY is optional
+uv run crossfoot budget                              # the gateway's spend and limit for the key
+uv run crossfoot audit --county panola               # read, close, audit one county; writes runs/<run_id>/panola/
+uv run crossfoot audit --all --budget 9              # every county in turn; writes runs/<run_id>/<county>/ and summary.json, summary.md
+uv run crossfoot summarize --base <run_id> --use panola=<run_id>   # a new summary from the newest result of each county; no model call
+uv run crossfoot verify-known --county panola        # checks the findings against eight slips read by eye
+uv run crossfoot site build --run latest             # writes site/data/ from the newest summary run
+python3 -m http.server -d site 8000                  # then open http://localhost:8000/
+uv run pytest -q                                     # no network, no model calls
 ```
 
-It needs `pdftoppm` (poppler) to render the scans.
+It needs `pdftoppm` (poppler) to render the scans. `uv run crossfoot --help` lists the other steps.
 
-## Evidence so far
+## Evidence
 
-- [docs/evidence/before-after.md](docs/evidence/before-after.md): two changes made from what the runs showed, each
-  with a run before and a run after and what got worse.
-- [docs/evidence/baseline/](docs/evidence/baseline/): one prompt to a general coding agent on the same county, kept
-  as it was written. It is being scored with the audit's own rules.
-- [hackathon.md](hackathon.md): the build log, including what failed.
-- Every commit made by a coding session carries an `Entire-Checkpoint` trailer; the session is stored with it.
+- Two changes made from what the runs showed, each with a run before and a run after and what got worse:
+  [docs/evidence/before-after.md](docs/evidence/before-after.md).
+- One prompt to a general coding agent on the same county, scored the same way:
+  [docs/evidence/baseline.md](docs/evidence/baseline.md).
+- A run stopped by its budget and continued, and other recoveries:
+  [docs/evidence/recovery.md](docs/evidence/recovery.md).
+- Traces and the detection: [docs/evidence/traces.md](docs/evidence/traces.md).
+- Checkpoints, the output of `entire checkpoint list`: [docs/evidence/checkpoints.txt](docs/evidence/checkpoints.txt)
+  (the last line says how to open a session from a commit's `Entire-Checkpoint` trailer).
+- The results page: [site/](site/) (static; serve it as in "Run it"). Screenshots of it at 1440x900 and 390x844 and the
+  accessibility check (axe-core, zero violations) are in [qa/final/](qa/final/).
+- The build log, including what failed: [hackathon.md](hackathon.md).
+
+Measured cost and time per county, from the same summary:
+
+<!-- cost:start -->
+| County | Pages | Model calls | Metered cost (estimate) | Seconds |
+|---|---|---|---|---|
+| Panola | 6 | 8 | $0.0118 | 41.5 |
+| San Saba | 21 | 9 | $0.0298 | 36.9 |
+| Cottle | 12 | 0 | $0.0000 | 18.2 |
+| Jones | 20 | 1 | $0.0075 | 36.6 |
+| Lynn | 37 | 1 | $0.0089 | 50.6 |
+| Scurry | 38 | 1 | $0.0009 | 29.5 |
+| Foard | 16 | 1 | $0.0015 | 31.1 |
+| Limestone | 0 | 1 | $0.0021 | 1.8 |
+| **All** | 150 | 22 | $0.0625 | 246.2 |
+
+These are the figures of the audit that `summary.json` lists for each county; a county audited again from an earlier run's ledger counts the new calls only, not the reading that was paid for in that earlier run. The one full run of Panola from nothing, [`runs/20261011-120008/run.json`](runs/20261011-120008/run.json), took 638.7 seconds, 269 model calls and $0.88 (metered estimate).
+<!-- cost:end -->
+
+## The three tools
+
+- **neatlogs.** Every model and tool call is a span. Two changes to the program were made from what the runs showed
+  ([before-after.md](docs/evidence/before-after.md)), and one detection was created
+  ([traces.md](docs/evidence/traces.md)).
+- **Entire.** Every coding session's commit carries an `Entire-Checkpoint` trailer
+  ([checkpoints.txt](docs/evidence/checkpoints.txt)). The graph plugin's instructions for coding agents are in
+  [AGENTS.md](AGENTS.md).
 
 ## Limits
 
 - The sums cannot see two wrong values that cancel out on the same row and the same column.
-- A value that sits on one printed sum only (the registered-voters row of this county) cannot be located when that
-  sum fails; it is reported as "cannot verify".
+- A value that sits on one printed sum only cannot be located when that sum fails; it is reported as "cannot verify".
+  Three of the counties print only a row sum as the second check (`summary.md`, column "second sum").
+- Limestone County prints nothing that can be added up, so it is listed as not checked and left as published.
 - Where the scan's own printed totals disagree with each other, Crossfoot says so and lists it for a person. It does
   not say which is right.
+- Some published rows were not compared with the scan (the contest did not pair with one on the scan, or the row
+  repeats a precinct); each is listed in the run's `summary.md` under "Published rows compared with the scan".
 - A missing or extra row is listed, never added or removed.
+- A person still has to open the scan for each finding, confirm it, and send it to the project. None has been confirmed.
+- Not built: sending anything to anyone, and reading a scan that has no printed totals.
 
-## How it is being built
+## What existed before the event
 
-- [ARCHITECTURE.md](ARCHITECTURE.md): the design, and the measurements that changed it.
-- [.prod-build/contract.md](.prod-build/contract.md): what it has to do and how each part is checked.
-- [UI-SPEC.md](UI-SPEC.md): the results page.
-- `.prod-build/briefs/` and `.prod-build/reports/`: the task given to each coding session and what it reported.
+The idea and the plan: [ARCHITECTURE.md](ARCHITECTURE.md), [UI-SPEC.md](UI-SPEC.md) and
+[.prod-build/contract.md](.prod-build/contract.md) were written before any code. No code existed before the event.
+`.prod-build/briefs/` and `.prod-build/reports/` hold the task given to each coding session and what it reported.

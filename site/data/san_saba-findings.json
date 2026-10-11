@@ -1,6 +1,6 @@
 {
  "county": "san_saba",
- "run_id": "20261011-130414",
+ "run_id": "20261011-141051",
  "layout": "report",
  "file": "20241105__tx__general__san_saba__precinct.csv",
  "policy": {
@@ -22,6 +22,9 @@
   "groups": 11,
   "corrections": 3
  },
+ "rows_published": 275,
+ "rows_compared": 275,
+ "not_compared": [],
  "findings": [
   {
    "id": "f001",
@@ -249,7 +252,7 @@
     "model": "claude-sonnet-4.6",
     "dpi": 400,
     "value": 186,
-    "crop": "runs/20261011-130414/crops/audit-reread-0001.png",
+    "crop": "runs/20261011-141051/crops/audit-reread-0001.png",
     "error": null,
     "row": {
      "total": 364,
@@ -339,7 +342,7 @@
     "model": "claude-sonnet-4.6",
     "dpi": 400,
     "value": 165,
-    "crop": "runs/20261011-130414/crops/audit-reread-0001.png",
+    "crop": "runs/20261011-141051/crops/audit-reread-0001.png",
     "error": null,
     "row": {
      "total": 364,
@@ -429,7 +432,7 @@
     "model": "claude-sonnet-4.6",
     "dpi": 400,
     "value": 108,
-    "crop": "runs/20261011-130414/crops/audit-reread-0002.png",
+    "crop": "runs/20261011-141051/crops/audit-reread-0002.png",
     "error": null,
     "row": {
      "total": 154,
@@ -519,7 +522,7 @@
     "model": "claude-sonnet-4.6",
     "dpi": 400,
     "value": 41,
-    "crop": "runs/20261011-130414/crops/audit-reread-0002.png",
+    "crop": "runs/20261011-141051/crops/audit-reread-0002.png",
     "error": null,
     "row": {
      "total": 154,
@@ -609,7 +612,7 @@
     "model": "claude-sonnet-4.6",
     "dpi": 400,
     "value": 15,
-    "crop": "runs/20261011-130414/crops/audit-reread-0003.png",
+    "crop": "runs/20261011-141051/crops/audit-reread-0003.png",
     "error": null,
     "row": {
      "total": 15,
@@ -699,7 +702,7 @@
     "model": "claude-sonnet-4.6",
     "dpi": 400,
     "value": 8,
-    "crop": "runs/20261011-130414/crops/audit-reread-0003.png",
+    "crop": "runs/20261011-141051/crops/audit-reread-0003.png",
     "error": null,
     "row": {
      "total": 15,
@@ -789,7 +792,7 @@
     "model": "claude-sonnet-4.6",
     "dpi": 400,
     "value": 13,
-    "crop": "runs/20261011-130414/crops/audit-reread-0004.png",
+    "crop": "runs/20261011-141051/crops/audit-reread-0004.png",
     "error": null,
     "row": {
      "total": 358,
@@ -879,7 +882,7 @@
     "model": "claude-sonnet-4.6",
     "dpi": 400,
     "value": 188,
-    "crop": "runs/20261011-130414/crops/audit-reread-0004.png",
+    "crop": "runs/20261011-141051/crops/audit-reread-0004.png",
     "error": null,
     "row": {
      "total": 358,
@@ -969,7 +972,7 @@
     "model": "claude-sonnet-4.6",
     "dpi": 400,
     "value": 108,
-    "crop": "runs/20261011-130414/crops/audit-reread-0005.png",
+    "crop": "runs/20261011-141051/crops/audit-reread-0005.png",
     "error": null,
     "row": {
      "total": 160,
@@ -1059,7 +1062,7 @@
     "model": "claude-sonnet-4.6",
     "dpi": 400,
     "value": 46,
-    "crop": "runs/20261011-130414/crops/audit-reread-0005.png",
+    "crop": "runs/20261011-141051/crops/audit-reread-0005.png",
     "error": null,
     "row": {
      "total": 160,
@@ -1149,7 +1152,7 @@
     "model": "claude-sonnet-4.6",
     "dpi": 400,
     "value": 463,
-    "crop": "runs/20261011-130414/crops/audit-reread-0006.png",
+    "crop": "runs/20261011-141051/crops/audit-reread-0006.png",
     "error": null,
     "row": {
      "total": 577,
@@ -1239,7 +1242,7 @@
     "model": "claude-sonnet-4.6",
     "dpi": 400,
     "value": 92,
-    "crop": "runs/20261011-130414/crops/audit-reread-0006.png",
+    "crop": "runs/20261011-141051/crops/audit-reread-0006.png",
     "error": null,
     "row": {
      "total": 577,
@@ -1329,7 +1332,7 @@
     "model": "claude-sonnet-4.6",
     "dpi": 400,
     "value": 26,
-    "crop": "runs/20261011-130414/crops/audit-reread-0007.png",
+    "crop": "runs/20261011-141051/crops/audit-reread-0007.png",
     "error": null,
     "row": {
      "total": 38,
@@ -1419,7 +1422,7 @@
     "model": "claude-sonnet-4.6",
     "dpi": 400,
     "value": 9,
-    "crop": "runs/20261011-130414/crops/audit-reread-0007.png",
+    "crop": "runs/20261011-141051/crops/audit-reread-0007.png",
     "error": null,
     "row": {
      "total": 38,
@@ -1509,7 +1512,7 @@
     "model": "claude-sonnet-4.6",
     "dpi": 400,
     "value": 35,
-    "crop": "runs/20261011-130414/crops/audit-reread-0008.png",
+    "crop": "runs/20261011-141051/crops/audit-reread-0008.png",
     "error": null,
     "row": {
      "total": 51,
@@ -1599,7 +1602,7 @@
     "model": "claude-sonnet-4.6",
     "dpi": 400,
     "value": 13,
-    "crop": "runs/20261011-130414/crops/audit-reread-0008.png",
+    "crop": "runs/20261011-141051/crops/audit-reread-0008.png",
     "error": null,
     "row": {
      "total": 51,
@@ -1689,7 +1692,7 @@
     "model": "claude-sonnet-4.6",
     "dpi": 400,
     "value": 295,
-    "crop": "runs/20261011-130414/crops/audit-reread-0009.png",
+    "crop": "runs/20261011-141051/crops/audit-reread-0009.png",
     "error": null,
     "row": {
      "total": 490,
@@ -1779,7 +1782,7 @@
     "model": "claude-sonnet-4.6",
     "dpi": 400,
     "value": 186,
-    "crop": "runs/20261011-130414/crops/audit-reread-0009.png",
+    "crop": "runs/20261011-141051/crops/audit-reread-0009.png",
     "error": null,
     "row": {
      "total": 490,
@@ -2143,121 +2146,10 @@
   }
  },
  "unmatched": {
-  "scan": [
-   {
-    "block": "c047",
-    "page": 13,
-    "contest": "County Commissioner Pct 3",
-    "candidate": "Kerley Kroll"
-   }
-  ],
-  "file": [
-   {
-    "contest": "County Commissioner Pct 3",
-    "district": "",
-    "candidate": "Kenley Kroll",
-    "rows": 2
-   }
-  ],
+  "scan": [],
+  "file": [],
   "rejected": [],
-  "model": {
-   "asked": {
-    "scan_contests": [
-     "President/Vice President",
-     "US Senator",
-     "US Representative, Dist 11"
-    ],
-    "file_contests": [
-     "President",
-     "U.S. Senate",
-     "U.S. House"
-    ],
-    "scan_candidates": [
-     "President/Vice President :: Donald J. Trump",
-     "President/Vice President :: Kamala D. Harris",
-     "President/Vice President :: Chase Oliver",
-     "President/Vice President :: Jill Stein",
-     "President/Vice President :: Write-ins",
-     "US Senator :: Ted Cruz",
-     "US Senator :: Colin Allred",
-     "US Senator :: Ted Brown",
-     "US Senator :: Write-ins",
-     "US Representative, Dist 11 :: August Pfluger",
-     "County Commissioner Pct 3 :: Kerley Kroll"
-    ],
-    "file_candidates": [
-     "President :: Donald J. Trump",
-     "President :: Kamala D. Harris",
-     "President :: Chase Oliver",
-     "President :: Jill Stein",
-     "President :: Write-ins",
-     "U.S. Senate :: Ted Cruz",
-     "U.S. Senate :: Colin Allred",
-     "U.S. Senate :: Ted Brown",
-     "U.S. Senate :: Write-ins",
-     "U.S. House :: August Pfluger",
-     "County Commissioner Pct 3 :: Kenley Kroll"
-    ]
-   },
-   "answer": {
-    "contests": [
-     [
-      0,
-      0
-     ],
-     [
-      1,
-      1
-     ],
-     [
-      2,
-      2
-     ]
-    ],
-    "candidates": [
-     [
-      0,
-      0
-     ],
-     [
-      1,
-      1
-     ],
-     [
-      2,
-      2
-     ],
-     [
-      3,
-      3
-     ],
-     [
-      4,
-      4
-     ],
-     [
-      5,
-      5
-     ],
-     [
-      6,
-      6
-     ],
-     [
-      7,
-      7
-     ],
-     [
-      8,
-      8
-     ],
-     [
-      9,
-      9
-     ]
-    ]
-   }
-  }
+  "model": {}
  },
  "corrected_events": [],
  "audit": {
@@ -2270,6 +2162,7 @@
   "contests": 142,
   "contest_totals_printed": 0,
   "second_sum_exists": false,
-  "seconds": 17.8
+  "ballot_sums_not_used": [],
+  "seconds": 16.6
  }
 }

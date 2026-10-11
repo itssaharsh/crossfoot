@@ -1,6 +1,6 @@
 {
  "county": "panola",
- "run_id": "20261011-130414",
+ "run_id": "20261011-135350",
  "layout": "matrix",
  "file": "20241105__tx__general__panola__precinct.csv",
  "policy": {
@@ -26,6 +26,9 @@
   "groups": 46,
   "corrections": 80
  },
+ "rows_published": 783,
+ "rows_compared": 783,
+ "not_compared": [],
  "findings": [
   {
    "id": "f001",
@@ -242,7 +245,7 @@
     "model": "claude-sonnet-4.6",
     "dpi": 400,
     "value": 1459,
-    "crop": "runs/20261011-130414/crops/audit-reread-0001-reg.png",
+    "crop": "runs/20261011-135350/crops/audit-reread-0001-reg.png",
     "error": null
    },
    "reread_disagrees": false,
@@ -21051,7 +21054,7 @@
     "model": "claude-sonnet-4.6",
     "dpi": 400,
     "value": 320,
-    "crop": "runs/20261011-130414/crops/audit-reread-0002-p6-b3.png",
+    "crop": "runs/20261011-135350/crops/audit-reread-0002-p6-b3.png",
     "error": null
    },
    "reread_disagrees": false,
@@ -21237,7 +21240,7 @@
     "model": "claude-sonnet-4.6",
     "dpi": 400,
     "value": 181,
-    "crop": "runs/20261011-130414/crops/audit-reread-0003-p6-b3.png",
+    "crop": "runs/20261011-135350/crops/audit-reread-0003-p6-b3.png",
     "error": null
    },
    "reread_disagrees": false,
@@ -21423,7 +21426,7 @@
     "model": "claude-sonnet-4.6",
     "dpi": 400,
     "value": 311,
-    "crop": "runs/20261011-130414/crops/audit-reread-0004-p6-b3.png",
+    "crop": "runs/20261011-135350/crops/audit-reread-0004-p6-b3.png",
     "error": null
    },
    "reread_disagrees": false,
@@ -21609,7 +21612,7 @@
     "model": "claude-sonnet-4.6",
     "dpi": 400,
     "value": 1363,
-    "crop": "runs/20261011-130414/crops/audit-reread-0005-p6-b3.png",
+    "crop": "runs/20261011-135350/crops/audit-reread-0005-p6-b3.png",
     "error": null
    },
    "reread_disagrees": false,
@@ -21795,7 +21798,7 @@
     "model": "claude-sonnet-4.6",
     "dpi": 400,
     "value": 235,
-    "crop": "runs/20261011-130414/crops/audit-reread-0006-p6-b3.png",
+    "crop": "runs/20261011-135350/crops/audit-reread-0006-p6-b3.png",
     "error": null
    },
    "reread_disagrees": false,
@@ -21981,7 +21984,7 @@
     "model": "claude-sonnet-4.6",
     "dpi": 400,
     "value": 245,
-    "crop": "runs/20261011-130414/crops/audit-reread-0007-p6-b3.png",
+    "crop": "runs/20261011-135350/crops/audit-reread-0007-p6-b3.png",
     "error": null
    },
    "reread_disagrees": false,
@@ -29304,6 +29307,6 @@
   "rereads_agreed_with_ledger": 7,
   "rereads_agreed_with_file": 0,
   "ledger_corrected": 0,
-  "seconds": 14.4
+  "seconds": 17.6
  }
 }

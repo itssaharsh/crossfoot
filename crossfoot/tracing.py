@@ -52,10 +52,6 @@ def init() -> str:
     return ""
 
 
-def enabled() -> bool:
-    return _on
-
-
 def wrap(client):
     return neatlogs.wrap(client) if _on else client
 

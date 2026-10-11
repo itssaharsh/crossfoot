@@ -39,7 +39,6 @@ DPIS = (300, 400, 500, 600)
 SUSPECT_DPI = 400
 STRIP_CELLS = 7           # a row strip is cut into pieces of at most this many cells
 KINDS = ("cell", "column", "row_total", "col_total", "grand", "row_strip")
-SUM_KINDS = ("row", "col", "grand_col", "grand_row")
 FINAL = ("cannot_verify", "document_inconsistent")
 ORDER = {"row": 0, "col": 1, "grand_col": 2, "grand_row": 3}
 
