@@ -1,0 +1,44 @@
+Read AGENTS.md, then .prod-build/briefs/T04a.md and do exactly that task.
+Run checks through `python3 .prod-build/pb.py` as the brief says.
+Finish by writing .prod-build/reports/T04a.md in the format at the end of the brief, commit (do not push), and reply with the report.
+
+---
+
+<task-notification>
+<task-id>b8fhp3uh0</task-id>
+<tool-use-id>toolu_0114RPkzSsoySNprkJnsZX5p</tool-use-id>
+<output-file>/tmp/claude-1000/-home-saharsh-contri-crossfoot/6d63dcdd-1b8f-4ca8-b2ad-68f3acc15064/tasks/b8fhp3uh0.output</output-file>
+<status>completed</status>
+<summary>Background command "python3 .prod-build/pb.py run --task T04a --timeout 900 --tail 60 -- uv run crossfoot audit --county san_saba 2&gt;&amp;1 | tail -70" completed (exit code 0)</summary>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>biaiuivyx</task-id>
+<tool-use-id>toolu_011TtNS9namMtHQq25kufLWQ</tool-use-id>
+<output-file>/tmp/claude-1000/-home-saharsh-contri-crossfoot/6d63dcdd-1b8f-4ca8-b2ad-68f3acc15064/tasks/biaiuivyx.output</output-file>
+<status>completed</status>
+<summary>Monitor "Wait for San Saba audit output" stream ended</summary>
+<event>done</event>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>bvl7qsezb</task-id>
+<tool-use-id>toolu_01Uy1bvcNp6sayi1ZvYG1mi4</tool-use-id>
+<output-file>/tmp/claude-1000/-home-saharsh-contri-crossfoot/6d63dcdd-1b8f-4ca8-b2ad-68f3acc15064/tasks/bvl7qsezb.output</output-file>
+<status>completed</status>
+<summary>Background command "python3 .prod-build/pb.py run --task T04a --timeout 900 --tail 40 -- uv run crossfoot audit --county san_saba &gt; /tmp/claude-1000/-home-saharsh-contri-crossfoot/6d63dcdd-1b8f-4ca8-b2ad-68f3acc15064/scratchpad/run2.txt 2&gt;&amp;1; cut -c1-500 /tmp/claude-1000/-home-saharsh-contri-crossfoot/6d63dcdd-1b8f-4ca8-b2ad-68f3acc15064/scratchpad/run2.txt | tail -20" completed (exit code 0)</summary>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>b8bl1sqdy</task-id>
+<tool-use-id>toolu_01Qa28cfWWTVuFA9qiphvR9o</tool-use-id>
+<output-file>/tmp/claude-1000/-home-saharsh-contri-crossfoot/6d63dcdd-1b8f-4ca8-b2ad-68f3acc15064/tasks/b8bl1sqdy.output</output-file>
+<status>completed</status>
+<summary>Background command "python3 .prod-build/pb.py run --task T04a --timeout 900 --tail 40 -- uv run crossfoot audit --county san_saba &gt; /tmp/claude-1000/-home-saharsh-contri-crossfoot/6d63dcdd-1b8f-4ca8-b2ad-68f3acc15064/scratchpad/run3.txt 2&gt;&amp;1; cut -c1-600 /tmp/claude-1000/-home-saharsh-contri-crossfoot/6d63dcdd-1b8f-4ca8-b2ad-68f3acc15064/scratchpad/run3.txt | tail -14" completed (exit code 0)</summary>
+</task-notification>

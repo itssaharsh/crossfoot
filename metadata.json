@@ -1,0 +1,40 @@
+{
+  "cli_version": "0.11.4",
+  "checkpoint_id": "01M4NGKA19RABXHCRZ85054WBD",
+  "strategy": "manual-commit",
+  "branch": "main",
+  "checkpoints_count": 4,
+  "files_touched": [
+    ".prod-build/evidence.jsonl",
+    ".prod-build/plan.json",
+    "crossfoot/audit.py",
+    "crossfoot/checks.py",
+    "crossfoot/cli.py",
+    "crossfoot/layouts/profile.py",
+    "crossfoot/layouts/report.py",
+    "crossfoot/outputs.py",
+    "hackathon.md",
+    "runs/20261011-123542/ledger.sqlite",
+    "runs/20261011-123542/limestone/county.json",
+    "runs/20261011-123542/limestone/report.md",
+    "runs/20261011-123542/run.json",
+    "runs/20261011-125310/ledger.sqlite",
+    "tests/test_report_layout.py"
+  ],
+  "sessions": [
+    {
+      "metadata": "/0/metadata.json",
+      "transcript": "/0/full.jsonl",
+      "compact_transcript": "/0/transcript.jsonl",
+      "content_hash": "/0/content_hash.txt",
+      "prompt": "/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 140,
+    "cache_creation_tokens": 257459,
+    "cache_read_tokens": 14025198,
+    "output_tokens": 112225,
+    "api_call_count": 66
+  }
+}

@@ -1,0 +1,167 @@
+{
+  "cli_version": "0.11.4",
+  "checkpoint_id": "01M4NGKA19RABXHCRZ85054WBD",
+  "session_id": "6d63dcdd-1b8f-4ca8-b2ad-68f3acc15064",
+  "strategy": "manual-commit",
+  "created_at": "2026-10-11T12:56:57.695266032Z",
+  "branch": "main",
+  "checkpoints_count": 4,
+  "save_step_count": 5,
+  "files_touched": [
+    ".prod-build/evidence.jsonl",
+    ".prod-build/plan.json",
+    "crossfoot/audit.py",
+    "crossfoot/checks.py",
+    "crossfoot/cli.py",
+    "crossfoot/layouts/profile.py",
+    "crossfoot/layouts/report.py",
+    "crossfoot/outputs.py",
+    "hackathon.md",
+    "runs/20261011-123542/ledger.sqlite",
+    "runs/20261011-123542/limestone/county.json",
+    "runs/20261011-123542/limestone/report.md",
+    "runs/20261011-123542/run.json",
+    "runs/20261011-125310/ledger.sqlite",
+    "tests/test_report_layout.py"
+  ],
+  "agent": "Claude Code",
+  "model": "claude-sonnet-5-5",
+  "turn_id": "7ce2095f3702",
+  "compact_transcript_start": 0,
+  "token_usage": {
+    "input_tokens": 140,
+    "cache_creation_tokens": 257459,
+    "cache_read_tokens": 14025198,
+    "output_tokens": 112225,
+    "api_call_count": 66
+  },
+  "session_metrics": {
+    "turn_count": 4
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-10-11T12:56:57.436907114Z",
+    "agent_lines": 1613,
+    "agent_removed": 22,
+    "human_added": 3180,
+    "human_modified": 17,
+    "human_removed": 0,
+    "total_committed": 4803,
+    "total_lines_changed": 4832,
+    "agent_percentage": 33.836920529801326,
+    "metric_version": 2
+  },
+  "prompt_attributions": [
+    {
+      "checkpoint_number": 2,
+      "user_lines_added": 0,
+      "user_lines_removed": 0,
+      "agent_lines_added": 0,
+      "agent_lines_removed": 0
+    },
+    {
+      "checkpoint_number": 3,
+      "user_lines_added": 11108,
+      "user_lines_removed": 0,
+      "agent_lines_added": 1758,
+      "agent_lines_removed": 32,
+      "user_added_per_file": {
+        ".prod-build/evidence.jsonl": 1,
+        "runs/20261011-123556/policy.json": 6,
+        "runs/20261011-123556/run.json": 50,
+        "runs/20261011-123556/san_saba/changes.diff": 5,
+        "runs/20261011-123556/san_saba/corrected/20241105__tx__general__san_saba__precinct.csv": 276,
+        "runs/20261011-123556/san_saba/county.json": 1,
+        "runs/20261011-123556/san_saba/findings.json": 9633,
+        "runs/20261011-123556/san_saba/report.md": 1136
+      }
+    },
+    {
+      "checkpoint_number": 4,
+      "user_lines_added": 14044,
+      "user_lines_removed": 1,
+      "agent_lines_added": 1759,
+      "agent_lines_removed": 32,
+      "user_added_per_file": {
+        ".prod-build/evidence.jsonl": 1,
+        "crossfoot/layouts/report.py": 3,
+        "runs/20261011-123556/policy.json": 6,
+        "runs/20261011-123556/run.json": 50,
+        "runs/20261011-123556/san_saba/changes.diff": 5,
+        "runs/20261011-123556/san_saba/corrected/20241105__tx__general__san_saba__precinct.csv": 276,
+        "runs/20261011-123556/san_saba/county.json": 1,
+        "runs/20261011-123556/san_saba/findings.json": 9633,
+        "runs/20261011-123556/san_saba/report.md": 1136,
+        "runs/20261011-124017/policy.json": 6,
+        "runs/20261011-124017/run.json": 50,
+        "runs/20261011-124017/san_saba/changes.diff": 5,
+        "runs/20261011-124017/san_saba/corrected/20241105__tx__general__san_saba__precinct.csv": 276,
+        "runs/20261011-124017/san_saba/county.json": 1,
+        "runs/20261011-124017/san_saba/findings.json": 2369,
+        "runs/20261011-124017/san_saba/report.md": 226
+      },
+      "user_removed_per_file": {
+        "crossfoot/layouts/report.py": 1
+      }
+    },
+    {
+      "checkpoint_number": 5,
+      "user_lines_added": 17080,
+      "user_lines_removed": 2,
+      "agent_lines_added": 1778,
+      "agent_lines_removed": 32,
+      "user_added_per_file": {
+        ".prod-build/evidence.jsonl": 1,
+        "crossfoot/layouts/report.py": 5,
+        "runs/20261011-123556/policy.json": 6,
+        "runs/20261011-123556/run.json": 50,
+        "runs/20261011-123556/san_saba/changes.diff": 5,
+        "runs/20261011-123556/san_saba/corrected/20241105__tx__general__san_saba__precinct.csv": 276,
+        "runs/20261011-123556/san_saba/county.json": 1,
+        "runs/20261011-123556/san_saba/findings.json": 9633,
+        "runs/20261011-123556/san_saba/report.md": 1136,
+        "runs/20261011-124017/policy.json": 6,
+        "runs/20261011-124017/run.json": 50,
+        "runs/20261011-124017/san_saba/changes.diff": 5,
+        "runs/20261011-124017/san_saba/corrected/20241105__tx__general__san_saba__precinct.csv": 276,
+        "runs/20261011-124017/san_saba/county.json": 1,
+        "runs/20261011-124017/san_saba/findings.json": 2369,
+        "runs/20261011-124017/san_saba/report.md": 226,
+        "runs/20261011-124347/policy.json": 6,
+        "runs/20261011-124347/run.json": 50,
+        "runs/20261011-124347/san_saba/changes.diff": 5,
+        "runs/20261011-124347/san_saba/corrected/20241105__tx__general__san_saba__precinct.csv": 276,
+        "runs/20261011-124347/san_saba/county.json": 1,
+        "runs/20261011-124347/san_saba/findings.json": 2469,
+        "runs/20261011-124347/san_saba/report.md": 214,
+        "tests/test_report_layout.py": 13
+      },
+      "user_removed_per_file": {
+        "crossfoot/layouts/report.py": 2
+      }
+    },
+    {
+      "checkpoint_number": 6,
+      "user_lines_added": 2986,
+      "user_lines_removed": 7,
+      "agent_lines_added": 1814,
+      "agent_lines_removed": 32,
+      "user_added_per_file": {
+        ".prod-build/evidence.jsonl": 1,
+        "crossfoot/layouts/report.py": 119,
+        "hackathon.md": 4,
+        "runs/20261011-125310/policy.json": 6,
+        "runs/20261011-125310/run.json": 50,
+        "runs/20261011-125310/san_saba/changes.diff": 5,
+        "runs/20261011-125310/san_saba/corrected/20241105__tx__general__san_saba__precinct.csv": 276,
+        "runs/20261011-125310/san_saba/county.json": 1,
+        "runs/20261011-125310/san_saba/findings.json": 2275,
+        "runs/20261011-125310/san_saba/report.md": 206,
+        "tests/test_report_layout.py": 43
+      },
+      "user_removed_per_file": {
+        "crossfoot/layouts/report.py": 4,
+        "hackathon.md": 3
+      }
+    }
+  ]
+}
