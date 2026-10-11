@@ -12,7 +12,8 @@
         "T01",
         "T02",
         "T02a",
-        "T03"
+        "T03a",
+        "T03b"
       ]
     },
     {
@@ -163,13 +164,19 @@
         "uv run crossfoot read --county panola"
       ],
       "rollback": "git revert the task's commit; the run before stays in runs/",
-      "status": "todo",
-      "notes": "Added 2026-10-11 after T02: the first read fails most sums, so the trace-driven fix comes before the loop instead of after the full run."
+      "status": "done",
+      "notes": "Added 2026-10-11 after T02: the first read fails most sums, so the trace-driven fix comes before the loop instead of after the full run.\n[2026-10-11 done] E0019 and the test run passed inside the task's session on the fix commit 338de15; the orchestrator re-ran pytest (28 passed) and checked the report's numbers against both first-read.json files. Acceptance not met and recorded as such: 32 row sums still fail (target under 20); the loop in T03a takes them.",
+      "base": "438ae3a",
+      "started_after": 14,
+      "evidence": [
+        "E0018",
+        "E0019"
+      ]
     },
     {
-      "id": "T03",
-      "title": "Investigation loop, audit against the published file, and outputs",
-      "objective": "`crossfoot audit --county panola` closes the county, audits the published file and writes findings, crops, a corrected file and a report",
+      "id": "T03a",
+      "title": "The investigation loop that closes a county's ledger",
+      "objective": "`crossfoot close --county panola --resume <run>` works every failing sum until each cell is accepted or cannot_verify, under the rules, and writes county.json",
       "role": "product-engineer",
       "size": "L",
       "deps": [
@@ -177,34 +184,68 @@
       ],
       "writes": [
         "crossfoot/agent.py",
-        "crossfoot/audit.py",
         "crossfoot/outputs.py",
-        "crossfoot/policy.py",
         "crossfoot/cli.py",
         "crossfoot/ledger.py",
         "crossfoot/checks.py",
         "crossfoot/layouts/matrix.py",
+        "crossfoot/tracing.py",
         "tests/**",
         "runs/**",
+        "docs/evidence/before-after.md",
         "hackathon.md",
-        ".prod-build/reports/T03.md",
+        ".prod-build/reports/T03a.md",
         ".prod-build/evidence.jsonl"
       ],
       "acceptance": [
         "AC-1",
-        "AC-2",
         "AC-3",
         "AC-4",
+        "IF the stronger model is asked for before two failed re-reads THEN THE SYSTEM SHALL refuse"
+      ],
+      "verify": [
+        "uv run pytest -q",
+        "uv run crossfoot close --county panola --resume 20261011-094115"
+      ],
+      "rollback": "git revert the task's commits; committed runs are never changed",
+      "status": "todo",
+      "notes": "Split from T03 on 2026-10-11 so each session has one job."
+    },
+    {
+      "id": "T03b",
+      "title": "The audit against the published file, and the outputs",
+      "objective": "`crossfoot audit --county panola` compares the closed ledger with the published file, settles each disagreement with printed totals and writes findings, crops, a corrected file, a diff and a report",
+      "role": "product-engineer",
+      "size": "L",
+      "deps": [
+        "T03a"
+      ],
+      "writes": [
+        "crossfoot/audit.py",
+        "crossfoot/policy.py",
+        "crossfoot/outputs.py",
+        "crossfoot/cli.py",
+        "crossfoot/agent.py",
+        "crossfoot/ledger.py",
+        "crossfoot/checks.py",
+        "tests/**",
+        "runs/**",
+        "hackathon.md",
+        ".prod-build/reports/T03b.md",
+        ".prod-build/evidence.jsonl"
+      ],
+      "acceptance": [
+        "AC-2",
         "AC-7"
       ],
       "verify": [
         "uv run pytest -q",
-        "uv run crossfoot audit --county panola",
+        "uv run crossfoot audit --county panola --resume latest",
         "uv run crossfoot verify-known --county panola"
       ],
-      "rollback": "git revert the task's commit; no data migration",
+      "rollback": "git revert the task's commits; no data migration",
       "status": "todo",
-      "notes": ""
+      "notes": "Split from T03 on 2026-10-11."
     },
     {
       "id": "T04",
@@ -213,7 +254,7 @@
       "role": "product-engineer",
       "size": "L",
       "deps": [
-        "T03"
+        "T03b"
       ],
       "writes": [
         "crossfoot/layouts/report.py",
@@ -278,7 +319,7 @@
       "role": "product-engineer",
       "size": "L",
       "deps": [
-        "T03"
+        "T03b"
       ],
       "writes": [
         "crossfoot/outputs.py",
