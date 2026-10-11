@@ -539,8 +539,13 @@
         "uv run pytest -q"
       ],
       "rollback": "git revert the task's commit",
-      "status": "todo",
-      "notes": "Added 2026-10-11: the tracing server answered 503 during T05."
+      "status": "done",
+      "notes": "Added 2026-10-11: the tracing server answered 503 during T05.\n[2026-10-11 done] Verify passed inside the task's session on commit 377406b (200 tests). The orchestrator listed the project's detections through the MCP server and found the new one.",
+      "base": "f2d75b0",
+      "started_after": 92,
+      "evidence": [
+        "E0093"
+      ]
     },
     {
       "id": "T06",
