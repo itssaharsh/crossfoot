@@ -113,6 +113,7 @@ def write_summary(run_dir, summary: dict) -> None:
         from_run             (a summary made by `crossfoot summarize`) the run the county's figures come from
         findings_by_kind, findings_by_status
         second_sum_exists    true when the scan prints a second sum (contest totals) to check a row against
+        second_sum           what the county has: "row and column" (matrix), "row and contest" or "row only" (report layout)
         sums_check           {in_all, holding_with_published, holding_with_corrected}: printed sums, counted from findings.json
         model_calls, model_calls_by_model {model: {calls, prompt_tokens, completion_tokens, cost}}, prompt_tokens,
         completion_tokens, metered_cost (an estimate from the gateway's price list), seconds]
@@ -139,7 +140,7 @@ def write_summary(run_dir, summary: dict) -> None:
                  f"{f(r.get('cells_accepted'))} | {f(r.get('cannot_verify'))} | "
                  f"{sum((r.get('findings_by_status') or {}).values()) if r.get('findings_by_status') is not None else ''} | "
                  f"{sc.get('in_all', '')} / {sc.get('holding_with_published', '')} / {sc.get('holding_with_corrected', '')} | "
-                 f"{'yes' if r.get('second_sum_exists') else 'no' if r.get('second_sum_exists') is not None else ''} | "
+                 f"{r['second_sum'] if 'second_sum' in r else second_sum_text(r.get('layout'), r.get('second_sum_exists'))} | "
                  f"{_cov(r)} | {r.get('model_calls', 0)} | {r.get('metered_cost', 0):.4f} | {r.get('seconds', 0)} |")
     s1, sc = t["sums_first_read"], t["sums_check"]
     L.append(f"| **all** | | | | {t['cells_read']} | {s1.get('passing', 0)} / {s1.get('failing', 0)} | {t['cells_reread']} | "
@@ -164,11 +165,10 @@ def write_summary(run_dir, summary: dict) -> None:
     if any(r.get("from_run") for r in rows):
         L += ["", "## Where each county's figures come from", ""]
         L += [f"- {r['county']}: run {r.get('from_run')}" for r in rows]
-        base = (summary.get("made_from") or {}).get("base")
-        if base:
-            L += ["", f"A county taken from a single-county audit reused the ledger of run {base}, so its calls, cost and seconds "
-                  f"are those of the audit alone; the reading was paid for in run {base}. The cost and calls in the header "
-                  "and the **all** row therefore add the reading of no county that was audited again."]
+        if (summary.get("made_from") or {}).get("base"):
+            L += ["", "A county taken from a single-county audit reused the ledger of an earlier run, so its calls, cost and "
+                  "seconds are those of the audit alone; the reading was paid for in the earlier run. The cost and calls in "
+                  "the header and the **all** row therefore add the reading of no county that was audited again."]
     L += ["", "## Not audited", ""]
     if not summary["skipped"] and not summary["not_reached"]:
         L.append("Every county was audited.")
@@ -255,6 +255,14 @@ def _first_sums(s: dict, report_layout: bool) -> dict:
     return {"passing": sum(s[f"{k}_sums_pass"] for k in keys), "failing": sum(s[f"{k}_sums_fail"] for k in keys)}
 
 
+def second_sum_text(layout, exists) -> str:
+    """What second sum a county has: the matrix prints column sums for every cell; the report layout has the contest sums
+    where the page prints a contest total (or a write-in total with its breakdown, or the ballots cast)."""
+    if layout == "matrix":
+        return "row and column"
+    return ("row and contest" if exists else "row only") if layout == "report" else ""
+
+
 def audit_one(county, ctx) -> dict:
     """The county's whole audit, on the run's shared ledger: fetch, read (unless the ledger says the read finished), close,
     audit, write the county's files. Raises on a failure (the run records it) and BudgetExceeded when the budget stops it."""
@@ -336,6 +344,7 @@ def audit_one(county, ctx) -> dict:
             "cannot_verify": d["counts"]["by_status"].get("cannot_verify", 0),
             "findings_by_kind": d["counts"]["by_kind"], "findings_by_status": d["counts"]["by_status"],
             "second_sum_exists": bool(d["audit"].get("second_sum_exists", bool(led.totals(county)))),
+            "second_sum": second_sum_text(info["layout"], d["audit"].get("second_sum_exists")),
             "sums_check": {k: sc[k] for k in ("in_all", "holding_with_published", "holding_with_corrected")},
             "reader": reader}
 
@@ -360,6 +369,7 @@ def _row_from_folder(folder: Path, county: str, old: dict) -> dict:
             "cannot_verify": f["counts"]["by_status"].get("cannot_verify", 0),
             "findings_by_kind": f["counts"]["by_kind"], "findings_by_status": f["counts"]["by_status"],
             "second_sum_exists": bool(f["audit"].get("second_sum_exists")),
+            "second_sum": second_sum_text(old.get("layout"), f["audit"].get("second_sum_exists")),
             "sums_check": {k: sc[k] for k in ("in_all", "holding_with_published", "holding_with_corrected")}, **cov,
             "model_calls": run.get("model_calls", 0), "model_calls_by_model": by,
             "prompt_tokens": run.get("prompt_tokens", 0), "completion_tokens": run.get("completion_tokens", 0),
@@ -375,7 +385,7 @@ def combine(out, base: str, use: dict, command: str = "") -> dict:
     old = json.loads((root / base / "summary.json").read_text())
     rows = []
     for r in old["counties"]:
-        run = use.get(r["county"], base)
+        run = use.get(r["county"]) or r.get("from_run") or base       # a base that is itself a summary names each row's run
         row = _row_from_folder(root / run, r["county"], r) if r["county"] in use else dict(r)
         rows.append({**row, "from_run": run})
     now = time.strftime("%Y-%m-%dT%H:%M:%S")

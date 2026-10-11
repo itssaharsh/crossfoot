@@ -340,6 +340,13 @@ def report_text(d, verdicts, urls) -> str:
               "a column also add to it; that is a second sum on the value. "
               f"Second sum in this county: {'yes' if a.get('second_sum_exists') else 'no'} "
               f"({a.get('contest_totals_printed', 0)} of {a.get('contests', 0)} contests print a contest total).", "",
+              "Where a contest also prints a write-in total with rows that break it down, those rows add to it; and where the "
+              "precinct's Statistics block prints its ballots cast, the contest total plus overvotes plus undervotes adds to it. "
+              + (f"The ballots-cast equation was not used for {len(a['ballot_sums_not_used'])} contest blocks, because it fails in "
+                 "every printed column on the same side (the contest was not on every ballot of the precinct): "
+                 + "; ".join(f"page {x['page']}, block {x['block']}" for x in a["ballot_sums_not_used"][:20])
+                 + ("; and more (the list is in findings.json)" if len(a["ballot_sums_not_used"]) > 20 else "") + "."
+                 if a.get("ballot_sums_not_used") else "") + "", "",
               "What one sum cannot see: two numbers of one row that are both wrong and cancel out are not detected. And when "
               "a published row differs from the scan's row in two or more values but still adds up to its own total, with no "
               "contest total over it, no printed total can tell the two rows apart; such a finding is cannot_verify, nothing "

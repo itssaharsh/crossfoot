@@ -469,8 +469,10 @@
         "uv run pytest -q"
       ],
       "rollback": "git revert the task's commits; committed runs are never changed",
-      "status": "todo",
-      "notes": "Added 2026-10-11 after looking at Jones page 1 by eye."
+      "status": "doing",
+      "notes": "Added 2026-10-11 after looking at Jones page 1 by eye.",
+      "base": "38c6fb1",
+      "started_after": 73
     },
     {
       "id": "T05",

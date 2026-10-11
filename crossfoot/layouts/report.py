@@ -144,8 +144,12 @@ def page_validator(d):
             for col in COLS:
                 _int_or_none(r.get(col), f"{col} of {r['label']!r}")
             y = r.get("y")
-            if isinstance(y, bool) or not isinstance(y, (int, float)) or not 0 <= y <= 1000:
+            if isinstance(y, bool) or not isinstance(y, (int, float)) or not 0 <= y <= Y_SLACK:
                 raise ValueError(f'"y" of {r["label"]!r} must be a number from 0 to 1000')
+            r["y"] = min(y, 1000)       # the last row of a full page was read at 1108 (Scurry page 18): it is an estimate
+
+
+Y_SLACK = 1250     # how far past the bottom edge a row's estimated position may be before the answer is refused
 
 
 def row_validator(d):
@@ -341,8 +345,9 @@ def row_sums(led, county) -> tuple[int, int]:
 def summarize(led, county) -> dict:
     cells = led.cells(county)
     rows, con = checks.report_row_checks(cells), checks.report_contest_checks(cells)
+    more = checks.report_writein_checks(cells) + checks.report_ballot_sums(cells)[0]       # write-in breakdown, ballots cast
     return {"cells_read": len(cells), "row_sums_pass": sum(c.ok for c in rows), "row_sums_fail": sum(not c.ok for c in rows),
-            "contest_sums_pass": sum(c.ok for c in con), "contest_sums_fail": sum(not c.ok for c in con),
+            "contest_sums_pass": sum(c.ok for c in con + more), "contest_sums_fail": sum(not c.ok for c in con + more),
             "contests_with_a_printed_total": len({c.block_id for c in con}),
             "contests": len({c["block_id"] for c in cells})}
 
@@ -463,6 +468,57 @@ def read_county(county, gw, led, *, run_id="", log=print, png_fn=page_png, n_pag
         out["stopped"] = str(e)
         log(f"stopped: {e}")
     return finish()
+
+
+def state_from(led, county, before_page) -> State:
+    """The reading state as it stood before `before_page`, rebuilt from the ledger: the precinct names, how many blocks each
+    precinct has (a new block gets a number above every existing one, so none collides with a later page's), the last contest of
+    each precinct on the pages before, and the labels already stored."""
+    st = State()
+    for e in led.events(county):
+        if e["kind"] == "page_read":
+            d = json.loads(e["payload_json"])
+            st.names.setdefault(precinct_key(d["precinct"]), d["precinct"])
+    cells = led.cells(county)
+    for c in cells:
+        pk, _, n = c["block_id"].partition("|")
+        if n.isdigit():
+            st.count[pk] = max(st.count.get(pk, 0), int(n))
+        st.labels.add((c["block_id"], c["row_kind"]))
+    for c in sorted((c for c in cells if c["page"] < before_page and c["block_id"].partition("|")[2].isdigit()),
+                    key=lambda c: (c["page"], int(c["block_id"].partition("|")[2]))):
+        st.last[c["block_id"].partition("|")[0]] = (contest_canon(c["contest"]), c["block_id"], c["contest"])
+    return st
+
+
+def read_pages_into(county, gw, led, pages, *, log=print, png_fn=page_png, data_root=None) -> dict:
+    """Read only `pages` (pages a first read failed on) into a ledger that already holds the others, with the reader and the
+    page geometry that ledger recorded. Returns {pages_read, pages_failed, stopped}."""
+    from ..sources import DATA
+    root = data_root or DATA
+    lay = layout_event(led, county)
+    order = lay.get("columns") or list(COLS)
+    chosen = next((json.loads(e["payload_json"]) for e in reversed(led.events(county)) if e["kind"] == "choose_reader"), None)
+    gw.model = (chosen or {}).get("reader") or agent.HAIKU
+    out = {"pages_read": [], "pages_failed": [], "stopped": None}
+    for page in pages:
+        try:
+            png = png_fn(county, page, GEO_DPI, root)
+            ans = gw.ask_json(PAGE_PROMPT.format(order=order_text(order)), png, validate=page_validator, model=gw.model)
+            st = state_from(led, county, page)
+            n = store_page(led, county, page, ans, st, model=gw.model, size=Image.open(png).size, x_right=lay.get("x_right"))
+            led.event(county, "page_read", {"page": page, "precinct": ans["precinct"], "model": gw.model, "cells": n,
+                                            "contests": len(ans["contests"])})
+            out["pages_read"].append(page)
+            log(f"  page {page}: read ({n} cells, {ans['precinct']})")
+        except BudgetExceeded as e:
+            out["stopped"] = str(e)
+            break
+        except ValueError as e:
+            led.event(county, "page_failed", {"page": page, "error": str(e)[:300]})
+            out["pages_failed"].append(page)
+            log(f"  page {page}: failed ({str(e)[:100]})")
+    return out
 
 
 # ---- where a row is: crops for re-reads and for the findings --------------------------------------------------------------
@@ -645,12 +701,10 @@ class Closer:
     def work_contest(self, ch):
         item = agent.sum_id(ch)
         self.ev("item_start", item=item, page=ch.page, block=ch.block_id)
-        rows = []
-        for c in self.led.cells(self.county):
-            k = (c["page"], c["block_id"], c["row_kind"])
-            if c["block_id"] == ch.block_id and checks.row_label_kind(c["row_kind"]) != "skip" and k not in rows:
-                rows.append(k)
-        rows.sort(key=lambda k: checks.row_label_kind(k[2]) == "total")      # the candidates first, the contest total last
+        # the rows of this sum: its terms, and its printed total last
+        rows = list(dict.fromkeys(tuple(k[:3]) for k, _ in ch.terms))
+        if ch.printed_key and tuple(ch.printed_key[:3]) not in rows:
+            rows.append(tuple(ch.printed_key[:3]))
         actions = 0
         for step in range(len(self.steps)):
             for page, block, label in rows:
@@ -666,8 +720,8 @@ class Closer:
                 break
         me = self.find(ch.kind, ch.page, ch.block_id, ch.key) or ch
         self.verdict(me, "cannot_verify",
-                     f"{actions} re-read(s) of the rows of this contest did not make the {ch.key} column hold: the "
-                     f"candidates add to {me.computed}, the contest total prints {me.printed}")
+                     f"{actions} re-read(s) of the rows of this sum did not make its {ch.key} column hold: the "
+                     f"the terms add to {me.computed}, the printed total is {me.printed}")
         self.ev("item_end", item=item, result="cannot_verify")
 
 
@@ -705,7 +759,9 @@ def finalize(led, county) -> list[dict]:
 
 def count_failing(chs) -> dict:
     return {"row": sum(c.kind == "report_row" and not c.ok for c in chs),
-            "contest": sum(c.kind == "report_contest" and not c.ok for c in chs)}
+            "contest": sum(c.kind == "report_contest" and not c.ok for c in chs),
+            "writein": sum(c.kind == "report_writein" and not c.ok for c in chs),
+            "ballots": sum(c.kind == "report_ballots" and not c.ok for c in chs)}
 
 
 def close_county(county, gw, led, geo, *, reader=None, run_id="", log=print, crop_dir=None, order=None) -> dict:
@@ -721,7 +777,8 @@ def close_county(county, gw, led, geo, *, reader=None, run_id="", log=print, cro
     stopped, worked = None, 0
     try:
         with tracing.trace("close_county", kind="AGENT", run=run_id, county=county):
-            for kind, work in (("report_row", cl.work_row), ("report_contest", cl.work_contest)):
+            for kind, work in (("report_row", cl.work_row), ("report_writein", cl.work_contest),
+                              ("report_contest", cl.work_contest), ("report_ballots", cl.work_contest)):
                 done = {v["sum_id"] for v in led.verdicts(county)}
                 todo = [c for c in checks.report_checks(led.cells(county))
                         if c.kind == kind and not c.ok and agent.sum_id(c) not in done]

@@ -223,28 +223,121 @@ def report_row_checks(cells: list[dict]) -> list[Check]:
     return out
 
 
-def report_contest_checks(cells: list[dict]) -> list[Check]:
-    """For a contest that prints a total row: per column, the candidates' figures add to the total row's figure."""
+def _norm(label) -> str:
+    return " ".join(str(label or "").lower().split())
+
+
+def is_write_in_total(label) -> bool:
+    return _norm(label).replace("-", " ") in ("write in totals", "write in total")
+
+
+def _write_in_shaped(label) -> bool:
+    return _norm(label).replace("-", " ").replace(" :", ":").startswith("write in:")
+
+
+def contest_shape(rows: list) -> dict:
+    """What the rows of one contest block are, from what the page shows. `rows` is [(page, label, {column: cell})] in print
+    order. Returns {total, write_in, breakdown, candidates, over, under} (rows, or lists of rows). The rows printed directly
+    under the write-in total, up to the contest total or the over/under votes, are a breakdown of it when one of them has the
+    label shape "Write-In: ..." or when they add to the write-in total in its total column; otherwise they are candidates."""
+    kinds = [row_label_kind(r[1]) for r in rows]
+    total = next((r for r, k in zip(rows, kinds) if k == "total"), None)
+    wi_i = next((i for i, r in enumerate(rows) if is_write_in_total(r[1])), None)
+    breakdown: list = []
+    if wi_i is not None:
+        end = next((i for i in range(wi_i + 1, len(rows)) if kinds[i] != "candidate"), len(rows))
+        between = rows[wi_i + 1:end]
+        wt = rows[wi_i][2].get("total")
+        sums = [r[2].get("total") for r in between]
+        if between and (any(_write_in_shaped(r[1]) for r in between) or
+                        (wt is not None and None not in sums and sum(x["value"] for x in sums) == wt["value"])):
+            breakdown = between
+    out_of = {id(r) for r in breakdown}
+    if wi_i is not None:
+        out_of.add(id(rows[wi_i]))                       # the write-in total is not a candidate: it is a term of its own
+    named = lambda *names: next((r for r in rows if _norm(r[1]) in names), None)
+    return {"total": total, "write_in": rows[wi_i] if wi_i is not None else None, "breakdown": breakdown,
+            "candidates": [r for r, k in zip(rows, kinds) if k == "candidate" and id(r) not in out_of],
+            "over": named("overvotes", "over votes"), "under": named("undervotes", "under votes")}
+
+
+def _blocks(cells):
     by_block: dict = {}
     for (page, block, label), cols in _rows_of(cells).items():
         by_block.setdefault(block, []).append((page, label, cols))
+    return by_block
+
+
+def report_contest_checks(cells: list[dict]) -> list[Check]:
+    """For a contest that prints a total row: per column, the candidates' figures and the write-in total's figure add to the
+    total row's figure. Rows that break the write-in total down are not terms (they are the terms of report_writein)."""
     out = []
-    for block, rows in by_block.items():
-        totals = [r for r in rows if row_label_kind(r[1]) == "total"]
-        if not totals:
+    for block, rows in _blocks(cells).items():
+        sh = contest_shape(rows)
+        if sh["total"] is None:
             continue
-        tp, tl, tcols = totals[0]
-        cands = [r for r in rows if row_label_kind(r[1]) == "candidate"]
+        tp, tl, tcols = sh["total"]
+        terms_rows = [r for r in rows if r in sh["candidates"] or r is sh["write_in"]]
         for col in REPORT_COLS:
             if col not in tcols:
                 continue
-            terms = [r[2][col] for r in cands if col in r[2]]
+            terms = [r[2][col] for r in terms_rows if col in r[2]]
             out.append(_make("report_contest", tp, block, col, terms, tcols[col]["value"], (tp, block, tl, col)))
     return out
 
 
+def report_writein_checks(cells: list[dict]) -> list[Check]:
+    """Where a contest prints a write-in total and rows that break it down: per column, the breakdown adds to the total."""
+    out = []
+    for block, rows in _blocks(cells).items():
+        sh = contest_shape(rows)
+        if not sh["write_in"] or not sh["breakdown"]:
+            continue
+        wp, wl, wcols = sh["write_in"]
+        for col in REPORT_COLS:
+            if col in wcols:
+                out.append(_make("report_writein", wp, block, col, [r[2][col] for r in sh["breakdown"] if col in r[2]],
+                                 wcols[col]["value"], (wp, block, wl, col)))
+    return out
+
+
+def report_ballot_sums(cells: list[dict]) -> tuple[list[Check], list[dict]]:
+    """(sums used, sums not used). Where a precinct's Statistics block prints its ballots cast and a contest prints a total,
+    overvotes and undervotes, per column: total + overvotes + undervotes = ballots cast. If the equation fails in every column
+    printed and always on the same side, the contest was not on every ballot of the precinct: it is not a sum for that block, and
+    the block is listed in the second list with the reason."""
+    stats: dict = {}
+    for (page, block, label), cols in _rows_of(cells).items():
+        if block.endswith("|st"):
+            stats.setdefault(block.split("|")[0], (page, block, label, cols))
+    used, unused = [], []
+    for block, rows in _blocks(cells).items():
+        sh = contest_shape(rows)
+        st = stats.get(block.split("|")[0])
+        if st is None or block.endswith(("|st", "|sb")) or not (sh["total"] and sh["over"] and sh["under"]):
+            continue
+        tp = sh["total"][0]
+        mine = []
+        for col in REPORT_COLS:
+            if all(col in r[2] for r in (sh["total"], sh["over"], sh["under"])) and col in st[3]:
+                mine.append(_make("report_ballots", tp, block, col, [sh[k][2][col] for k in ("total", "over", "under")],
+                                  st[3][col]["value"], (st[0], st[1], st[2], col)))
+        if not mine:
+            continue
+        signs = {(c.computed > c.printed) - (c.computed < c.printed) for c in mine if c.computed is not None}
+        if all(not c.ok and c.computed is not None for c in mine) and len(signs) == 1:
+            unused.append({"block": block, "page": tp, "why": (
+                f"the contest total, overvotes and undervotes do not add to the precinct's ballots cast in any column "
+                f"({', '.join(f'{c.key} {c.computed} against {c.printed}' for c in mine)}), always on the same side: the "
+                f"contest was not on every ballot of the precinct, so the equation is not a sum for this block")})
+        else:
+            used += mine
+    return used, unused
+
+
 def report_checks(cells: list[dict]) -> list[Check]:
-    return report_row_checks(cells) + report_contest_checks(cells)
+    return (report_row_checks(cells) + report_contest_checks(cells) + report_writein_checks(cells) +
+            report_ballot_sums(cells)[0])
 
 
 def report_crossing(cells: list[dict]) -> dict:

@@ -1,0 +1,546 @@
+county,precinct,office,district,party,candidate,votes,absentee,early_voting,election_day
+Scurry,Precinct 5,Registered Voters,,,,98,,,
+Scurry,Precinct 5,Ballots Cast,,,,73,0,65,8
+Scurry,Precinct 5,President,,REP,Donald J. Trump,60,0,54,6
+Scurry,Precinct 5,President,,DEM,Kamala D. Harris,13,0,11,2
+Scurry,Precinct 5,President,,LIB,Chase Oliver,0,0,0,0
+Scurry,Precinct 5,President,,GRN,Jill Stein,0,0,0,0
+Scurry,Precinct 5,President,,,Write-ins,0,0,0,0
+Scurry,Precinct 5,U.S. Senate,,REP,Ted Cruz,57,0,51,6
+Scurry,Precinct 5,U.S. Senate,,DEM,Colin Allred,14,0,12,2
+Scurry,Precinct 5,U.S. Senate,,LIB,Ted Brown,0,0,0,0
+Scurry,Precinct 5,U.S. Senate,,,Write-ins,0,0,0,0
+Scurry,Precinct 5,U.S. House,19,REP,Jodey C. Arrington,62,0,55,7
+Scurry,Precinct 5,U.S. House,19,LIB,Bernard Johnson,3,0,2,1
+Scurry,Precinct 5,U.S. House,19,IND,Nathan Lewis,3,0,3,0
+Scurry,Precinct 5,Railroad Commissioner,,REP,Christi Craddick,51,0,48,3
+Scurry,Precinct 5,Railroad Commissioner,,DEM,Katherine Culbert,11,0,8,3
+Scurry,Precinct 5,Railroad Commissioner,,LIB,Hawk Dunlap,10,0,8,2
+Scurry,Precinct 5,Railroad Commissioner,,GRN,Eddie Espinoza,0,0,0,0
+Scurry,Precinct 5,Railroad Commissioner,,,Write-ins,0,0,0,0
+Scurry,Precinct 5,"Justice, Supreme Court, PI 2",,REP,Jimmy Blacklock,59,0,54,5
+Scurry,Precinct 5,"Justice, Supreme Court, PI 2",,DEM,DaSean Jones,12,0,10,2
+Scurry,Precinct 5,"Justice, Supreme Court, Pl 4",,REP,John Devine,56,0,51,5
+Scurry,Precinct 5,"Justice, Supreme Court, Pl 4",,DEM,Christine Vinh Weems,13,0,10,3
+Scurry,Precinct 5,"Justice, Supreme Court, PI 6",,REP,Jane Bland,57,0,53,4
+Scurry,Precinct 5,"Justice, Supreme Court, PI 6",,DEM,Bonnie Lee Goldstein,11,0,8,3
+Scurry,Precinct 5,"Justice, Supreme Court, PI 6",,LIB,J. David Roberson,0,0,0,0
+Scurry,Precinct 5,"Presiding Judge, Ct of Crim App",,REP,David J. Schenck,58,0,54,4
+Scurry,Precinct 5,"Presiding Judge, Ct of Crim App",,DEM,Holly Taylor,10,0,7,3
+Scurry,Precinct 5,"Judge, Ct of Crim App, Pl 7",,REP,Gina Parker,56,0,51,5
+Scurry,Precinct 5,"Judge, Ct of Crim App, Pl 7",,DEM,Nancy Mulder,12,0,9,3
+Scurry,Precinct 5,"Judge, Ct of Crim App, PI 8",,REP,Lee Finley,57,0,52,5
+Scurry,Precinct 5,"Judge, Ct of Crim App, PI 8",,DEM,Chika Anyiam,11,0,8,3
+Scurry,Precinct 5,"Member, State BoE, Dist 15",,REP,Aaron Kinsey,53,0,49,4
+Scurry,Precinct 5,"Member, State BoE, Dist 15",,DEM,Morgan Kirkpatrick,16,0,12,4
+Scurry,Precinct 5,"Member, State BoE, Dist 15",,LIB,Jack B. Westbrook,2,0,2,0
+Scurry,Precinct 5,State House,83,REP,Dustin Burrows,60,0,55,5
+Scurry,Precinct 5,"Chief Justice, 11th Ct of App Dist",,REP,John Bailey,59,0,54,5
+Scurry,Precinct 5,"Dist Judge, 132nd Judicial Dist",,REP,Dana W. Cooley,62,0,57,5
+Scurry,Precinct 5,"Dist Attorney, 132nd Judicial Dist",,REP,Ben R. Smith,59,0,54,5
+Scurry,Precinct 5,County Attorney,,REP,Michael Hartman,61,0,55,6
+Scurry,Precinct 5,District Clerk - Unexpired Term,,REP,Lana Warr,60,0,55,5
+Scurry,Precinct 5,Sheriff,,REP,Trey Wilson,60,0,55,5
+Scurry,Precinct 5,County Tax Assessor-Collector,,REP,Jana Young,61,0,56,5
+Scurry,Precinct 5,County Treasurer - Unexpired Term,,REP,Misty Chapman,61,0,56,5
+Scurry,Precinct 6,Registered Voters,,,,402,,,
+Scurry,Precinct 6,Ballots Cast,,,,278,8,222,48
+Scurry,Precinct 6,President,,REP,Donald J. Trump,247,7,196,44
+Scurry,Precinct 6,President,,DEM,Kamala D. Harris,30,1,25,4
+Scurry,Precinct 6,President,,LIB,Chase Oliver,0,0,0,0
+Scurry,Precinct 6,President,,GRN,Jill Stein,1,0,1,0
+Scurry,Precinct 6,President,,,Write-ins,0,0,0,0
+Scurry,Precinct 6,U.S. Senate,,REP,Ted Cruz,240,7,191,42
+Scurry,Precinct 6,U.S. Senate,,DEM,Colin Allred,33,1,26,6
+Scurry,Precinct 6,U.S. Senate,,LIB,Ted Brown,4,0,4,0
+Scurry,Precinct 6,U.S. Senate,,,Write-ins,0,0,0,0
+Scurry,Precinct 6,U.S. House,19,REP,Jodey C. Arrington,245,7,194,44
+Scurry,Precinct 6,U.S. House,19,LIB,Bernard Johnson,9,0,8,1
+Scurry,Precinct 6,U.S. House,19,IND,Nathan Lewis,13,1,10,2
+Scurry,Precinct 6,Railroad Commissioner,,REP,Christi Craddick,221,8,174,39
+Scurry,Precinct 6,Railroad Commissioner,,DEM,Katherine Culbert,23,0,20,3
+Scurry,Precinct 6,Railroad Commissioner,,LIB,Hawk Dunlap,17,0,12,5
+Scurry,Precinct 6,Railroad Commissioner,,GRN,Eddie Espinoza,4,0,4,0
+Scurry,Precinct 6,Railroad Commissioner,,,Write-ins,0,0,0,0
+Scurry,Precinct 6,"Justice, Supreme Court, PI 2",,REP,Jimmy Blacklock,237,7,189,41
+Scurry,Precinct 6,"Justice, Supreme Court, PI 2",,DEM,DaSean Jones,25,1,19,5
+Scurry,Precinct 6,"Justice, Supreme Court, Pl 4",,REP,John Devine,235,7,187,41
+Scurry,Precinct 6,"Justice, Supreme Court, Pl 4",,DEM,Christine Vinh Weems,28,1,22,5
+Scurry,Precinct 6,"Justice, Supreme Court, PI 6",,REP,Jane Bland,236,7,188,41
+Scurry,Precinct 6,"Justice, Supreme Court, PI 6",,DEM,Bonnie Lee Goldstein,26,1,20,5
+Scurry,Precinct 6,"Justice, Supreme Court, PI 6",,LIB,J. David Roberson,3,0,3,0
+Scurry,Precinct 6,"Presiding Judge, Ct of Crim App",,REP,David J. Schenck,235,7,188,40
+Scurry,Precinct 6,"Presiding Judge, Ct of Crim App",,DEM,Holly Taylor,27,1,20,6
+Scurry,Precinct 6,"Judge, Ct of Crim App, PI 7",,REP,Gina Parker,237,7,188,42
+Scurry,Precinct 6,"Judge, Ct of Crim App, PI 7",,DEM,Nancy Mulder,25,1,20,4
+Scurry,Precinct 6,"Judge, Ct of Crim App, PI 8",,REP,Lee Finley,233,7,184,42
+Scurry,Precinct 6,"Judge, Ct of Crim App, PI 8",,DEM,Chika Anyiam,26,1,21,4
+Scurry,Precinct 6,"Member, State BoE, Dist 15",,REP,Aaron Kinsey,231,7,182,42
+Scurry,Precinct 6,"Member, State BoE, Dist 15",,DEM,Morgan Kirkpatrick,24,1,19,4
+Scurry,Precinct 6,"Member, State BoE, Dist 15",,LIB,Jack B. Westbrook,6,0,6,0
+Scurry,Precinct 6,State House,83,REP,Dustin Burrows,244,8,192,44
+Scurry,Precinct 6,"Chief Justice, 11th Ct of App Dist",,REP,John Bailey,241,8,191,42
+Scurry,Precinct 6,"Dist Judge, 132nd Judicial Dist",,REP,Dana W. Cooley,244,8,192,44
+Scurry,Precinct 6,"Dist Attorney, 132nd Judicial Dist",,REP,Ben R. Smith,233,8,187,38
+Scurry,Precinct 6,County Attorney,,REP,Michael Hartman,240,8,192,40
+Scurry,Precinct 6,District Clerk - Unexpired Term,,REP,Lana Warr,231,7,183,41
+Scurry,Precinct 6,Sheriff,,REP,Trey Wilson,238,8,188,42
+Scurry,Precinct 6,County Tax Assessor-Collector,,REP,Jana Young,243,8,192,43
+Scurry,Precinct 6,County Treasurer - Unexpired Term,,REP,Misty Chapman,239,8,190,41
+Scurry,Precinct 7,Registered Voters,,,,2133,,,
+Scurry,Precinct 7,Ballots Cast,,,,1408,29,1072,307
+Scurry,Precinct 7,President,,REP,Donald J. Trump,1229,22,956,251
+Scurry,Precinct 7,President,,DEM,Kamala D. Harris,159,6,105,48
+Scurry,Precinct 7,President,,LIB,Chase Oliver,11,1,5,5
+Scurry,Precinct 7,President,,GRN,Jill Stein,5,0,3,2
+Scurry,Precinct 7,President,,,Write-ins,0,0,0,0
+Scurry,Precinct 7,U.S. Senate,,REP,Ted Cruz,1166,21,913,232
+Scurry,Precinct 7,U.S. Senate,,DEM,Colin Allred,179,7,119,53
+Scurry,Precinct 7,U.S. Senate,,LIB,Ted Brown,39,1,26,12
+Scurry,Precinct 7,U.S. Senate,,,Write-ins,1,0,0,1
+Scurry,Precinct 7,U.S. House,19,REP,Jodey C. Arrington,1212,23,940,249
+Scurry,Precinct 7,U.S. House,19,LIB,Bernard Johnson,63,2,41,20
+Scurry,Precinct 7,U.S. House,19,IND,Nathan Lewis,69,2,48,19
+Scurry,Precinct 7,Railroad Commissioner,,REP,Christi Craddick,1146,22,898,226
+Scurry,Precinct 7,Railroad Commissioner,,DEM,Katherine Culbert,126,5,82,39
+Scurry,Precinct 7,Railroad Commissioner,,LIB,Hawk Dunlap,46,0,31,15
+Scurry,Precinct 7,Railroad Commissioner,,GRN,Eddie Espinoza,21,0,12,9
+Scurry,Precinct 7,Railroad Commissioner,,,Write-ins,1,0,0,1
+Scurry,Precinct 7,"Justice, Supreme Court, Pl 2",,REP,Jimmy Blacklock,1185,22,921,242
+Scurry,Precinct 7,"Justice, Supreme Court, Pl 2",,DEM,DaSean Jones,136,5,87,44
+Scurry,Precinct 7,"Justice, Supreme Court, Pl 4",,REP,John Devine,1180,22,922,236
+Scurry,Precinct 7,"Justice, Supreme Court, Pl 4",,DEM,Christine Vinh Weems,147,5,91,51
+Scurry,Precinct 7,"Justice, Supreme Court, PI 6",,REP,Jane Bland,1159,22,901,236
+Scurry,Precinct 7,"Justice, Supreme Court, PI 6",,DEM,Bonnie Lee Goldstein,129,5,90,34
+Scurry,Precinct 7,"Justice, Supreme Court, PI 6",,LIB,J. David Roberson,38,1,23,14
+Scurry,Precinct 7,"Presiding Judge, Ct of Crim App",,REP,David J. Schenck,1180,22,921,237
+Scurry,Precinct 7,"Presiding Judge, Ct of Crim App",,DEM,Holly Taylor,145,5,93,47
+Scurry,Precinct 7,"Judge, Ct of Crim App, PI 7",,REP,Gina Parker,1181,22,919,240
+Scurry,Precinct 7,"Judge, Ct of Crim App, PI 7",,DEM,Nancy Mulder,136,5,88,43
+Scurry,Precinct 7,"Judge, Ct of Crim App, PI 8",,REP,Lee Finley,1187,22,924,241
+Scurry,Precinct 7,"Judge, Ct of Crim App, PI 8",,DEM,Chika Anyiam,135,5,87,43
+Scurry,Precinct 7,"Member, State BoE, Dist 15",,REP,Aaron Kinsey,1149,21,900,228
+Scurry,Precinct 7,"Member, State BoE, Dist 15",,DEM,Morgan Kirkpatrick,146,6,98,42
+Scurry,Precinct 7,"Member, State BoE, Dist 15",,LIB,Jack B. Westbrook,35,0,19,16
+Scurry,Precinct 7,State House,83,REP,Dustin Burrows,1239,24,958,257
+Scurry,Precinct 7,"Chief Justice, 11th Ct of App Dist",,REP,John Bailey,1226,22,950,254
+Scurry,Precinct 7,"Dist Judge, 132nd Judicial Dist",,REP,Dana W. Cooley,1221,23,941,257
+Scurry,Precinct 7,"Dist Attorney, 132nd Judicial Dist",,REP,Ben R. Smith,1190,24,916,250
+Scurry,Precinct 7,County Attorney,,REP,Michael Hartman,1215,25,940,250
+Scurry,Precinct 7,District Clerk - Unexpired Term,,REP,Lana Warr,1187,23,919,245
+Scurry,Precinct 7,Sheriff,,REP,Trey Wilson,1216,24,934,258
+Scurry,Precinct 7,County Tax Assessor-Collector,,REP,Jana Young,1239,26,955,258
+Scurry,Precinct 7,County Treasurer - Unexpired Term,,REP,Misty Chapman,1204,23,932,249
+Scurry,Precinct 7,Justice of the Peace - Unexpired Term Precinct 1,,REP,Joe Lay,1214,23,938,253
+Scurry,Precinct 8,Registered Voters,,,,1037,,,
+Scurry,Precinct 8,Ballots Cast,,,,627,20,452,155
+Scurry,Precinct 8,President,,REP,Donald J. Trump,524,16,384,124
+Scurry,Precinct 8,President,,DEM,Kamala D. Harris,92,4,61,27
+Scurry,Precinct 8,President,,LIB,Chase Oliver,4,0,2,2
+Scurry,Precinct 8,President,,GRN,Jill Stein,2,0,1,1
+Scurry,Precinct 8,President,,,Write-ins,1,0,1,0
+Scurry,Precinct 8,U.S. Senate,,REP,Ted Cruz,503,16,376,111
+Scurry,Precinct 8,U.S. Senate,,DEM,Colin Allred,103,4,63,36
+Scurry,Precinct 8,U.S. Senate,,LIB,Ted Brown,11,0,6,5
+Scurry,Precinct 8,U.S. Senate,,,Write-ins,0,0,0,0
+Scurry,Precinct 8,U.S. House,19,REP,Jodey C. Arrington,520,14,383,123
+Scurry,Precinct 8,U.S. House,19,LIB,Bernard Johnson,41,1,20,20
+Scurry,Precinct 8,U.S. House,19,IND,Nathan Lewis,34,4,26,4
+Scurry,Precinct 8,Railroad Commissioner,,REP,Christi Craddick,477,13,361,103
+Scurry,Precinct 8,Railroad Commissioner,,DEM,Katherine Culbert,86,4,54,28
+Scurry,Precinct 8,Railroad Commissioner,,LIB,Hawk Dunlap,25,1,14,10
+Scurry,Precinct 8,Railroad Commissioner,,GRN,Eddie Espinoza,14,1,5,8
+Scurry,Precinct 8,Railroad Commissioner,,,Write-ins,0,0,0,0
+Scurry,Precinct 8,"Justice, Supreme Court, PI 2",,REP,Jimmy Blacklock,506,14,372,120
+Scurry,Precinct 8,"Justice, Supreme Court, PI 2",,DEM,DaSean Jones,87,4,56,27
+Scurry,Precinct 8,"Justice, Supreme Court, Pl 4",,REP,John Devine,502,14,366,122
+Scurry,Precinct 8,"Justice, Supreme Court, Pl 4",,DEM,Christine Vinh Weems,88,4,59,25
+Scurry,Precinct 8,"Justice, Supreme Court, PI 6",,REP,Jane Bland,496,14,370,112
+Scurry,Precinct 8,"Justice, Supreme Court, PI 6",,DEM,Bonnie Lee Goldstein,81,4,51,26
+Scurry,Precinct 8,"Justice, Supreme Court, PI 6",,LIB,J. David Roberson,14,0,5,9
+Scurry,Precinct 8,"Presiding Judge, Ct of Crim App",,REP,David J. Schenck,497,13,369,115
+Scurry,Precinct 8,"Presiding Judge, Ct of Crim App",,DEM,Holly Taylor,93,5,57,31
+Scurry,Precinct 8,"Judge, Ct of Crim App, PI 7",,REP,Gina Parker,502,15,368,119
+Scurry,Precinct 8,"Judge, Ct of Crim App, PI 7",,DEM,Nancy Mulder,82,4,52,26
+Scurry,Precinct 8,"Judge, Ct of Crim App, PI 8",,REP,Lee Finley,503,14,370,119
+Scurry,Precinct 8,"Judge, Ct of Crim App, PI 8",,DEM,Chika Anyiam,87,4,55,28
+Scurry,Precinct 8,"Member, State BoE, Dist 15",,REP,Aaron Kinsey,483,13,361,109
+Scurry,Precinct 8,"Member, State BoE, Dist 15",,DEM,Morgan Kirkpatrick,93,5,56,32
+Scurry,Precinct 8,"Member, State BoE, Dist 15",,LIB,Jack B. Westbrook,13,0,7,6
+Scurry,Precinct 8,State House,83,REP,Dustin Burrows,538,12,393,133
+Scurry,Precinct 8,"Chief Justice, 11th Ct of App Dist",,REP,John Bailey,529,13,385,131
+Scurry,Precinct 8,"Dist Judge, 132nd Judicial Dist",,REP,Dana W. Cooley,528,12,384,132
+Scurry,Precinct 8,"Dist Attorney, 132nd Judicial Dist",,REP,Ben R. Smith,519,12,377,130
+Scurry,Precinct 8,County Attorney,,REP,Michael Hartman,536,13,392,131
+Scurry,Precinct 8,District Clerk - Unexpired Term,,REP,Lana Warr,514,12,374,128
+Scurry,Precinct 8,Sheriff,,REP,Trey Wilson,526,14,381,131
+Scurry,Precinct 8,County Tax Assessor-Collector,,REP,Jana Young,538,15,388,135
+Scurry,Precinct 8,County Treasurer - Unexpired Term,,REP,Misty Chapman,526,12,386,128
+Scurry,Precinct 8,County Commissioner Pct 3,,REP,Shawn McCowen,514,12,376,126
+Scurry,Precinct 8,Justice of the Peace - Unexpired Term Precinct 1,,REP,Joe Lay,510,12,369,129
+Scurry,Precinct 9,Registered Voters,,,,517,,,
+Scurry,Precinct 9,Ballots Cast,,,,393,11,265,117
+Scurry,Precinct 9,President,,REP,Donald J. Trump,351,7,241,103
+Scurry,Precinct 9,President,,DEM,Kamala D. Harris,36,3,20,13
+Scurry,Precinct 9,President,,LIB,Chase Oliver,1,0,1,0
+Scurry,Precinct 9,President,,GRN,Jill Stein,1,0,1,0
+Scurry,Precinct 9,President,,,Write-ins,1,1,0,0
+Scurry,Precinct 9,U.S. Senate,,REP,Ted Cruz,353,9,242,102
+Scurry,Precinct 9,U.S. Senate,,DEM,Colin Allred,31,1,20,10
+Scurry,Precinct 9,U.S. Senate,,LIB,Ted Brown,6,0,2,4
+Scurry,Precinct 9,U.S. Senate,,,Write-ins,0,0,0,0
+Scurry,Precinct 9,U.S. House,19,REP,Jodey C. Arrington,354,9,237,108
+Scurry,Precinct 9,U.S. House,19,LIB,Bernard Johnson,12,1,9,2
+Scurry,Precinct 9,U.S. House,19,IND,Nathan Lewis,15,0,13,2
+Scurry,Precinct 9,Railroad Commissioner,,REP,Christi Craddick,315,8,214,93
+Scurry,Precinct 9,Railroad Commissioner,,DEM,Katherine Culbert,23,0,17,6
+Scurry,Precinct 9,Railroad Commissioner,,LIB,Hawk Dunlap,35,0,23,12
+Scurry,Precinct 9,Railroad Commissioner,,GRN,Eddie Espinoza,1,0,0,1
+Scurry,Precinct 9,Railroad Commissioner,,,Write-ins,0,0,0,0
+Scurry,Precinct 9,"Justice, Supreme Court, PI 2",,REP,Jimmy Blacklock,350,8,237,105
+Scurry,Precinct 9,"Justice, Supreme Court, PI 2",,DEM,DaSean Jones,24,0,16,8
+Scurry,Precinct 9,"Justice, Supreme Court, Pl 4",,REP,John Devine,352,8,238,106
+Scurry,Precinct 9,"Justice, Supreme Court, Pl 4",,DEM,Christine Vinh Weems,25,0,18,7
+Scurry,Precinct 9,"Justice, Supreme Court, PI 6",,REP,Jane Bland,341,7,231,103
+Scurry,Precinct 9,"Justice, Supreme Court, PI 6",,DEM,Bonnie Lee Goldstein,24,0,17,7
+Scurry,Precinct 9,"Justice, Supreme Court, PI 6",,LIB,J. David Roberson,11,0,9,2
+Scurry,Precinct 9,"Presiding Judge, Ct of Crim App",,REP,David J. Schenck,347,8,235,104
+Scurry,Precinct 9,"Presiding Judge, Ct of Crim App",,DEM,Holly Taylor,28,0,20,8
+Scurry,Precinct 9,"Judge, Ct of Crim App, PI 7",,REP,Gina Parker,346,8,234,104
+Scurry,Precinct 9,"Judge, Ct of Crim App, PI 7",,DEM,Nancy Mulder,28,0,20,8
+Scurry,Precinct 9,"Judge, Ct of Crim App, PI 8",,REP,Lee Finley,349,8,237,104
+Scurry,Precinct 9,"Judge, Ct of Crim App, PI 8",,DEM,Chika Anyiam,26,0,18,8
+Scurry,Precinct 9,"Member, State BoE, Dist 15",,REP,Aaron Kinsey,342,7,231,104
+Scurry,Precinct 9,"Member, State BoE, Dist 15",,DEM,Morgan Kirkpatrick,27,1,19,7
+Scurry,Precinct 9,"Member, State BoE, Dist 15",,LIB,Jack B. Westbrook,8,1,6,1
+Scurry,Precinct 9,State House,83,REP,Dustin Burrows,357,8,245,104
+Scurry,Precinct 9,"Chief Justice, 11th Ct of App Dist",,REP,John Bailey,356,8,243,105
+Scurry,Precinct 9,"Dist Judge, 132nd Judicial Dist",,REP,Dana W. Cooley,349,8,237,104
+Scurry,Precinct 9,"Dist Attorney, 132nd Judicial Dist",,REP,Ben R. Smith,341,7,239,95
+Scurry,Precinct 9,County Attorney,,REP,Michael Hartman,338,8,236,94
+Scurry,Precinct 9,District Clerk - Unexpired Term,,REP,Lana Warr,342,8,235,99
+Scurry,Precinct 9,Sheriff,,REP,Trey Wilson,346,8,238,100
+Scurry,Precinct 9,County Tax Assessor-Collector,,REP,Jana Young,350,8,242,100
+Scurry,Precinct 9,County Treasurer - Unexpired Term,,REP,Misty Chapman,342,8,236,98
+Scurry,Precinct 9,County Commissioner Pct 3,,REP,Shawn McCowen,329,6,233,90
+Scurry,Precinct 9,Board of Trustee Ira ISD,,,Rance Dunn,235,6,154,75
+Scurry,Precinct 9,Board of Trustee Ira ISD,,,Justin Taylor,94,1,58,35
+Scurry,Precinct 9,Board of Trustee Ira ISD,,,David Kirk,136,1,83,52
+Scurry,Precinct 9,Board of Trustee Ira ISD,,,J.J. Caswell,141,1,102,38
+Scurry,Precinct 9,Board of Trustee Ira ISD,,,Russell Wall,169,3,116,50
+Scurry,Precinct 9,Board of Trustee Ira ISD,,,Austin Calley,183,6,111,66
+Scurry,Precinct 9,Board of Trustee Ira ISD,,,Tanner Poole,120,2,83,35
+Scurry,Precinct 9,Board of Trustee Ira ISD,,,Charles D. Walker,106,2,72,32
+Scurry,Precinct 9,Board of Trustee Ira ISD,,,Dennis Taylor,125,6,82,37
+Scurry,Precinct 9,IRA INDEPENDENT SCHOOL DISTRICT- PROPOSITION A Ira ISD,,,For,238,8,147,83
+Scurry,Precinct 9,IRA INDEPENDENT SCHOOL DISTRICT- PROPOSITION A Ira ISD,,,Against,119,2,88,29
+Scurry,Precinct 10,Registered Voters,,,,840,,,
+Scurry,Precinct 10,Ballots Cast,,,,620,9,502,109
+Scurry,Precinct 10,President,,REP,Donald J. Trump,565,8,459,98
+Scurry,Precinct 10,President,,DEM,Kamala D. Harris,51,1,41,9
+Scurry,Precinct 10,President,,LIB,Chase Oliver,0,0,0,0
+Scurry,Precinct 10,President,,GRN,Jill Stein,0,0,0,0
+Scurry,Precinct 10,President,,,Write-ins,3,0,2,1
+Scurry,Precinct 10,U.S. Senate,,REP,Ted Cruz,538,9,437,92
+Scurry,Precinct 10,U.S. Senate,,DEM,Colin Allred,62,0,50,12
+Scurry,Precinct 10,U.S. Senate,,LIB,Ted Brown,11,0,8,3
+Scurry,Precinct 10,U.S. Senate,,,Write-ins,0,0,0,0
+Scurry,Precinct 10,U.S. House,19,REP,Jodey C. Arrington,551,9,447,95
+Scurry,Precinct 10,U.S. House,19,LIB,Bernard Johnson,23,0,16,7
+Scurry,Precinct 10,U.S. House,19,IND,Nathan Lewis,17,0,14,3
+Scurry,Precinct 10,Railroad Commissioner,,REP,Christi Craddick,530,9,429,92
+Scurry,Precinct 10,Railroad Commissioner,,DEM,Katherine Culbert,46,0,38,8
+Scurry,Precinct 10,Railroad Commissioner,,LIB,Hawk Dunlap,13,0,12,1
+Scurry,Precinct 10,Railroad Commissioner,,GRN,Eddie Espinoza,7,0,5,2
+Scurry,Precinct 10,Railroad Commissioner,,,Write-ins,0,0,0,0
+Scurry,Precinct 10,"Justice, Supreme Court, PI 2",,REP,Jimmy Blacklock,541,9,439,93
+Scurry,Precinct 10,"Justice, Supreme Court, PI 2",,DEM,DaSean Jones,48,0,39,9
+Scurry,Precinct 10,"Justice, Supreme Court, Pl 4",,REP,John Devine,540,9,441,90
+Scurry,Precinct 10,"Justice, Supreme Court, Pl 4",,DEM,Christine Vinh Weems,45,0,38,7
+Scurry,Precinct 10,"Justice, Supreme Court, PI 6",,REP,Jane Bland,528,9,432,87
+Scurry,Precinct 10,"Justice, Supreme Court, PI 6",,DEM,Bonnie Lee Goldstein,46,0,39,7
+Scurry,Precinct 10,"Justice, Supreme Court, PI 6",,LIB,J. David Roberson,11,0,9,2
+Scurry,Precinct 10,"Presiding Judge, Ct of Crim App",,REP,David J. Schenck,535,9,439,87
+Scurry,Precinct 10,"Presiding Judge, Ct of Crim App",,DEM,Holly Taylor,50,0,42,8
+Scurry,Precinct 10,"Judge, Ct of Crim App, PI 7",,REP,Gina Parker,534,9,437,88
+Scurry,Precinct 10,"Judge, Ct of Crim App, PI 7",,DEM,Nancy Mulder,51,0,42,9
+Scurry,Precinct 10,"Judge, Ct of Crim App, PI 8",,REP,Lee Finley,536,9,438,89
+Scurry,Precinct 10,"Judge, Ct of Crim App, PI 8",,DEM,Chika Anyiam,45,0,38,7
+Scurry,Precinct 10,"Member, State BoE, Dist 15",,REP,Aaron Kinsey,504,8,410,86
+Scurry,Precinct 10,"Member, State BoE, Dist 15",,DEM,Morgan Kirkpatrick,53,0,45,8
+Scurry,Precinct 10,"Member, State BoE, Dist 15",,LIB,Jack B. Westbrook,14,0,11,3
+Scurry,Precinct 10,State House,83,REP,Dustin Burrows,544,9,440,95
+Scurry,Precinct 10,"Chief Justice, 11th Ct of App Dist",,REP,John Bailey,536,9,433,94
+Scurry,Precinct 10,"Dist Judge, 132nd Judicial Dist",,REP,Dana W. Cooley,543,9,441,93
+Scurry,Precinct 10,"Dist Attorney, 132nd Judicial Dist",,REP,Ben R. Smith,517,9,416,92
+Scurry,Precinct 10,County Attorney,,REP,Michael Hartman,542,9,441,92
+Scurry,Precinct 10,District Clerk - Unexpired Term,,REP,Lana Warr,525,9,430,86
+Scurry,Precinct 10,Sheriff,,REP,Trey Wilson,542,9,441,92
+Scurry,Precinct 10,County Tax Assessor-Collector,,REP,Jana Young,546,9,444,93
+Scurry,Precinct 10,County Treasurer - Unexpired Term,,REP,Misty Chapman,534,9,437,88
+Scurry,Precinct 10,County Commissioner Pct 3,,REP,Shawn McCowen,533,9,434,90
+Scurry,Precinct 10,Board of Trustee Ira ISD,,,Rance Dunn,0,0,0,0
+Scurry,Precinct 10,Board of Trustee Ira ISD,,,Justin Taylor,0,0,0,0
+Scurry,Precinct 10,Board of Trustee Ira ISD,,,David Kirk,0,0,0,0
+Scurry,Precinct 10,Board of Trustee Ira ISD,,,J.J. Caswell,1,0,1,0
+Scurry,Precinct 10,Board of Trustee Ira ISD,,,Russell Wall,1,0,1,0
+Scurry,Precinct 10,Board of Trustee Ira ISD,,,Austin Calley,0,0,0,0
+Scurry,Precinct 10,Board of Trustee Ira ISD,,,Tanner Poole,1,0,1,0
+Scurry,Precinct 10,Board of Trustee Ira ISD,,,Charles D. Walker,1,0,1,0
+Scurry,Precinct 10,Board of Trustee Ira ISD,,,Dennis Taylor,0,0,0,0
+Scurry,Precinct 10,IRA INDEPENDENT SCHOOL DISTRICT- PROPOSITION A Ira ISD,,,For,1,0,1,0
+Scurry,Precinct 10,IRA INDEPENDENT SCHOOL DISTRICT- PROPOSITION A Ira ISD,,,Against,0,0,0,0
+Scurry,Precinct 11,Registered Voters,,,,142,,,
+Scurry,Precinct 11,Ballots Cast,,,,103,2,77,24
+Scurry,Precinct 11,President,,REP,Donald J. Trump,91,2,68,21
+Scurry,Precinct 11,President,,DEM,Kamala D. Harris,9,0,6,3
+Scurry,Precinct 11,President,,LIB,Chase Oliver,1,0,1,0
+Scurry,Precinct 11,President,,GRN,Jill Stein,0,0,0,0
+Scurry,Precinct 11,President,,,Write-ins,0,0,0,0
+Scurry,Precinct 11,U.S. Senate,,REP,Ted Cruz,88,2,66,20
+Scurry,Precinct 11,U.S. Senate,,DEM,Colin Allred,12,0,10,2
+Scurry,Precinct 11,U.S. Senate,,LIB,Ted Brown,3,0,1,2
+Scurry,Precinct 11,U.S. Senate,,,Write-ins,0,0,0,0
+Scurry,Precinct 11,U.S. House,19,REP,Jodey C. Arrington,93,2,70,21
+Scurry,Precinct 11,U.S. House,19,LIB,Bernard Johnson,5,0,3,2
+Scurry,Precinct 11,U.S. House,19,IND,Nathan Lewis,1,0,0,1
+Scurry,Precinct 11,Railroad Commissioner,,REP,Christi Craddick,84,2,64,18
+Scurry,Precinct 11,Railroad Commissioner,,DEM,Katherine Culbert,7,0,5,2
+Scurry,Precinct 11,Railroad Commissioner,,LIB,Hawk Dunlap,7,0,4,3
+Scurry,Precinct 11,Railroad Commissioner,,GRN,Eddie Espinoza,0,0,0,0
+Scurry,Precinct 11,Railroad Commissioner,,,Write-ins,0,0,0,0
+Scurry,Precinct 11,"Justice, Supreme Court, Pl 2",,REP,Jimmy Blacklock,89,2,66,21
+Scurry,Precinct 11,"Justice, Supreme Court, Pl 2",,DEM,DaSean Jones,11,0,8,3
+Scurry,Precinct 11,"Justice, Supreme Court, Pl 4",,REP,John Devine,87,2,66,19
+Scurry,Precinct 11,"Justice, Supreme Court, Pl 4",,DEM,Christine Vinh Weems,10,0,7,3
+Scurry,Precinct 11,"Justice, Supreme Court, PI 6",,REP,Jane Bland,84,1,65,18
+Scurry,Precinct 11,"Justice, Supreme Court, PI 6",,DEM,Bonnie Lee Goldstein,11,0,7,4
+Scurry,Precinct 11,"Justice, Supreme Court, PI 6",,LIB,J. David Roberson,1,0,1,0
+Scurry,Precinct 11,"Presiding Judge, Ct of Crim App",,REP,David J. Schenck,88,1,68,19
+Scurry,Precinct 11,"Presiding Judge, Ct of Crim App",,DEM,Holly Taylor,8,0,5,3
+Scurry,Precinct 11,"Judge, Ct of Crim App, PI 7",,REP,Gina Parker,87,1,67,19
+Scurry,Precinct 11,"Judge, Ct of Crim App, PI 7",,DEM,Nancy Mulder,9,0,6,3
+Scurry,Precinct 11,"Judge, Ct of Crim App, PI 8",,REP,Lee Finley,89,2,68,19
+Scurry,Precinct 11,"Judge, Ct of Crim App, PI 8",,DEM,Chika Anyiam,8,0,5,3
+Scurry,Precinct 11,"Member, State BoE, Dist 15",,REP,Aaron Kinsey,88,2,67,19
+Scurry,Precinct 11,"Member, State BoE, Dist 15",,DEM,Morgan Kirkpatrick,9,0,6,3
+Scurry,Precinct 11,"Member, State BoE, Dist 15",,LIB,Jack B. Westbrook,0,0,0,0
+Scurry,Precinct 11,State House,83,REP,Dustin Burrows,89,2,68,19
+Scurry,Precinct 11,"Chief Justice, 11th Ct of App Dist",,REP,John Bailey,89,2,67,20
+Scurry,Precinct 11,"Dist Judge, 132nd Judicial Dist",,REP,Dana W. Cooley,90,2,67,21
+Scurry,Precinct 11,"Dist Attorney, 132nd Judicial Dist",,REP,Ben R. Smith,88,2,65,21
+Scurry,Precinct 11,County Attorney,,REP,Michael Hartman,90,2,67,21
+Scurry,Precinct 11,District Clerk - Unexpired Term,,REP,Lana Warr,87,1,66,20
+Scurry,Precinct 11,Sheriff,,REP,Trey Wilson,87,2,64,21
+Scurry,Precinct 11,County Tax Assessor-Collector,,REP,Jana Young,89,1,68,20
+Scurry,Precinct 11,County Treasurer - Unexpired Term,,REP,Misty Chapman,88,2,65,21
+Scurry,Precinct 11,Board of Trustee Hermleigh ISD,,,Kevin Tate,7,0,5,2
+Scurry,Precinct 11,Board of Trustee Hermleigh ISD,,,Joe Taylor,8,0,7,1
+Scurry,Precinct 11,Board of Trustee Hermleigh ISD,,,John (Big John) Pence,8,0,6,2
+Scurry,Precinct 11,Board of Trustee Hermleigh ISD,,,Bridget Moore Claxton,5,0,4,1
+Scurry,Precinct 11,Board of Trustee Hermleigh ISD,,,Blaine Minton,4,0,4,0
+Scurry,Precinct 11,Board of Trustee Hermleigh ISD,,,Leslie Beane,1,0,1,0
+Scurry,Precinct 12,Registered Voters,,,,1710,,,
+Scurry,Precinct 12,Ballots Cast,,,,995,14,742,239
+Scurry,Precinct 12,President,,REP,Donald J. Trump,839,12,628,199
+Scurry,Precinct 12,President,,DEM,Kamala D. Harris,144,2,106,36
+Scurry,Precinct 12,President,,LIB,Chase Oliver,4,0,3,1
+Scurry,Precinct 12,President,,GRN,Jill Stein,3,0,1,2
+Scurry,Precinct 12,President,,,Write-ins,4,0,3,1
+Scurry,Precinct 12,U.S. Senate,,REP,Ted Cruz,782,12,595,175
+Scurry,Precinct 12,U.S. Senate,,DEM,Colin Allred,162,2,115,45
+Scurry,Precinct 12,U.S. Senate,,LIB,Ted Brown,27,0,16,11
+Scurry,Precinct 12,U.S. Senate,,,Write-ins,1,0,1,0
+Scurry,Precinct 12,U.S. House,19,REP,Jodey C. Arrington,820,11,620,189
+Scurry,Precinct 12,U.S. House,19,LIB,Bernard Johnson,69,1,46,22
+Scurry,Precinct 12,U.S. House,19,IND,Nathan Lewis,55,2,39,14
+Scurry,Precinct 12,Railroad Commissioner,,REP,Christi Craddick,776,11,589,176
+Scurry,Precinct 12,Railroad Commissioner,,DEM,Katherine Culbert,114,2,86,26
+Scurry,Precinct 12,Railroad Commissioner,,LIB,Hawk Dunlap,31,0,19,12
+Scurry,Precinct 12,Railroad Commissioner,,GRN,Eddie Espinoza,22,0,11,11
+Scurry,Precinct 12,Railroad Commissioner,,,Write-ins,1,0,1,0
+Scurry,Precinct 12,"Justice, Supreme Court, Pl 2",,REP,Jimmy Blacklock,806,11,604,191
+Scurry,Precinct 12,"Justice, Supreme Court, Pl 2",,DEM,DaSean Jones,132,3,95,34
+Scurry,Precinct 12,"Justice, Supreme Court, Pl 4",,REP,John Devine,797,11,596,190
+Scurry,Precinct 12,"Justice, Supreme Court, Pl 4",,DEM,Christine Vinh Weems,134,3,94,37
+Scurry,Precinct 12,"Justice, Supreme Court, PI 6",,REP,Jane Bland,789,11,589,189
+Scurry,Precinct 12,"Justice, Supreme Court, PI 6",,DEM,Bonnie Lee Goldstein,126,3,91,32
+Scurry,Precinct 12,"Justice, Supreme Court, PI 6",,LIB,J. David Roberson,24,0,17,7
+Scurry,Precinct 12,"Presiding Judge, Ct of Crim App",,REP,David J. Schenck,800,11,598,191
+Scurry,Precinct 12,"Presiding Judge, Ct of Crim App",,DEM,Holly Taylor,132,3,92,37
+Scurry,Precinct 12,"Judge, Ct of Crim App, PI 7",,REP,Gina Parker,798,11,594,193
+Scurry,Precinct 12,"Judge, Ct of Crim App, PI 7",,DEM,Nancy Mulder,128,3,90,35
+Scurry,Precinct 12,"Judge, Ct of Crim App, PI 8",,REP,Lee Finley,800,11,599,190
+Scurry,Precinct 12,"Judge, Ct of Crim App, PI 8",,DEM,Chika Anyiam,129,3,89,37
+Scurry,Precinct 12,"Member, State BoE, Dist 15",,REP,Aaron Kinsey,763,11,569,183
+Scurry,Precinct 12,"Member, State BoE, Dist 15",,DEM,Morgan Kirkpatrick,132,3,96,33
+Scurry,Precinct 12,"Member, State BoE, Dist 15",,LIB,Jack B. Westbrook,30,0,19,11
+Scurry,Precinct 12,State House,83,REP,Dustin Burrows,848,14,626,208
+Scurry,Precinct 12,"Chief Justice, 11th Ct of App Dist",,REP,John Bailey,836,14,618,204
+Scurry,Precinct 12,"Dist Judge, 132nd Judicial Dist",,REP,Dana W. Cooley,847,14,632,201
+Scurry,Precinct 12,"Dist Attorney, 132nd Judicial Dist",,REP,Ben R. Smith,808,14,599,195
+Scurry,Precinct 12,County Attorney,,REP,Michael Hartman,843,14,625,204
+Scurry,Precinct 12,District Clerk - Unexpired Term,,REP,Lana Warr,817,14,610,193
+Scurry,Precinct 12,Sheriff,,REP,Trey Wilson,836,14,624,198
+Scurry,Precinct 12,County Tax Assessor-Collector,,REP,Jana Young,861,14,641,206
+Scurry,Precinct 12,County Treasurer - Unexpired Term,,REP,Misty Chapman,818,14,609,195
+Scurry,Precinct 12,Justice of the Peace - Unexpired Term Precinct 1,,REP,Joe Lay,813,12,606,195
+Scurry,Precinct 12,Board of Trustee Hermleigh ISD,,,Kevin Tate,7,2,3,2
+Scurry,Precinct 12,Board of Trustee Hermleigh ISD,,,Joe Taylor,10,2,6,2
+Scurry,Precinct 12,Board of Trustee Hermleigh ISD,,,John (Big John) Pence,3,0,2,1
+Scurry,Precinct 12,Board of Trustee Hermleigh ISD,,,Bridget Moore Claxton,5,2,1,2
+Scurry,Precinct 12,Board of Trustee Hermleigh ISD,,,Blaine Minton,2,0,2,0
+Scurry,Precinct 12,Board of Trustee Hermleigh ISD,,,Leslie Beane,3,2,1,0
+Scurry,Precinct 13,Registered Voters,,,,497,,,
+Scurry,Precinct 13,Ballots Cast,,,,371,5,253,113
+Scurry,Precinct 13,President,,REP,Donald J. Trump,319,4,217,98
+Scurry,Precinct 13,President,,DEM,Kamala D. Harris,49,1,34,14
+Scurry,Precinct 13,President,,LIB,Chase Oliver,3,0,2,1
+Scurry,Precinct 13,President,,GRN,Jill Stein,0,0,0,0
+Scurry,Precinct 13,President,,,Write-ins,0,0,0,0
+Scurry,Precinct 13,U.S. Senate,,REP,Ted Cruz,298,4,205,89
+Scurry,Precinct 13,U.S. Senate,,DEM,Colin Allred,56,1,37,18
+Scurry,Precinct 13,U.S. Senate,,LIB,Ted Brown,11,0,8,3
+Scurry,Precinct 13,U.S. Senate,,,Write-ins,0,0,0,0
+Scurry,Precinct 13,U.S. House,19,REP,Jodey C. Arrington,313,4,211,98
+Scurry,Precinct 13,U.S. House,19,LIB,Bernard Johnson,19,0,14,5
+Scurry,Precinct 13,U.S. House,19,IND,Nathan Lewis,26,1,20,5
+Scurry,Precinct 13,Railroad Commissioner,,REP,Christi Craddick,289,4,196,89
+Scurry,Precinct 13,Railroad Commissioner,,DEM,Katherine Culbert,46,1,32,13
+Scurry,Precinct 13,Railroad Commissioner,,LIB,Hawk Dunlap,18,0,15,3
+Scurry,Precinct 13,Railroad Commissioner,,GRN,Eddie Espinoza,4,0,1,3
+Scurry,Precinct 13,Railroad Commissioner,,,Write-ins,0,0,0,0
+Scurry,Precinct 13,"Justice, Supreme Court, Pl 2",,REP,Jimmy Blacklock,308,4,207,97
+Scurry,Precinct 13,"Justice, Supreme Court, Pl 2",,DEM,DaSean Jones,45,1,32,12
+Scurry,Precinct 13,"Justice, Supreme Court, Pl 4",,REP,John Devine,298,4,202,92
+Scurry,Precinct 13,"Justice, Supreme Court, Pl 4",,DEM,Christine Vinh Weems,48,1,33,14
+Scurry,Precinct 13,"Justice, Supreme Court, PI 6",,REP,Jane Bland,290,4,197,89
+Scurry,Precinct 13,"Justice, Supreme Court, PI 6",,DEM,Bonnie Lee Goldstein,48,1,32,15
+Scurry,Precinct 13,"Justice, Supreme Court, PI 6",,LIB,J. David Roberson,7,0,6,1
+Scurry,Precinct 13,"Presiding Judge, Ct of Crim App",,REP,David J. Schenck,296,4,202,90
+Scurry,Precinct 13,"Presiding Judge, Ct of Crim App",,DEM,Holly Taylor,48,1,32,15
+Scurry,Precinct 13,"Judge, Ct of Crim App, PI 7",,REP,Gina Parker,294,4,203,87
+Scurry,Precinct 13,"Judge, Ct of Crim App, PI 7",,DEM,Nancy Mulder,48,1,30,17
+Scurry,Precinct 13,"Judge, Ct of Crim App, PI 8",,REP,Lee Finley,296,4,201,91
+Scurry,Precinct 13,"Judge, Ct of Crim App, PI 8",,DEM,Chika Anyiam,45,1,31,13
+Scurry,Precinct 13,"Member, State BoE, Dist 15",,REP,Aaron Kinsey,285,4,194,87
+Scurry,Precinct 13,"Member, State BoE, Dist 15",,DEM,Morgan Kirkpatrick,49,1,35,13
+Scurry,Precinct 13,"Member, State BoE, Dist 15",,LIB,Jack B. Westbrook,11,0,6,5
+Scurry,Precinct 13,State House,83,REP,Dustin Burrows,311,5,209,97
+Scurry,Precinct 13,"Chief Justice, 11th Ct of App Dist",,REP,John Bailey,310,5,208,97
+Scurry,Precinct 13,"Dist Judge, 132nd Judicial Dist",,REP,Dana W. Cooley,304,5,207,92
+Scurry,Precinct 13,"Dist Attorney, 132nd Judicial Dist",,REP,Ben R. Smith,299,5,200,94
+Scurry,Precinct 13,County Attorney,,REP,Michael Hartman,309,5,206,98
+Scurry,Precinct 13,District Clerk - Unexpired Term,,REP,Lana Warr,299,5,200,94
+Scurry,Precinct 13,Sheriff,,REP,Trey Wilson,299,4,196,99
+Scurry,Precinct 13,County Tax Assessor-Collector,,REP,Jana Young,311,5,209,97
+Scurry,Precinct 13,County Treasurer - Unexpired Term,,REP,Misty Chapman,294,5,196,93
+Scurry,Precinct 13,Board of Trustee Hermleigh ISD,,,Kevin Tate,218,4,144,70
+Scurry,Precinct 13,Board of Trustee Hermleigh ISD,,,Joe Taylor,213,5,143,65
+Scurry,Precinct 13,Board of Trustee Hermleigh ISD,,,John (Big John) Pence,165,3,104,58
+Scurry,Precinct 13,Board of Trustee Hermleigh ISD,,,Bridget Moore Claxton,97,0,71,26
+Scurry,Precinct 13,Board of Trustee Hermleigh ISD,,,Blaine Minton,125,0,78,47
+Scurry,Precinct 13,Board of Trustee Hermleigh ISD,,,Leslie Beane,87,2,52,33
+Scurry,Precinct 14,Registered Voters,,,,107,,,
+Scurry,Precinct 14,Ballots Cast,,,,82,3,65,14
+Scurry,Precinct 14,President,,REP,Donald J. Trump,74,3,60,11
+Scurry,Precinct 14,President,,DEM,Kamala D. Harris,8,0,5,3
+Scurry,Precinct 14,President,,LIB,Chase Oliver,0,0,0,0
+Scurry,Precinct 14,President,,GRN,Jill Stein,0,0,0,0
+Scurry,Precinct 14,President,,,Write-ins,0,0,0,0
+Scurry,Precinct 14,U.S. Senate,,REP,Ted Cruz,74,3,60,11
+Scurry,Precinct 14,U.S. Senate,,DEM,Colin Allred,8,0,5,3
+Scurry,Precinct 14,U.S. Senate,,LIB,Ted Brown,0,0,0,0
+Scurry,Precinct 14,U.S. Senate,,,Write-ins,0,0,0,0
+Scurry,Precinct 14,U.S. House,19,REP,Jodey C. Arrington,75,3,60,12
+Scurry,Precinct 14,U.S. House,19,LIB,Bernard Johnson,2,0,1,1
+Scurry,Precinct 14,U.S. House,19,IND,Nathan Lewis,4,0,4,0
+Scurry,Precinct 14,Railroad Commissioner,,REP,Christi Craddick,64,3,51,10
+Scurry,Precinct 14,Railroad Commissioner,,DEM,Katherine Culbert,7,0,6,1
+Scurry,Precinct 14,Railroad Commissioner,,LIB,Hawk Dunlap,9,0,6,3
+Scurry,Precinct 14,Railroad Commissioner,,GRN,Eddie Espinoza,1,0,1,0
+Scurry,Precinct 14,Railroad Commissioner,,,Write-ins,0,0,0,0
+Scurry,Precinct 14,"Justice, Supreme Court, Pl 2",,REP,Jimmy Blacklock,73,3,59,11
+Scurry,Precinct 14,"Justice, Supreme Court, Pl 2",,DEM,DaSean Jones,6,0,5,1
+Scurry,Precinct 14,"Justice, Supreme Court, Pl 4",,REP,John Devine,74,3,59,12
+Scurry,Precinct 14,"Justice, Supreme Court, Pl 4",,DEM,Christine Vinh Weems,6,0,5,1
+Scurry,Precinct 14,"Justice, Supreme Court, PI 6",,REP,Jane Bland,71,3,58,10
+Scurry,Precinct 14,"Justice, Supreme Court, PI 6",,DEM,Bonnie Lee Goldstein,6,0,5,1
+Scurry,Precinct 14,"Justice, Supreme Court, PI 6",,LIB,J. David Roberson,2,0,1,1
+Scurry,Precinct 14,"Presiding Judge, Ct of Crim App",,REP,David J. Schenck,74,3,59,12
+Scurry,Precinct 14,"Presiding Judge, Ct of Crim App",,DEM,Holly Taylor,5,0,5,0
+Scurry,Precinct 14,"Judge, Ct of Crim App, PI 7",,REP,Gina Parker,72,3,58,11
+Scurry,Precinct 14,"Judge, Ct of Crim App, PI 7",,DEM,Nancy Mulder,6,0,5,1
+Scurry,Precinct 14,"Judge, Ct of Crim App, PI 8",,REP,Lee Finley,74,3,59,12
+Scurry,Precinct 14,"Judge, Ct of Crim App, PI 8",,DEM,Chika Anyiam,5,0,5,0
+Scurry,Precinct 14,"Member, State BoE, Dist 15",,REP,Aaron Kinsey,71,3,58,10
+Scurry,Precinct 14,"Member, State BoE, Dist 15",,DEM,Morgan Kirkpatrick,7,0,5,2
+Scurry,Precinct 14,"Member, State BoE, Dist 15",,LIB,Jack B. Westbrook,2,0,1,1
+Scurry,Precinct 14,State House,83,REP,Dustin Burrows,77,3,61,13
+Scurry,Precinct 14,"Chief Justice, 11th Ct of App Dist",,REP,John Bailey,78,3,62,13
+Scurry,Precinct 14,"Dist Judge, 132nd Judicial Dist",,REP,Dana W. Cooley,78,3,62,13
+Scurry,Precinct 14,"Dist Attorney, 132nd Judicial Dist",,REP,Ben R. Smith,77,3,61,13
+Scurry,Precinct 14,County Attorney,,REP,Michael Hartman,80,3,63,14
+Scurry,Precinct 14,District Clerk - Unexpired Term,,REP,Lana Warr,78,3,62,13
+Scurry,Precinct 14,Sheriff,,REP,Trey Wilson,78,3,62,13
+Scurry,Precinct 14,County Tax Assessor-Collector,,REP,Jana Young,81,3,65,13
+Scurry,Precinct 14,County Treasurer - Unexpired Term,,REP,Misty Chapman,78,3,62,13
+Scurry,Precinct 14,County Commissioner Pct 1,,REP,Terry D. Williams,44,1,34,9
+Scurry,Precinct 14,Board of Trustee Hermleigh ISD,,,Kevin Tate,13,0,12,1
+Scurry,Precinct 14,Board of Trustee Hermleigh ISD,,,Joe Taylor,15,0,14,1
+Scurry,Precinct 14,Board of Trustee Hermleigh ISD,,,John (Big John) Pence,8,0,7,1
+Scurry,Precinct 14,Board of Trustee Hermleigh ISD,,,Bridget Moore Claxton,8,0,6,2
+Scurry,Precinct 14,Board of Trustee Hermleigh ISD,,,Blaine Minton,6,0,6,0
+Scurry,Precinct 14,Board of Trustee Hermleigh ISD,,,Leslie Beane,8,0,8,0
+Scurry,Precinct 15,Registered Voters,,,,1885,,,
+Scurry,Precinct 15,Ballots Cast,,,,799,15,552,232
+Scurry,Precinct 15,President,,REP,Donald J. Trump,646,6,458,182
+Scurry,Precinct 15,President,,DEM,Kamala D. Harris,143,9,85,49
+Scurry,Precinct 15,President,,LIB,Chase Oliver,3,0,3,0
+Scurry,Precinct 15,President,,GRN,Jill Stein,2,0,1,1
+Scurry,Precinct 15,President,,,Write-ins,2,0,2,0
+Scurry,Precinct 15,U.S. Senate,,REP,Ted Cruz,584,6,421,157
+Scurry,Precinct 15,U.S. Senate,,DEM,Colin Allred,151,9,91,51
+Scurry,Precinct 15,U.S. Senate,,LIB,Ted Brown,25,0,12,13
+Scurry,Precinct 15,U.S. Senate,,,Write-ins,1,0,0,1
+Scurry,Precinct 15,U.S. House,19,REP,Jodey C. Arrington,607,7,437,163
+Scurry,Precinct 15,U.S. House,19,LIB,Bernard Johnson,60,0,36,24
+Scurry,Precinct 15,U.S. House,19,IND,Nathan Lewis,47,3,28,16
+Scurry,Precinct 15,Railroad Commissioner,,REP,Christi Craddick,557,5,406,146
+Scurry,Precinct 15,Railroad Commissioner,,DEM,Katherine Culbert,113,9,63,41
+Scurry,Precinct 15,Railroad Commissioner,,LIB,Hawk Dunlap,33,0,21,12
+Scurry,Precinct 15,Railroad Commissioner,,GRN,Eddie Espinoza,22,0,14,8
+Scurry,Precinct 15,Railroad Commissioner,,,Write-ins,0,0,0,0
+Scurry,Precinct 15,"Justice, Supreme Court, Pl 2",,REP,Jimmy Blacklock,588,5,424,159
+Scurry,Precinct 15,"Justice, Supreme Court, Pl 2",,DEM,DaSean Jones,134,9,77,48
+Scurry,Precinct 15,"Justice, Supreme Court, Pl 4",,REP,John Devine,578,5,415,158
+Scurry,Precinct 15,"Justice, Supreme Court, Pl 4",,DEM,Christine Vinh Weems,134,9,77,48
+Scurry,Precinct 15,"Justice, Supreme Court, Pl 6",,REP,Jane Bland,567,5,410,152
+Scurry,Precinct 15,"Justice, Supreme Court, Pl 6",,DEM,Bonnie Lee Goldstein,128,9,71,48
+Scurry,Precinct 15,"Justice, Supreme Court, Pl 6",,LIB,J. David Roberson,18,0,11,7
+Scurry,Precinct 15,"Presiding Judge, Ct of Crim App",,REP,David J. Schenck,577,5,417,155
+Scurry,Precinct 15,"Presiding Judge, Ct of Crim App",,DEM,Holly Taylor,133,9,75,49
+Scurry,Precinct 15,"Judge, Ct of Crim App, PI 7",,REP,Gina Parker,575,5,417,153
+Scurry,Precinct 15,"Judge, Ct of Crim App, PI 7",,DEM,Nancy Mulder,131,9,72,50
+Scurry,Precinct 15,"Judge, Ct of Crim App, PI 8",,REP,Lee Finley,579,7,415,157
+Scurry,Precinct 15,"Judge, Ct of Crim App, PI 8",,DEM,Chika Anyiam,124,7,71,46
+Scurry,Precinct 15,"Member, State BoE, Dist 15",,REP,Aaron Kinsey,558,5,403,150
+Scurry,Precinct 15,"Member, State BoE, Dist 15",,DEM,Morgan Kirkpatrick,133,9,77,47
+Scurry,Precinct 15,"Member, State BoE, Dist 15",,LIB,Jack B. Westbrook,16,0,11,5
+Scurry,Precinct 15,State House,83,REP,Dustin Burrows,629,7,444,178
+Scurry,Precinct 15,"Chief Justice, 11th Ct of App Dist",,REP,John Bailey,614,6,434,174
+Scurry,Precinct 15,"Dist Judge, 132nd Judicial Dist",,REP,Dana W. Cooley,622,9,441,172
+Scurry,Precinct 15,"Dist Attorney, 132nd Judicial Dist",,REP,Ben R. Smith,612,7,434,171
+Scurry,Precinct 15,County Attorney,,REP,Michael Hartman,621,7,440,174
+Scurry,Precinct 15,District Clerk - Unexpired Term,,REP,Lana Warr,602,6,430,166
+Scurry,Precinct 15,Sheriff,,REP,Trey Wilson,614,8,443,163
+Scurry,Precinct 15,County Tax Assessor-Collector,,REP,Jana Young,639,8,456,175
+Scurry,Precinct 15,County Treasurer - Unexpired Term,,REP,Misty Chapman,604,6,434,164
+Scurry,Precinct 15,County Commissioner Pct 1,,REP,Terry D. Williams,614,8,428,178
+Scurry,Precinct 15,Justice of the Peace - Unexpired Term Precinct 1,,REP,Joe Lay,602,6,429,167
+Scurry,Precinct 15,Board of Trustee Hermleigh ISD,,,Kevin Tate,0,0,0,0
+Scurry,Precinct 15,Board of Trustee Hermleigh ISD,,,Joe Taylor,0,0,0,0
+Scurry,Precinct 15,Board of Trustee Hermleigh ISD,,,John (Big John) Pence,0,0,0,0
+Scurry,Precinct 15,Board of Trustee Hermleigh ISD,,,Bridget Moore Claxton,0,0,0,0
+Scurry,Precinct 15,Board of Trustee Hermleigh ISD,,,Blaine Minton,0,0,0,0
+Scurry,Precinct 15,Board of Trustee Hermleigh ISD,,,Leslie Beane,0,0,0,0

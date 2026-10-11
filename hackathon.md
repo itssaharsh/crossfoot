@@ -193,6 +193,34 @@ Planned, and updated as each part is actually used:
   only just. Not fixed here: reading it again needs a scan read.
 - Gateway's own figure: $9.6386 before, $10.3736 after (change $0.7350).
 
+### 11 October 2026, T04d: contest sums that leave out the write-in breakdown, Scurry's page 18, the final summary
+- Cause seen on Jones page 1 (block 1|1): the block prints "Write-In Totals" 1, then "Write-In: Uncertified" 1, "Write-In: Peter
+  Sonski/Lauren Onak" 0, "Not Assigned" 0 (rows that break the total down), then "Total Votes Cast" 1,206, "Overvotes" 0, "Undervotes" 8;
+  the Statistics block prints "Ballots Cast - Total" 1,214. The contest sum added the breakdown on top of the write-in total (1,207).
+- Changed (`checks.py`): three sums per contest block, each its own kind and each per column: `report_contest` (candidates + write-in
+  total = contest total; breakdown rows are not terms), `report_writein` (breakdown rows = write-in total), `report_ballots` (total +
+  overvotes + undervotes = the precinct's ballots cast). Breakdown rows are found from the page: the rows directly under the write-in total
+  that carry the label shape "Write-In: ..." or add to the write-in total; no list of names. The ballots equation is not used for a block
+  where it fails in every printed column on the same side (the contest was not on every ballot); those blocks are listed in
+  `findings.json` (`audit.ballot_sums_not_used`) with the reason and named in `report.md`. A row now counts as covered by a second sum when it
+  sits on any contest sum, so the rule "a row that differs in two values and adds up cannot be verified" stays for rows no second sum covers.
+- Scurry page 18: the first read failed because the model put the last row of the page at y 1108 (the scale is 0 to 1000) and the
+  validator refused the page. The validator now clamps up to 1250 to 1000 and still refuses anything further off. `crossfoot read-page` reads
+  only the named pages into a copy of a run's ledger (new block numbers above the precinct's existing ones). Page 18 read on the second try
+  (the first try, run folder removed again, failed with the same refusal; the one probe call that showed the 1108 is not kept).
+- `summary.md`/`summary.json`: the column for the second sum says "row and column", "row and contest" or "row only".
+- Measured, audits on existing ledgers, no scan read (figures from `runs/20261011-140556` Jones, `-140637` Lynn, `-141015` Scurry,
+  `-141051` San Saba, `-141131` Cottle, `-141152` Foard, summary `runs/20261011-141300/summary.md`):
+  Jones: contest sums failing 20 -> 0, cells `cannot_verify` 170 -> 0, findings 18 settled + 8 `cannot_verify` -> 26 settled, printed sums in
+  all 758 -> 1,102 (all hold with the corrected file). Lynn: contest sums failing 9 after the old closing (26 on the first read) -> 0, cells
+  `cannot_verify` 68 -> 0, findings 38 settled + 9 `cannot_verify` -> 47 settled, sums in all 1,427 -> 2,115. Scurry: published rows compared
+  518 -> 534 of 545 (the 11 not compared are the Registered Voters rows); findings 0. San Saba, Cottle and Foard audited again with the new
+  sums, findings unchanged (21, 0, 0). Published rows compared in all: 3,021 of 3,061.
+- Gateway's own figure: $10.3736 before, $10.4624 after (change $0.0888). 196 tests passed before the last test was added; 197 after.
+- Failed / not done: nothing in Jones or Lynn is still failing, so the 8 + 9 earlier `cannot_verify` findings were settled by the new
+  sums only; they are findings against a volunteer file, not checked by a person. The ballots equation was not used for 4 Jones blocks and 1
+  Lynn block.
+
 ## Demo
 Not available yet.
 

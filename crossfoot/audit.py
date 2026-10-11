@@ -566,6 +566,12 @@ def describe_sum(ch) -> tuple[str, str]:
         col = {"total": "total", "early": "early voting", "election_day": "election day"}.get(ch.key, ch.key)
         return (f"the candidates' {col} figures add to the contest total's {col} figure",
                 "contest total printed on the scan")
+    if ch.kind == "report_writein":
+        return (f"the write-in rows that break the write-in total down add to its {ch.key} figure",
+                "write-in total printed on the scan")
+    if ch.kind == "report_ballots":
+        return (f"the contest total, overvotes and undervotes add to the precinct's ballots cast ({ch.key})",
+                "ballots cast printed in the precinct's Statistics block")
     if ch.kind == "grand_col":
         return "the small totals under the columns add to the grand total", "grand total"
     return "the row totals add to the grand total", "grand total"
@@ -627,7 +633,8 @@ def sums_for(ent, scan_value, file_value, cells, totals) -> list[dict]:
                     "terms": [{"cell": list(kk), "value": v} for kk, v in sch.terms], "printed": sch.printed,
                     "printed_label": label, "computed_with_scan": sch.computed, "holds_with_scan": sch.ok,
                     "computed_with_file": fch.computed, "holds_with_file": fch.ok})
-    order = {"row": 0, "col": 1, "grand_col": 2, "grand_row": 3, "report_row": 0, "report_contest": 1}
+    order = {"row": 0, "col": 1, "grand_col": 2, "grand_row": 3, "report_row": 0, "report_contest": 1,
+             "report_writein": 1, "report_ballots": 1}
     out.sort(key=lambda s: order[s["kind"]])
     return out
 
@@ -1336,15 +1343,18 @@ def audit_report_county(county, led, geo, gw, file_rows, *, run_dir, log=print, 
                           f"hold this row" for r in rows if r.file_idx is not None and r.scan is None and r.block is not None
               and report.precinct_key(r.precinct) in gaps}
     slots = classify([r for r in rows if r.file_idx not in unread])
-    con = checks.report_contest_checks(cells)
-    covered = {c.block_id for c in con}
+    con = [c for c in checks.report_checks(cells) if c.kind != "report_row"]
+    covered = {c.block_id for c in con if c.kind == "report_contest"}
+    # a row is covered by a second sum when it is a term, or the printed total, of a contest sum (total, write-in, ballots)
+    covered_rows = {tuple(k[:3]) for c in con for k in [k for k, _ in c.terms] + ([c.printed_key] if c.printed_key else [])}
+    ballots_unused = checks.report_ballot_sums(cells)[1]
     log(f"  {len(rows)} rows compared; {len(slots)} disagreements to look at on the scan")
     # rows that no printed total can settle by themselves are read once more, one step up the ladder
     seconds: dict = {}
     for r in rows:
         if r.file is None or r.scan is None or r.block is None or r.precinct not in r.block.loc:
             continue
-        if len(diff_parts(r)) >= 2 and not row_fails_own_total(r) and r.block.loc[r.precinct][1] not in covered:
+        if len(diff_parts(r)) >= 2 and not row_fails_own_total(r) and r.block.loc[r.precinct] not in covered_rows:
             seconds[id(r)] = reread_scan_row(gw, geo, cells, r.block.loc[r.precinct], reader or agent.HAIKU, order,
                                              run_dir / "crops" / f"audit-reread-{len(seconds) + 1:04d}.png")
     order_ix, gnames = {}, {}
@@ -1366,7 +1376,7 @@ def audit_report_county(county, led, geo, gw, file_rows, *, run_dir, log=print, 
         else:
             ndiff = len(diff_parts(r)) if r.file else 0
             own_ok = bool(r.file) and not row_fails_own_total(r)
-            status, why, dis = report_status(sums, sv, fv, ndiff, own_ok, loc[1] in covered, sec)
+            status, why, dis = report_status(sums, sv, fv, ndiff, own_ok, loc in covered_rows, sec)
         if s.kind == "file_row_fails_own_total":
             f = r.file
             why = (f"the file's votes {f['votes']} differ from its parts {f['absentee']} + {f['early_voting']} + "
@@ -1398,7 +1408,7 @@ def audit_report_county(county, led, geo, gw, file_rows, *, run_dir, log=print, 
                       "rereads_agreed_with_ledger": sum(1 for x in seconds.values() if x["agrees_with_ledger"]),
                       "rereads_agreed_with_file": 0, "ledger_corrected": 0,
                       "contests": n_con, "contest_totals_printed": len(covered),
-                      "second_sum_exists": bool(covered), "seconds": round(time.time() - t0, 1)}}
+                      "second_sum_exists": bool(con), "ballot_sums_not_used": ballots_unused, "seconds": round(time.time() - t0, 1)}}
 
 
 def sums_check_report(cells, rows, findings, applied, matching) -> dict:

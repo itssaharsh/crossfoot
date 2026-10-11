@@ -130,6 +130,50 @@ def cmd_read(args) -> int:
     return 2 if s["stopped"] else 0
 
 
+def cmd_read_page(args) -> int:
+    """Read the pages a first read failed on into a copy of that run's ledger (a new run folder); nothing else is read."""
+    import shutil
+    import time
+    from pathlib import Path
+
+    from . import audit, outputs, tracing
+    from .layouts import report
+    from .ledger import Ledger
+    from .model import gateway_spend
+    src = Path("runs") / args.into / "ledger.sqlite"
+    if not src.exists():
+        print(f"{src} does not exist", file=sys.stderr)
+        return 1
+    note = tracing.init()
+    if note:
+        print(note)
+    try:
+        before = gateway_spend()[0]
+    except (KeyError, OSError, ValueError):
+        before = None
+    started = time.strftime("%Y-%m-%dT%H:%M:%S")
+    run_id = time.strftime("%Y%m%d-%H%M%S")
+    out = Path("runs") / run_id
+    out.mkdir(parents=True)
+    shutil.copy(src, out / "ledger.sqlite")
+    led = Ledger(out / "ledger.sqlite")
+    gw = audit.AuditGateway(budget=args.budget)
+    pages = [int(x) for x in args.pages.split(",")]
+    print(f"run {run_id}: reading page(s) {args.pages} of {args.county} into a copy of the ledger of {args.into}")
+    try:
+        r = report.read_pages_into(args.county, gw, led, pages, log=lambda *a: print(*a, flush=True))
+    finally:
+        tracing.shutdown()
+    outputs.write_run(out, run_id, started=started, ended=time.strftime("%Y-%m-%dT%H:%M:%S"),
+                      command="crossfoot " + " ".join(sys.argv[1:]), counties=[args.county], gw=gw, resumed_from=args.into)
+    try:
+        print(f"gateway spend: ${before:.4f} -> ${gateway_spend()[0]:.4f}")
+    except (KeyError, OSError, ValueError, TypeError):
+        pass
+    print(f"read: {r['pages_read']}; failed: {r['pages_failed']}; written: {out / 'ledger.sqlite'}")
+    return 2 if r["stopped"] else (0 if not r["pages_failed"] else 1)
+
+
 def cmd_close(args) -> int:
     import json
     import shutil
@@ -634,6 +678,12 @@ def build_parser():
     s.add_argument("--model", default="auto", help="auto (default): read a sample of page 1 with claude-haiku and choose "
                    "the reader by how many of its row sums fail; or a model name, which skips the sample")
     s.set_defaults(fn=cmd_read)
+    s = sub.add_parser("read-page", help="read pages a first read failed on into a copy of that run's ledger")
+    s.add_argument("--county", required=True, choices=list(sources.COUNTIES))
+    s.add_argument("--into", required=True, help="run id whose ledger is copied into a new run")
+    s.add_argument("--pages", required=True, help="comma-separated pages")
+    s.add_argument("--budget", type=float, default=0.30, help="dollars this run may meter (default 0.30)")
+    s.set_defaults(fn=cmd_read_page)
     s = sub.add_parser("close", help="work every failing sum of a first-read ledger until each cell is accepted or "
                                      "cannot_verify")
     s.add_argument("--county", required=True, choices=list(sources.COUNTIES))
