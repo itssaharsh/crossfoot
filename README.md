@@ -9,9 +9,15 @@ error with the document's own printed totals, and proposes the fix.
 *Panola County, page 1, Chase Oliver, precinct 29, election day. The published file has 0; the scan has 1. The row's printed total is 12: the cells add to 12 with the scan's value and to 11 with the file's, so the printed total decides (finding f005 in [runs/20261011-161207/panola/findings.json](runs/20261011-161207/panola/findings.json); not confirmed by a person).*
 <!-- picture:end -->
 
-Open: **[the live results page](https://crossfoot-zeta.vercel.app/)** ([its source](site/)) · [traces and the detection](docs/evidence/traces.md) ·
-[checkpoints](docs/evidence/checkpoints.txt) · [the design](ARCHITECTURE.md) ·
+Open: **[the live results page](https://crossfoot-zeta.vercel.app/)** ([its source](site/)) · [the design](ARCHITECTURE.md) ·
 [the build log](hackathon.md)
+
+The three tools, and where to see each:
+- **neatlogs** traces every model and tool call of a run: [one trace as the server returns it](docs/evidence/trace-panola-final.md),
+  [every trace and the detection](docs/evidence/traces.md), [what a trace changed in the program](docs/evidence/before-after.md).
+- **Entire** records each coding session with its commit: [the checkpoints](docs/evidence/checkpoints.txt).
+- **cfo.ai** made the business plan from the measured cost: [the plan](https://app.cfo.ai/s/aRFg86F21pDO1EQN) and
+  [what it says](docs/evidence/business-plan.md).
 
 ## What it found
 
