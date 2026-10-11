@@ -31,3 +31,7 @@ video-script.md
 storage-state*.json
 storage_state*.json
 *.storage-state.json
+# crossfoot run data
+data/
+runs/*/cache/
+*.sqlite-journal

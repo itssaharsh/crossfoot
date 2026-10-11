@@ -2,7 +2,7 @@
   "project": "crossfoot",
   "mode": "hackathon",
   "channel": "relay",
-  "base": null,
+  "base": "82a6b67",
   "created": "2026-10-11",
   "milestones": [
     {
@@ -77,8 +77,10 @@
         "uv run crossfoot render --county panola --page 1"
       ],
       "rollback": "git revert the task's commit; no data migration",
-      "status": "todo",
-      "notes": ""
+      "status": "doing",
+      "notes": "",
+      "base": "82a6b67",
+      "started_after": 1
     },
     {
       "id": "T02",

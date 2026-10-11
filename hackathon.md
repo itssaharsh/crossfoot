@@ -31,6 +31,15 @@ Planned, and updated as each part is actually used:
 - How the code is written: each task is a separate coding session started in this folder, so the checkpoint tool
   records the session behind each commit.
 
+### 2026-10-11 - T01 scaffold, sources, rendering, ledger, checks
+- Added the uv project, `fetch`, `filecheck` and `render` commands, the SQLite ledger and the pure checks
+  (`row_checks`, `column_checks`, `grid_gaps`, `locate`). No model was called.
+- Measured with `uv run crossfoot filecheck --all` on the downloaded files: rows whose votes differ from the sum of
+  their parts: Panola 1 of 764 checked, San Saba 1 of 275, the other six 0. Rows skipped for a blank part: Cottle 0,
+  Foard 4, Jones 4, Limestone 875 (all rows; checked 0), Lynn 8, Panola 19, San Saba 0, Scurry 11.
+- `uv run crossfoot render --county panola --page 1` wrote a 2781x1687 px PNG at 200 dpi.
+- Nothing failed. Evidence: `uv run pytest -q` passed (12 tests), recorded in `.prod-build/evidence.jsonl`.
+
 ## Demo
 Not available yet.
 
