@@ -358,10 +358,14 @@
         "uv run crossfoot audit --county san_saba"
       ],
       "rollback": "git revert the task's commits; committed runs are never changed",
-      "status": "doing",
-      "notes": "Split from T04 on 2026-10-11.",
+      "status": "done",
+      "notes": "Split from T04 on 2026-10-11.\n[2026-10-11 done] Verify runs passed inside the task's session on commit fb07bda (148 tests; San Saba audit run 20261011-125310). The orchestrator re-ran pytest (148 passed), read findings.json and run.json, and looked at two crops by eye: Precinct 2A's row reads 506 / 9 / 306 / 191 and Precinct 3A's 364 / 13 / 186 / 165, as the findings say.",
       "base": "c4a0f79",
-      "started_after": 44
+      "started_after": 44,
+      "evidence": [
+        "E0052",
+        "E0053"
+      ]
     },
     {
       "id": "T04b",
