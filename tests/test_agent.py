@@ -80,6 +80,7 @@ def truth_reader(good=GOOD):
 
 
 def run(led, decide, read, **kw):
+    kw.setdefault("pair", False)      # these tests drive the model path (what pairing cannot place); tests/test_pairing_loop.py pairs
     geo = FakeGeo()
     gw = FakeGw(geo, decide, read)
     s = agent.close_county("x", gw, led, geo, run_id="", log=lambda *a: None, **kw)
@@ -93,6 +94,9 @@ def assert_status_rule(led):
     bad = {k for ch in checks.row_checks(cells, totals) + checks.column_checks(cells, totals) if not ch.ok
            for k, _ in ch.terms}
     for c in cells:
+        if c["status"] == "first_read":   # T03b: a cell whose other sum holds is left unmarked while a failing sum has a verdict
+            assert checks.cell_key(c) in bad and led.verdicts("x"), c
+            continue
         assert c["status"] in ("accepted", "cannot_verify"), c
         if c["status"] == "accepted":
             assert checks.cell_key(c) not in bad
@@ -121,7 +125,7 @@ def test_a_worse_reading_is_not_kept():
     def read(bid, t, model, n):
         e, a, p = GOOD[t["column"]]
         return {"EARLY": 99 if n == 0 else e, "ABSENTEE": a, "PRECINCT": p, "total": e + a + p}
-    s, gw, geo = run(led, lambda p, n: reread_col("1"), read)
+    s, gw, geo = run(led, lambda p, n: reread_col("1", dpi=300 + 100 * n), read)   # the same target is not re-read twice at one dpi
     ev = [json.loads(e["payload_json"]) for e in led.events("x") if e["kind"] == "reread"]
     assert ev[0]["changes"][0]["new"] == 99 and ev[0]["changes"][0]["kept"] == "old"
     assert ev[1]["changes"][0]["kept"] == "new"
@@ -161,9 +165,13 @@ def test_six_actions_then_cannot_verify_and_the_loop_goes_on():
     make_block(led, 1, "p1-b2", wrong={("EARLY", "2"): 21})
     stuck = lambda bid, t, m, n: ({"EARLY": 16, "ABSENTEE": 2, "PRECINCT": 3, "total": 15} if bid == "p1-b1"
                                   else {"EARLY": 20, "ABSENTEE": 4, "PRECINCT": 6, "total": 30})
+    count = {"p1-b1": 0, "p1-b2": 0}
+    plan = [(HAIKU, 300), (HAIKU, 400), (HAIKU, 500), (HAIKU, 600), (SONNET, 300), (SONNET, 400)]   # six different reads
     def decide(prompt, n):
-        col = "1" if "p1-b1" in prompt else "2"
-        return reread_col(col, model=HAIKU)
+        bid = "p1-b1" if "p1-b1" in prompt else "p1-b2"
+        m, dpi = plan[count[bid]]
+        count[bid] += 1
+        return reread_col("1" if bid == "p1-b1" else "2", model=m, dpi=dpi)
     s, gw, geo = run(led, decide, stuck)
     first = [t for t in geo.targets if t[0] == "p1-b1"]
     assert len(first) == 6
@@ -180,36 +188,40 @@ def test_a_decision_may_list_several_rereads_and_they_count_one_each():
     led = Ledger()
     make_block(led, 1, "p1-b1", wrong={("EARLY", "1"): 16})
     many = {"action": "reread", "rereads": [{"target": {"kind": "cell", "row": "EARLY", "column": "1"},
-                                             "dpi": 300, "model": HAIKU}] * 8}
+                                             "dpi": dpi, "model": m} for m in (HAIKU, SONNET)
+                                            for dpi in (300, 400, 500, 600)]}   # eight different reads, six allowed
     s, gw, geo = run(led, lambda p, n: many if n == 0 else {"action": "done"},
                      lambda b, t, m, n: {"value": 16})
     assert len(geo.targets) == 6
 
 
-def test_stronger_model_is_refused_until_two_haiku_rereads_failed():
+def test_ladder_a_step_only_after_the_one_below_was_tried_on_that_target():
     led = Ledger()
     make_block(led, 1, "p1-b1", wrong={("EARLY", "1"): 16})
-    plan = [reread_col("1", model=SONNET), reread_col("1"), reread_col("1"), reread_col("1", model=SONNET)]
+    plan = [reread_col("1", model=SONNET), reread_col("1"), reread_col("1", model=SONNET, dpi=400)]
     def read(bid, t, model, n):
         e, a, p = GOOD["1"]
         return {"EARLY": 16 if model == HAIKU else 10, "ABSENTEE": a, "PRECINCT": p, "total": e + a + p}
-    s, gw, geo = run(led, lambda p, n: plan[min(n, 3)], read)
+    s, gw, geo = run(led, lambda p, n: plan[min(n, 2)], read)
     models = [m for m, k, _ in gw.log if k == "read"]
-    assert models == [HAIKU, HAIKU, SONNET]            # the first Sonnet request never reached the model
+    assert models == [HAIKU, SONNET]                   # the first Sonnet request never reached the model
     refused = [json.loads(e["payload_json"]) for e in led.events("x") if e["kind"] == "refused"]
-    assert len(refused) == 1 and "two re-reads" in refused[0]["reason"]
+    assert len(refused) == 1 and "only after" in refused[0]["reason"]
     assert {c["status"] for c in led.cells("x")} == {"accepted"}
 
 
-def test_check_model_rule_directly():
-    item = agent.Item("row", 1, "b", "EARLY")
-    with pytest.raises(agent.StrongModelRefused):
-        agent.check_model(item, SONNET)
-    item.weak_failures = 2
-    agent.check_model(item, SONNET)
-    agent.check_model(item, HAIKU)
-    with pytest.raises(ValueError):
-        agent.check_model(item, "some-other-model")
+def test_pick_model_ladder_rules_directly():
+    ladder = agent.ladder_for("claude-haiku")
+    assert ladder == [HAIKU, SONNET, "claude-opus-4.6"]
+    assert agent.ladder_for(SONNET) == [SONNET, "claude-opus-4.6"]
+    assert agent.pick_model(HAIKU, ladder, set()) == (0, None)
+    assert agent.pick_model(SONNET, ladder, set())[0] is None
+    assert agent.pick_model("  Claude-Sonnet-4.6 ", ladder, {0}) == (1, None)      # trimmed and lower-cased
+    assert agent.pick_model("claude-opus-4.6", ladder, {0})[0] is None
+    assert agent.pick_model("claude-opus-4.6", ladder, {0, 1}) == (2, None)
+    assert agent.pick_model("gpt-banana", ladder, set()) == (0, None)              # unknown: the next step not yet tried
+    assert agent.pick_model("gpt-banana", ladder, {0}) == (1, None)
+    assert agent.pick_model("gpt-banana", ladder, {0, 1, 2}) == (2, None)
 
 
 def test_resume_never_asks_about_accepted_cells():
@@ -304,7 +316,7 @@ def test_two_rereads_that_agree_win_a_tie():
     def read(bid, t, model, n):
         e, a, p = GOOD[t["column"]]
         return {"EARLY": 11 if t["column"] == "1" else 25, "ABSENTEE": a, "PRECINCT": p, "total": e + a + p}
-    s, gw, geo = run(led, lambda p, n: reread_col("1") if n < 2 else {"action": "cannot_verify", "reason": "x"}, read)
+    s, gw, geo = run(led, lambda p, n: reread_col("1", dpi=300 + 100 * n) if n < 2 else {"action": "cannot_verify", "reason": "x"}, read)
     ev = [json.loads(e["payload_json"]) for e in led.events("x") if e["kind"] == "reread"]
     assert [x["changes"][0]["kept"] for x in ev] == ["old", "new"]
 

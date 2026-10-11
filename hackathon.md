@@ -81,6 +81,20 @@ Planned, and updated as each part is actually used:
   JSON in prose and needed a repair call (the parser only strips a code fence), which adds calls. Not fixed here.
 - Two full runs plus a 5-item trial; task gateway spend about $2.00.
 
+### 2026-10-11 - T03b the reader chosen by measurement; failing sums paired where they cross
+- Changed: `read` samples page 1 with `claude-haiku` and reads the county with `claude-sonnet-4.6` if over a tenth of the
+  sample's row sums fail; `checks.suspects` pairs failing sums that share one value and agree on its error; the loop re-reads
+  those values at 400 dpi up a ladder (reader, `claude-sonnet-4.6`, `claude-opus-4.6`), names `document_inconsistent`, gives
+  every failing sum a verdict, and takes a `row_strip` target; `parse_json` finds JSON inside prose or a fence; price table
+  from the gateway's list.
+- Measured (run `20261011-111955`, `20261011-112935`): the sample had 6 of 22 row sums failing, so the read used sonnet and
+  left 3 row, 2 column, 1 + 1 grand sums failing; the close left 1, 1, 1, 0 with 19 calls in 80.0 s. Figures and the comparison
+  with T03a's close are in `docs/evidence/before-after.md`.
+- Failed / not solved: the registered row (+2) is one sum and cannot be paired; four re-reads agreed; one small total on page 6
+  reads the same every time (`document_inconsistent`).
+- Fixed: a model that wrote prose around its JSON no longer costs a repair call.
+- Gateway spend for the task: $3.6806 to $4.5142.
+
 ## Demo
 Not available yet.
 

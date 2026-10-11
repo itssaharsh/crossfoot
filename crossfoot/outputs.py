@@ -7,7 +7,13 @@ runs/<run_id>/<county>/county.json
   cells     [{page, block, contest, candidate, row_kind, column, value, first_read, status, tries, model, reason, box}]
             status is accepted or cannot_verify when the run is closed; first_read is what the first read gave
   totals    [{page, block, direction, key, value, box}]    direction row (key = row kind), col (key = precinct), grand
-  checks    [{kind, page, block, key, terms, printed, computed, ok}]    terms = [[[page, block, row_kind, column], value]]
+  checks    [{kind, page, block, key, terms, printed, computed, ok, note}]    kind row | col | grand_col | grand_row;
+            terms = [[page, block, row_kind, column], ...] (cell keys only; values are in cells and totals; a small
+            total or a row total that is a term is keyed [page, block, 'col' | 'row', key])
+  reader    the model that read the county; sample = the figures of the choice (row sums in the sample, failing, rate,
+            whether its values were kept), or {skipped: true} when the model was named
+  verdicts  [{sum, page, block, verdict, reason, entity}]    one per sum still failing after the loop;
+            verdict document_inconsistent | cannot_verify
   events    [{ts, kind, payload}]    in order: item_start, decision, reread, check, status_change, refused, stop, item_end
   summary   sums failing before and after, cells re-read / changed / cannot_verify, model calls, tokens, metered cost,
             seconds (the figures of the close)
@@ -29,8 +35,10 @@ LAYOUT = "matrix"
 GEO_DPI = 200
 
 
-def _page_sizes(county, pages, root):
+def _page_sizes(county, pages, root=None):
     from .render import page_png
+    from .sources import DATA
+    root = root or DATA
     out = []
     for n in pages:
         try:
@@ -55,8 +63,10 @@ def write_county(run_dir, county, run_id, led, geo, summary, *, pages=None, data
             blocks.append({"id": c["block_id"], "page": c["page"], "contest": c["contest"],
                            "candidate": c["candidate"], "box": list(bb) if bb else None})
     chs = [{"kind": ch.kind, "page": ch.page, "block": ch.block_id, "key": ch.key,
-            "terms": [[list(k), v] for k, v in ch.terms], "printed": ch.printed, "computed": ch.computed, "ok": ch.ok}
-           for ch in checks.all_checks(cells, totals)]
+            "terms": [list(k) for k, _ in ch.terms], "printed": ch.printed, "computed": ch.computed, "ok": ch.ok,
+            "note": ch.note} for ch in checks.all_checks(cells, totals)]
+    evs = led.events(county)
+    chosen = next((json.loads(e["payload_json"]) for e in reversed(evs) if e["kind"] == "choose_reader"), None)
     tbox = lambda t: (lambda b: list(b) if b else None)(
         geo.total_box(t["page"], t["block_id"], t["direction"], t["key"]) if geo else None)
     d = {"county": county, "run_id": run_id, "layout": LAYOUT,
@@ -69,12 +79,16 @@ def write_county(run_dir, county, run_id, led, geo, summary, *, pages=None, data
          "totals": [{"page": t["page"], "block": t["block_id"], "direction": t["direction"], "key": t["key"],
                      "value": t["value"], "box": tbox(t)} for t in totals],
          "checks": chs,
-         "events": [{"ts": e["ts"], "kind": e["kind"], "payload": json.loads(e["payload_json"])}
-                    for e in led.events(county)],
+         "reader": (chosen or {}).get("reader") or summary.get("reader"),
+         "sample": chosen,
+         "verdicts": [{"sum": v["sum_id"], "page": v["page"], "block": v["block_id"], "verdict": v["verdict"],
+                       "reason": v["reason"], "entity": json.loads(v["entity"]) if v["entity"] else None}
+                      for v in led.verdicts(county)],
+         "events": [{"ts": e["ts"], "kind": e["kind"], "payload": json.loads(e["payload_json"])} for e in evs],
          "summary": summary}
     out = Path(run_dir) / county / "county.json"
     out.parent.mkdir(parents=True, exist_ok=True)
-    out.write_text(json.dumps(d, indent=1))
+    out.write_text(json.dumps(d, separators=(",", ":")))   # no indentation: it was 2.3 MB with
     return out
 
 

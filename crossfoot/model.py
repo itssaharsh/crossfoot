@@ -12,11 +12,13 @@ from pathlib import Path
 DEFAULT_MODEL = "claude-haiku"
 DEFAULT_BUDGET = 2.00          # dollars per run
 
-# ESTIMATE ONLY: dollars per million tokens (input, output). Not the gateway's bill; the gateway's own
-# spend figure (`crossfoot budget`) is the one to trust. Unknown models are priced like the dearest row.
+# ESTIMATE ONLY: dollars per million tokens (input, output), from the gateway's own list (its /model/info, read on
+# 11 October 2026). Not the gateway's bill; the figure `crossfoot budget` prints is the one to trust. Unknown models
+# are priced like the dearest row.
 PRICE_PER_MTOK = {
-    "claude-haiku": (1.00, 5.00),
-    "claude-sonnet-4.6": (3.00, 15.00),
+    "claude-haiku": (1.10, 5.50),
+    "claude-sonnet-4.6": (3.30, 16.50),
+    "claude-opus-4.6": (5.50, 27.50),
 }
 FIRST_CALL_ESTIMATE = 0.01     # what the guard assumes a call costs before it has seen one
 
@@ -30,16 +32,27 @@ def price(model: str, prompt_tokens: int, completion_tokens: int) -> float:
     return (prompt_tokens * pin + completion_tokens * pout) / 1e6
 
 
+_FENCE = re.compile(r"```(?:json|JSON)?\s*(.*?)\s*```", re.S)
+
+
 def parse_json(text: str):
-    """Parse a model answer as JSON, tolerating a code fence around it. Raises ValueError."""
+    """Parse a model answer as JSON. Tolerates a code fence (around the answer or inside prose) and prose before or
+    after the JSON object; the first object or list that parses wins. Raises ValueError."""
     t = (text or "").strip()
-    m = re.match(r"^```(?:json)?\s*(.*?)\s*```$", t, re.S)
-    if m:
-        t = m.group(1)
     try:
         return json.loads(t)
     except json.JSONDecodeError as e:
-        raise ValueError(f"answer is not valid JSON: {e}") from None
+        first = e
+    dec = json.JSONDecoder()
+    for src in [m.group(1) for m in _FENCE.finditer(t)] + [t]:
+        for m in re.finditer(r"[{\[]", src):
+            try:
+                obj, _ = dec.raw_decode(src[m.start():])
+            except json.JSONDecodeError:
+                continue
+            if isinstance(obj, (dict, list)):
+                return obj
+    raise ValueError(f"answer is not valid JSON: {first}") from None
 
 
 def root_url(base: str) -> str:

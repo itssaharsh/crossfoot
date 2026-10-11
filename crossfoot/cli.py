@@ -98,9 +98,10 @@ def cmd_read(args) -> int:
     led = Ledger(out / "ledger.sqlite")
     gw = Gateway(budget=args.budget)
     pages = [int(x) for x in args.pages.split(",")] if args.pages else None
-    print(f"run {run_id}: reading {args.county} with {gw.model}, run budget ${args.budget:.2f}")
+    print(f"run {run_id}: reading {args.county} ({'reader chosen by a sample' if args.model == 'auto' else args.model}), "
+          f"run budget ${args.budget:.2f}")
     try:
-        s = matrix.read_county(args.county, gw, led, run_id=run_id, pages=pages)
+        s = matrix.read_county(args.county, gw, led, run_id=run_id, pages=pages, model=args.model)
     except (RenderError, RuntimeError) as e:
         print(e, file=sys.stderr)
         return 1
@@ -115,6 +116,8 @@ def cmd_read(args) -> int:
     (out / "first-read.json").write_text(json.dumps(s, indent=2))
     print(f"blocks found: {s['blocks_found']} (failed {s['blocks_failed']})")
     print(f"cells read: {s['cells_read']} (failed {s['failed_cells']})")
+    print(f"reader: {s['reader']}" + (f" (sample {s['sample']['failing']} of {s['sample']['row_sums']} row sums failing)"
+                                      if s.get("sample") and not s["sample"].get("skipped") else ""))
     print(f"row sums: {s['row_sums_pass']} pass, {s['row_sums_fail']} fail")
     print(f"column sums: {s['col_sums_pass']} pass, {s['col_sums_fail']} fail")
     print(f"grand totals: {s['grand_sums_pass']} pass, {s['grand_sums_fail']} fail")
@@ -140,7 +143,14 @@ def cmd_close(args) -> int:
     if args.county != "panola":
         print(f"{args.county}: only the matrix layout (panola) is built so far", file=sys.stderr)
         return 1
-    src = Path("runs") / args.resume / "ledger.sqlite"
+    resume = args.resume
+    if resume == "latest":
+        reads = sorted(p.parent.name for p in Path("runs").glob("*/first-read.json"))
+        if not reads:
+            print("no run with a first-read.json to resume from", file=sys.stderr)
+            return 1
+        resume = reads[-1]
+    src = Path("runs") / resume / "ledger.sqlite"
     if not src.exists():
         print(f"{src} does not exist", file=sys.stderr)
         return 1
@@ -162,10 +172,14 @@ def cmd_close(args) -> int:
         print("the ledger has no header block (registered voters row); nothing to place columns by", file=sys.stderr)
         return 1
     geo = matrix.Geometry(args.county, cols)
-    gw = Gateway(budget=args.budget)
-    print(f"run {run_id}: closing {args.county} from {args.resume}, run budget ${args.budget:.2f}")
+    chosen = next((json.loads(e["payload_json"]).get("reader") for e in reversed(led.events(args.county))
+                   if e["kind"] == "choose_reader"), None)
+    reader = chosen or "claude-haiku"
+    gw = Gateway(budget=args.budget, model=reader)
+    print(f"run {run_id}: closing {args.county} from {resume} (reader {reader}"
+          f"{'' if chosen else ', not recorded in the ledger: the cheapest is assumed'}), run budget ${args.budget:.2f}")
     try:
-        s = agent.close_county(args.county, gw, led, geo, run_id=run_id, max_items=args.max_items)
+        s = agent.close_county(args.county, gw, led, geo, run_id=run_id, max_items=args.max_items, reader=reader)
     except RenderError as e:
         print(e, file=sys.stderr)
         return 1
@@ -179,12 +193,18 @@ def cmd_close(args) -> int:
     outputs.write_county(out, args.county, run_id, led, geo, s)
     outputs.write_run(out, run_id, started=started, ended=time.strftime("%Y-%m-%dT%H:%M:%S"),
                       command="crossfoot " + " ".join(sys.argv[1:]), counties=[args.county], gw=gw,
-                      resumed_from=args.resume)
+                      resumed_from=resume)
     b, a = s["sums_failing_before"], s["sums_failing_after"]
-    print(f"sums failing before: {b['row']} row, {b['col']} column, {b['grand']} grand")
-    print(f"sums failing after:  {a['row']} row, {a['col']} column, {a['grand']} grand")
-    print(f"cells re-read: {s['cells_reread']}; changed: {s['cells_changed']}; cannot_verify: {s['cells_cannot_verify']}; "
-          f"accepted: {s['cells_accepted']} of {s['cells_total']}; still open: {s['cells_open']}")
+    print(f"sums failing before: {b['row']} row, {b['col']} column, {b['grand']} grand (small totals), "
+          f"{b['grand_row']} grand (row totals)")
+    print(f"sums failing after:  {a['row']} row, {a['col']} column, {a['grand']} grand (small totals), "
+          f"{a['grand_row']} grand (row totals)")
+    print(f"values re-read: {s['values_reread']}; cells changed: {s['cells_changed']}, totals changed: "
+          f"{s['totals_changed']}; cannot_verify: {s['cells_cannot_verify']}; document_inconsistent: "
+          f"{s['cells_document_inconsistent']}; accepted: {s['cells_accepted']} of {s['cells_total']}; "
+          f"still open: {s['cells_open']}")
+    print(f"verdicts on sums still failing: {s['verdicts']['document_inconsistent']} document_inconsistent, "
+          f"{s['verdicts']['cannot_verify']} cannot_verify")
     print(f"model calls: {s['model_calls']}; tokens: {s['prompt_tokens']} in, {s['completion_tokens']} out; "
           f"metered cost (estimate): ${s['metered_cost_estimate']:.4f}; seconds: {s['seconds']}")
     if "gateway_spend_change" in s:
@@ -212,12 +232,15 @@ def main(argv=None) -> int:
     s = sub.add_parser("read", help="first read of a county's scan into a new run's ledger")
     s.add_argument("--county", required=True, choices=list(sources.COUNTIES))
     s.add_argument("--budget", type=float, default=2.00, help="dollars this run may meter (default 2.00)")
-    s.add_argument("--pages", help="comma-separated pages, default all")
+    s.add_argument("--pages", help="comma-separated pages, default all (the sample of --model auto always reads page 1)")
+    s.add_argument("--model", default="auto", help="auto (default): read a sample of page 1 with claude-haiku and choose "
+                   "the reader by how many of its row sums fail; or a model name, which skips the sample")
     s.set_defaults(fn=cmd_read)
     s = sub.add_parser("close", help="work every failing sum of a first-read ledger until each cell is accepted or "
                                      "cannot_verify")
     s.add_argument("--county", required=True, choices=list(sources.COUNTIES))
-    s.add_argument("--resume", required=True, help="run id whose ledger is copied into a new run")
+    s.add_argument("--resume", required=True, help="run id whose ledger is copied into a new run, or 'latest' for the "
+                   "newest read (a run with a first-read.json)")
     s.add_argument("--budget", type=float, default=1.50, help="dollars this run may meter (default 1.50)")
     s.add_argument("--max-items", type=int, help="work at most this many failing sums (for trials)")
     s.set_defaults(fn=cmd_close)

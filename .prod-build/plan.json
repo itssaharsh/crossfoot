@@ -247,8 +247,10 @@
         "uv run crossfoot close --county panola --resume latest"
       ],
       "rollback": "git revert the task's commits; committed runs are never changed",
-      "status": "todo",
-      "notes": "Added 2026-10-11 after T03a and a scout read: the cheap model plus a blind loop cost more and closed less than one read with the stronger model."
+      "status": "doing",
+      "notes": "Added 2026-10-11 after T03a and a scout read: the cheap model plus a blind loop cost more and closed less than one read with the stronger model.",
+      "base": "cff34cb",
+      "started_after": 22
     },
     {
       "id": "T03c",
