@@ -63,6 +63,18 @@ class Ledger:
                         (value, model, county, page, block_id, row_kind, column))
         self.db.commit()
 
+    def set_box(self, county, page, block_id, row_kind, column, box):
+        self.db.execute("UPDATE cells SET x0=?, y0=?, x1=?, y1=? WHERE county=? AND page=? AND block_id=? AND row_kind=? "
+                        "AND column=?", (*box, county, page, block_id, row_kind, column))
+        self.db.commit()
+
+    def set_value(self, county, page, block_id, row_kind, column, value, model=None):
+        """Write a value the audit's re-read showed (an accepted cell included); the caller sets the status after."""
+        self.db.execute("UPDATE cells SET value=?, tries=tries+1, model=COALESCE(?, model) WHERE county=? AND page=? "
+                        "AND block_id=? AND row_kind=? AND column=?",
+                        (value, model, county, page, block_id, row_kind, column))
+        self.db.commit()
+
     def put_total(self, county, page, block_id, direction, key, value):
         self.db.execute("INSERT OR REPLACE INTO totals VALUES(?,?,?,?,?,?)",
                         (county, page, block_id, direction, key, value))

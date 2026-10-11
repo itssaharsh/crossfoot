@@ -1,0 +1,9 @@
+{"county": "panola", "expected": [
+ {"kind": "file_row_fails_own_total", "office_contains": "District Judge", "candidate_contains": "Rafferty", "precinct": "22"},
+ {"candidate_contains": "Oliver", "precinct": "18"},
+ {"candidate_contains": "Oliver", "precinct": "29"},
+ {"candidate_contains": "Stein", "precinct": "2"},
+ {"candidate_contains": "Stein", "precinct": "3"},
+ {"candidate_contains": "Stein", "precinct": "18"},
+ {"candidate_contains": "Stein", "precinct": "27"},
+ {"candidate_contains": "Stein", "precinct": "28"}]}

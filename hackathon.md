@@ -95,6 +95,20 @@ Planned, and updated as each part is actually used:
 - Fixed: a model that wrote prose around its JSON no longer costs a repair call.
 - Gateway spend for the task: $3.6806 to $4.5142.
 
+### 2026-10-11 - T03c the audit against the published file, and the outputs
+- Changed: `crossfoot audit --county panola [--resume RUN|latest]` reads (reader chosen by a sample), closes, matches the
+  scan's contests and candidates to the file's (normalised labels first; the model once, as two lists, checked in code), looks
+  at every disagreeing value on the scan again (400 dpi, `claude-sonnet-4.6`, three at a time, starts 1.1 s apart), and writes
+  `findings.json`, one crop per group, `corrected/<file>`, `changes.diff`, `report.md`, `policy.json`, `run.json`.
+  `verify-known` and `policy set|show` added. The 22 registered-voters cells now take their sum's verdict; the 76 cells of
+  page 1's first block now have boxes (two checked by eye on a crop).
+- Measured, one full run from nothing (`runs/20261011-120008/run.json`): 638.7 s, 269 model calls (haiku 19, sonnet-4.6 243,
+  opus-4.6 7), metered $0.8845, gateway $4.7283 to $5.6127. 121 findings in 46 groups; 104 re-reads, none changed the ledger.
+  `verify-known`: 8 of 8 expected found. Runs on the same ledger (`--resume`) cost $0.1073 and 177.7 s.
+- Failed / not solved: the number of `cannot_verify` findings moved between runs (11, 14, 18) because the re-read model
+  sometimes gives a third value; the corrected file changes cell values only, so missing and extra rows stay listed.
+- Fixed: call-start spacing is applied at the request, not before an import; the report no longer fails on ledger verdict keys.
+
 ## Demo
 Not available yet.
 

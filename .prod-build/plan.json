@@ -283,8 +283,10 @@
         "uv run crossfoot verify-known --county panola"
       ],
       "rollback": "git revert the task's commits; committed runs are never changed",
-      "status": "todo",
-      "notes": "Was T03b before 2026-10-11 11:15 UTC."
+      "status": "doing",
+      "notes": "Was T03b before 2026-10-11 11:15 UTC.",
+      "base": "16b6b2b",
+      "started_after": 29
     },
     {
       "id": "T04a",

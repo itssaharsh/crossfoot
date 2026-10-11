@@ -813,6 +813,28 @@ def close_county(county, gw, led, geo, *, run_id="", max_items=None, log=print, 
     return s
 
 
+def finalize_open(led, county, ev=None) -> list[dict]:
+    """Every value ends accepted, document_inconsistent or cannot_verify. A cell still open after the loop sits on a
+    failing sum (else it would be accepted); that sum has a verdict, and the cell takes the verdict's status and reason.
+    Safe to run again. Returns the changes."""
+    cells, totals = led.cells(county), led.totals(county)
+    on = checks.crossing(cells, totals)
+    vs = {v["sum_id"]: v for v in led.verdicts(county)}
+    out = []
+    for c in cells:
+        if c["status"] in ("accepted", *FINAL):
+            continue
+        mine = [vs[sum_id(x)] for x in on.get(_ckey(c), []) if not x.ok and sum_id(x) in vs]
+        if not mine:
+            continue
+        v = next((x for x in mine if x["verdict"] == "document_inconsistent"), mine[0])
+        led.set_status(county, c["page"], c["block_id"], c["row_kind"], c["column"], v["verdict"], v["reason"])
+        out.append({"cell": list(_ckey(c)), "old": c["status"], "new": v["verdict"], "reason": v["reason"]})
+    if out and ev:
+        ev("status_change", changes=out)
+    return out
+
+
 def _finish(cl: Closer):
     """After every failing sum has been worked: a cell on no printed sum becomes cannot_verify, and a sum that still
     fails without a verdict (it shares a value that was given up on) gets one. Cells on a failing sum that is explained
