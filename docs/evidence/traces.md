@@ -102,3 +102,23 @@ finds San Saba's trace of an earlier single-county run (`cda8fe1f09ffd623d04581f
 trace in the earlier run over all counties (`abac15ed55e1e45223d2aa32af3a47af`, 13:15 UTC). The runs made between
 about 13:58 and 14:50 UTC have no traces at all: the service answered 503 in that time.
 
+## San Saba and Jones on the final code, audited again for their traces
+
+The final run's traces for these two counties never arrived, so each county was audited again by itself on the same
+commit (`aefdc2e`, the commit `run.json` records) on 11 October 2026. Both traces arrived.
+
+| county | run | command | trace id | trace started (UTC) | spans | tokens |
+|---|---|---|---|---|---|---|
+| san_saba | `20261011-201637` | `crossfoot audit --county san_saba --budget 0.5` | `0e8bfd5bb30d9e85fbc6276c60f1b15c` | 20:16:42 | 44 | 67,292 |
+| jones | `20261011-201830` | `crossfoot audit --county jones --budget 0.5` | `4f0c85b77e6895161b8bce9675f5fe8b` | 20:18:33 | 44 | 83,954 |
+
+- Looked up with `search_traces` (queries `san_saba`, `jones`, `read_page`, `read_county`; `date_from` 20:15, `date_to` 20:30). The search for
+  `read_county` in that window returns exactly these two. Neither has an errored span. The root span of a single-county audit is `read_county`,
+  not the county's name as in `audit --all`.
+- The findings are those of the final run, record for record: San Saba 21 (3 settled, 18 that cannot be verified), Jones 26 (all settled).
+  Compared field by field against `runs/20261011-161207/<county>/findings.json`; the only text that differs is the run id inside the path of a
+  re-read crop.
+- While San Saba's spans were exported the SDK logged one "Bad Gateway ... retrying"; the trace still arrived whole. That is the only hint so far
+  at why two traces of the final run are missing, and it is a guess, not a finding.
+- Gateway spend: $0.2010 and $0.2611. No figure in the README or on the page comes from these two runs; those are built from `20261011-161207`.
+

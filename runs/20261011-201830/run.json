@@ -1,0 +1,50 @@
+{
+ "run_id": "20261011-201830",
+ "started": "2026-10-11T20:18:30",
+ "ended": "2026-10-11T20:20:44",
+ "seconds": 133.9,
+ "commit": "aefdc2e8673d5a96d5015cba256cf7fbc4806c26",
+ "command": "crossfoot audit --county jones --budget 0.5",
+ "counties": [
+  "jones"
+ ],
+ "resumed_from": null,
+ "reader": "claude-haiku",
+ "sample": {
+  "row_sums": 27,
+  "failing": 0,
+  "rate": 0.0,
+  "line": 0.1,
+  "sampled_with": "claude-haiku",
+  "reader": "claude-haiku",
+  "kept_sample": true
+ },
+ "phases_seconds": {
+  "read": 88.4,
+  "close": 17.4,
+  "audit": 6.3
+ },
+ "model_calls": 24,
+ "model_calls_by_model": {
+  "claude-haiku": {
+   "calls": 23,
+   "prompt_tokens": 48815,
+   "completion_tokens": 35139,
+   "cost": 0.247
+  },
+  "claude-sonnet-4.6": {
+   "calls": 1,
+   "prompt_tokens": 321,
+   "completion_tokens": 389,
+   "cost": 0.0075
+  }
+ },
+ "prompt_tokens": 49136,
+ "completion_tokens": 35528,
+ "metered_cost_estimate": 0.2544,
+ "gateway_spend": {
+  "before": 14.00338025500001,
+  "after": 14.26443555500001,
+  "change": 0.2611
+ }
+}

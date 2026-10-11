@@ -360,6 +360,15 @@ list are gone.
   the four links fit.
 - Removed with the old layout: the run-number grid and its measurement files (`qa/final/costs.json`, `qa/final/*-run-numbers-1440.png`) that an earlier entry names; `qa/final/` now holds the redesigned page's screenshots.
 
+### 2026-10-11 - San Saba and Jones audited again so their traces exist
+- Why: the final run's traces for these two counties never reached neatlogs (the run log shows no export error).
+- Run: `crossfoot audit --county san_saba --budget 0.5` (run `20261011-201637`) and `crossfoot audit --county jones
+  --budget 0.5` (run `20261011-201830`), both on commit `aefdc2e`. Gateway spend $0.2010 and $0.2611.
+- Result: both traces arrived (`0e8bfd5bb30d9e85fbc6276c60f1b15c`, `4f0c85b77e6895161b8bce9675f5fe8b`; 44 spans each,
+  no errored span). The findings are the final run's, record for record: 21 and 26. The only text that differs is the
+  run id inside a crop path. Written up in [docs/evidence/traces.md](docs/evidence/traces.md).
+- Not changed: the README, the page and every figure in them still come from run `20261011-161207`.
+
 ## Demo
 - Live: https://crossfoot-zeta.vercel.app/ (deployed from `site/` on 11 October 2026; no sign-in).
 - The results page is static. From a clone: `python3 -m http.server -d site 8000`, then open http://localhost:8000/.
