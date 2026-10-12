@@ -471,6 +471,18 @@ list are gone.
   loaded by the page.
 - **Checked after it.** `uv run pytest -q`, `tools/readme_tables.py --check` and `tools/named_paths.py --check`.
 
+### 2026-10-12 - the agent rules, the tool wiring and the page's screenshots were removed from the tree
+- **What was removed.** The rules the coding sessions were given (`AGENTS.md`, `CLAUDE.md`, `.entire/graph-agent.md`), the
+  local wiring of the tools (`.claude/settings.json`, which holds Entire's hooks, and `.mcp.json`, which points at
+  neatlogs' MCP server) and the page's screenshots and check results (`qa/final/`, 29 files). A reviewer does not need
+  them to read, run or check the project. They are in the history: the last commit that holds them is `e0452da`.
+- **What stayed.** `.entire/settings.json`: Entire records in it where a repository's checkpoints are kept, so the public
+  session pages may depend on it. The scripts under `tools/qa/` stayed; they make the screenshots and the checks again.
+- **What still names the removed files.** Earlier entries of this log, the task lines in
+  `docs/evidence/checkpoints.txt` and the recorded sessions themselves, which open with "Read AGENTS.md". The README and
+  the evidence pages no longer point at them. `tools/named_paths.py` lists `qa/final/` as removed on purpose.
+- **Checked after it.** `uv run pytest -q`, `tools/readme_tables.py --check` and `tools/named_paths.py --check`.
+
 ## Demo
 - Live: https://crossfoot-zeta.vercel.app/ (deployed from `site/` on 11 October 2026; no sign-in).
 - The results page is static. From a clone: `python3 -m http.server -d site 8000`, then open http://localhost:8000/.

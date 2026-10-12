@@ -9,7 +9,8 @@ old reports and the made-up ids in tests/ are skipped, and so is a sentence that
 renamed (and the lines that continue its bullet): what it names is meant to be gone.
 
 Ten run folders that only the build log named were taken out of the tree on 12 October 2026 (REMOVED below). They are in
-the history, last at commit 38507b8. A mention of one of them is listed as removed, and it is an error if it is back."""
+the history, last at commit 38507b8. A mention of one of them is listed as removed, and it is an error if it is back.
+The page's screenshots and check results (qa/final/) left the tree the same day, last at commit e0452da; the same holds for them."""
 import re, sys
 from pathlib import Path
 
@@ -21,6 +22,7 @@ GONE = re.compile(r"\b(removed|deleted|renamed)\b", re.I)
 QA = re.compile(r"(?<![\w/])qa/[\w./-]+")
 REMOVED = {"20261011-085854", "20261011-121108", "20261011-122159", "20261011-140000", "20261011-140637", "20261011-141051",
            "20261011-141131", "20261011-141152", "20261011-141300", "20261011-150000"}
+REMOVED_QA = "qa/final"
 
 
 def files():
@@ -74,10 +76,14 @@ def main(argv=None) -> int:
         print(f"  {p}  {'present' if ok else 'MISSING'}")
     print("qa paths named:")
     for p in sorted(qa):
-        ok = (ROOT / p).exists()
+        if p.startswith(REMOVED_QA):
+            ok = not (ROOT / REMOVED_QA).exists()
+            print(f"  {p}  {'removed on purpose, in the history' if ok else 'LISTED AS REMOVED BUT PRESENT'}")
+        else:
+            ok = (ROOT / p).exists()
+            print(f"  {p}  {'present' if ok else 'MISSING'}")
         if not ok:
             bad.append(p)
-        print(f"  {p}  {'present' if ok else 'MISSING'}")
     print(f"{len(bad)} named path(s) missing")
     return 1 if (bad and "--check" in (argv or sys.argv[1:])) else 0
 

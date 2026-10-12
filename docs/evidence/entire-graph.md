@@ -47,7 +47,8 @@ crossfoot/checks.py (Python)
 
 ## What this is not
 
-The coding sessions did not use the graph. Its guide is in `AGENTS.md` and `.entire/graph-agent.md`, but
+The coding sessions did not use the graph. Its guide was part of the rules the sessions were given (those files left the tree on 12 October 2026 and are in the
+history at commit `e0452da`), but
 `entire graph stats` over the 16 recorded sessions reports 0 graph calls against 668 exploration calls (113 whole-file reads,
 555 uses of grep, find or a partial read). The agents went on reading files. This page was made after the build, to show the
 rework commit; nothing in the program came from it.

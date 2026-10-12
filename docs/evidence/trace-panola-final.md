@@ -195,6 +195,6 @@ PRECINCT: Values: 254
 
 ## How to read it yourself
 
-With access to the project in neatlogs: open trace `81bf9a637f8f4dcd02c763b1a1ce7592`. With the MCP server (`.mcp.json`):
+With access to the project in neatlogs: open trace `81bf9a637f8f4dcd02c763b1a1ce7592`. With neatlogs' MCP server (`https://ingest.neatlogs.com/mcp`):
 `get_trace_context` with `{"trace_id": "81bf9a637f8f4dcd02c763b1a1ce7592", "limit": 40, "offset": 0, "include_evaluations": false}`.
 The other traces of the final run are listed in [traces.md](traces.md).

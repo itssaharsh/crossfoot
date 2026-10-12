@@ -99,8 +99,9 @@ The event page lists what a judge checks. Its words are on the left; where to lo
 Also here:
 - One prompt to a general coding agent on the same county, scored the same way:
   [docs/evidence/baseline.md](docs/evidence/baseline.md).
-- The results page: [site/](site/) (static; serve it as in "Run it"). Screenshots of it at 1440x900 and 390x844 and the
-  accessibility check (axe-core, zero violations) are in [qa/final/](qa/final/).
+- The results page: [site/](site/) (static; serve it as in "Run it"). The scripts that screenshot it and run the
+  accessibility check are in [tools/qa/](tools/qa/); their last results (axe-core, zero violations) were removed from
+  the tree on 12 October and are in the history at commit `e0452da`.
 - The build log, including what failed: [hackathon.md](hackathon.md).
 
 Measured cost and time per county, from the same summary:
@@ -131,9 +132,9 @@ Calls, cost and seconds are those of the run that read each county, [`runs/20261
   ([incident.md](docs/evidence/incident.md)).
 - **Entire.** Every coding session's commit carries an `Entire-Checkpoint` trailer
   ([checkpoints.txt](docs/evidence/checkpoints.txt)). The sessions can be read on entire.io without a sign-in:
-  [all of them](https://entire.io/gh/itssaharsh/crossfoot/sessions), and for example [the one that fixed the first incident](https://entire.io/gh/itssaharsh/crossfoot/session/98bc1e84-e6c6-4c05-ade1-7eac85a5282f). Its graph plugin was installed and its guide is in
-  [AGENTS.md](AGENTS.md), but the coding sessions never called it; its change list for the loop rework was made
-  afterwards ([entire-graph.md](docs/evidence/entire-graph.md)).
+  [all of them](https://entire.io/gh/itssaharsh/crossfoot/sessions), and for example [the one that fixed the first incident](https://entire.io/gh/itssaharsh/crossfoot/session/98bc1e84-e6c6-4c05-ade1-7eac85a5282f). Its graph plugin was installed,
+  but the coding sessions never called it; its change list for the loop rework was made afterwards
+  ([entire-graph.md](docs/evidence/entire-graph.md)).
 - **cfo.ai.** The business plan, made from the run's measured cost and our stated assumptions:
   [the shared plan](https://cfo.ai/s/epRxqy-jnNrvyGSD) and what it says
   ([business-plan.md](docs/evidence/business-plan.md)). The model costs $0.29 a file and a person confirming the
