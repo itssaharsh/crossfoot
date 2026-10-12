@@ -1,7 +1,11 @@
 # The business plan (cfo.ai)
 
 The owner made this plan in cfo.ai on 11 October 2026 from the measured cost of the final run and a list of assumptions.
-It is shared read-only here: https://app.cfo.ai/s/aRFg86F21pDO1EQN
+It is shared read-only here: https://cfo.ai/s/epRxqy-jnNrvyGSD
+
+The link changed on 12 October 2026 (the first one, ending `aRFg86F21pDO1EQN`, no longer opens). On the same day one
+block was removed from the plan: an interactive cash simulator that failed to draw for a reader who is not signed in.
+No figure changed.
 
 Everything under "What the plan says" is copied from that page as it read on 11 October 2026 at 22:45 UTC. Three
 screenshots of it are in [business-plan/](business-plan/). The business is hypothetical: nobody has paid, and the page

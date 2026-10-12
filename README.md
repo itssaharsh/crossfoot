@@ -13,10 +13,12 @@ Open: **[the live results page](https://crossfoot-zeta.vercel.app/)** ([its sour
 [the build log](hackathon.md)
 
 The three tools, and where to see each:
-- **neatlogs** traces every model and tool call of a run: [one trace as the server returns it](docs/evidence/trace-panola-final.md),
+- **neatlogs** traces every model and tool call of a run: [two incidents, and the fix each one led to](docs/evidence/incident.md),
+  [one trace as the server returns it](docs/evidence/trace-panola-final.md),
   [every trace and the detection](docs/evidence/traces.md), [what a trace changed in the program](docs/evidence/before-after.md).
-- **Entire** records each coding session with its commit: [the checkpoints](docs/evidence/checkpoints.txt).
-- **cfo.ai** made the business plan from the measured cost: [the plan](https://app.cfo.ai/s/aRFg86F21pDO1EQN) and
+- **Entire** records each coding session with its commit: [the sessions on entire.io](https://entire.io/gh/itssaharsh/crossfoot/sessions), open without a sign-in,
+  and [the checkpoints](docs/evidence/checkpoints.txt).
+- **cfo.ai** made the business plan from the measured cost: [the plan](https://cfo.ai/s/epRxqy-jnNrvyGSD) and
   [what it says](docs/evidence/business-plan.md).
 
 ## What it found
@@ -86,10 +88,10 @@ The event page lists what a judge checks. Its words are on the left; where to lo
 
 | The event asks for | Where it is |
 |---|---|
-| **The agent improved.** A run before your change and a run after it, with the numbers you compared | [before-after.md](docs/evidence/before-after.md): two changes, each with its run before and its run after, their trace ids, the numbers, and what got worse |
-| **You used neatlogs.** Links to traces, or screenshots of them | [trace-panola-final.md](docs/evidence/trace-panola-final.md): one trace as the neatlogs server returns it. [traces.md](docs/evidence/traces.md): the trace id of every run, and the detection that was created |
-| **You used Entire.** Checkpoints or entire-graph output | [checkpoints.txt](docs/evidence/checkpoints.txt): the output of `entire checkpoint list`; each session's commit carries an `Entire-Checkpoint` trailer. [entire-graph.md](docs/evidence/entire-graph.md): the graph plugin's change list for the commit that reworked the loop |
-| **You used cfo.ai.** A business plan covering pricing, costs, revenue and runway | [The plan](https://app.cfo.ai/s/aRFg86F21pDO1EQN), and its figures in [business-plan.md](docs/evidence/business-plan.md) |
+| **The agent improved.** A run before your change and a run after it, with the numbers you compared | [before-after.md](docs/evidence/before-after.md): two changes, each with its run before and its run after, their trace ids, the numbers, and what got worse. [incident.md](docs/evidence/incident.md): two more, each from an incident in neatlogs; the Panola read took 397.4 s before and 197.6 s after, in two traces |
+| **You used neatlogs.** Links to traces, or screenshots of them | [incident.md](docs/evidence/incident.md): two incidents raised and resolved in neatlogs, what its investigation said about each, and screenshots of the board and of the traces before and after. [trace-panola-final.md](docs/evidence/trace-panola-final.md): one trace as the neatlogs server returns it. [traces.md](docs/evidence/traces.md): the trace id of every run, and the detection that was created |
+| **You used Entire.** Checkpoints or entire-graph output | [The sessions on entire.io](https://entire.io/gh/itssaharsh/crossfoot/sessions), open without a sign-in: each has its task, its tool calls and its commit. [checkpoints.txt](docs/evidence/checkpoints.txt): the output of `entire checkpoint list`; each session's commit carries an `Entire-Checkpoint` trailer. [entire-graph.md](docs/evidence/entire-graph.md): the graph plugin's change list for the commit that reworked the loop |
+| **You used cfo.ai.** A business plan covering pricing, costs, revenue and runway | [The plan](https://cfo.ai/s/epRxqy-jnNrvyGSD), and its figures in [business-plan.md](docs/evidence/business-plan.md) |
 | **The agent recovers from failures.** A run where an action failed, showing what the agent did next | [recovery.md](docs/evidence/recovery.md): a run stopped by its budget and continued, and other recoveries |
 | **You wrote the code during the hackathon.** Commits dated during the hackathon | The history of this repository: every commit is dated 11 or 12 October 2026. What was planned earlier is under "What existed before the event" |
 
@@ -123,13 +125,16 @@ Calls, cost and seconds are those of the run that read each county, [`runs/20261
 - **neatlogs.** Every model and tool call is a span. Two changes to the program were made from what the runs showed
   ([before-after.md](docs/evidence/before-after.md)), and one detection was created
   ([traces.md](docs/evidence/traces.md)). One trace as the server returns it, with its span tree and a masked image:
-  [trace-panola-final.md](docs/evidence/trace-panola-final.md).
+  [trace-panola-final.md](docs/evidence/trace-panola-final.md). On 12 October two incidents were raised in its console and
+  resolved; each led to a change in the program, and its assistant found the first one
+  ([incident.md](docs/evidence/incident.md)).
 - **Entire.** Every coding session's commit carries an `Entire-Checkpoint` trailer
-  ([checkpoints.txt](docs/evidence/checkpoints.txt)). Its graph plugin was installed and its guide is in
+  ([checkpoints.txt](docs/evidence/checkpoints.txt)). The sessions can be read on entire.io without a sign-in:
+  [all of them](https://entire.io/gh/itssaharsh/crossfoot/sessions), and for example [the one that fixed the first incident](https://entire.io/gh/itssaharsh/crossfoot/session/98bc1e84-e6c6-4c05-ade1-7eac85a5282f). Its graph plugin was installed and its guide is in
   [AGENTS.md](AGENTS.md), but the coding sessions never called it; its change list for the loop rework was made
   afterwards ([entire-graph.md](docs/evidence/entire-graph.md)).
 - **cfo.ai.** The business plan, made from the run's measured cost and our stated assumptions:
-  [the shared plan](https://app.cfo.ai/s/aRFg86F21pDO1EQN) and what it says
+  [the shared plan](https://cfo.ai/s/epRxqy-jnNrvyGSD) and what it says
   ([business-plan.md](docs/evidence/business-plan.md)). The model costs $0.29 a file and a person confirming the
   findings $13.21, so two of the three prices we tried lose money on every file.
 
@@ -141,6 +146,9 @@ Calls, cost and seconds are those of the run that read each county, [`runs/20261
 - A column of values that moves to the wrong precinct name is caught by the picture (which cells are blacked out), not
   by the sums. This works only where a block has blacked-out cells, so it does not catch a shift in a block with none,
   or a swap between two filled columns.
+- Two runs of the same county need not agree: the model can read the same picture two ways
+  ([incident.md](docs/evidence/incident.md)). The printed sums catch a misread value and the picture check catches a
+  moved column; other differences between runs are not ruled out.
 - Limestone County prints nothing that can be added up, so it is listed as not checked and left as published.
 - Where the scan's own printed totals disagree with each other, Crossfoot says so and lists it for a person. It does
   not say which is right.

@@ -437,6 +437,27 @@ list are gone.
   picture check only fixes columns in blocks that have blacked-out cells; it was not shown on any other kind of error.
   This run's `p6-b4` was read correctly by the model, so the realignment ran once, not twice.
 
+### 2026-10-12 - two incidents in neatlogs, raised and resolved
+- **Where it is written up.** [docs/evidence/incident.md](docs/evidence/incident.md), with screenshots of the console
+  in `docs/evidence/incident/`. Until this day the incident board was empty: no run had failed.
+- **Incident 1, "Reads run one model call at a time in the matrix layout (Panola)".** Raised from what neatlogs'
+  assistant said about the last 100 traces. neatlogs' own investigation of the incident: "Root cause is not
+  established", 25%, inspect how `read_county` runs its calls. The fix is T13 above. Its real run, made after that
+  entry was written: `runs/20261012-094453` (`audit --county panola --workers 4 --budget 1.2`), 317.8 s in all (read
+  197.6, close 84.8, audit 15.0) against 507.0 s (read 397.4) in the final run; 174 model calls; metered $0.7890;
+  trace `6cdc36b6ef012dfb8fd2eb96ed9ee13b` for the read.
+- **Incident 2, "Two runs on the same images disagree on which precinct a column belongs to (Panola, block p6-b2)".**
+  Found by comparing that run's findings with the final run's: 107 of 121 identical, 14 not. neatlogs' investigation:
+  55%, suspects the model temperature. The temperature was already 0. The fix is T14 above, and after it all 121
+  findings equal the final run's.
+- **Both are marked Resolved** in the console.
+- **What neatlogs did not do.** It named the wrong layout as the slow one, it could not establish the cause of the
+  first incident, and it did not find the second.
+- **Also this day.** The cfo.ai plan has a new link (https://cfo.ai/s/epRxqy-jnNrvyGSD); the old one stopped opening. One
+  block of the plan, a simulator that failed to draw for a signed-out reader, was removed; no figure changed. Entire's
+  pages for this repository now open without a sign-in (https://entire.io/gh/itssaharsh/crossfoot/sessions). The spend
+  line in AGENTS.md was raised from $15 to $18 for these two runs; the gateway shows $15.83 of $20.00 spent.
+
 ## Demo
 - Live: https://crossfoot-zeta.vercel.app/ (deployed from `site/` on 11 October 2026; no sign-in).
 - The results page is static. From a clone: `python3 -m http.server -d site 8000`, then open http://localhost:8000/.
@@ -460,5 +481,5 @@ repository and demo link; a demo video of three minutes or less that covers neat
 the repository.
 
 Done on 11 October: the public repository (https://github.com/itssaharsh/crossfoot), the deployed page
-(https://crossfoot-zeta.vercel.app/) and the cfo.ai business plan (https://app.cfo.ai/s/aRFg86F21pDO1EQN, summarised in
+(https://crossfoot-zeta.vercel.app/) and the cfo.ai business plan (https://cfo.ai/s/epRxqy-jnNrvyGSD, summarised in
 [docs/evidence/business-plan.md](docs/evidence/business-plan.md)). Outstanding: the demo video's link and the post on X.

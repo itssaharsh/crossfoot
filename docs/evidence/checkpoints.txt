@@ -1,5 +1,17 @@
   branch       main
-  checkpoints  36
+  checkpoints  40
+
+● 59a4c2f9-922  [temporary]  Read AGENTS.md, then .prod-build/briefs/T14.md and do exa...
+  10-12 10:04 (c03f954) Read AGENTS.md, then .prod-build/briefs/T14.md and do exactly that task.
+
+● 01M4QS464ZRV4KFCZ46759YNDA  "Read AGENTS.md, then .prod-build/briefs/T14.md and do exa..."
+  10-12 10:04 (eb0bf90) T14: columns blanked out in the picture are checked against the model's answe...
+
+● 98bc1e84-e6c  [temporary]  Read AGENTS.md, then .prod-build/briefs/T13.md and do exa...
+  10-12 09:42 (4329ef2) Read AGENTS.md, then .prod-build/briefs/T13.md and do exactly that task.
+
+● 01M4QQV5S5HA3FSFXX2NJD7BK8  "Read AGENTS.md, then .prod-build/briefs/T13.md and do exa..."
+  10-12 09:42 (4f5f61d) T13: matrix read runs blocks in parallel (--workers); real run not started, w...
 
 ● 36989449-f53  [temporary]  "Read AGENTS.md, then .prod-build/briefs/T12.md and do exa..."
   10-11 17:52 (9b9d32a) <task-notification> <task-id>br60yd2cp</task-id> <tool-use-id>toolu_016X
@@ -110,5 +122,3 @@
 ● 01M4N2MJRDY60BETX65N5VQXWM  "Read AGENTS.md, then .prod-build/briefs/T01.md and do exa..."
   10-11 08:52 (4207764) T01: scaffold, sources, rendering, ledger and checks
 
-
-This list was saved on 12 October 2026 with `entire checkpoint list` (36 entries; one marked temporary holds session files that were never committed). To open the session behind a commit, read the `Entire-Checkpoint` trailer of its message (`git log -1 <commit>`) and run `entire checkpoint explain <id>`, or open `https://entire.io/gh/itssaharsh/crossfoot/commit/<sha>` signed in at entire.io.
