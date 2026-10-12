@@ -414,6 +414,29 @@ list are gone.
   $15 that AGENTS.md says no run may reach, so it was not started. No wall-clock, cost or findings figure for the new
   code exists yet; none is claimed here.
 
+### 2026-10-12, T14: which columns of a block are blank is read from the picture
+- **What was wrong.** The final run (`20261011-161207`) and the four-worker run (`20261012-094453`) sent the model the
+  same group crops of `p6-b2` and `p6-b4`, and the model put the last two filled columns under 22 and 27 in one run and
+  under 20 and 26 in the other. 22 and 27 are right by eye. The printed sums cannot see a column that moves.
+- **What changed.** `layouts/matrix.py` reads the blacked-out columns from the page image (all three cells at least 90%
+  dark), compares them with the columns the model filled, moves the values onto the picture's columns when the count is
+  the same (event `columns_realigned`) and fails the block when the count differs. New command
+  `crossfoot check-columns --run <id>` (no model call). Tests: `tests/test_columns_picture.py` (8; real crops of
+  page 6 in `tests/fixtures/panola_p6_*`, and a drawn page with a fake model). `uv run pytest -q`: 270 passed.
+- **`check-columns` on finished runs.** `20261011-161207`: 42 blocks, 42 agree. `20261012-094453`: 42 blocks, 40
+  agree, 2 differ (`p6-b2` and `p6-b4`: ledger 20 and 26, picture 22 and 27). So the published findings stand.
+- **The real run** `20261012-095754` (`audit --county panola --workers 4 --budget 1.2`, reader claude-sonnet-4.6):
+  read 197.3 s, close 80.3 s, audit 19.5 s, 321.5 s in all (`runs/20261012-095754/run.json`); 173 model calls; metered
+  $0.7775; gateway spend $15.0534 to $15.8309 (change $0.7775). Findings 121 (`settled_against_file` 109,
+  `cannot_verify` 12), and all 121 equal the 121 of `runs/20261011-161207/panola/findings.json`, compared by id and
+  by content with run ids treated as equal. One `columns_realigned` event, for `p6-b2` (model 7, 8, 9, 10, 20, 26;
+  picture 7, 8, 9, 10, 22, 27). `check-columns` on this run: 42 agree. Trace `52b7e0863792adabb6d76946d31a77f0`
+  (neatlogs): span_count 342, llm_calls 146, tool_calls 195, root_span_count 1, span_tree_complete true, latency_ms 197287
+  (the read phase; the trace covers `read_county` only).
+- **What did not improve.** The wall clock (321.5 s) is not shorter than the earlier four-worker run (317.8 s). The
+  picture check only fixes columns in blocks that have blacked-out cells; it was not shown on any other kind of error.
+  This run's `p6-b4` was read correctly by the model, so the realignment ran once, not twice.
+
 ## Demo
 - Live: https://crossfoot-zeta.vercel.app/ (deployed from `site/` on 11 October 2026; no sign-in).
 - The results page is static. From a clone: `python3 -m http.server -d site 8000`, then open http://localhost:8000/.

@@ -97,6 +97,16 @@ is rejected and the county is reported as not supported and left alone.
    `BudgetExceeded` no worker starts another call. The gateway spaces call starts by its minimum interval across all
    threads, so more workers do not raise the request rate. The same setting (`crossfoot/settings.py`) is the number of
    calls in flight for the report layout's pages and for the audit's re-reads.
+   After a block's group answers are joined, the columns the model left empty (no value in any of the three rows) are
+   compared with the columns the picture shows as filled (`layouts/matrix.py: blacked_out`, `realign`). A column is
+   blacked out when the inside of all three of its cells (EARLY, ABSENTEE, PRECINCT) is at least 90% dark pixels in the
+   200 dpi page, between the column edges the page gives. Same columns: nothing changes. Same count in other places:
+   each row's values and the small totals move onto the picture's columns in left-to-right order and a
+   `columns_realigned` event names the block, the columns the model gave and the columns the picture gives. A different
+   count: the answer is rejected, and the block is handled as a failed block is (cells marked failed, `block_failed`
+   event). A block on a page with no column edges is not compared. `crossfoot check-columns --run <id>` repeats the
+   comparison on a finished run's ledger and page images, with no model call. This catches a whole column that moves;
+   the printed sums cannot, because they add the same numbers wherever the column is named.
 4. Which model reads a county is decided by measurement, not fixed. A sample of the first page is read with
    `claude-haiku`; if more than a tenth of the sample's row sums fail, the county is read with `claude-sonnet-4.6`.
    Measured on Panola on 11 October 2026, same code and crops: `claude-haiku` left 85 of 943 printed sums failing

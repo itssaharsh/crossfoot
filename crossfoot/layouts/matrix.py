@@ -12,6 +12,7 @@ from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass
 from pathlib import Path
 
+import numpy as np
 from PIL import Image
 
 from .. import checks, tracing
@@ -103,6 +104,61 @@ def merge_groups(ds: list[dict]) -> dict:
             for r in ROWS}
     return {"contest": ds[0].get("contest"), "candidate": ds[0].get("candidate"), "rows": rows,
             "col_totals": [v for d in ds for v in d["col_totals"]], "grand": ds[-1]["grand"]}
+
+
+BLACK_SHARE = 0.9   # a cell whose inside is at least this share dark is blacked out
+CELL_INSET = (4, 3) # pixels (left/top, right/bottom) left out of each cell so its ruled lines do not count
+
+
+def blacked_out(gray, origin, edges, rule_y0, rule_y1) -> list[bool]:
+    """Which precinct columns are blacked out, read from the picture: True where all three cells (EARLY, ABSENTEE,
+    PRECINCT) are solid dark. `gray` is a grey-level array of the 200 dpi page, or of a crop of it whose top-left
+    corner sits at `origin` = (x, y) on the page; `edges` are the n+1 page x positions of the precinct columns;
+    rule_y0..rule_y1 is the ruled height of the block. No model."""
+    ox, oy = origin
+    h = (rule_y1 - rule_y0) / len(ROWS)
+    a, z = CELL_INSET
+    out = []
+    for c in range(len(edges) - 1):
+        shares = []
+        for r in range(len(ROWS)):
+            y0, y1 = round(rule_y0 + r * h) + a - oy, round(rule_y0 + (r + 1) * h) - z - oy
+            cell = gray[y0:y1, edges[c] + a - ox:edges[c + 1] - z - ox]
+            shares.append(float((cell < segment.DARK).mean()) if cell.size else 0.0)
+        out.append(min(shares) >= BLACK_SHARE)
+    return out
+
+
+def filled_columns(gray, origin, edges, rule_y0, rule_y1) -> list[int]:
+    """Indexes of the columns that are not blacked out, left to right."""
+    return [i for i, black in enumerate(blacked_out(gray, origin, edges, rule_y0, rule_y1)) if not black]
+
+
+def model_filled(d) -> list[int]:
+    """Indexes of the columns where the model gave a value in at least one of the three rows."""
+    return [i for i in range(len(d["col_totals"])) if any(d["rows"][r]["values"][i] is not None for r in ROWS)]
+
+
+def realign(d, picture) -> tuple[dict, dict | None]:
+    """Compare a merged answer's filled columns with the picture's. Same: the answer as it is, no event. Same count in
+    other places: each row's values and the small totals move onto the picture's columns in left-to-right order, and
+    the second value says what moved. A different count raises ValueError (the block is then handled as failed)."""
+    have = model_filled(d)
+    if have == picture:
+        return d, None
+    if len(have) != len(picture):
+        raise ValueError(f"the model filled {len(have)} columns, the picture shows {len(picture)} filled "
+                         f"(model: {have}, picture: {picture})")
+    n = len(d["col_totals"])
+
+    def move(vals):
+        out = [None] * n
+        for src, dst in zip(have, picture):
+            out[dst] = vals[src]
+        return out
+    new = dict(d, rows={r: dict(d["rows"][r], values=move(d["rows"][r]["values"])) for r in ROWS},
+               col_totals=move(d["col_totals"]))
+    return new, {"model_columns": have, "picture_columns": picture}
 
 
 def group_image(hi_png, b, edges, g, scale, dest: Path) -> Path:
@@ -299,7 +355,18 @@ def read_county(county, gw, led, *, run_id="", pages=None, dpi=200, log=print, d
                 if is_header:
                     return gw.ask_json(HEADER_PROMPT, crop_path, validate=header_validator)
                 edges = _edges(blocks_for(page), len(cols))
-                return _read_block(gw, county, page, bid, b, edges, cols, png, crop_path, run_id, root, dpi)
+                d = _read_block(gw, county, page, bid, b, edges, cols, png, crop_path, run_id, root, dpi)
+                if edges is None:
+                    return d
+                with Image.open(png) as im:
+                    gray = np.asarray(im.convert("L").crop(b.box))
+                d, moved = realign(d, filled_columns(gray, (b.x0, b.y0), edges, b.rule_y0, b.rule_y1))
+                if moved:
+                    d["_realigned"] = {"page": page, "block": bid, "columns_model": [cols[i] for i in moved["model_columns"]],
+                                       "columns_picture": [cols[i] for i in moved["picture_columns"]],
+                                       "indexes_model": moved["model_columns"],
+                                       "indexes_picture": moved["picture_columns"]}
+                return d
             except BudgetExceeded:
                 if stop is not None:
                     stop.set()      # at once, so no other worker starts a call
@@ -315,6 +382,9 @@ def read_county(county, gw, led, *, run_id="", pages=None, dpi=200, log=print, d
         else:
             edges = _edges(blocks_for(page), len(st["cols"]))
             st["contest"] = d.get("contest") or st["contest"]
+            moved = d.pop("_realigned", None)
+            if moved:
+                led.event(county, "columns_realigned", moved)
             n = _store(led, county, page, bid, d, st["cols"], st["contest"], d.get("candidate"), gw.model, edges, b)
             what = d.get("candidate")
         led.event(county, "block_read", {"page": page, "block": bid, "cells": n, "candidate": what, "model": gw.model})
@@ -611,3 +681,40 @@ def precinct_order(led, county) -> list[str]:
         if c["block_id"] == "reg" and c["column"] not in seen:
             seen.append(c["column"])
     return seen
+
+
+def check_columns(county, led, *, dpi=200, data_root=None) -> list[dict]:
+    """For every block of the matrix layout in a ledger (the page-1 header block has its own rows and is left out): are
+    the columns holding cells the picture's filled columns? Reads the ledger and the page images; no model call."""
+    from ..sources import DATA
+    root = data_root or DATA
+    cols = precinct_order(led, county)
+    seen: dict = {}
+    for c in led.cells(county):
+        if c["block_id"] in ("reg", "cast"):
+            continue
+        e = seen.setdefault((c["page"], c["block_id"]), {"cols": set(), "failed": False})
+        if c["status"] == "failed":
+            e["failed"] = True
+        else:
+            e["cols"].add(c["column"])
+    out, blocks_of = [], {}
+    for (page, bid), e in sorted(seen.items(), key=lambda kv: (kv[0][0], int(kv[0][1].split("-b")[1]))):
+        row = {"page": page, "block": bid}
+        if page not in blocks_of:
+            blocks_of[page] = find_blocks(page_png(county, page, dpi, root))
+        blocks = blocks_of[page]
+        edges = _edges(blocks, len(cols))
+        b = blocks[int(bid.split("-b")[1])] if int(bid.split("-b")[1]) < len(blocks) else None
+        if e["failed"]:
+            out.append(dict(row, status="failed", note="the block was marked failed; no values to compare"))
+        elif edges is None or b is None:
+            out.append(dict(row, status="unchecked", note="the page gives no column edges"))
+        else:
+            with Image.open(page_png(county, page, dpi, root)) as im:
+                gray = np.asarray(im.convert("L").crop(b.box))
+            pic = filled_columns(gray, (b.x0, b.y0), edges, b.rule_y0, b.rule_y1)
+            ledger = [i for i, col in enumerate(cols) if col in e["cols"]]
+            out.append(dict(row, status="agree" if ledger == pic else "differ",
+                            ledger=[cols[i] for i in ledger], picture=[cols[i] for i in pic]))
+    return out

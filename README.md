@@ -138,6 +138,9 @@ Calls, cost and seconds are those of the run that read each county, [`runs/20261
 - The sums cannot see two wrong values that cancel out on the same row and the same column.
 - A value that sits on one printed sum only cannot be located when that sum fails; it is reported as "cannot verify".
   Three of the counties print only a row sum as the second check (`summary.md`, column "second sum").
+- A column of values that moves to the wrong precinct name is caught by the picture (which cells are blacked out), not
+  by the sums. This works only where a block has blacked-out cells, so it does not catch a shift in a block with none,
+  or a swap between two filled columns.
 - Limestone County prints nothing that can be added up, so it is listed as not checked and left as published.
 - Where the scan's own printed totals disagree with each other, Crossfoot says so and lists it for a person. It does
   not say which is right.

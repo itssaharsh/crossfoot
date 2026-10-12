@@ -595,6 +595,33 @@ def _audit_report(args) -> int:
     return 0
 
 
+def cmd_check_columns(args) -> int:
+    from pathlib import Path
+
+    from .ledger import Ledger
+    from .layouts import matrix
+    path = Path("runs") / args.run / "ledger.sqlite"
+    if not path.exists():
+        print(f"no ledger at {path}", file=sys.stderr)
+        return 1
+    try:
+        res = matrix.check_columns(args.county, Ledger(path))
+    except (RenderError, OSError, ValueError) as e:
+        print(e, file=sys.stderr)
+        return 1
+    for r in res:
+        line = f"{r['block']:8} {r['status']}"
+        if r["status"] == "differ":
+            line += f"  ledger columns {','.join(r['ledger'])}; picture columns {','.join(r['picture'])}"
+        elif r["status"] in ("failed", "unchecked"):
+            line += f"  ({r['note']})"
+        print(line)
+    n = lambda k: sum(r["status"] == k for r in res)
+    print(f"{len(res)} blocks: {n('agree')} agree, {n('differ')} differ, {n('failed')} failed, {n('unchecked')} unchecked "
+          f"(run {args.run}, {args.county}; no model call)")
+    return 1 if n("differ") else 0
+
+
 def cmd_verify_known(args) -> int:
     import json
     from pathlib import Path
@@ -778,6 +805,11 @@ def build_parser():
     s.add_argument("--workers", type=int, default=3, help="model calls in flight at once while reading and checking "
                    "(default 3, minimum 1; 1 reads one block at a time)")
     s.set_defaults(fn=cmd_audit)
+    s = sub.add_parser("check-columns", help="for a finished run: are the columns the ledger filled the picture's filled "
+                                             "(not blacked out) columns? No model call")
+    s.add_argument("--run", required=True, help="run id")
+    s.add_argument("--county", default="panola", choices=["panola"])
+    s.set_defaults(fn=cmd_check_columns)
     s = sub.add_parser("verify-known", help="check the newest findings.json against the answer key in tests/")
     s.add_argument("--county", required=True, choices=list(sources.COUNTIES))
     s.set_defaults(fn=cmd_verify_known)
