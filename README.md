@@ -9,8 +9,8 @@ error with the document's own printed totals, and proposes the fix.
 *Panola County, page 1, Chase Oliver, precinct 29, election day. The published file has 0; the scan has 1. The row's printed total is 12: the cells add to 12 with the scan's value and to 11 with the file's, so the printed total decides (finding f005 in [runs/20261011-161207/panola/findings.json](runs/20261011-161207/panola/findings.json); not confirmed by a person).*
 <!-- picture:end -->
 
-Open: **[the live results page](https://crossfoot-zeta.vercel.app/)** ([its source](site/)) · [the design](ARCHITECTURE.md) ·
-[the build log](hackathon.md)
+Open: **[the live results page](https://crossfoot-zeta.vercel.app/)** ([its source](site/)) ·
+**[the demo video, 2 minutes 56 seconds](https://youtu.be/zgzX46zRU2w)** · [the design](ARCHITECTURE.md) · [the build log](hackathon.md)
 
 The three tools, and where to see each:
 - **neatlogs** traces every model and tool call of a run: [two incidents, and the fix each one led to](docs/evidence/incident.md),
@@ -93,6 +93,7 @@ The event page lists what a judge checks. Its words are on the left; where to lo
 | **You used Entire.** Checkpoints or entire-graph output | [The sessions on entire.io](https://entire.io/gh/itssaharsh/crossfoot/sessions), open without a sign-in: each has its task, its tool calls and its commit. [checkpoints.txt](docs/evidence/checkpoints.txt): the output of `entire checkpoint list`; each session's commit carries an `Entire-Checkpoint` trailer. [entire-graph.md](docs/evidence/entire-graph.md): the graph plugin's change list for the commit that reworked the loop |
 | **You used cfo.ai.** A business plan covering pricing, costs, revenue and runway | [The plan](https://cfo.ai/s/epRxqy-jnNrvyGSD), and its figures in [business-plan.md](docs/evidence/business-plan.md) |
 | **The agent recovers from failures.** A run where an action failed, showing what the agent did next | [recovery.md](docs/evidence/recovery.md): a run stopped by its budget and continued, and other recoveries |
+| **You built in public.** Links to what you shared during the hackathon, tagged #neatHack | The posts on X, by [@Saharshbugging](https://x.com/Saharshbugging): [those tagged #neatHack](https://x.com/search?q=%23neatHack%20from%3ASaharshbugging&f=live). The build log, with what failed, is public in this repository: [hackathon.md](hackathon.md) |
 | **You wrote the code during the hackathon.** Commits dated during the hackathon | The history of this repository: every commit is dated 11 or 12 October 2026. What was planned earlier is under "What existed before the event" |
 
 Also here:

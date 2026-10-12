@@ -482,4 +482,5 @@ the repository.
 
 Done on 11 October: the public repository (https://github.com/itssaharsh/crossfoot), the deployed page
 (https://crossfoot-zeta.vercel.app/) and the cfo.ai business plan (https://cfo.ai/s/epRxqy-jnNrvyGSD, summarised in
-[docs/evidence/business-plan.md](docs/evidence/business-plan.md)). Outstanding: the demo video's link and the post on X.
+[docs/evidence/business-plan.md](docs/evidence/business-plan.md)). The demo video, uploaded on 12 October: https://youtu.be/zgzX46zRU2w (2 minutes 56 seconds). Posts made during the event:
+https://x.com/Saharshbugging. Outstanding when this was written: the quote post on X that submits the project.
