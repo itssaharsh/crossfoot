@@ -21,7 +21,8 @@ Read `README.md` and `ARCHITECTURE.md` before changing anything.
   never say or imply that either has seen or approved this.
 - **Model budget.** The model gateway key has a hard $20 budget shared by the whole team. Development runs use
   Panola County only unless the brief says otherwise. Check spend with `uv run crossfoot budget` before and after
-  any run, never start a run that could pass $15 total, and never loop on a failing call.
+  any run, never start a run that could pass $18 total (the line was $15 until 12 October 2026, the event's last
+  day), and never loop on a failing call.
 - The gateway allows 60 requests a minute: keep model calls under one a second.
 
 ## How to work here
