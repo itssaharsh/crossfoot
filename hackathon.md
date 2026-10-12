@@ -458,6 +458,19 @@ list are gone.
   pages for this repository now open without a sign-in (https://entire.io/gh/itssaharsh/crossfoot/sessions). The spend
   line in AGENTS.md was raised from $15 to $18 for these two runs; the gateway shows $15.83 of $20.00 spent.
 
+### 2026-10-12 - ten run folders that only this log named were removed from the tree
+- **What was removed.** `runs/` held 34 folders. Ten of them were named by neither the README nor any page under
+  `docs/evidence/`, only by earlier entries of this log or by each other, and the final run replaced what they measured:
+  removed were 20261011-085854, 20261011-121108, 20261011-122159, 20261011-140000, 20261011-140637, 20261011-141051,
+  20261011-141131, 20261011-141152, 20261011-141300 and 20261011-150000 (75 files, about 5 MB).
+- **Where they are now.** In the history. The last commit that holds them is `38507b8`.
+- **What still names them.** The earlier entries of this log, left as they were written. `tools/named_paths.py` lists the
+  ten as removed on purpose and fails if one comes back.
+- **What was kept, and why.** Every other tracked file was looked at: each run folder left is cited by the README or an
+  evidence page, every file under `docs/`, `qa/` and `tools/` is named by a document, and every file under `site/` is
+  loaded by the page.
+- **Checked after it.** `uv run pytest -q`, `tools/readme_tables.py --check` and `tools/named_paths.py --check`.
+
 ## Demo
 - Live: https://crossfoot-zeta.vercel.app/ (deployed from `site/` on 11 October 2026; no sign-in).
 - The results page is static. From a clone: `python3 -m http.server -d site 8000`, then open http://localhost:8000/.

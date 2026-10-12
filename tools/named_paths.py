@@ -6,7 +6,10 @@
 Documents read: README.md, hackathon.md, docs/, tests/. A run id counts as present when runs/<id> exists;
 a path like runs/<id>/<rest> counts as present when that file exists. Lines that say "not committed", raw diff-stat lines of
 old reports and the made-up ids in tests/ are skipped, and so is a sentence that says something was removed, deleted or
-renamed (and the lines that continue its bullet): what it names is meant to be gone."""
+renamed (and the lines that continue its bullet): what it names is meant to be gone.
+
+Ten run folders that only the build log named were taken out of the tree on 12 October 2026 (REMOVED below). They are in
+the history, last at commit 38507b8. A mention of one of them is listed as removed, and it is an error if it is back."""
 import re, sys
 from pathlib import Path
 
@@ -16,6 +19,8 @@ RUN = re.compile(r"\b(2026\d{4}-\d{6})\b")
 RUNPATH = re.compile(r"runs/(2026\d{4}-\d{6})/([\w./*<>-]+)")
 GONE = re.compile(r"\b(removed|deleted|renamed)\b", re.I)
 QA = re.compile(r"(?<![\w/])qa/[\w./-]+")
+REMOVED = {"20261011-085854", "20261011-121108", "20261011-122159", "20261011-140000", "20261011-140637", "20261011-141051",
+           "20261011-141131", "20261011-141152", "20261011-141300", "20261011-150000"}
 
 
 def files():
@@ -50,12 +55,19 @@ def main(argv=None) -> int:
     bad = []
     print("run ids named, and whether runs/<id> exists:")
     for r in sorted(runs):
-        ok = (ROOT / "runs" / r).is_dir()
-        print(f"  {r}  {'present' if ok else 'MISSING'}  ({len(runs[r])} file(s))")
+        if r in REMOVED:
+            ok = not (ROOT / "runs" / r).exists()
+            print(f"  {r}  {'removed on purpose, in the history' if ok else 'LISTED AS REMOVED BUT PRESENT'}  ({len(runs[r])} file(s))")
+        else:
+            ok = (ROOT / "runs" / r).is_dir()
+            print(f"  {r}  {'present' if ok else 'MISSING'}  ({len(runs[r])} file(s))")
         if not ok:
             bad.append(r)
     print("paths under runs/ named:")
     for p in sorted(paths):
+        if p.split("/")[1] in REMOVED:
+            print(f"  {p}  removed on purpose, in the history")
+            continue
         ok = (ROOT / p).exists()
         if not ok:
             bad.append(p)
