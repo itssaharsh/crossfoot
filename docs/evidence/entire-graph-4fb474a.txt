@@ -231,14 +231,3 @@ tests/test_parse_json.py (Python)
   + function test_braces_in_the_prose_do_not_hide_the_object added
   + function test_no_json_still_raises added
   + function test_price_table_is_the_gateways_list added
-
-Warnings
-  ! W_UNSUPPORTED_FILE .prod-build/evidence.jsonl
-    file skipped; no parser for this file type, so its changes are not analyzed
-    base and head versions have no supported parser
-  ! W_UNSUPPORTED_FILE runs/20261011-111955/ledger.sqlite
-    file skipped; no parser for this file type, so its changes are not analyzed
-    head version has no supported parser
-  ! W_UNSUPPORTED_FILE runs/20261011-112935/ledger.sqlite
-    file skipped; no parser for this file type, so its changes are not analyzed
-    head version has no supported parser

@@ -8,7 +8,8 @@ entities depend on each. This is its answer for the commit that reworked the loo
 entire graph commit 4fb474a
 ```
 
-The whole answer, 244 lines, is in [entire-graph-4fb474a.txt](entire-graph-4fb474a.txt). In all it lists 142 entities added,
+The answer, 233 lines, is in [entire-graph-4fb474a.txt](entire-graph-4fb474a.txt). Left out of that file: the tool's closing
+warnings that it has no parser for three files of that commit (two SQLite ledgers and a JSONL file, none of them in the tree now). In all it lists 142 entities added,
 44 changed and 6 removed, across 20 files. For the program and its tests:
 
 | File | Added | Changed | Removed |
