@@ -73,7 +73,7 @@ def cmd_read(args) -> int:
     import time
     from pathlib import Path
 
-    from . import tracing
+    from . import settings, tracing
     from .ledger import Ledger
     from .layouts import matrix
     from .model import Gateway, gateway_spend
@@ -101,7 +101,8 @@ def cmd_read(args) -> int:
     print(f"run {run_id}: reading {args.county} ({'reader chosen by a sample' if args.model == 'auto' else args.model}), "
           f"run budget ${args.budget:.2f}")
     try:
-        s = matrix.read_county(args.county, gw, led, run_id=run_id, pages=pages, model=args.model)
+        s = matrix.read_county(args.county, gw, led, run_id=run_id, pages=pages, model=args.model,
+                               workers=settings.set_workers(args.workers))
     except (RenderError, RuntimeError) as e:
         print(e, file=sys.stderr)
         return 1
@@ -297,11 +298,12 @@ def cmd_audit(args) -> int:
     import time
     from pathlib import Path
 
-    from . import agent, audit, outputs, policy, tracing
+    from . import agent, audit, outputs, policy, settings, tracing
     from .layouts import matrix
     from .ledger import Ledger
     from .model import BudgetExceeded, gateway_spend
     from .render import RenderError
+    settings.set_workers(args.workers)
     if args.all:
         return _audit_all(args)
     if args.budget is None:
@@ -348,7 +350,8 @@ def cmd_audit(args) -> int:
             led = Ledger(out / "ledger.sqlite")
             print(f"run {run_id}: reading, closing and auditing {args.county}, run budget ${args.budget:.2f}")
             t1 = time.time()
-            s_read = matrix.read_county(args.county, gw, led, run_id=run_id, model="auto", log=log)
+            s_read = matrix.read_county(args.county, gw, led, run_id=run_id, model="auto", log=log,
+                                        workers=settings.workers)
             phases["read"] = round(time.time() - t1, 1)
             sample = s_read.get("sample")
             if s_read["stopped"]:
@@ -745,6 +748,7 @@ def build_parser():
     s.add_argument("--pages", help="comma-separated pages, default all (the sample of --model auto always reads page 1)")
     s.add_argument("--model", default="auto", help="auto (default): read a sample of page 1 with claude-haiku and choose "
                    "the reader by how many of its row sums fail; or a model name, which skips the sample")
+    s.add_argument("--workers", type=int, default=3, help="model calls in flight at once (default 3, minimum 1)")
     s.set_defaults(fn=cmd_read)
     s = sub.add_parser("read-page", help="read pages a first read failed on into a copy of that run's ledger")
     s.add_argument("--county", required=True, choices=list(sources.COUNTIES))
@@ -771,6 +775,8 @@ def build_parser():
                    "newest run with a county.json (with --all: the run to continue)")
     s.add_argument("--budget", type=float, default=None, help="dollars this run may meter (default 2.00 for a county, "
                    "9.00 with --all)")
+    s.add_argument("--workers", type=int, default=3, help="model calls in flight at once while reading and checking "
+                   "(default 3, minimum 1; 1 reads one block at a time)")
     s.set_defaults(fn=cmd_audit)
     s = sub.add_parser("verify-known", help="check the newest findings.json against the answer key in tests/")
     s.add_argument("--county", required=True, choices=list(sources.COUNTIES))

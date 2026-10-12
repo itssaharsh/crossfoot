@@ -90,6 +90,13 @@ is rejected and the county is reported as not supported and left alone.
 3. Matrix: each block is cut into column groups no wider than 1,500 px at 300 dpi, one model call per group; report:
    one page per call. The answer is strict JSON, validated (right number of columns, integers only), with one repair
    request. Every value comes back with the block, row kind and column it belongs to.
+   Matrix reads run up to `--workers` blocks at once (default 3; `--workers 1` reads one block at a time, as before).
+   The header and the sample are read first, one call at a time. Then worker threads only cut crops, call the model and
+   parse; the calling thread stores every answer in block order, so the ledger, its order, the carried contest name and
+   the events are the same whatever the number of workers. A failed block is marked failed in order; after a
+   `BudgetExceeded` no worker starts another call. The gateway spaces call starts by its minimum interval across all
+   threads, so more workers do not raise the request rate. The same setting (`crossfoot/settings.py`) is the number of
+   calls in flight for the report layout's pages and for the audit's re-reads.
 4. Which model reads a county is decided by measurement, not fixed. A sample of the first page is read with
    `claude-haiku`; if more than a tenth of the sample's row sums fail, the county is read with `claude-sonnet-4.6`.
    Measured on Panola on 11 October 2026, same code and crops: `claude-haiku` left 85 of 943 printed sums failing

@@ -51,7 +51,7 @@ from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass, field
 from pathlib import Path
 
-from . import agent, checks
+from . import agent, checks, settings
 from .layouts import report
 from .model import BudgetExceeded, Gateway, price
 from .sources import _int
@@ -62,7 +62,6 @@ KINDS = ("file_row_fails_own_total", "wrong_number", "wrong_column", "wrong_prec
 STATUSES = ("settled_against_file", "document_inconsistent", "cannot_verify")
 REREAD_MODEL = agent.SONNET
 REREAD_DPI = 400
-PARALLEL = 3
 CLOSE_ENOUGH = 0.10        # mapped pairs: county totals within this share of each other
 MIN_LINK_VOTES = 10        # a row moved to another precinct is recognised by its values; small ones coincide too easily,
                            # so below this many votes only a swap (each row sits where the other belongs) counts
@@ -777,7 +776,7 @@ def reread_slots(slots, geo, gw, crop_dir: Path, *, log=print, only=None) -> dic
         except Exception as e:
             return ent, {"value": None, "model": REREAD_MODEL, "dpi": REREAD_DPI, "crop": str(path),
                          "error": f"no usable answer: {str(e)[:120]}"}
-    with ThreadPoolExecutor(PARALLEL) as ex:
+    with ThreadPoolExecutor(settings.workers) as ex:
         for ent, res in ex.map(run, jobs):
             out[ent] = res
     log(f"  re-read {len(jobs)} values on the scan")

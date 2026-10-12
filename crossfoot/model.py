@@ -100,10 +100,11 @@ class Gateway:
         self._guard()
         from openai import APIConnectionError, APITimeoutError, RateLimitError
         for attempt in (0, 1):
-            wait = self.min_interval - (time.monotonic() - self._last)
+            with self._meter:           # each call reserves the next start slot, so threads cannot beat the spacing
+                start = max(time.monotonic(), self._last + self.min_interval)
+                wait, self._last = start - time.monotonic(), start
             if wait > 0:
                 self.sleep(wait)
-            self._last = time.monotonic()
             try:
                 r = self.client.chat.completions.create(model=model, messages=messages, temperature=0)
                 break

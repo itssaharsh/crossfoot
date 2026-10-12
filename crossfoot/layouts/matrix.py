@@ -4,8 +4,11 @@ First read only: one crop per block goes to the model, the answer goes into the 
 """
 from __future__ import annotations
 
+import contextvars
 import json
+import threading
 import time
+from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -250,7 +253,8 @@ def _rows_in(led, county):
     return len(chs), sum(1 for c in chs if not c.ok)
 
 
-def read_county(county, gw, led, *, run_id="", pages=None, dpi=200, log=print, data_root=None, model="auto") -> dict:
+def read_county(county, gw, led, *, run_id="", pages=None, dpi=200, log=print, data_root=None, model="auto",
+                workers=1) -> dict:
     """Read every page of a matrix-layout county block by block into the ledger. Returns the summary dict.
 
     model="auto": a sample of page 1 is read with claude-haiku first and the reader is chosen by the share of its row
@@ -270,52 +274,124 @@ def read_county(county, gw, led, *, run_id="", pages=None, dpi=200, log=print, d
             blocks_of[page] = find_blocks(page_png(county, page, dpi, root))
         return blocks_of[page]
 
-    def read_blocks(page, stop_when=None):
-        """Read the blocks of one page not read yet. Stops early when `stop_when()` is true after a block."""
-        png = page_png(county, page, dpi, root)
+    def jobs_for(page, stop_when=None):
+        """The blocks of one page not read yet, in order, as (page, i, bid, block, is_header)."""
         blocks = blocks_for(page)
+        out = []
         for i, b in enumerate(blocks):
             bid = f"p{page}-b{i}"
             is_header = page == 1 and i == 0
             if bid in st["done"] or (page not in pages and not is_header and not stop_when):
                 continue
-            crop_path = Path("runs") / run_id / "crops" / f"{bid}.png" if run_id else Path(f"/tmp/{bid}.png")
-            crop(png, b.box, crop_path)
-            st["done"].add(bid)
+            out.append((page, i, bid, b, is_header))
+        return out
+
+    def ask(job, cols, stop):
+        """Worker side: cut the crop, call the model, parse. Touches no ledger and no carried state."""
+        page, i, bid, b, is_header = job
+        png = page_png(county, page, dpi, root)
+        crop_path = Path("runs") / run_id / "crops" / f"{bid}.png" if run_id else Path(f"/tmp/{bid}.png")
+        crop(png, b.box, crop_path)
+        with tracing.trace("read_block", kind="TOOL", run=run_id, county=county, page=page, block=bid):
+            if stop is not None and stop.is_set():
+                raise BudgetExceeded("an earlier block stopped the read; no call started")
             try:
-                with tracing.trace("read_block", kind="TOOL", run=run_id, county=county, page=page, block=bid):
-                    if is_header:
-                        d = gw.ask_json(HEADER_PROMPT, crop_path, validate=header_validator)
-                        st["cols"] = d["precincts"]
-                        n = _store_header(led, county, page, d, st["cols"], gw.model)
-                        what = "header"
-                    else:
-                        edges = _edges(blocks, len(st["cols"]))
-                        d = _read_block(gw, county, page, bid, b, edges, st["cols"], png, crop_path, run_id, root, dpi)
-                        st["contest"] = d.get("contest") or st["contest"]
-                        n = _store(led, county, page, bid, d, st["cols"], st["contest"], d.get("candidate"), gw.model,
-                                   edges, b)
-                        what = d.get("candidate")
-                led.event(county, "block_read", {"page": page, "block": bid, "cells": n, "candidate": what,
-                                                 "model": gw.model})
-                st["log"].append({"block": bid, "page": page, "status": "read", "cells": n, "candidate": what,
-                                  "box": list(b.box)})
+                if is_header:
+                    return gw.ask_json(HEADER_PROMPT, crop_path, validate=header_validator)
+                edges = _edges(blocks_for(page), len(cols))
+                return _read_block(gw, county, page, bid, b, edges, cols, png, crop_path, run_id, root, dpi)
+            except BudgetExceeded:
+                if stop is not None:
+                    stop.set()      # at once, so no other worker starts a call
+                raise
+
+    def apply(job, d):
+        """Calling-thread side: store one answer and the carried state, as the sequential read always did."""
+        page, i, bid, b, is_header = job
+        if is_header:
+            st["cols"] = d["precincts"]
+            n = _store_header(led, county, page, d, st["cols"], gw.model)
+            what = "header"
+        else:
+            edges = _edges(blocks_for(page), len(st["cols"]))
+            st["contest"] = d.get("contest") or st["contest"]
+            n = _store(led, county, page, bid, d, st["cols"], st["contest"], d.get("candidate"), gw.model, edges, b)
+            what = d.get("candidate")
+        led.event(county, "block_read", {"page": page, "block": bid, "cells": n, "candidate": what, "model": gw.model})
+        st["log"].append({"block": bid, "page": page, "status": "read", "cells": n, "candidate": what,
+                          "box": list(b.box)})
+
+    def fail(job, e):
+        page, i, bid, b, is_header = job
+        st["failed"] += 1
+        if st["cols"]:
+            for r in ROWS:
+                for col in st["cols"]:
+                    led.put_cell(county, page, bid, r, col, None, model=gw.model)
+                    led.set_status(county, page, bid, r, col, "failed")
+        led.event(county, "block_failed", {"page": page, "block": bid, "error": str(e)[:300]})
+        st["log"].append({"block": bid, "page": page, "status": "failed", "error": str(e)[:300]})
+        log(f"  {bid}: failed ({str(e)[:100]})")
+        if is_header:
+            raise RuntimeError("the page-1 header could not be read; later pages need its precinct order")
+
+    def run_jobs(jobs, stop_when=None, parallel=False):
+        """Read `jobs` in block order. With parallel, the model calls after the header run up to `workers` at a time
+        and their answers are applied here, in order."""
+        n_par = max(1, int(workers))
+        if parallel and n_par > 1:
+            head = [j for j in jobs[:1] if j[4]]
+            for job in head:
+                st["done"].add(job[2])
+                try:
+                    apply(job, ask(job, st["cols"], None))
+                except BudgetExceeded:
+                    raise
+                except Exception as e:
+                    fail(job, e)
+            rest = jobs[len(head):]
+            stop = threading.Event()
+            cols = st["cols"]
+            for pg in sorted({j[0] for j in rest}):     # render the 300 dpi page here, once, before threads share it
+                if cols and _edges(blocks_for(pg), len(cols)) is not None:
+                    page_png(county, pg, READ_DPI, root)
+            with ThreadPoolExecutor(n_par) as ex:
+                def work(job):
+                    ctx = contextvars.copy_context()
+                    return ctx.run(ask, job, cols, stop)
+                futs = []
+                for job in rest:
+                    st["done"].add(job[2])
+                    futs.append((job, ex.submit(work, job)))
+                try:
+                    for job, f in futs:
+                        try:
+                            d = f.result()
+                        except BudgetExceeded:
+                            stop.set()
+                            raise
+                        except Exception as e:
+                            fail(job, e)
+                            continue
+                        apply(job, d)
+                finally:
+                    stop.set()
+                    for _, f in futs:
+                        f.cancel()
+            return
+        for job in jobs:
+            st["done"].add(job[2])
+            try:
+                apply(job, ask(job, st["cols"], None))
             except BudgetExceeded:
                 raise
             except Exception as e:  # bad JSON twice, wrong shape, or a model error: mark the block failed, go on
-                st["failed"] += 1
-                if st["cols"]:
-                    for r in ROWS:
-                        for col in st["cols"]:
-                            led.put_cell(county, page, bid, r, col, None, model=gw.model)
-                            led.set_status(county, page, bid, r, col, "failed")
-                led.event(county, "block_failed", {"page": page, "block": bid, "error": str(e)[:300]})
-                st["log"].append({"block": bid, "page": page, "status": "failed", "error": str(e)[:300]})
-                log(f"  {bid}: failed ({str(e)[:100]})")
-                if is_header:
-                    raise RuntimeError("the page-1 header could not be read; later pages need its precinct order")
+                fail(job, e)
             if stop_when and stop_when():
                 return
+
+    def read_blocks(page, stop_when=None):
+        run_jobs(jobs_for(page, stop_when), stop_when)
 
     try:
         with tracing.trace("read_county", kind="WORKFLOW", run=run_id, county=county):
@@ -340,8 +416,8 @@ def read_county(county, gw, led, *, run_id="", pages=None, dpi=200, log=print, d
                 sample = {"reader": model, "skipped": True, "kept_sample": False}
                 led.event(county, "choose_reader", sample)
                 log(f"reader: {model} (set with --model; no sample was read)")
-            for page in sorted(set(pages) | {1}):
-                read_blocks(page)
+            todo = [j for page in sorted(set(pages) | {1}) for j in jobs_for(page)]
+            run_jobs(todo, parallel=True)
     except BudgetExceeded as e:
         stopped = str(e)
         log(f"stopped: {e}")

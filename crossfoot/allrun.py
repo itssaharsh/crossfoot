@@ -297,7 +297,7 @@ def second_sum_text(layout, exists) -> str:
 def audit_one(county, ctx) -> dict:
     """The county's whole audit, on the run's shared ledger: fetch, read (unless the ledger says the read finished), close,
     audit, write the county's files. Raises on a failure (the run records it) and BudgetExceeded when the budget stops it."""
-    from . import agent, audit, outputs, policy, sources
+    from . import agent, audit, outputs, policy, settings, sources
     from .layouts import matrix, report
     led, gw, out, run_id, log = ctx.led, ctx.gw, ctx.out, ctx.run_id, ctx.log
     sources.fetch(county)
@@ -323,7 +323,7 @@ def audit_one(county, ctx) -> dict:
                         "cells_read": read["cells_read"], "sums_first_read": _first_sums(read, True),
                         "pages_failed": read["pages_failed"]}
         else:
-            s = matrix.read_county(county, gw, led, run_id=run_id, model="auto", log=log)
+            s = matrix.read_county(county, gw, led, run_id=run_id, model="auto", log=log, workers=settings.workers)
             if s["stopped"]:
                 raise BudgetExceeded(s["stopped"])
             info = {"outcome": "audited", "layout": "matrix", "pages": len({c["page"] for c in led.cells(county)}),

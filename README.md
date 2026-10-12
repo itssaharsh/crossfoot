@@ -69,6 +69,7 @@ uv sync
 export LITELLM_API_KEY=... LITELLM_BASE_URL=...      # an OpenAI-compatible gateway; NEATLOGS_API_KEY is optional
 uv run crossfoot budget                              # the gateway's spend and limit for the key
 uv run crossfoot audit --county panola               # read, close, audit one county; writes runs/<run_id>/panola/
+uv run crossfoot audit --county panola --workers 4  # --workers N: model calls in flight at once while reading (default 3, minimum 1)
 uv run crossfoot audit --all --budget 9              # every county in turn; writes runs/<run_id>/<county>/ and summary.json, summary.md
 uv run crossfoot summarize --base <run_id> --use panola=<run_id>   # a new summary from the newest result of each county; no model call
 uv run crossfoot verify-known --county panola        # checks the findings against eight slips read by eye

@@ -394,6 +394,26 @@ list are gone.
 - The neatlogs detection was checked again with `list_detections`: active.
 - Not here yet: links to the posts on X (the event's "you built in public" line) and a link to the demo video.
 
+### 2026-10-12, T13: the matrix read runs several model calls at once
+- **What neatlogs said.** Asked to investigate the last 100 traces (Deep mode), its assistant found no errors and no
+  detection hits, and said reading is slow because pages are read "strictly one after another".
+- **What was true of it.** Wrong for the report layout (`layouts/report.py` already kept 3 calls in flight). Right for the
+  matrix layout: `read_county` read every block, and every column group in it, one after another. In the final run
+  (`runs/20261011-161207`) Panola's audit took 507.0 s, 397.4 s of it the read, 172 model calls (trace
+  `81bf9a637f8f4dcd02c763b1a1ce7592`).
+- **The change.** `layouts/matrix.py`: after the header and the sample, blocks are read with up to N calls in flight;
+  worker threads cut crops, call the model and parse, and the calling thread stores answers in block order. One knob,
+  `--workers N` on `audit`, `read` and `audit --all` (default 3, minimum 1), in `crossfoot/settings.py`; the report
+  layout's and the audit's thread counts read it. The gateway now reserves each call's start slot under a lock, so the
+  1.1 s spacing holds across threads (before, threads could each read the same last-call time).
+- **Tests.** `tests/test_matrix_parallel.py`, fake model: workers 1 and 4 give the same cells, totals, statuses, order and
+  events; the same carried contest names; a failing block is marked failed in both and the rest is read; no call starts
+  after `BudgetExceeded`; call starts are spaced across threads. `uv run pytest -q`: 262 passed (253 before).
+- **Not done: the real run.** The gateway showed $14.2644 of $20.00 spent before this task. The brief's run
+  (`audit --county panola --workers 4 --budget 1.2`, about $0.79 from the final run) would take the total past the
+  $15 that AGENTS.md says no run may reach, so it was not started. No wall-clock, cost or findings figure for the new
+  code exists yet; none is claimed here.
+
 ## Demo
 - Live: https://crossfoot-zeta.vercel.app/ (deployed from `site/` on 11 October 2026; no sign-in).
 - The results page is static. From a clone: `python3 -m http.server -d site 8000`, then open http://localhost:8000/.

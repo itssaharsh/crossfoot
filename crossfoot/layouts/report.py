@@ -26,7 +26,7 @@ from pathlib import Path
 
 from PIL import Image
 
-from .. import agent, checks, tracing
+from .. import agent, checks, settings, tracing
 from ..model import BudgetExceeded
 from ..render import page_png
 from . import profile
@@ -35,7 +35,6 @@ COLS = checks.REPORT_COLS
 HALF_ROW = 20          # half the height of a row's box, pixels at 200 dpi
 ROW_PAD = 100          # a re-read crop reaches this far above and below the row's centre, pixels at 200 dpi
 GEO_DPI = 200
-PARALLEL = 3           # model calls in flight while a county's pages are read
 MAX_ACTIONS = agent.MAX_ACTIONS
 NOTE_NO_TOTALS = "nothing on this scan can be cross-checked; left as published"
 
@@ -446,8 +445,8 @@ def read_county(county, gw, led, *, run_id="", log=print, png_fn=page_png, n_pag
             out["pages_read"].append(1)
             n = n_pages or page_count(county, root)
             todo = [p for p in (pages or range(2, n + 1)) if p != 1]
-            # up to PARALLEL model calls in flight; the answers are put in the ledger here, one thread, in page order
-            with ThreadPoolExecutor(PARALLEL) as ex:
+            # up to `settings.workers` model calls in flight; the answers are put in the ledger here, one thread, in page order
+            with ThreadPoolExecutor(settings.workers) as ex:
                 futs = [(p, ex.submit(ask_page, p, gw.model)) for p in todo]
                 try:
                     for page, f in futs:
