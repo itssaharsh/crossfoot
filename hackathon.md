@@ -383,6 +383,17 @@ list are gone.
 - Not done: nothing in the plan is validated. No customer has been asked, and the minute per finding is a guess until a
   person has confirmed findings.
 
+### 2026-10-12 - the evidence laid out as the event page asks for it
+- The README's Evidence section now follows the event page's own list (the agent improved; neatlogs; Entire; cfo.ai;
+  recovery; code written during the event), each with where to look.
+- Entire's graph plugin: `entire graph stats` over the 16 recorded coding sessions reports 0 graph calls and 668 exploration
+  calls. The plugin was installed and its guide is in `AGENTS.md`, but the agents never called it, and the README now says
+  so. Made afterwards with `entire graph commit 4fb474a`: [docs/evidence/entire-graph.md](docs/evidence/entire-graph.md),
+  the entity-level change list of the loop rework (142 entities added, 44 changed, 6 removed).
+- [docs/evidence/checkpoints.txt](docs/evidence/checkpoints.txt) saved again: 36 entries (it had 31).
+- The neatlogs detection was checked again with `list_detections`: active.
+- Not here yet: links to the posts on X (the event's "you built in public" line) and a link to the demo video.
+
 ## Demo
 - Live: https://crossfoot-zeta.vercel.app/ (deployed from `site/` on 11 October 2026; no sign-in).
 - The results page is static. From a clone: `python3 -m http.server -d site 8000`, then open http://localhost:8000/.

@@ -1,5 +1,21 @@
   branch       main
-  checkpoints  31
+  checkpoints  36
+
+● 36989449-f53  [temporary]  "Read AGENTS.md, then .prod-build/briefs/T12.md and do exa..."
+  10-11 17:52 (9b9d32a) <task-notification> <task-id>br60yd2cp</task-id> <tool-use-id>toolu_016X
+  10-11 17:52 (eba037c) carry forward: uncommitted session files
+
+● 01M4P1FXGVGXZYHSZMQ4QB4MDZ  "Read AGENTS.md, then .prod-build/briefs/T12.md and do exa..."
+  10-11 17:52 (b509452) T12: results page redesigned: explain first, clean light, nothing empty on sc...
+
+● 01M4NT6BTQT53MNVQQA8W6EJZW  T08b: report and evidence
+  10-11 15:44 (ef52a05) T08b: report and evidence
+
+● 01M4NT00T1637AEYJXFHN5NBSM  "Read AGENTS.md, then .prod-build/briefs/T08b.md and do ex..."
+  10-11 15:41 (07b72c9) T08b: page build fetches missing scans and swaps site/data whole; cost and ti...
+
+● 01M4NRZR615426NM2MHB35TC3G  T08: evidence README from the final run, page built from ...
+  10-11 15:23 (2610bb2) T08: evidence README from the final run, page built from summary run 20261011...
 
 ● 01M4NQYYSSYFE7GFTNSJJ49A84  "Read AGENTS.md, then .prod-build/briefs/T07c.md and do ex..."
   10-11 15:05 (082d4d0) T07c: every county on the page: county tabs, the run line, the report layout'...
@@ -95,4 +111,4 @@
   10-11 08:52 (4207764) T01: scaffold, sources, rendering, ledger and checks
 
 
-This list was saved by task T08 with `entire checkpoint list`. To open the session behind a commit, read the `Entire-Checkpoint` trailer of its message (`git log -1 <commit>`) and run `entire checkpoint explain <that id>`.
+This list was saved on 12 October 2026 with `entire checkpoint list` (36 entries; one marked temporary holds session files that were never committed). To open the session behind a commit, read the `Entire-Checkpoint` trailer of its message (`git log -1 <commit>`) and run `entire checkpoint explain <id>`, or open `https://entire.io/gh/itssaharsh/crossfoot/commit/<sha>` signed in at entire.io.

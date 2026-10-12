@@ -1,0 +1,244 @@
+Semantic changes cff34cb5be1be7142b6e4d3db8d22ffe477491d9..4fb474a
+
+.prod-build/plan.json (JSON)
+  ~ module .prod-build/plan.json body changed (0 dependents)
+
+.prod-build/reports/T03b.md (Markdown)
+  + module .prod-build/reports/T03b.md added
+
+crossfoot/agent.py (Python)
+  - class StrongModelRefused removed (0 dependents)
+  + function norm added
+  + function ladder_for added
+  - function check_model removed (0 dependents)
+  + function pick_model added
+  ~ class Item body changed (9 dependents)
+  + function sum_id added
+  + function entity_of added
+  + function target_of added
+  + function tkey added
+  ~ function derive_status body changed (3 dependents)
+  ~ function count_failing body changed (1 dependent)
+  ~ function _holding body changed (1 dependent)
+  ~ function _fmt_check body changed (1 dependent)
+  ~ function _crossing_checks body changed (1 dependent)
+  ~ function hint_for body changed (1 dependent)
+  ~ function build_prompt signature changed (2 dependents)
+  ~ function read_validator signature changed (2 dependents)
+  ~ function check body changed (29 dependents)
+  - method Closer._refusal removed (0 dependents)
+  ~ function decision_validator body changed (2 dependents)
+  ~ function _block_no renamed from block_no (2 dependents)
+  + function describe added
+  ~ class Closer body changed (3 dependents)
+  ~ method Closer.__init__ signature changed (10 dependents)
+  + method Closer.given_up added
+  + method Closer._target_refusal added
+  + method Closer._total added
+  ~ method Closer._updates body changed (2 dependents)
+  + method Closer._refuse added
+  ~ method Closer.reread signature changed (21 dependents)
+  + method Closer.give_verdict added
+  - function _finish_open_cells removed (0 dependents)
+  + method Closer.work_suspect added
+  ~ method Closer.stop body changed (7 dependents)
+  ~ method Closer._work body changed (2 dependents)
+  ~ function work_list body changed (1 dependent)
+  + function next_suspects added
+  ~ function close_county signature changed (3 dependents)
+  + function _finish added
+
+crossfoot/checks.py (Python)
+  ~ class Check body changed (9 dependents)
+  ~ function _make signature changed (2 dependents)
+  ~ function row_checks body changed (11 dependents)
+  ~ function column_checks body changed (7 dependents)
+  ~ function grand_checks body changed (2 dependents)
+  + function grand_row_checks added
+  ~ function all_checks body changed (8 dependents)
+  + class Suspect added
+  + class Located added
+  + function suspects added
+
+crossfoot/cli.py (Python)
+  ~ function cmd_read body changed (1 dependent)
+  ~ function cmd_close body changed (1 dependent)
+  ~ function main body changed (1 dependent)
+
+crossfoot/layouts/matrix.py (Python)
+  + function _rows_in added
+  ~ function read_county signature changed (4 dependents)
+  + function blocks_for added
+  + function read_blocks added
+  ~ class Geometry body changed (1 dependent)
+  ~ method Geometry.crop body changed (10 dependents)
+  + method Geometry._cut added
+  + method Geometry.strip_crops added
+
+crossfoot/layouts/profile.py (Python)
+  + function decide added
+  + function sentence added
+
+crossfoot/ledger.py (Python)
+  ~ class Ledger body changed (34 dependents)
+  + method Ledger.set_verdict added
+  + method Ledger.verdicts added
+  + method Ledger.clear_values added
+
+crossfoot/model.py (Python)
+  ~ function parse_json body changed (8 dependents)
+
+crossfoot/outputs.py (Python)
+  ~ function _page_sizes signature changed (1 dependent)
+  ~ function write_county body changed (2 dependents)
+
+docs/evidence/before-after.md (Markdown)
+  + section The-loop:-before-and-after-T03b added
+  + section What-failed added
+  + section What-shows-the-cause added
+  + section The-change-commits-of-T03b-the-code-is-in-the-commit-named-in-the-report added
+  + section Both-closes-numbers-from-each-run-s-county.json-summary-first-read.json-and-run.json added
+  + section Plainly added
+
+hackathon.md (Markdown)
+  + section 2026-10-11---T03b-the-reader-chosen-by-measurement-failing-sums-paired-where-they-cross added
+
+runs/20261011-111955/first-read.json (JSON)
+  + section cells_read added
+  + section failed_cells added
+  + section row_sums_pass added
+  + section row_sums_fail added
+  + section col_sums_pass added
+  + section col_sums_fail added
+  + section grand_sums_pass added
+  + section grand_sums_fail added
+  + section printed_totals added
+  + section county added
+  + section run_id added
+  + section blocks_found added
+  + section blocks_failed added
+  + section reader added
+  + section sample added
+  + section row_sums added
+  + section failing added
+  + section rate added
+  + section line added
+  + section sampled_with added
+  + section kept_sample added
+  + section blocks added
+  + section precincts added
+  + section model_calls added
+  + section prompt_tokens added
+  + section completion_tokens added
+  + section metered_cost_estimate added
+  + section seconds added
+  + section stopped added
+  + section block added
+  + section page added
+  + section status added
+  + section cells added
+  + section candidate added
+  + section box added
+  + section gateway_spend_before added
+  + section gateway_spend_after added
+  + section gateway_spend_change added
+  + section ledger added
+
+runs/20261011-112935/panola/county.json (JSON)
+  + module runs/20261011-112935/panola/county.json added
+
+runs/20261011-112935/run.json (JSON)
+  + section run_id added
+  + section started added
+  + section ended added
+  + section commit added
+  + section command added
+  + section counties added
+  + section resumed_from added
+  + section model_calls added
+  + section prompt_tokens added
+  + section completion_tokens added
+  + section metered_cost_estimate added
+
+tests/test_agent.py (Python)
+  ~ function run body changed (64 dependents)
+  ~ function assert_status_rule body changed (6 dependents)
+  ~ function test_a_worse_reading_is_not_kept body changed (0 dependents)
+  ~ function test_six_actions_then_cannot_verify_and_the_loop_goes_on body changed (0 dependents)
+  ~ function decide body changed (15 dependents)
+  ~ function test_a_decision_may_list_several_rereads_and_they_count_one_each body changed (0 dependents)
+  - function test_stronger_model_is_refused_until_two_haiku_rereads_failed removed (0 dependents)
+  + function test_ladder_a_step_only_after_the_one_below_was_tried_on_that_target added
+  - function test_check_model_rule_directly removed (0 dependents)
+  + function test_pick_model_ladder_rules_directly added
+  ~ function test_two_rereads_that_agree_win_a_tie body changed (0 dependents)
+
+tests/test_choose_reader.py (Python)
+  + class Recording added
+  + method Recording.__init__ added
+  + method Recording._create added
+  + function blk added
+  + function run added
+  + function test_a_sample_that_holds_keeps_haiku_and_its_values added
+  + function test_a_sample_over_a_tenth_failing_switches_to_sonnet_and_reads_again added
+  + function test_exactly_a_tenth_failing_keeps_haiku added
+  + function test_decide_is_on_the_line added
+  + function test_a_named_model_skips_the_sample_and_says_so added
+
+tests/test_locate.py (Python)
+  + function block added
+  + function found added
+  + function test_a_block_that_holds_has_no_suspects added
+  + function test_one_wrong_cell_is_found_with_the_value_it_must_have added
+  + function test_one_wrong_small_total_sits_on_its_column_and_the_grand_total added
+  + function test_one_wrong_row_total_sits_on_its_row_and_the_grand_total_by_rows added
+  + function test_a_wrong_grand_total_fails_both_grand_checks_and_is_found added
+  + function test_two_wrong_cells_in_different_rows_and_columns_are_both_found added
+  + function test_two_wrong_cells_with_the_same_error_are_ambiguous_not_guessed added
+  + function test_two_wrong_cells_in_one_row_cannot_be_paired_and_it_says_so added
+  + function test_the_registered_row_sits_on_one_sum_and_says_so added
+  + function test_an_unread_term_is_not_paired added
+  + function test_the_sign_of_the_error_is_carried_both_ways added
+  + function test_both_grand_checks_are_kinds_of_their_own added
+
+tests/test_pairing_loop.py (Python)
+  + class StripGeo added
+  + method StripGeo.strip_crops added
+  + class Reader added
+  + method Reader.__init__ added
+  + method Reader.__call__ added
+  + function go added
+  + function read added
+  + function events added
+  + function test_one_wrong_cell_is_reread_where_the_sums_cross_and_fixed_without_asking_the_model added
+  + function test_a_wrong_small_total_is_reread_as_a_total_and_the_cells_are_left_alone added
+  + function test_a_wrong_row_total_and_a_wrong_grand_total_are_reread_as_totals added
+  + function test_the_old_value_again_goes_one_step_up_and_the_stronger_reading_wins added
+  + function test_the_same_reading_twice_while_both_sums_fail_is_document_inconsistent added
+  + function test_three_different_readings_end_cannot_verify_after_the_whole_ladder added
+  + function test_a_reading_that_does_not_fit_the_sums_is_not_written added
+  + function test_a_cell_whose_column_holds_is_not_marked_when_its_row_fails_for_another_value added
+  + function test_unlocated_sums_go_to_the_model_and_a_row_strip_can_be_asked_for added
+  + function test_an_unknown_model_name_falls_back_to_the_next_step_instead_of_stopping_the_item added
+  + function test_a_target_is_not_reread_twice_with_the_same_model_and_dpi_and_the_refusal_counts added
+  + function test_resume_skips_accepted_values_and_does_not_ask_again added
+  + function test_every_failing_sum_at_the_end_has_a_verdict_and_a_reason added
+
+tests/test_parse_json.py (Python)
+  + function test_plain_and_fenced_answers_still_parse added
+  + function test_prose_before_after_or_around_the_object added
+  + function test_a_fence_inside_prose_and_prose_after_a_fence added
+  + function test_braces_in_the_prose_do_not_hide_the_object added
+  + function test_no_json_still_raises added
+  + function test_price_table_is_the_gateways_list added
+
+Warnings
+  ! W_UNSUPPORTED_FILE .prod-build/evidence.jsonl
+    file skipped; no parser for this file type, so its changes are not analyzed
+    base and head versions have no supported parser
+  ! W_UNSUPPORTED_FILE runs/20261011-111955/ledger.sqlite
+    file skipped; no parser for this file type, so its changes are not analyzed
+    head version has no supported parser
+  ! W_UNSUPPORTED_FILE runs/20261011-112935/ledger.sqlite
+    file skipped; no parser for this file type, so its changes are not analyzed
+    head version has no supported parser

@@ -81,15 +81,20 @@ It needs `pdftoppm` (poppler) to render the scans. `uv run crossfoot --help` lis
 
 ## Evidence
 
-- Two changes made from what the runs showed, each with a run before and a run after and what got worse:
-  [docs/evidence/before-after.md](docs/evidence/before-after.md).
+The event page lists what a judge checks. Its words are on the left; where to look is on the right.
+
+| The event asks for | Where it is |
+|---|---|
+| **The agent improved.** A run before your change and a run after it, with the numbers you compared | [before-after.md](docs/evidence/before-after.md): two changes, each with its run before and its run after, their trace ids, the numbers, and what got worse |
+| **You used neatlogs.** Links to traces, or screenshots of them | [trace-panola-final.md](docs/evidence/trace-panola-final.md): one trace as the neatlogs server returns it. [traces.md](docs/evidence/traces.md): the trace id of every run, and the detection that was created |
+| **You used Entire.** Checkpoints or entire-graph output | [checkpoints.txt](docs/evidence/checkpoints.txt): the output of `entire checkpoint list`; each session's commit carries an `Entire-Checkpoint` trailer. [entire-graph.md](docs/evidence/entire-graph.md): the graph plugin's change list for the commit that reworked the loop |
+| **You used cfo.ai.** A business plan covering pricing, costs, revenue and runway | [The plan](https://app.cfo.ai/s/aRFg86F21pDO1EQN), and its figures in [business-plan.md](docs/evidence/business-plan.md) |
+| **The agent recovers from failures.** A run where an action failed, showing what the agent did next | [recovery.md](docs/evidence/recovery.md): a run stopped by its budget and continued, and other recoveries |
+| **You wrote the code during the hackathon.** Commits dated during the hackathon | The history of this repository: every commit is dated 11 or 12 October 2026. What was planned earlier is under "What existed before the event" |
+
+Also here:
 - One prompt to a general coding agent on the same county, scored the same way:
   [docs/evidence/baseline.md](docs/evidence/baseline.md).
-- A run stopped by its budget and continued, and other recoveries:
-  [docs/evidence/recovery.md](docs/evidence/recovery.md).
-- Traces and the detection: [docs/evidence/traces.md](docs/evidence/traces.md).
-- Checkpoints, the output of `entire checkpoint list`: [docs/evidence/checkpoints.txt](docs/evidence/checkpoints.txt)
-  (the last line says how to open a session from a commit's `Entire-Checkpoint` trailer).
 - The results page: [site/](site/) (static; serve it as in "Run it"). Screenshots of it at 1440x900 and 390x844 and the
   accessibility check (axe-core, zero violations) are in [qa/final/](qa/final/).
 - The build log, including what failed: [hackathon.md](hackathon.md).
@@ -119,8 +124,9 @@ Calls, cost and seconds are those of the run that read each county, [`runs/20261
   ([traces.md](docs/evidence/traces.md)). One trace as the server returns it, with its span tree and a masked image:
   [trace-panola-final.md](docs/evidence/trace-panola-final.md).
 - **Entire.** Every coding session's commit carries an `Entire-Checkpoint` trailer
-  ([checkpoints.txt](docs/evidence/checkpoints.txt)). The graph plugin's instructions for coding agents are in
-  [AGENTS.md](AGENTS.md).
+  ([checkpoints.txt](docs/evidence/checkpoints.txt)). Its graph plugin was installed and its guide is in
+  [AGENTS.md](AGENTS.md), but the coding sessions never called it; its change list for the loop rework was made
+  afterwards ([entire-graph.md](docs/evidence/entire-graph.md)).
 - **cfo.ai.** The business plan, made from the run's measured cost and our stated assumptions:
   [the shared plan](https://app.cfo.ai/s/aRFg86F21pDO1EQN) and what it says
   ([business-plan.md](docs/evidence/business-plan.md)). The model costs $0.29 a file and a person confirming the

@@ -75,6 +75,8 @@ Run 20261011-130414 (`crossfoot audit --all --budget 9`, started 13:04:17), one 
   It is a planning call, not a page read, so the name says "haiku call" and not "read". I did not look up which trace holds that span, so no trace id is given for the match.
 - Created with `create_detection`: the server answered "Detection created. A 14-day backfill is running"; `backfill_status` was `pending`. Whether it is active was not
   re-read with `list_detections` after creation, so "active" is the server's creation answer, not a second check.
+- Checked again on 12 October 2026 with `list_detections`: the detection is listed with `is_active: true` (type `conditional`, runs on spans of type LLM,
+  created 2026-10-11T14:51:38Z). The answer does not say how many spans it has matched.
 - The three existing detections (Expensive LLM Call, Slow LLM Response, Execution Failed) were not touched; the fourth listed in the capabilities, "Invalid Output Format Detector", is inactive and was not touched.
 
 ## What the server refused
